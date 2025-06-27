@@ -1,1 +1,36 @@
 accountgo-saas-7.2.zip 
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+.env.*   # ignore .env.development, .env.local etc.
+
+/.idea
+/.vscode
+.phpunit.result.cache
+Homestead.yaml
+Homestead.json
+/.phpunit.result.cache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Composer
+composer.lock
+npm-debug.log
+yarn-error.log
+
+# Laravel Sail
+docker-compose.override.yml
+
+# Laravel Cache & Logs
+/storage/framework/*
+!/storage/framework/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
+
+# Laravel storage exceptions
+/storage/app/public
+!/storage/app/public/.gitignore
