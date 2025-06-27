@@ -3,8 +3,6 @@ accountgo-saas-7.2.zip
 /node_modules
 /public/storage
 /storage/*.key
-.env
-.env.*   # ignore .env.development, .env.local etc.
 
 /.idea
 /.vscode
