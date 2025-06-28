@@ -109,6 +109,13 @@ Route::get('/branches/create', 'App\Http\Controllers\BranchesController@create')
 
 Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->name('branches.add')->middleware('auth');
 
+Route::get('/sellto', 'App\Http\Controllers\SelltoController@index')->name('sellto.list')->middleware('auth');
+
+Route::get('/sellto/create', 'App\Http\Controllers\SelltoController@create')->name('sellto.create')->middleware('auth');
+
+Route::post('/sellto/add', 'App\Http\Controllers\SelltoController@add')->name('sellto.add')->middleware('auth');
+
+Route::get('/sellto/search', 'App\Http\Controllers\SelltoController@search')->name('sellto.search')->middleware('auth');
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice')->middleware('auth');
 
