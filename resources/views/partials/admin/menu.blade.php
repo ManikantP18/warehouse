@@ -251,6 +251,13 @@
                             <span class="dash-mtext">Branches</span>
                         </a>
                     </li>
+                    
+                <li class="dash-item {{ Request::route()->getName() == 'ledger.list' ? ' active' : '' }} ">
+                        <a href="{{ route('ledger.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Ladgers</span>
+                        </a>
+                    </li>
 
                 <!-- {{-- -------  Vendor ---------- --}}
                 @if (Gate::check('manage vender'))

@@ -88,6 +88,7 @@ use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
+use App\Http\Controllers\LedgerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,6 +109,21 @@ Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('
 Route::get('/branches/create', 'App\Http\Controllers\BranchesController@create')->name('branches.create')->middleware('auth');
 
 Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->name('branches.add')->middleware('auth');
+
+Route::get('/ledger', 'App\Http\Controllers\LedgerController@index')->name('ledger.list')->middleware('auth');
+
+Route::get('/ledger/create', 'App\Http\Controllers\LedgerController@create')->name('ledger.create')->middleware('auth');
+
+Route::post('/ledger/add', 'App\Http\Controllers\LedgerController@add')->name('ledger.add')->middleware('auth');
+
+Route::get('/ledger/delete/{id}', 'App\Http\Controllers\LedgerController@delete')->name('ledger.delete')->middleware('auth');
+
+Route::get('/ledger/edit/{id}', 'App\Http\Controllers\LedgerController@edit')->name('ledger.edit')->middleware('auth');
+
+Route::put('/ledger/edit/', 'App\Http\Controllers\LedgerController@update')->name('ledger.update')->middleware('auth');
+
+Route::get('/ledger/others/', 'App\Http\Controllers\LedgerController@other')->name('ledger.other')->middleware('auth');
+
 
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice')->middleware('auth');
