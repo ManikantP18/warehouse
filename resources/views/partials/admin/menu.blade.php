@@ -252,6 +252,13 @@
                         </a>
                     </li>
 
+                    <li class="dash-item {{ Request::route()->getName() == 'Rogring.list' ? ' active' : '' }} ">
+                        <a href="{{ route('Rogring.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Rogrings</span>
+                        </a>
+                    </li>
+    
                 <!-- {{-- -------  Vendor ---------- --}}
                 @if (Gate::check('manage vender'))
                     <li class="dash-item {{ Request::segment(1) == 'vender' ? 'active' : '' }}">
