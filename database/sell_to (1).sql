@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2025 at 01:01 PM
+-- Generation Time: Jun 29, 2025 at 10:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,6 +40,7 @@ CREATE TABLE `sell_to` (
   `sell_total_ammount` int(11) NOT NULL,
   `sell_gst_ammount` int(11) NOT NULL,
   `sell_status` tinyint(4) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
   `sell_created_date` datetime NOT NULL,
   `sell_way` varchar(255) NOT NULL,
   `sell_to` varchar(255) NOT NULL,
@@ -50,9 +51,9 @@ CREATE TABLE `sell_to` (
 -- Dumping data for table `sell_to`
 --
 
-INSERT INTO `sell_to` (`sell_id`, `sell_account_number`, `sell_relation_customer`, `sell_account_name`, `sell_property_owner`, `sell_village`, `sell_phone`, `sell_quantity`, `sell_rate`, `sell_total_ammount`, `sell_gst_ammount`, `sell_status`, `sell_created_date`, `sell_way`, `sell_to`, `item_selled`) VALUES
-(1, '12345678909876543', 'nikita', 'nikita', 'nikita', 'thibgaon', '1234567890', 3, 4.5, 150000, 200, 1, '2025-06-28 09:38:02', 'cash', '', ''),
-(2, '12345678976543', 'tulsi', '3453', 'tulsi', 'tulsi', '1234567865', 0, 0, 3343, 2343, 1, '0000-00-00 00:00:00', 'credit', 'farmer', 'tulsi');
+INSERT INTO `sell_to` (`sell_id`, `sell_account_number`, `sell_relation_customer`, `sell_account_name`, `sell_property_owner`, `sell_village`, `sell_phone`, `sell_quantity`, `sell_rate`, `sell_total_ammount`, `sell_gst_ammount`, `sell_status`, `is_deleted`, `sell_created_date`, `sell_way`, `sell_to`, `item_selled`) VALUES
+(1, '12345678909876543', 'nikita', 'nikita', 'nikita', 'thibgaon', '1234567890', 3, 4.5, 150000, 200, 1, 0, '2025-06-28 09:38:02', 'cash', '', ''),
+(11, 'cust-1', 'Manikant Patidar', 'Sukhraj', 'Tulsi', 'badgaon', '7744551122', 0, 0, 3343, 0, 1, 0, '0000-00-00 00:00:00', 'cash', 'farmer', 'tulsi');
 
 --
 -- Indexes for dumped tables
@@ -72,7 +73,7 @@ ALTER TABLE `sell_to`
 -- AUTO_INCREMENT for table `sell_to`
 --
 ALTER TABLE `sell_to`
-  MODIFY `sell_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sell_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

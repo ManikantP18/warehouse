@@ -1,10 +1,8 @@
-{{ Form::open(['url' => 'sellto/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
+{{ Form::open(['url' => 'sellto/update', 'method' => 'put', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
     <h6 class="sub-title">Sells Creation</h6>
 
     <div class="row">
-
-        
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                 <label for="sellto_farmer/other" class="form-label">Sell To</label>
@@ -36,8 +34,8 @@
       <div class="form-group">
         <label for="search" class="form-label">Search By</label>
         <div class="form-icon-user">
-          <input class="form-control onlyforformesrs" required name="search" type="text"  id="search">
-     </div>
+          <input class="form-control" required name="search" type="text" id="search" placeholder="Khata Number / Mobile Number">
+        </div>
       </div>
     </div>
 
@@ -61,8 +59,9 @@
                     required
                     name="sellto_account_number"
                     type="text"
-                    
-                    id="sellto_account_number">
+                    id="sellto_account_number"
+                    value="{{$sellto[0]->sell_account_number}}"
+                    >
 
                 </div>
             </div>
@@ -72,15 +71,16 @@
             <div class="form-group">
                 <label for="sellto_phone" class="form-label">Mobile Number</label>
                 <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs"
+                     <input class="form-control onlyforformesrs"
                     required
                     name="sellto_phone"
                     type="tel"
                     pattern="[0-9]{10}"
                     maxlength="10"
                     title="Enter 10-digit mobile number"
-                    id="sellto_phone">
-
+                    id="sellto_phone"
+                    value="{{$sellto[0]->sell_phone}}"
+                    >
                 </div>
             </div>
         </div>
@@ -89,8 +89,8 @@
             <div class="form-group">
                 <label for="sellto_customer_name" class="form-label">Customer Name</label>
                 <div class="form-icon-user">
-                   <input class="form-control alwaysvisible" required pattern="[A-Za-z ]+" title="Only alphabets are allowed" name="sellto_customer_name" type="text" id="sellto_customer_name">
-            </div>
+                     <input class="form-control alwaysvisible" required pattern="[A-Za-z ]+" title="Only alphabets are allowed" name="sellto_customer_name" type="text" id="sellto_customer_name" value="{{$sellto[0]->sell_relation_customer}}">
+                </div>
             </div>
         </div>
 
@@ -98,7 +98,7 @@
             <div class="form-group">
                 <label for="sellto_acc_holder" class="form-label">Account Holder Name</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="sellto_acc_holder" type="text" id="sellto_acc_holder">
+                    <input class="form-control alwaysvisible" required="required" name="sellto_acc_holder" type="text" id="sellto_acc_holder" value="{{$sellto[0]->sell_account_name}}">
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
             <div class="form-group">
                 <label for="sellto_owner_name" class="form-label"> Field Owner Name</label>
                 <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" required="required" name="sellto_owner_name" type="text" id="sellto_owner_name">
+                     <input class="form-control onlyforformesrs" required="required" name="sellto_owner_name" type="text" id="sellto_owner_name" value="{{$sellto[0]->sell_property_owner}}">
                 </div>
             </div>
         </div>
@@ -117,7 +117,7 @@
             <div class="form-group">
                 <label for="sellto_village" class="form-label"> Village </label>
                 <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" required pattern="[A-Za-z ]+" title="Only letters allowed" name="sellto_village" type="text" id="sellto_village">
+                    <input class="form-control onlyforformesrs" required pattern="[A-Za-z ]+" title="Only letters allowed" name="sellto_village" type="text" id="sellto_village" value="{{$sellto[0]->sell_village	}}">
                 </div>
             </div>
         </div>
@@ -128,7 +128,7 @@
             <div class="form-group">
                 <label for="sellto_item_selled" class="form-label">Item Selled</label>
                 <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" required="required" name="sellto_item_selled" type="text" id="sellto_item_selled">
+                    <input class="form-control onlyforformesrs" required="required" name="sellto_item_selled" type="text" id="sellto_item_selled" value="{{$sellto[0]->item_selled	}}">
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
             <div class="form-group">
                 <label for="sellto_quantity" class="form-label"> Quantity </label>
                 <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" required name="sellto_quantity" type="number" min="1" step="any" title="Enter a valid number" id="sellto_quantity">
+                    <input class="form-control onlyforformesrs" required="required" name="sellto_quantity" type="text" id="sellto_quantity" value="{{$sellto[0]->sell_quantity}}">
                 </div>
             </div>
         </div>
@@ -146,7 +146,7 @@
             <div class="form-group">
                 <label for="sellto_rate" class="form-label"> Rate</label>
                 <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" required name="sellto_rate" type="number" min="0.01" step="0.01" title="Enter a valid rate" id="sellto_rate">
+                      <input class="form-control onlyforformesrs" required name="sellto_quantity" type="number" min="1" step="any" title="Enter a valid number" id="sellto_quantity" value="{{$sellto[0]->sell_rate}}">
                 </div>
             </div>
         </div>
@@ -155,7 +155,7 @@
             <div class="form-group">
                 <label for="sellto_total_amount" class="form-label">Total Amount</label>
                 <div class="form-icon-user">
-                   <input class="form-control onlyforformesrs" required name="sellto_total_amount" type="number" min="0" step="0.01"  title="Enter total amount"  id="sellto_total_amount">
+                    <input class="form-control onlyforformesrs" required name="sellto_total_amount" type="number" min="0" step="0.01"  title="Enter total amount"  id="sellto_total_amount" value="{{$sellto[0]->sell_total_ammount}}">
                 </div>
             </div>
         </div>
@@ -164,7 +164,8 @@
             <div class="form-group">
                 <label for="sellto_gst_amount" class="form-label">GST Amount</label>
                 <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" required  name="sellto_gst_amount" type="number" min="0" step="0.01" title="Enter GST amount" id="sellto_gst_amount">
+                    <input class="form-control onlyforformesrs" required  name="sellto_gst_amount" type="number" min="0" step="0.01" title="Enter GST amount" id="sellto_gst_amount" value="{{$sellto[0]->sell_gst_ammount	}}">
+                    <input class="form-control" required="required" name="sell_id" type="hidden" id="" value="{{$sellto[0]->sell_id	}}">
                 </div>
             </div>
         </div>
@@ -172,28 +173,12 @@
 </div>
 <div class="modal-footer">
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
-    <input type="submit" value="Create" class="btn btn-primary">
+    <input type="submit" value="Update" class="btn btn-primary">
 </div>
 </form>
 
 <>
   <script>
-    (() => {
-      'use strict'
-
-      const forms = document.querySelectorAll('.needs-validation')
-
-      Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-          form.classList.add('was-validated')
-        }, false)
-      })
-    })()
-
         function toggleFields() {
 
             let val = document.getElementById('sellto_farmer/other').value;

@@ -16,11 +16,11 @@
     </script>
 @endpush
 @section('page-title')
-    {{ __('Manage Ladgers') }}
+    {{ __('Manage Sells') }}
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item">{{ __('Ladgers') }}</li>
+    <li class="breadcrumb-item">{{ __('Sells') }}</li>
 @endsection
 
 @section('action-btn')
@@ -43,12 +43,35 @@
     </div>
 @endsection
 
+
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body table-border-style table-border-style">
                     <div class="table-responsive">
+                         <div class="card shadow-sm rounded-4 border-0 mb-4">
+                <div class="card-body pb-0">
+    <ul class="nav nav-pills nav-fill gap-2 p-2 rounded-pill bg-light border" id="sellTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a href="{{ route('sellto.list') }}"
+               class="nav-link {{ request()->routeIs('sellto.list') ? 'active' : '' }} rounded-pill" 
+               role="tab">
+                👨‍🌾 Farmers
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a href="{{ route('sellto.other') }}"
+               class="nav-link {{ request()->routeIs('sellto.other') ? 'active' : '' }} rounded-pill"
+               role="tab">
+                👥 Others
+            </a>
+        </li>
+    </ul>
+</div>
+
+            </div>
                         <table class="table datatable">
                             <thead>
                                 <tr>
@@ -58,7 +81,8 @@
                                     <th> field owner </th>
                                     <th>village</th>
                                     <th> mobile no. </th>
-                                    <th> selled itme / quantity </th>
+                                    <th> selled itme  </th>
+                                    <th>quantity </th>
                                     <th> rate </th>
                                     <th> total ammount </th>
                                     <th> gst ammount </th>
@@ -77,11 +101,36 @@
                                     <td> {{$value->sell_property_owner}} </td>
                                     <td> {{$value->sell_village}} </td>
                                     <td> {{$value->sell_phone}} </td>
+                                    <td> {{$value->item_selled}} </td>
                                     <td> {{$value->sell_quantity}} </td>
                                     <td> {{$value->sell_rate}} </td>
                                     <td> {{$value->sell_total_ammount}} </td>
                                     <td> {{$value->sell_gst_ammount}} </td>
                                     <td> {{$value->sell_way}} </td>
+                                  
+                                 <td>
+                                   
+                                    <a href="#" data-size="xl" data-url="{{ route('sellto.edit', $value->sell_id) }}" data-ajax-popup="true"
+                                    data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Sells') }}"
+                                    class="btn btn-sm btn-primary">
+                                        <i class="ti ti-pencil"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" 
+                                    class="btn btn-sm bg-danger text-white shadow-sm" 
+                                    title="Delete" 
+                                    onclick="removeit('{{ route('sellto.delete', $value->sell_id) }}')">
+                                        <i class="ti ti-trash"></i>
+                                    </a>
+
+
+                                </td>
+
+
+
+
+
+
+
                                </tr>
 
                             @endforeach
@@ -117,5 +166,12 @@
                 }));
             }, 2000);
         });
+
+        function removeit(url) {
+            let cnf = confirm('Are You Sure You Want To Delete This Sell?');
+            if(cnf == true) {
+                window.location.href = url;
+            }
+        }
     </script>
 @endpush

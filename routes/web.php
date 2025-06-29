@@ -111,11 +111,20 @@ Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->nam
 
 Route::get('/sellto', 'App\Http\Controllers\SelltoController@index')->name('sellto.list')->middleware('auth');
 
+Route::get('/othersSellto', 'App\Http\Controllers\SelltoController@others')->name('sellto.other')->middleware('auth');
+
 Route::get('/sellto/create', 'App\Http\Controllers\SelltoController@create')->name('sellto.create')->middleware('auth');
 
 Route::post('/sellto/add', 'App\Http\Controllers\SelltoController@add')->name('sellto.add')->middleware('auth');
 
 Route::get('/sellto/search', 'App\Http\Controllers\SelltoController@search')->name('sellto.search')->middleware('auth');
+
+Route::get('/sellto/delete/{id}', 'App\Http\Controllers\SelltoController@delete')->name('sellto.delete')->middleware('auth');
+
+Route::get('/sellto/edit/{id}', 'App\Http\Controllers\SelltoController@edit')->name('sellto.edit')->middleware('auth');
+
+Route::put('/sellto/update', 'App\Http\Controllers\SelltoController@update')->name('sellto.update')->middleware('auth');
+
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice')->middleware('auth');
 
