@@ -88,6 +88,8 @@ use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
+use App\Http\Controllers\kataparchiController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -108,6 +110,16 @@ Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('
 Route::get('/branches/create', 'App\Http\Controllers\BranchesController@create')->name('branches.create')->middleware('auth');
 
 Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->name('branches.add')->middleware('auth');
+
+
+
+Route::get('/kataparchi', 'App\Http\Controllers\kataparchiController@index')->name('kataparchi.list')->middleware('auth');
+
+Route::get('/kataparchi/create', 'App\Http\Controllers\kataparchiController@create')->name('kataparchi.create')->middleware('auth');
+
+Route::post('/kataparchi/add', 'App\Http\Controllers\kataparchiController@add')->name('kataparchi.add')->middleware('auth');
+
+Route::get('/kataparchi/delete/{id}', 'App\Http\Controllers\kataparchiController@delete')->name('kataparchi.delete')->middleware('auth');
 
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice')->middleware('auth');
