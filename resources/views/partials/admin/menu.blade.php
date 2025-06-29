@@ -250,6 +250,22 @@
                             <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
                             <span class="dash-mtext">Branches</span>
                         </a>
+                </li>
+                 
+                    <li class="dash-item {{ Request::route()->getName() == 'sellto.list' ? ' active' : '' }} ">
+                        <a href="{{ route('sellto.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Sell To</span>
+                        </a>
+                </li>
+
+                    
+
+                 <li class="dash-item {{ Request::route()->getName() == 'kataparchi.list' ? ' active' : '' }} ">
+                        <a href="{{ route('kataparchi.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">kataparchi</span>
+                        </a>
                     </li>
                     
                 <li class="dash-item {{ Request::route()->getName() == 'ledger.list' ? ' active' : '' }} ">

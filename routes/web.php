@@ -88,7 +88,12 @@ use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
+<<<<<<< HEAD
 use App\Http\Controllers\LedgerController;
+=======
+use App\Http\Controllers\kataparchiController;
+
+>>>>>>> 66b47c61ec8c61f04b3a96e6b1d545961f5ddf1f
 
 /*
 |--------------------------------------------------------------------------
@@ -124,6 +129,32 @@ Route::put('/ledger/edit/', 'App\Http\Controllers\LedgerController@update')->nam
 
 Route::get('/ledger/others/', 'App\Http\Controllers\LedgerController@other')->name('ledger.other')->middleware('auth');
 
+
+Route::get('/sellto', 'App\Http\Controllers\SelltoController@index')->name('sellto.list')->middleware('auth');
+
+Route::get('/othersSellto', 'App\Http\Controllers\SelltoController@others')->name('sellto.other')->middleware('auth');
+
+Route::get('/sellto/create', 'App\Http\Controllers\SelltoController@create')->name('sellto.create')->middleware('auth');
+
+Route::post('/sellto/add', 'App\Http\Controllers\SelltoController@add')->name('sellto.add')->middleware('auth');
+
+Route::get('/sellto/search', 'App\Http\Controllers\SelltoController@search')->name('sellto.search')->middleware('auth');
+
+Route::get('/sellto/delete/{id}', 'App\Http\Controllers\SelltoController@delete')->name('sellto.delete')->middleware('auth');
+
+Route::get('/sellto/edit/{id}', 'App\Http\Controllers\SelltoController@edit')->name('sellto.edit')->middleware('auth');
+
+Route::put('/sellto/update', 'App\Http\Controllers\SelltoController@update')->name('sellto.update')->middleware('auth');
+
+
+
+Route::get('/kataparchi', 'App\Http\Controllers\kataparchiController@index')->name('kataparchi.list')->middleware('auth');
+
+Route::get('/kataparchi/create', 'App\Http\Controllers\kataparchiController@create')->name('kataparchi.create')->middleware('auth');
+
+Route::post('/kataparchi/add', 'App\Http\Controllers\kataparchiController@add')->name('kataparchi.add')->middleware('auth');
+
+Route::get('/kataparchi/delete/{id}', 'App\Http\Controllers\kataparchiController@delete')->name('kataparchi.delete')->middleware('auth');
 
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice')->middleware('auth');
