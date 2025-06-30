@@ -3,6 +3,46 @@
     <h6 class="sub-title">Sells Creation</h6>
 
     <div class="row">
+
+     <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row align-items-end">
+
+    <div class="col-lg-3 col-md-3 col-sm-12">
+      <div class="form-group">
+        <label for="search" class="form-label">Account/Mobile No</label>
+        <div class="form-icon-user">
+          <input class="form-control onlyforformesrs"  name="search" type="text" id="search" placeholder="Acc No / Mobile No">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-12">
+      <div class="form-group">
+        <label for="search_name" class="form-label">Farmer Name</label>
+        <div class="form-icon-user">
+          <input class="form-control onlyforformesrs"  name="search_name" type="text" id="search_name" placeholder="Farmer Name">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-12">
+      <div class="form-group">
+        <label for="search_village" class="form-label">Village Name</label>
+        <div class="form-icon-user">
+          <input class="form-control onlyforformesrs"  name="search_village" type="text" id="search_village" placeholder="Village Name">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-12">
+      <div class="form-group">
+        <label class="form-label d-none d-sm-block">&nbsp;</label>
+        <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
+      </div>
+    </div>
+
+  </div>
+</div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                 <label for="sellto_farmer/other" class="form-label">Sell To</label>
@@ -27,27 +67,7 @@
             </div>
             </div>
 
-           <div class="col-lg-12 col-md-12 col-sm-12">
-  <div class="row align-items-end">
-    
-    <div class="col-lg-10 col-md-9 col-sm-9">
-      <div class="form-group">
-        <label for="search" class="form-label">Search By</label>
-        <div class="form-icon-user">
-          <input class="form-control" required name="search" type="text" id="search" placeholder="Khata Number / Mobile Number">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-2 col-md-3 col-sm-3">
-      <div class="form-group">
-        <label class="form-label d-none d-sm-block">&nbsp;</label>
-        <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+        
 
         
 
@@ -122,22 +142,39 @@
             </div>
         </div>
         
-       
+       <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="sellto_item_selled" class="form-label">Item Selled</label>
+                <div class="form-icon-user">
+                    <select name="sellto_item_selled" id="sellto_item_selled" class="form-control onlyforformesrs" onchange='autofill()'>
+                        
+                        <option value="" hidden>Select Item</option>
+                       @foreach($items AS $val):
+                        <option value="{{$val->id}}">{{$val->name}} - {{$val->quantity}} KG</option>
+                       @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
 
-         <div class="col-lg-6 col-md-6 col-sm-6">
+         
+        
+        
+        
+        <!-- <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="sellto_item_selled" class="form-label">Item Selled</label>
                 <div class="form-icon-user">
                     <input class="form-control onlyforformesrs" required="required" name="sellto_item_selled" type="text" id="sellto_item_selled" value="{{$sellto[0]->item_selled	}}">
                 </div>
             </div>
-        </div>
+        </div> -->
 
          <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="sellto_quantity" class="form-label"> Quantity </label>
                 <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" required="required" name="sellto_quantity" type="text" id="sellto_quantity" value="{{$sellto[0]->sell_quantity}}">
+                    <input class="form-control onlyforformesrs" required="required" name="sellto_quantity" type="text" id="sellto_quantity" value="{{$sellto[0]->sell_quantity}}" onkeyup="autofill()">
                 </div>
             </div>
         </div>
@@ -176,7 +213,7 @@
     <input type="submit" value="Update" class="btn btn-primary">
 </div>
 </form>
-
+<input type="hidden" id="itemsdata" value="{{json_encode($items)}}">
 <>
   <script>
     (() => {
@@ -237,7 +274,25 @@
         })
         }
         
-        
+          function autofill() {
+
+            let item = $("#sellto_item_selled").val();
+
+            let sellto_quantity = $("#sellto_quantity").val();
+
+            let itemdata = $("#itemsdata").val();
+
+            let myitem = JSON.parse(itemdata).filter((values) =>{
+                return values.id == item
+            })
+
+            $("#sellto_rate").val(myitem[0].sale_price);
+
+            let totalprice = myitem[0].sale_price * sellto_quantity;
+
+            $("#sellto_total_amount").val(totalprice)
+            
+        }
 
 
 </script>
