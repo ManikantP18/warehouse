@@ -19,18 +19,12 @@ class RogringController extends Controller
     }  
 
     public function add(Request $req)
-{
-    $req->validate([
-        'Rogring_name' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:255'],
-        'Rogring_contact' => ['required', 'digits:10'],
- 
-    ]);
-    
+    {
 
-    DB::table('rogring')->insert([
-        'Rogring_name' => $req->input('Rogring_name'),
-        'Rogring_contcact' => $req->input('Rogring_contcact'),
-    ]);
+        DB::table('rogring')->insert([
+            'Rogring_name' => $req->input('Rogring_name'),
+            'Rogring_contcact' => $req->input('Rogring_contcact'),
+        ]);
 
     return Redirect::to('Rogring')->with('success', 'Rogring added successfully.');
 }
