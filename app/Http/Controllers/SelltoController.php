@@ -19,7 +19,9 @@ class SelltoController extends Controller
     }
 
      function create(){
-        return view('sellto/create');
+        $data['items'] = DB::select("select * from product_services where type = 'Product'"); 
+       
+        return view('sellto/create',$data);
     }
 
     function add(Request $req){
@@ -46,26 +48,34 @@ class SelltoController extends Controller
     }
 
     public function search(Request $req)
-{
-    $searchVal = $req->input('searchVal');
+        {
+            $searchVal = $req->input('searchVal'); // Account No or Mobile No
+            $searchVillage = $req->input('searchVillage');
+            $searchname = $req->input('searchname');
 
-    $searchData = DB::table('ladgers')
-        ->where('account_id', $searchVal)
-        ->orWhere('phone_number', $searchVal)
-        ->first(); // fetch only one record
+           
 
-    if ($searchData) {
-        return response()->json([
-            'success' => true,
-            'data' => $searchData
-        ]);
-    } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'No record found.'
-        ]);
-    }
-}
+            $searchData = DB::select("SELECT * FROM ladgers
+            WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
+            AND (relational_cust_name LIKE '%$searchname%'
+            AND village LIKE '%$searchVillage%')
+            ");
+
+
+
+            if ($searchData) {
+                return response()->json([
+                    'success' => true,
+                    'data' => $searchData
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No record found.'
+                ]);
+            }
+
+        }
 
     function others() {
          $data['sellto'] = DB::select("select * from sell_to where sell_to != 'farmer' and is_deleted = 0");
@@ -80,6 +90,8 @@ class SelltoController extends Controller
 
     function edit($id) {
         $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
+
+        $data['items'] = DB::select("select * from product_services where type = 'Product'");
         return view('sellto/edit',$data);
     } 
 
