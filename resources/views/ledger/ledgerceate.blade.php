@@ -1,142 +1,183 @@
 {{ Form::open(['url' => 'ledger/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
-    <h6 class="sub-title">Ladger Creation</h6>
+    <h6 class="sub-title">Ledger Creation</h6>
 
-    <div class="row">
+    <div class="form-group mb-3">
+        <label for="ledger_type" class="form-label">Select Ledger Type</label>
+        <select name="ledger_type" id="ledger_type" class="form-select" required onchange="showhide(this.value)">
+            <option value="farmer">Farmer</option>
+            <option value="others">Others</option>
+        </select>
+    </div>
 
-        <div class="form-group mb-3">
-    <label for="ledger_type" class="form-label">Select Ledger Type</label>
-    <select name="ledger_type" id="ledger_type" class="form-select" required onchange="showhide(this.value)">
-        <option value="">-- Select Type --</option>
-        <option value="farmer">Farmer</option>
-        <option value="others">Others</option>
-    </select>
+    {{-- FARMER FORM SECTION --}}
+    <div class="row farmer-form-section">
+    <div class="col-md-6">
+    <label>Relational Cust. Name</label>
+    <input class="form-control" name="relational_cust_name" type="text" required pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
 </div>
 
-          <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="ladger_id " class="form-label">Ladger id</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="ladger_id " type="text" id="ladger_id ">
-                </div>
-            </div>
-        </div>  
+    <div class="col-md-6">
+        <label>Account Holder</label>
+        <input class="form-control" name="account_holder" type="text" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
+    </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="ladger_id " class="form-label">relational cust. name</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="relational_cust_name" type="text" id="relational_cust_name">
-                </div>
-            </div>
-        </div>
+    <div class="col-md-6">
+        <label>Farmer Owner Name</label>
+        <input class="form-control" name="farm_owner_name" type="text" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
+    </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">Account Holder</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="account_holder" type="text" id="account_holder">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">Farmer Owner name </label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" name="farm_owner_name" type="text" id="farm_owner_name">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">Village</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="village" type="text" id="village">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">Farmer Area acre</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" name="farm_area_acre" type="number" id="farm_area_acre">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 ">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">Phone No.</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required, digit" name="phone_number" type="number" id="phone_number">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 hideshow ">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">Bank Account name </label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" name="bank_account_name" type="text" id="bank_account_name">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">Account No.</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" name="account_number" type="number" id="account_number">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label"> Bank Name</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" name="bank_name" type="text" id="bank_name">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">IFSC code</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" name="ifsc_code" type="text" id="ifsc_code">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">Branch </label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" name="branch" type="text" id="branch">
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">GST Details</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required, digit" name="gst_num" type="number" id="gst_num">
-                </div>
-            </div>
-        </div>
+    <div class="col-md-6">
+        <label>Village</label>
+        <input class="form-control" name="village" type="text" required minlength="2" pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed" >
+    </div>
+
+    <div class="col-md-6">
+        <label>Farmer Area Acre</label>
+        <input class="form-control" name="farm_area_acre" type="number" required min="0" step="0.01">
+    </div>
+
+    <div class="col-md-6">
+    <label>Phone No.</label>
+    <input class="form-control" name="phone_number" type="tel" required 
+           pattern="^[6-9][0-9]{9}$" 
+           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
+</div>
+
+    <div class="col-md-6">
+        <label>Bank Account Name</label>
+        <input class="form-control" name="bank_account_name" type="text" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
+    </div>
+
+    <div class="col-md-6">
+        <label>Account No.</label>
+        <input class="form-control" name="account_number" type="text" required pattern="\d{9,18}" title="Enter 9 to 18 digit account number">
+    </div>
+
+    <div class="col-md-6">
+        <label>Bank Name</label>
+        <input class="form-control" name="bank_name" type="text" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed" >
+    </div>
+
+    <div class="col-md-6">
+        <label>IFSC Code</label>
+        <input class="form-control" name="ifsc_code" type="text" required pattern="^[A-Z]{4}0[A-Z0-9]{6}$" title="Enter valid IFSC code (e.g., SBIN0001234)">
+    </div>
+
+    <div class="col-md-6">
+        <label>Branch</label>
+        <input class="form-control" name="branch" type="text" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
+    </div>
+
+    <div class="col-md-6">
+        <label>GST Number</label>
+        <input class="form-control" name="gst_num" type="text" required pattern="\d{15}" title="Enter 15-digit GST number">
     </div>
 </div>
+
+
 <div class="modal-footer">
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
     <input type="submit" value="Create" class="btn btn-primary">
 </div>
-</form>
-
+{{ Form::close() }}
 <script>
-    function showhide(ledger_type){
-       // let ledger_type = $("#ledger_type").val();
+function showhide(value) {
+   
+    let formar_fields = `<div class="col-md-6">
+            <label>Relational Cust. Name</label>
+            <input class="form-control" name="relational_cust_name" required type="text">
+        </div>
 
-        
+        <div class="col-md-6">
+            <label>Account Holder</label>
+            <input class="form-control" name="account_holder" required type="text">
+        </div>
 
-        $(".hideshow").hide();
+        <div class="col-md-6">
+            <label>Farmer Owner Name</label>
+            <input class="form-control" name="farm_owner_name" type="text">
+        </div>
 
-        if(ledger_type == 'farmer'){
-            $(".hideshow").show();
-        }
+        <div class="col-md-6">
+            <label>Village</label>
+            <input class="form-control" name="village" required type="text">
+        </div>
+
+        <div class="col-md-6">
+            <label>Farmer Area Acre</label>
+            <input class="form-control" name="farm_area_acre" type="number">
+        </div>
+
+        <div class="col-md-6">
+            <label>Phone No.</label>
+            <input class="form-control" name="phone_number" required type="number">
+        </div>
+
+        <div class="col-md-6">
+            <label>Bank Account Name</label>
+            <input class="form-control" name="bank_account_name" type="text">
+        </div>
+
+        <div class="col-md-6">
+            <label>Account No.</label>
+            <input class="form-control" name="account_number" type="number">
+        </div>
+
+        <div class="col-md-6">
+            <label>Bank Name</label>
+            <input class="form-control" name="bank_name" type="text">
+        </div>
+
+        <div class="col-md-6">
+            <label>IFSC Code</label>
+            <input class="form-control" name="ifsc_code" type="text">
+        </div>
+
+        <div class="col-md-6">
+            <label>Branch</label>
+            <input class="form-control" name="branch" type="text">
+        </div>
+
+        <div class="col-md-6">
+            <label>GST Number</label>
+            <input class="form-control" name="gst_num" required type="number">
+        </div>`;
+
+        let other_fields = `<div class="col-md-6">
+    <label>Relational Cust. Name</label>
+    <input class="form-control" name="relational_cust_name" type="text" required
+           pattern="^[A-Za-z ]+$"
+           title="Only letters and spaces are allowed. Special characters are not permitted.">
+</div>
+
+        <div class="col-md-6">
+            <label>Account Holder</label>
+            <input class="form-control" name="account_holder" type="text" required  pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed">
+        </div>
+
+        <div class="col-md-6">
+            <label>Village</label>
+            <input class="form-control" name="village" type="text" required  pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed">
+        </div>
+
+       <div class="col-md-6">
+    <label>Phone No.</label>
+    <input class="form-control" name="phone_number" type="tel" required 
+           pattern="^[6-9][0-9]{9}$" 
+           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
+</div>
+
+
+        <div class="col-md-6">
+            <label>GST Number</label>
+            <input class="form-control" name="gst_num" required pattern="\d{15}" title="Enter 15-digit GST number" type="number">
+        </div>`;
+
+    if (value === 'farmer') {
+        $(".farmer-form-section").html(formar_fields)
+    } else {
+        $(".farmer-form-section").html(other_fields)
     }
-</script>     
+}
+</script>
