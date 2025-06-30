@@ -154,6 +154,9 @@ Route::post('/kataparchi/add', 'App\Http\Controllers\kataparchiController@add')-
 
 Route::get('/kataparchi/delete/{id}', 'App\Http\Controllers\kataparchiController@delete')->name('kataparchi.delete')->middleware('auth');
 
+Route::get('/kataparchi/edit/{id}', 'App\Http\Controllers\kataparchiController@edit')->name('kataparchi.edit')->middleware('auth');
+
+Route::put('/kataparchi/update', 'App\Http\Controllers\kataparchiController@update')->name('kataparchi.update')->middleware('auth');
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice')->middleware('auth');
 

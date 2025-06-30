@@ -50,13 +50,18 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body table-border-style table-border-style">
-                <div class="mb-4 text-center d-flex justify-content-center w-100" style="gap: 0;">
-                   <a href="{{route('ledger.list') }}"> <button id="farmer-btn" class="btn btn-outline-primary w-100 me-0 btn-toggle-type" >Farmer</button></a>
+               <div class="mb-4 text-center d-flex justify-content-center w-100" style="gap: 0;">
+    <div class="d-flex w-100" style="gap: 0;">
+        <a href="{{ route('ledger.list') }}" class="w-50">
+            <button id="farmer-btn" class="btn btn-outline-primary w-100 btn-toggle-type">Farmer</button>
+        </a>
+        <a href="{{ route('ledger.other') }}" class="w-50">
+            <button id="others-btn" class="btn btn-outline-primary w-100 btn-toggle-type">Others</button>
+        </a>
+    </div>
+    <input type="hidden" name="ledger_type" id="ledger_type" value="">
+</div>
 
-                <a href="{{route('ledger.other')}} "><button id="others-btn" class="btn btn-outline-primary w-100 ms-0 btn-toggle-type" >Others</button>
-</a>
-                    <input type="hidden" name="ledger_type" id="ledger_type" value="">
-                </div>
                     <div class="table-responsive">
                         <table class="table datatable">
                             <thead>

@@ -25,7 +25,7 @@ class LedgerController extends Controller
     }
 
     function add(Request $req){
-        $ladger_id = $req->input('ladger_id ');
+        $ladger_type = $req->input('ledger_type') == 'others' ? 2 : 1;
         $relational_cust_name	 = $req->input('relational_cust_name');
         $account_holder	 = $req->input('account_holder');
         $farm_owner_name = $req->input('farm_owner_name');
@@ -42,10 +42,10 @@ class LedgerController extends Controller
                 
 
 
-       DB::insert("Insert into ladgers ( account_id,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num) VALUES ('$account_id','$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num')");
+       DB::insert("Insert into ladgers ( account_id,ladger_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num) VALUES ('$account_id',$ladger_type,'$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num')");
 
 
-        return Redirect::to('ledger');
+        return Redirect::to('ledger')->with('success', 'Ledger Create Successfully');;
     }
 
     function customerNumber()
@@ -90,7 +90,7 @@ class LedgerController extends Controller
        DB::update("update ladgers set relational_cust_name = '$relational_cust_name' ,account_holder = '$account_holder',farm_owner_name = '$farm_owner_name',village = '$village',farm_area_acre = '$farm_area_acre',phone_number = '$phone_number',bank_account_name = '$bank_account_name',account_number = '$account_number',bank_name = '$bank_name',ifsc_code = '$ifsc_code',branch = '$branch',gst_num = '$gst_num'  where ladger_id = 'ladger_id'");
 
 
-        return Redirect::to('/ledger');
+        return Redirect::to('/ledger')->with('success', 'Ledger edit Successfully');
     }
 
     function other() {
