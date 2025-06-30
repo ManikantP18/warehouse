@@ -98,16 +98,16 @@
 
                                     <td> 
                                         <div class="d-flex">
-                                           <!-- <a href="#"
-                                                data-url=""
-                                                
+                                            
+                                        <a href="#"
+                                                data-url="{{ route('kataparchi.edit', $value->kp_id) }}"
                                                 data-ajax-popup="true"
                                                  data-title="{{ __('EDit kataparchi') }}"
+                                                 
                                                  class="btn btn-sm btn-primary me-2"
                                                 data-bs-toggle="tooltip" title="{{ __('Edite')}}">
-
                                                 <i class="ti ti-pencil"></i>
-                                            </a> -->
+                                            </a> 
 
                                                 
 

@@ -98,10 +98,10 @@ class SelltoController extends Controller
         $total = $req->input('sellto_total_amount');
          $gst = $req->input('sellto_gst_amount');
 
-         $id = $req->input('sell_id');
+         $id = $req->input('kp_id');
 
 
-        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',item_selled = '$itemselled',sell_quantity = '$quantity',sell_rate = '$rate',sell_total_ammount = '$total',sell_gst_ammount = '$gst' where sell_id = '$id'");
+        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',item_selled = '$itemselled',sell_quantity = '$quantity',sell_rate = '$rate',sell_total_ammount = '$total',sell_gst_ammount = '$gst' where kp_id = '$id'");
 
         return Redirect::to('sellto');
     }
