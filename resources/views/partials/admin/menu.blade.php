@@ -679,6 +679,8 @@
                     </li>
                 @endif
 
+                -->
+
                 {{-- -------  Constant ---------- --}}
                 @if (Gate::check('manage constant tax') ||
                         Gate::check('manage constant category') ||
@@ -733,6 +735,8 @@
                         </ul>
                     </li>
                 @endif
+
+                <!--
                 {{-- @if (\Auth::user()->type == 'super admin')
                     @include('landingpage::menu.landingpage')
                 @endif --}}

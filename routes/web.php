@@ -88,12 +88,10 @@ use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
-<<<<<<< HEAD
-use App\Http\Controllers\LedgerController;
-=======
-use App\Http\Controllers\kataparchiController;
 
->>>>>>> 66b47c61ec8c61f04b3a96e6b1d545961f5ddf1f
+use App\Http\Controllers\LedgerController;
+
+use App\Http\Controllers\kataparchiController;
 
 /*
 |--------------------------------------------------------------------------
