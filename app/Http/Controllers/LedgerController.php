@@ -25,6 +25,7 @@ class LedgerController extends Controller
     }
 
     function add(Request $req){
+        
         $ladger_type = $req->input('ledger_type') == 'others' ? 2 : 1;
         $relational_cust_name	 = $req->input('relational_cust_name');
         $account_holder	 = $req->input('account_holder');
@@ -51,6 +52,22 @@ class LedgerController extends Controller
         }
         
     }
+
+    function validmobile(request $req){
+
+        $phone_number = $req->input('mobileno');
+
+        $exists = DB::table('ladgers')
+    ->where('phone_number', $phone_number)
+    ->where('is_deleted', 0)
+    ->exists();
+
+    if ($exists) {
+        echo 'This phone number is already in use';
+    }else {
+        echo 'ok';
+    }
+}
 
     function customerNumber()
     {

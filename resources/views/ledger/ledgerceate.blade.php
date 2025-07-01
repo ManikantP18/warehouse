@@ -1,3 +1,6 @@
+
+
+
 {{ Form::open(['url' => 'ledger/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
     <h6 class="sub-title">Ledger Creation</h6>
@@ -37,12 +40,25 @@
         <input class="form-control" name="farm_area_acre" type="number" required min="0" step="0.01">
     </div>
 
-    <div class="col-md-6">
+   <div class="col-md-6">
     <label>Phone No.</label>
-    <input class="form-control" name="phone_number" type="tel" required 
-           pattern="^[6-9][0-9]{9}$" 
-           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
+    <input 
+        class="validphone form-control @error('phone_number') is-invalid @enderror" 
+        name="phone_number" 
+        type="tel" 
+        required 
+        pattern="^[6-9][0-9]{9}$" 
+        value="{{ old('phone_number') }}"
+        title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9" onchange="validphone(this.value)"
+    >
+
+    @error('phone_number')
+        <div class="invalid-feedback d-block">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
+
 
     <div class="col-md-6">
         <label>Bank Account Name</label>
@@ -109,10 +125,24 @@ function showhide(value) {
             <input class="form-control" name="farm_area_acre" type="number">
         </div>
 
-        <div class="col-md-6">
-            <label>Phone No.</label>
-            <input class="form-control" name="phone_number" required type="number">
+       <div class="col-md-6">
+    <label>Phone No.</label>
+    <input class="validphone form-control @error('phone_number') is-invalid @enderror" 
+           name="phone_number" 
+           type="tel" 
+           required 
+           pattern="^[6-9][0-9]{9}$" 
+           value="{{ old('phone_number') }}"
+           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9" onchange="validphone(this.value)">
+
+
+    @error('phone_number')
+        <div class="invalid-feedback d-block">
+            {{ $message }}
         </div>
+    @enderror
+</div>
+
 
         <div class="col-md-6">
             <label>Bank Account Name</label>
@@ -163,10 +193,21 @@ function showhide(value) {
 
        <div class="col-md-6">
     <label>Phone No.</label>
-    <input class="form-control" name="phone_number" type="tel" required 
+    <input class="validphone form-control @error('phone_number') is-invalid @enderror" 
+           name="phone_number" 
+           type="tel" 
+           required 
            pattern="^[6-9][0-9]{9}$" 
-           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
+           value="{{ old('phone_number') }}"
+           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9" onchange="validphone(this.value)">
+
+    @error('phone_number')
+        <div class="invalid-feedback d-block">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
+
 
 
         <div class="col-md-6">
@@ -179,5 +220,23 @@ function showhide(value) {
     } else {
         $(".farmer-form-section").html(other_fields)
     }
+}
+
+function validphone(val){
+    $.ajax({
+            url : '{{route('ledger.verifyphone')}}',
+            type : 'GET',
+            data : {
+                mobileno : val
+            },
+            success: function(response) {
+
+                if(response != 'ok'){
+                    alert(`${val} phone no.is already exist with another ledger!`);
+                    $(".validphone").val('');
+                }
+
+            }
+        });
 }
 </script>

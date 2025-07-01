@@ -127,6 +127,8 @@ Route::put('/ledger/edit/', 'App\Http\Controllers\LedgerController@update')->nam
 
 Route::get('/ledger/others/', 'App\Http\Controllers\LedgerController@other')->name('ledger.other')->middleware('auth');
 
+Route::get('/verifyphone', 'App\Http\Controllers\LedgerController@validmobile')->name('ledger.verifyphone')->middleware('auth');
+
 
 Route::get('/sellto', 'App\Http\Controllers\SelltoController@index')->name('sellto.list')->middleware('auth');
 
