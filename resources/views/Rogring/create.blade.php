@@ -5,22 +5,11 @@
     <div class="row">
 
     
-        <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="form-group">
                 <label for="Rogring_name" class="form-label">Rogring Name</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible"required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed" name="Rogring_name" type="text" id="Rogring_name">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="Rogring_contact" class="form-label">Rogring Contact No</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible"  required 
-           pattern="^[6-9][0-9]{9}$" 
-           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9"name="Rogring_contcact" type="number" id="Rogring_contact">
                 </div>
             </div>
         </div>
