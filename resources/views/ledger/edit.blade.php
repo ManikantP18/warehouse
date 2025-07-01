@@ -11,16 +11,7 @@
         <option value="farmer">Farmer</option>
         <option value="others">Others</option>
     </select>
-</div>
-
-          <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="ladger_id " class="form-label">Ladger id</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="ladger_id " type="text" id="ladger_id " value="{{$ledger[0]->ladger_id }}">
-                </div>
-            </div>
-        </div>  
+</div>  
 
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
