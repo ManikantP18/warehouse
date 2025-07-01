@@ -71,7 +71,7 @@
 
     <div class="col-md-6">
         <label>GST Number</label>
-        <input class="form-control" name="gst_num" type="text" required pattern="\d{15}" title="Enter 15-digit GST number">
+        <input class="form-control" name="gst_num" type="text" required  title="Enter 15-digit GST number">
     </div>
 </div>
 
@@ -141,7 +141,7 @@ function showhide(value) {
 
         <div class="col-md-6">
             <label>GST Number</label>
-            <input class="form-control" name="gst_num" required type="number">
+            <input class="form-control" name="gst_num" required type="text">
         </div>`;
 
         let other_fields = `<div class="col-md-6">
@@ -171,7 +171,7 @@ function showhide(value) {
 
         <div class="col-md-6">
             <label>GST Number</label>
-            <input class="form-control" name="gst_num" required pattern="\d{15}" title="Enter 15-digit GST number" type="number">
+            <input class="form-control" name="gst_num" required title="Enter 15-digit GST number" type="text">
         </div>`;
 
     if (value === 'farmer') {
