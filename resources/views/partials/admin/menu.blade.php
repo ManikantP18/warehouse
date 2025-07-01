@@ -250,8 +250,36 @@
                             <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
                             <span class="dash-mtext">Branches</span>
                         </a>
+                </li>
+
+                <li class="dash-item {{ Request::route()->getName() == 'ledger.list' ? ' active' : '' }} ">
+                        <a href="{{ route('ledger.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Ladgers</span>
+                        </a>
                     </li>
 
+                    <li class="dash-item {{ Request::route()->getName() == 'kataparchi.list' ? ' active' : '' }} ">
+                        <a href="{{ route('kataparchi.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">kataparchi</span>
+                        </a>
+                    </li>
+                 
+                    <li class="dash-item {{ Request::route()->getName() == 'sellto.list' ? ' active' : '' }} ">
+                        <a href="{{ route('sellto.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Sell To</span>
+                        </a>
+                </li>
+
+                    <li class="dash-item {{ Request::route()->getName() == 'Rogring.list' ? ' active' : '' }} ">
+                        <a href="{{ route('Rogring.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Rogrings</span>
+                        </a>
+                    </li>
+    
                 <!-- {{-- -------  Vendor ---------- --}}
                 @if (Gate::check('manage vender'))
                     <li class="dash-item {{ Request::segment(1) == 'vender' ? 'active' : '' }}">
@@ -656,6 +684,8 @@
                     </li>
                 @endif
 
+                -->
+
                 {{-- -------  Constant ---------- --}}
                 @if (Gate::check('manage constant tax') ||
                         Gate::check('manage constant category') ||
@@ -710,6 +740,8 @@
                         </ul>
                     </li>
                 @endif
+
+                <!--
                 {{-- @if (\Auth::user()->type == 'super admin')
                     @include('landingpage::menu.landingpage')
                 @endif --}}

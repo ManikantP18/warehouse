@@ -88,6 +88,15 @@ use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
+use App\Http\Controllers\RogringController;
+
+
+
+
+
+use App\Http\Controllers\LedgerController;
+
+use App\Http\Controllers\KataParchiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,6 +117,68 @@ Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('
 Route::get('/branches/create', 'App\Http\Controllers\BranchesController@create')->name('branches.create')->middleware('auth');
 
 Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->name('branches.add')->middleware('auth');
+
+Route::get('/ledger', 'App\Http\Controllers\LedgerController@index')->name('ledger.list')->middleware('auth');
+
+Route::get('/ledger/create', 'App\Http\Controllers\LedgerController@create')->name('ledger.create')->middleware('auth');
+
+Route::post('/ledger/add', 'App\Http\Controllers\LedgerController@add')->name('ledger.add')->middleware('auth');
+
+Route::get('/ledger/delete/{id}', 'App\Http\Controllers\LedgerController@delete')->name('ledger.delete')->middleware('auth');
+
+Route::get('/ledger/edit/{id}', 'App\Http\Controllers\LedgerController@edit')->name('ledger.edit')->middleware('auth');
+
+Route::put('/ledger/edit/', 'App\Http\Controllers\LedgerController@update')->name('ledger.update')->middleware('auth');
+
+Route::get('/ledger/others/', 'App\Http\Controllers\LedgerController@other')->name('ledger.other')->middleware('auth');
+
+
+Route::get('/sellto', 'App\Http\Controllers\SelltoController@index')->name('sellto.list')->middleware('auth');
+
+Route::get('/othersSellto', 'App\Http\Controllers\SelltoController@others')->name('sellto.other')->middleware('auth');
+
+Route::get('/sellto/create', 'App\Http\Controllers\SelltoController@create')->name('sellto.create')->middleware('auth');
+
+Route::post('/sellto/add', 'App\Http\Controllers\SelltoController@add')->name('sellto.add')->middleware('auth');
+
+Route::get('/sellto/search', 'App\Http\Controllers\SelltoController@search')->name('sellto.search')->middleware('auth');
+
+Route::get('/sellto/delete/{id}', 'App\Http\Controllers\SelltoController@delete')->name('sellto.delete')->middleware('auth');
+
+Route::get('/sellto/edit/{id}', 'App\Http\Controllers\SelltoController@edit')->name('sellto.edit')->middleware('auth');
+
+Route::put('/sellto/update', 'App\Http\Controllers\SelltoController@update')->name('sellto.update')->middleware('auth');
+
+
+
+Route::get('/kataparchi', 'App\Http\Controllers\KataParchiController@index')->name('kataparchi.list')->middleware('auth');
+
+Route::get('/kataparchi/create', 'App\Http\Controllers\KataParchiController@create')->name('kataparchi.create')->middleware('auth');
+
+Route::post('/kataparchi/add', 'App\Http\Controllers\KataParchiController@add')->name('kataparchi.add')->middleware('auth');
+
+Route::get('/kataparchi/delete/{id}', 'App\Http\Controllers\KataParchiController@delete')->name('kataparchi.delete')->middleware('auth');
+
+Route::get('/kataparchi/edit/{id}', 'App\Http\Controllers\KataParchiController@edit')->name('kataparchi.edit')->middleware('auth');
+
+Route::put('/kataparchi/update', 'App\Http\Controllers\KataParchiController@update')->name('kataparchi.update')->middleware('auth');
+
+
+Route::get('/Rogring', 'App\Http\Controllers\RogringController@index')->name('Rogring.list')->middleware('auth');
+
+Route::get('/Rogring/create', 'App\Http\Controllers\RogringController@create')->name('Rogring.create')->middleware('auth');
+
+Route::post('/Rogring/add', 'App\Http\Controllers\RogringController@add')->name('Rogring.add')->middleware('auth');
+
+
+
+Route::delete('Rogring/{id}', [RogringController::class, 'destroy'])->name('Rogring.destroy');
+
+Route::get('Rogring/{id}/edit', 'App\Http\Controllers\RogringController@edit')->name('rogring.edit')->middleware('auth');
+
+Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update')->name('rogring.update')->middleware('auth');;
+
+
 
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice')->middleware('auth');
