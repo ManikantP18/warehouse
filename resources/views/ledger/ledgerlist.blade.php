@@ -44,21 +44,31 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="row" {{ request()->routeIs('route.name')}}>
         
 
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body table-border-style table-border-style">
-               <div class="mb-4 text-center d-flex justify-content-center w-100" style="gap: 0;">
-    <div class="d-flex w-100" style="gap: 0;">
-        <a href="{{ route('ledger.list') }}" class="w-50">
-            <button id="farmer-btn" class="btn btn-outline-primary w-100 btn-toggle-type">Farmer</button>
-        </a>
-        <a href="{{ route('ledger.other') }}" class="w-50">
-            <button id="others-btn" class="btn btn-outline-primary w-100 btn-toggle-type">Others</button>
-        </a>
-    </div>
+              <div class="mb-4 text-center row g-0">
+    <div class="col-6">
+    <a href="{{ route('ledger.list') }}">
+        <button id="farmer-btn"
+            class="btn w-100 btn-toggle-type 
+                {{ request()->routeIs('ledger.list') ? 'btn-primary' : 'btn-outline-primary' }}">
+            Farmer
+        </button>
+    </a>
+</div>
+<div class="col-6">
+    <a href="{{ route('ledger.other') }}">
+        <button id="others-btn"
+            class="btn w-100 btn-toggle-type 
+                {{ request()->routeIs('ledger.other') ? 'btn-primary' : 'btn-outline-primary' }}">
+            Others
+        </button>
+    </a>
+</div>
     <input type="hidden" name="ledger_type" id="ledger_type" value="">
 </div>
 
@@ -132,7 +142,7 @@
        function showFields(type) {
     document.getElementById('ledger_type').value = type;
     const farmerCols = document.querySelectorAll('.farmer-only');
-
+        
     if (type === 'farmer') {
         farmerCols.forEach(el => el.style.display = '');
     } else {

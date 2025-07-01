@@ -44,8 +44,12 @@ class LedgerController extends Controller
 
        DB::insert("Insert into ladgers ( account_id,ladger_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num) VALUES ('$account_id',$ladger_type,'$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num')");
 
-
-        return Redirect::to('ledger')->with('success', 'Ledger Create Successfully');;
+        if($ladger_type == 1){
+            return Redirect::to('ledger')->with('success', 'Ledger Create Successfully');
+        } else{
+            return Redirect::to('ledger/others')->with('success', 'Ledger Create Successfully');
+        }
+        
     }
 
     function customerNumber()
@@ -97,5 +101,6 @@ class LedgerController extends Controller
         $data['ledger'] = DB::select("select * from ladgers where ladger_type != 1 and is_deleted = 0");
         return view('ledger/ledgerlist',$data);
     }
-
+    
 }
+
