@@ -178,7 +178,9 @@ Route::delete('Rogring/{id}', [RogringController::class, 'destroy'])->name('Rogr
 
 Route::get('Rogring/{id}/edit', 'App\Http\Controllers\RogringController@edit')->name('rogring.edit')->middleware('auth');
 
-Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update')->name('rogring.update')->middleware('auth');;
+Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update')->name('rogring.update')->middleware('auth');
+
+Route::get('Rogring/search', 'App\Http\Controllers\RogringController@search')->name('Rogring.search')->middleware('auth');
 
 
 
