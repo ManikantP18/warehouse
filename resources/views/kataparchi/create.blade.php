@@ -58,7 +58,7 @@
 
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="kp_date" class="form-label">date</label>
+                <label for="kp_date" class="form-label">Date</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required="required" name="kp_date" type="date" id="kp_date">
                 </div>
@@ -67,7 +67,7 @@
 
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="kp_acc_no" class="form-label">account no.</label>
+                <label for="kp_acc_no" class="form-label">Account No.</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required="required" name="kp_acc_no" type="text" id="kp_acc_no">
                 </div>
@@ -77,7 +77,7 @@
         
         <div class="col-lg-6 col-md-6 col-sm-6 onlyforformesrs">
             <div class="form-group">
-                <label for="kp_rel_name" class="form-label">  customer name </label>
+                <label for="kp_rel_name" class="form-label"> Customer Name </label>
                 <div class="form-icon-user">
                     <input class="form-control onlyforformesrs" required="required" name="kp_rel_name" type="text" id="kp_rel_name">
                 </div>
@@ -86,7 +86,7 @@
 
          <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="kp_acc_holdername" class="form-label">account holder name</label>
+                <label for="kp_acc_holdername" class="form-label">Account Holder Name</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required="required, digit" name="kp_acc_holdername" type="text" id="kp_acc_holdername">
                 </div>
@@ -96,7 +96,7 @@
         
         <div class="col-lg-6 col-md-6 col-sm-6 onlyforformesrs">
             <div class="form-group">
-                <label for="kp_bhoomiswami_name" class="form-label"> land owner name</label>
+                <label for="kp_bhoomiswami_name" class="form-label">Land Owner Name</label>
                 <div class="form-icon-user">
                     <input class="form-control onlyforformesrs" required="required" name="kp_bhoomiswami_name" type="text" id="kp_bhoomiswami_name">
                 </div>
@@ -105,7 +105,7 @@
 
         <div class="col-lg-6 col-md-6 col-sm-6 onlyforformesrs">
             <div class="form-group">
-                <label for="kp_vilage" class="form-label">villagel</label>
+                <label for="kp_vilage" class="form-label">Village</label>
                 <div class="form-icon-user">
                     <input class="form-control onlyforformesrs" required="required" name="kp_vilage" type="text" id="kp_vilage">
                 </div>
@@ -114,7 +114,7 @@
 
          <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="kp_rakaba_acre" class="form-label"> land acre</label>
+                <label for="kp_rakaba_acre" class="form-label">Land Acre</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required="required, digit" name="kp_rakaba_acre" type="text" id="kp_rakaba_acre">
                 </div>
@@ -124,7 +124,7 @@
         
         <div class="col-lg-6 col-md-6 col-sm-6 onlyforformesrs">
             <div class="form-group">
-                <label for="kp_mo_no" class="form-label">Mobile no. </label>
+                <label for="kp_mo_no" class="form-label">Mobile No. </label>
                 <div class="form-icon-user">
                     <input class="form-control onlyforformesrs" required="required" name="kp_mo_no" type="number" id="kp_mo_no">
                 </div>
@@ -134,15 +134,15 @@
          <div class="col-lg-6 col-md-6 col-sm-6 onlyforformesrs">
             <div class="form-group">
                 <label for="kp_rogger_name" class="form-label">Rogring By</label>
-                <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" required="required" name="kp_rogger_name" type="text" id="kp_rogger_name">
-                </div>
+
+                <input class="form-control onlyforformesrs" required="required" name="kp_rogger_name"  id="kp_rogger_name">
+
             </div>
         </div>
 
          <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="kp_varity" class="form-label"> variety</label>
+                <label for="kp_varity" class="form-label"> Variety</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required="required, digit" name="kp_varity" type="text" id="kp_varity">
                 </div>
@@ -152,7 +152,7 @@
         
         <div class="col-lg-6 col-md-6 col-sm-6 onlyforformesrs">
             <div class="form-group">
-                <label for="kp_rstno" class="form-label"> GST no</label>
+                <label for="kp_rstno" class="form-label"> RST No</label>
                 <div class="form-icon-user">
                     <input class="form-control onlyforformesrs" required="required" name="kp_rstno" type="text" id="kp_rstno">
                 </div>
@@ -161,7 +161,7 @@
 
           <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="kp_vechicle_wight" class="form-label">  vehcle weight</label>
+                <label for="kp_vechicle_wight" class="form-label">Vehcle Weight</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required="required, digit" name="kp_vechicle_wight" type="number" id="kp_vechicle_wight">
                 </div>
@@ -171,7 +171,7 @@
         
         <div class="col-lg-6 col-md-6 col-sm-6 onlyforformesrs">
             <div class="form-group">
-                <label for="kp_godown_name" class="form-label"> Godown name</label>
+                <label for="kp_godown_name" class="form-label">Godown Name</label>
                 <div class="form-icon-user">
                     <input class="form-control onlyforformesrs" required="required" name="kp_godown_name" type="text" id="kp_godown_name">
                 </div>
@@ -224,7 +224,9 @@
                 //         $('#sellto_account_number').val(data.account_id);
                 //         $('#sellto_phone').val(data.phone_number);
                 //         $('#sellto_customer_name').val(data.relational_cust_name);
+
                 //         $('#sellto_acc_holder').val(data.account_holder);
+
                 //         $('#sellto_owner_name').val(data.farm_owner_name);
                 //         $('#sellto_village').val(data.village);
                 //         $('#sellto_gst_amount').val(data.gst_num);
@@ -258,15 +260,22 @@
                  console.log(data);
 
                         $('#kp_acc_no').val(data[0].account_id);
+
                         $('#sellto_phone').val(data[0].phone_number);
+
                         $('#kp_rel_name').val(data[0].relational_cust_name);
                         $('#kp_acc_holdername').val(data[0].account_holder);
                         $('#kp_bhoomiswami_name').val(data[0].farm_owner_name);
+
+                        $('#Rogring_name').val(data[0].Rogring_name);
+                        $('#kp_rogger_name').val(data[0].Rogring_name);
+
                         $('#kp_vilage').val(data[0].village);
                         $('#kp_rakaba_acre').val(data[0].farm_area_acre);
                         $('#kp_mo_no').val(data[0].phone_number);
+
                         $('#kp_mo_no').val(data[0].phone_number);
-                        $('#kp_rstno').val(data[0].gst_num);
+                        $('#kp_rogger_name').val(data[0].Rogring_name ?? '');
             } else {
                 alert("No matching record found.");
             }
