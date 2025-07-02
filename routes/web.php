@@ -112,9 +112,21 @@ use App\Http\Controllers\KataParchiController;
 
 require __DIR__ . '/auth.php';
 
+Route::post('/bankacc/add', 'App\Http\Controllers\BankController@add')->name('bankacc.add')->middleware('auth');
+
+Route::get('/bankacc', 'App\Http\Controllers\BankController@index')->name('bankacc.list')->middleware('auth');
+
+Route::get('/bankacc/create', 'App\Http\Controllers\BankController@create')->name('bankacc.create')->middleware('auth');
+
+Route::post('/bankacc/add', 'App\Http\Controllers\BankController@add')->name('bankacc.add')->middleware('auth');
+
+Route::get('bankacc/edit/{id}', ['App\Http\Controllers\BankController@edit',])->name('bankacc.edit');
+
+// Update existing account
+Route::put('bankacc/update', ['App\Http\Controllers\BankController@update',])->name('bankacc.update');
+
 Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('branches.list')->middleware('auth');
 
-Route::get('/branches/create', 'App\Http\Controllers\BranchesController@create')->name('branches.create')->middleware('auth');
 
 Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->name('branches.add')->middleware('auth');
 
@@ -177,6 +189,7 @@ Route::delete('Rogring/{id}', [RogringController::class, 'destroy'])->name('Rogr
 Route::get('Rogring/{id}/edit', 'App\Http\Controllers\RogringController@edit')->name('rogring.edit')->middleware('auth');
 
 Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update')->name('rogring.update')->middleware('auth');;
+
 
 
 
