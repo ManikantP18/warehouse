@@ -6,15 +6,15 @@
 
             <!-- Warning Section Ends -->
 <!-- Required Js -->
-<script src="http://127.0.0.1:8081/js/jquery.min.js"></script>
-<script src="http://127.0.0.1:8081/js/jquery.form.js"></script>
+<script src="{{asset('js/jquery.min.js')}}"></script>
+<script src="{{asset('js/jquery.form.js')}}"></script>
 
-<script src="http://127.0.0.1:8081/assets/js/plugins/bootstrap.min.js"></script>
+<script src="{{asset('assets/js/plugins/bootstrap.min.js')}}"></script>
 
 
-<script src="http://127.0.0.1:8081/assets/js/plugins/choices.min.js"></script>
+<script src="{{asset('assets/js/plugins/choices.min.js')}}"></script>
 
 <!-- sweet alert Js -->
 
-<script src="http://127.0.0.1:8081/js/custom.js"></script>
+<script src="{{asset('js/custom.js')}}"></script>
 

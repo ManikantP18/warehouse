@@ -58,7 +58,9 @@
                                 <tr>
                                     <th>Rogring Id</th>
                                     <th> Rogring Name</th>
-                                    <th> Rogring Phone </th>
+                                    <th> Relational Cust. Name </th>
+                                    <th> Farmer Owner Name </th>
+                                    <th> Village </th>
                                     <th> Status </th>
                                     <th> Action </th>
                                 </tr>
@@ -68,10 +70,12 @@
                                 <tr>
                                     <td>{{ $value->Rogring_id }}</td>
                                     <td>{{ $value->Rogring_name }}</td>
-                                    <td>{{ $value->Rogring_contcact }}</td>
+                                    <td>{{ $value->relational_cust_name }}</td>
+                                    <td>{{ $value->farm_owner_name }}</td>
+                                    <td>{{ $value->village }}</td>
                                     <td>{{ $value->Rogring_status == 1 ? 'Active' : 'Inactive' }}</td>
                                     <td>
-                                        <div class="d-flex">
+                                     <!--  <div class="d-flex">
                                         <a href="#"
                                          data-url="{{ route('rogring.edit', $value->Rogring_id) }}"
 
@@ -81,6 +85,7 @@
                                                data-bs-toggle="tooltip" title="{{ __('Edit') }}">
                                                 <i class="ti ti-pencil"></i>
                                             </a>
+                                             -->
 
                                             <form method="POST" action="{{ route('Rogring.destroy', $value->Rogring_id) }}"
                                           onsubmit="return confirm('{{ __('Are you sure you want to delete this Rogring?') }}');">

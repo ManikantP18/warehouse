@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class RogringController extends Controller
 {
     public function index(){
-        $data['rogring'] = DB::select('select * from rogring');
+        $data['rogring'] = DB::select('select * from rogring JOIN ladgers ON ladgers.ladger_id  = rogring.ladgers WHERE Rogring_status = 1');
         return view('Rogring/list',$data);
     }
 
@@ -21,12 +21,16 @@ class RogringController extends Controller
     public function add(Request $req)
     {
 
-        print_r($req->input()); exit;
+        $farmers = $req->input('ladger_id');
 
-        DB::table('rogring')->insert([
-            'Rogring_name' => $req->input('Rogring_name'),
-            'Rogring_contcact' => $req->input('Rogring_contcact'),
-        ]);
+        for($i=0; $i<count($farmers); $i++){
+
+            DB::table('rogring')->insert([
+                'Rogring_name' => $req->input('Rogring_name'),
+                'ladgers' => $farmers[$i],
+            ]);
+
+        }
 
     return Redirect::to('Rogring')->with('success', 'Rogring added successfully.');
 }

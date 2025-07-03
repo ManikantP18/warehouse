@@ -53,11 +53,9 @@
         <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
       </div>
     </div>
+                   
 
-    <div class="form-group col-md-6 multy-opt">
-            
-        </div>
-
+  
 
 
   </div>
@@ -69,6 +67,10 @@
  
     </div>
 </div>
+
+<div class=" multy-opt  col-lg-3 col-md-3 col-sm-12 ">
+</div>
+
 <div class="modal-footer">
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
     <input type="submit" value="Create" class="btn btn-primary">
