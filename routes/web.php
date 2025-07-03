@@ -89,6 +89,7 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
 use App\Http\Controllers\RogringController;
+use App\Http\Controllers\StagingController;
 
 
 
@@ -111,6 +112,12 @@ use App\Http\Controllers\KataParchiController;
 
 
 require __DIR__ . '/auth.php';
+Route::get('/staging', 'App\Http\Controllers\StagingController@index')->name('staging.list')->middleware('auth');
+Route::get('/staging/create', 'App\Http\Controllers\StagingController@create')->name('staging.create')->middleware('auth');
+Route::post('/staging/add', 'App\Http\Controllers\StagingController@add')->name('staging.add')->middleware('auth');
+Route::get('/staging/delete/{id}', 'App\Http\Controllers\StagingController@delete')->name('staging.delete')->middleware('auth');
+Route::get('/staging/edit/{id}', 'App\Http\Controllers\StagingController@edit')->name('staging.edit')->middleware('auth');
+Route::put('/staging/edit/', 'App\Http\Controllers\StagingController@update')->name('staging.update')->middleware('auth');
 
 Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('branches.list')->middleware('auth');
 

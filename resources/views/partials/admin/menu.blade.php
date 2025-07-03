@@ -284,6 +284,10 @@
                         <a href="{{ route('purchase.list') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
                             <span class="dash-mtext">Purchase</span>
+                      <li class="dash-item {{ Request::route()->getName() == 'staging.list' ? ' active' : '' }} ">
+                        <a href="{{ route('staging.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Staging</span>
                         </a>
                     </li>
     
