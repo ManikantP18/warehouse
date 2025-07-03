@@ -54,7 +54,7 @@
             <div class="form-group">
                 <label for="kp_acc_holdername" class="form-label">Account Holder Name</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="sellto_acc_holder" type="text" id="kp_acc_holdername" value="{{$kataparchi[0]->kp_acc_holdername}}">
+                    <input class="form-control alwaysvisible" required="required" name="kp_acc_holdername" type="text" id="kp_acc_holdername" value="{{$kataparchi[0]->kp_acc_holdername}}">
                 </div>
             </div>
         </div>
