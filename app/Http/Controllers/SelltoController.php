@@ -57,7 +57,7 @@ class SelltoController extends Controller
 
            
 
-            $searchData = DB::select("SELECT * FROM ladgers
+            $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
             WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
             AND (relational_cust_name LIKE '%$searchname%'
             AND village LIKE '%$searchVillage%')

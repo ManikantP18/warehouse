@@ -20,6 +20,8 @@ class KataParchiController extends Controller
     }
 
     function create(){
+
+        //$data['items'] = DB::select("select * from ladgers join rogring on ladgers.ladger_id = rogring.ledgers"); 
         return view('kataparchi/create');
     }
 
@@ -72,7 +74,7 @@ class KataParchiController extends Controller
         $kp_rogger = $req->input('kp_rogger_name');
         $kpvarity = $req->input('kp_varity');
         $kprst = $req->input('kp_rstno');
-        $kp_vwihgt = $req->input('kp_vechicle_wight');
+        $kp_vwihgt = $req->input('kp_vehicle_wight');
         $kp_goween = $req->input('kp_godown_name');
 
         $id = $req->input('kp_id');

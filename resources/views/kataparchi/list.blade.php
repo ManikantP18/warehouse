@@ -82,8 +82,10 @@
                                     <td> {{ $value->kp_date }} </td>
                                     <td> {{ $value->kp_acc_no }} </td>
                                     <td> {{ $value->kp_rel_name  }} </td>
-                                    <td> {{ $value->kp_acc_holdername }} </td>
-                                     <td> {{ $value->kp_bhoomiswami_name }} </td>
+
+                                    <td> {{ $value->kp_acc_holdername}} </td>
+
+                                    <td> {{ $value->kp_bhoomiswami_name }} </td>
                                     <td> {{ $value->kp_vilage }} </td>
                                     <td> {{ $value->kp_rakaba_acre }} </td>
                                     <td> {{ $value->kp_mo_no  }} </td>
