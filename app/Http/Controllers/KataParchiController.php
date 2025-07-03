@@ -43,7 +43,7 @@ class KataParchiController extends Controller
         $kp_vwihgt = $req->input('kp_vechicle_wight');
         $kp_goween = $req->input('kp_godown_name');
 
-        DB::insert("Insert into kata_parchi (kp_date,kp_acc_no,kp_rel_name,kp_acc_holdername,kp_bhoomiswami_name,kp_vilage,kp_rakaba_acre,kp_mo_no,kp_rogger_name,kp_verity,kp_rstno,kp_vehicle_wight,kp_godown_name) VALUES ('$kpdate','$kpacc','$kprel','$kpacc_hold_name ','$kp_land_owner','$kpvilage','$kp_acre','$kpmn','$kp_rogger','$kpvarity','$kprst','$kp_vwihgt','$kp_goween')");
+        DB::insert("Insert into kata_parchi (kp_date,kp_acc_no,kp_rel_name,kp_acc_holdername,kp_bhoomiswami_name,kp_vilage,kp_rakaba_acre,kp_mo_no,kp_rogger_name,kp_verity,kp_rstno,kp_vehicle_wight,kp_godown_name) VALUES ('$kpdate','$kpacc','$kprel','$kpacc_hold_name','$kp_land_owner','$kpvilage','$kp_acre','$kpmn','$kp_rogger','$kpvarity','$kprst','$kp_vwihgt','$kp_goween')");
 
         return Redirect::to('kataparchi');
     }
@@ -82,7 +82,7 @@ class KataParchiController extends Controller
         
         DB::update("update kata_parchi set 
 
-        kp_date ='$kpdate',kp_acc_no ='$kpacc',kp_rel_name ='$kprel',kp_acc_holdername='$kpacc_hold_name',kp_bhoomiswami_name='$kp_land_owner',kp_vilage ='$kpvilage',kp_rakaba_acre='$kp_acre',kp_mo_no= '$kpmn',kp_rogger_name='$kp_rogger',kp_verity='$kpvarity',kp_rstno= '$kprst',kp_vehicle_wight='$kp_vwihgt',kp_godown_name='$kp_goween'  where kp_id='$id' ");
+        kp_date ='$kpdate',kp_acc_no ='$kpacc',kp_rel_name ='$kprel',kp_acc_holdername ='$kpacc_hold_name',kp_bhoomiswami_name='$kp_land_owner',kp_vilage ='$kpvilage',kp_rakaba_acre='$kp_acre',kp_mo_no= '$kpmn',kp_rogger_name='$kp_rogger',kp_verity='$kpvarity',kp_rstno= '$kprst',kp_vehicle_wight='$kp_vwihgt',kp_godown_name='$kp_goween'  where kp_id='$id' ");
                 
        
 
