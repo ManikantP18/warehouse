@@ -180,7 +180,22 @@ Route::get('Rogring/{id}/edit', 'App\Http\Controllers\RogringController@edit')->
 
 Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update')->name('rogring.update')->middleware('auth');;
 
+Route::get('/purchase', 'App\Http\Controllers\PurchaseController@index')->name('purchase.list')->middleware('auth');
 
+Route::get('/purchase/create', 'App\Http\Controllers\PurchaseController@create')->name('purchase.create')->middleware('auth');
+
+Route::post('/purchase/add', 'App\Http\Controllers\PurchaseController@add')->name('purchase.add')->middleware('auth');
+
+Route::get('/purchase/search', 'App\Http\Controllers\PurchaseController@search')->name('purchase.search')->middleware('auth');
+
+Route::get('/purchase/edit/{id}', 'App\Http\Controllers\PurchaseController@edit')->name('purchase.edit')->middleware('auth');
+ 
+Route::get('/purchase/getrst', 'App\Http\Controllers\PurchaseController@getrst')->name('purchase.getrst')->middleware('auth');
+
+Route::get('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
+
+
+Route::get('/purchase/delete/{id}', 'App\Http\Controllers\PurchaseController@delete')->name('purchase.delete')->middleware('auth');
 
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice')->middleware('auth');

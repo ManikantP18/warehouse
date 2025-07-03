@@ -279,6 +279,13 @@
                             <span class="dash-mtext">Rogrings</span>
                         </a>
                     </li>
+
+                    <li class="dash-item {{ Request::route()->getName() == 'purchase.list' ? ' active' : '' }} ">
+                        <a href="{{ route('purchase.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Purchase</span>
+                        </a>
+                    </li>
     
                 <!-- {{-- -------  Vendor ---------- --}}
                 @if (Gate::check('manage vender'))

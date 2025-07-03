@@ -19,7 +19,7 @@ class SelltoController extends Controller
     }
 
      function create(){
-        $data['items'] = DB::select("select * from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
+        $data['items'] = DB::select("select *, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
        
         return view('sellto/create',$data);
     }
