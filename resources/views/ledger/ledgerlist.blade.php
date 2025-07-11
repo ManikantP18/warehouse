@@ -45,6 +45,12 @@
 
 @section('content')
     <div class="row" {{ request()->routeIs('route.name')}}>
+         {{-- ✅ Error display --}}
+    @if ($errors->has('duplicate'))
+        <div class="alert alert-danger">
+            {{ $errors->first('duplicate') }}
+        </div>
+    @endif
         
 
         <div class="col-md-12">

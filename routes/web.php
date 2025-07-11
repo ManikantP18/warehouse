@@ -90,6 +90,9 @@ use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
 use App\Http\Controllers\RogringController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\StagingController;
+
+
 
 
 
@@ -110,6 +113,12 @@ use App\Http\Controllers\KataParchiController;
 
 
 require __DIR__ . '/auth.php';
+Route::get('/staging', 'App\Http\Controllers\StagingController@index')->name('staging.list')->middleware('auth');
+Route::get('/staging/create', 'App\Http\Controllers\StagingController@create')->name('staging.create')->middleware('auth');
+Route::post('/staging/add', 'App\Http\Controllers\StagingController@add')->name('staging.add')->middleware('auth');
+Route::get('/staging/delete/{id}', 'App\Http\Controllers\StagingController@delete')->name('staging.delete')->middleware('auth');
+Route::get('/staging/edit/{id}', 'App\Http\Controllers\StagingController@edit')->name('staging.edit')->middleware('auth');
+Route::put('/staging/edit/', 'App\Http\Controllers\StagingController@update')->name('staging.update')->middleware('auth');
 
 
 Route::get('/bankacc', 'App\Http\Controllers\BankController@index')->name('bankacc.list')->middleware('auth');
@@ -145,6 +154,8 @@ Route::get('/ledger/edit/{id}', 'App\Http\Controllers\LedgerController@edit')->n
 Route::put('/ledger/edit/', 'App\Http\Controllers\LedgerController@update')->name('ledger.update')->middleware('auth');
 
 Route::get('/ledger/others/', 'App\Http\Controllers\LedgerController@other')->name('ledger.other')->middleware('auth');
+
+Route::get('/verifyphone', 'App\Http\Controllers\LedgerController@validmobile')->name('ledger.verifyphone')->middleware('auth');
 
 
 Route::get('/sellto', 'App\Http\Controllers\SelltoController@index')->name('sellto.list')->middleware('auth');
@@ -190,9 +201,26 @@ Route::delete('Rogring/{id}', [RogringController::class, 'destroy'])->name('Rogr
 
 Route::get('Rogring/{id}/edit', 'App\Http\Controllers\RogringController@edit')->name('rogring.edit')->middleware('auth');
 
-Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update')->name('rogring.update')->middleware('auth');;
+Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update')->name('rogring.update')->middleware('auth');
+
+Route::get('Rogring/search', 'App\Http\Controllers\RogringController@search')->name('Rogring.search')->middleware('auth');
+
+Route::get('/purchase', 'App\Http\Controllers\PurchaseController@index')->name('purchase.list')->middleware('auth');
+
+Route::get('/purchase/create', 'App\Http\Controllers\PurchaseController@create')->name('purchase.create')->middleware('auth');
+
+Route::post('/purchase/add', 'App\Http\Controllers\PurchaseController@add')->name('purchase.add')->middleware('auth');
+
+Route::get('/purchase/search', 'App\Http\Controllers\PurchaseController@search')->name('purchase.search')->middleware('auth');
+
+Route::get('/purchase/edit/{id}', 'App\Http\Controllers\PurchaseController@edit')->name('purchase.edit')->middleware('auth');
+ 
+Route::get('/purchase/getrst', 'App\Http\Controllers\PurchaseController@getrst')->name('purchase.getrst')->middleware('auth');
+
+Route::get('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
 
 
+Route::get('/purchase/delete/{id}', 'App\Http\Controllers\PurchaseController@delete')->name('purchase.delete')->middleware('auth');
 
 
 

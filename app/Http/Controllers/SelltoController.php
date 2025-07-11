@@ -19,7 +19,7 @@ class SelltoController extends Controller
     }
 
      function create(){
-        $data['items'] = DB::select("select * from product_services where type = 'Product'"); 
+        $data['items'] = DB::select("select *, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
        
         return view('sellto/create',$data);
     }
@@ -38,9 +38,11 @@ class SelltoController extends Controller
         $rate = $req->input('sellto_rate');
         $total = $req->input('sellto_total_amount');
          $gst = $req->input('sellto_gst_amount');
+        $cashamm = $req->input('sellto_cash_amount');
+        $creditamm = $req->input('sellto_Credit_amount');
+        $remainamm = $req->input('sellto_Remaining_amount');
 
-
-        DB::insert("Insert into sell_to (sell_way,sell_to,sell_account_number,sell_phone,sell_relation_customer,sell_account_name,sell_property_owner,sell_village,item_selled,sell_quantity,sell_rate,sell_total_ammount,sell_gst_ammount) VALUES ('$cashcredit', '$farmerother' , '$accno', '$phone' ,'$csname', '$accholder','$oname', '$village' ,'$itemselled', '$quantity','$rate' ,'$total', '$gst')");
+        DB::insert("Insert into sell_to (sell_way,sell_to,sell_account_number,sell_phone,sell_relation_customer,sell_account_name,sell_property_owner,sell_village,item_selled,sell_quantity,sell_rate,sell_total_ammount,sell_gst_ammount,cash_amount,credit_amount,remaining_amount) VALUES ('$cashcredit', '$farmerother' , '$accno', '$phone' ,'$csname', '$accholder','$oname', '$village' ,'$itemselled', '$quantity','$rate' ,'$total', '$gst','$cashamm' ,'$creditamm', '$remainamm')");
         if($farmerother == 'farmer') {
             return Redirect::to('sellto');
         }
@@ -55,7 +57,7 @@ class SelltoController extends Controller
 
            
 
-            $searchData = DB::select("SELECT * FROM ladgers
+            $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
             WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
             AND (relational_cust_name LIKE '%$searchname%'
             AND village LIKE '%$searchVillage%')
@@ -109,11 +111,13 @@ class SelltoController extends Controller
         $rate = $req->input('sellto_rate');
         $total = $req->input('sellto_total_amount');
          $gst = $req->input('sellto_gst_amount');
-
+        $cashamm = $req->input('sellto_cash_amount');
+        $creditamm = $req->input('sellto_Credit_amount');
+        $remainamm = $req->input('sellto_Remaining_amount');
          $id = $req->input('kp_id');
 
 
-        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',item_selled = '$itemselled',sell_quantity = '$quantity',sell_rate = '$rate',sell_total_ammount = '$total',sell_gst_ammount = '$gst' where kp_id = '$id'");
+        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',item_selled = '$itemselled',sell_quantity = '$quantity',sell_rate = '$rate',sell_total_ammount = '$total',sell_gst_ammount = '$gst' , cash_amount = '$cashamm',credit_amount = '$creditamm'  remaining_amount = '$remainamm'  where kp_id = '$id'");
 
         return Redirect::to('sellto');
     }

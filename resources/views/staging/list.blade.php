@@ -2,8 +2,6 @@
 @php
     $profile = asset(Storage::url('uploads/avatar/'));
 @endphp
-
-
 @push('script-page')
     <script>
         $(document).on('click', '#billing_data', function() {
@@ -17,14 +15,12 @@
         })
     </script>
 @endpush
-
 @section('page-title')
-    {{ __('Manage Rogring') }}
+    {{ __('Manage Staging') }}
 @endsection
-
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item">{{ __('Rogrings') }}</li>
+    <li class="breadcrumb-item">{{ __('Staging') }}</li>
 @endsection
 
 @section('action-btn')
@@ -39,8 +35,8 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-        <a href="#" data-size="xl" data-url="{{ route('Rogring.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Ladger') }}"
+        <a href="#" data-size="xl" data-url="{{ route('staging.create') }}" data-ajax-popup="true"
+            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Staging') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
         </a>
@@ -56,51 +52,52 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>Rogring Id</th>
-                                    <th> Rogring Name</th>
-                                    <th> Relational Cust. Name </th>
-                                    <th> Farmer Owner Name </th>
-                                    <th> Village </th>
+                                    <th>Staging Id</th>
+                                    <th>Select Lot No.</th>
+                                    <th> Staging Varity </th>
+                                    <th> Godown </th>
+                                    <th>Stage No. </th>
+                                    <th> No of Begs </th>
+                                    <th>Pay for staging </th>
+                                    <th>Date </th>
                                     <th> Status </th>
                                     <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($rogring as $value)
+
+                            @foreach($staging AS $value):
+
                                 <tr>
-                                    <td>{{ $value->Rogring_id }}</td>
-                                    <td>{{ $value->Rogring_name }}</td>
-                                    <td>{{ $value->relational_cust_name }}</td>
-                                    <td>{{ $value->farm_owner_name }}</td>
-                                    <td>{{ $value->village }}</td>
-                                    <td>{{ $value->Rogring_status == 1 ? 'Active' : 'Inactive' }}</td>
-                                    <td>
-                                     <!--  <div class="d-flex">
-                                        <a href="#"
-                                         data-url="{{ route('rogring.edit', $value->Rogring_id) }}"
+                                    <td> {{ $value->staging_id}} </td>
+                                    <td> {{ $value->select_lot_no}} </td>
+                                    <td> {{ $value->staging_varity}} </td>
+                                    <td> {{ $value->godown}} </td>
+                                     <td> {{ $value->stage_no}} </td>
+                                    <td> {{ $value->no_of_begs}} </td>
+                                     <td> {{ $value->pay_for_staging}} </td>
+                                      <td> {{ $value->staging_date}} </td>
+                                    <td> {{ $value->staging_status == 1 ? 'Active' : 'Inactive' }} </td>
+                            <td>
+                                       <div class="flex gap-4">
+  
+   <a href="#" data-url="{{ route('staging.edit', $value->staging_id) }}"  data-size="xl"data-ajax-popup="true" data-bs-toggle="tooltip" 
+            class="btn btn-sm btn-success">
+           <i class="ti ti-pencil"></i>
+        </a>
+ 
+   {{-- ✅ Delete Button: Calls JS confirm & deletes --}}
+    <button class="btn btn-sm btn-danger" onclick="deleteit('{{ route('staging.delete', $value->staging_id) }}')" title="Delete">
+        <i class="ti ti-trash"></i>
+    </button>
+  
 
-                                             data-ajax-popup="true"
-                                               data-title="{{ __('Edit Rogring') }}"
-                                               class="btn btn-sm btn-primary me-2"
-                                               data-bs-toggle="tooltip" title="{{ __('Edit') }}">
-                                                <i class="ti ti-pencil"></i>
-                                            </a>
-                                             -->
+</div>
+                                         </td>
+                               </tr>
 
-                                            <form method="POST" action="{{ route('Rogring.destroy', $value->Rogring_id) }}"
-                                          onsubmit="return confirm('{{ __('Are you sure you want to delete this Rogring?') }}');">
-                                          @csrf
-                                              @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
-                                        data-bs-toggle="tooltip" title="{{ __('Delete') }}">
-                                      <i class="ti ti-trash"></i>
-                                         </button>
-                                             </form>
-
-                                        </div>
-                                    </td>
-                                </tr>
                             @endforeach
+                               
                             </tbody>
                         </table>
                     </div>
@@ -116,13 +113,13 @@
             if ($(this).is(':checked')) {
                 $('.ps_div').removeClass('d-none');
                 $('#password').attr("required", true);
+
             } else {
                 $('.ps_div').addClass('d-none');
                 $('#password').val(null);
                 $('#password').removeAttr("required");
             }
         });
-
         $(document).on('click', '.login_enable', function() {
             setTimeout(function() {
                 $('.modal-body').append($('<input>', {
@@ -132,5 +129,13 @@
                 }));
             }, 2000);
         });
+
+        function deleteit(url){
+            let cnt = confirm("Are you sure you want to delete this Ledger?")
+
+            if(cnt == true){
+                window.location.href = url;
+            }
+        }
     </script>
 @endpush

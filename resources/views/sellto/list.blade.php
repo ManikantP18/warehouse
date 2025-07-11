@@ -86,6 +86,9 @@
                                     <th> rate </th>
                                     <th> total ammount </th>
                                     <th> gst ammount </th>
+                                    <th> Cash  Paid </th>
+                                    <th> Credit Paid </th>
+                                    <th> Reaining Ammount </th>
                                     <th>Cash/creadit</th>
                                     <th>action</th>
                                 </tr>
@@ -106,6 +109,9 @@
                                     <td> {{$value->sell_rate}} </td>
                                     <td> {{$value->sell_total_ammount}} </td>
                                     <td> {{$value->sell_gst_ammount}} </td>
+                                    <td> {{$value->cash_amount}} </td>
+                                    <td> {{$value->credit_amount}} </td>
+                                    <td> {{$value->remaining_amount}} </td>
                                     <td> {{$value->sell_way}} </td>
                                   
                                  <td>
