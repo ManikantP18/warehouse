@@ -52,9 +52,10 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>LedgerAC Id</th>
+                                 
                                     <th> Ledger Name</th>
-                                      <th> Contact Num</th>
+                                      <th> Account  Num</th>
+                                       <th> Bank Name</th>
                                     <th> Account Type </th>
                                     <th> CheckBook  </th>
                                     <th> ChequeRangefrom </th>
@@ -69,39 +70,32 @@
                                   @foreach($bankacc AS $value):
 
                                 <tr>
-                                    <td> {{ $value->account_id }} </td>
+                                 
                                     <td> {{ $value->account_name }} </td>
                                     <td> {{ $value->account_num }} </td>
+                                     <td> {{ $value->bank_name }} </td>
                                     <td> {{ $value->account_type }} </td>
-                                     <td> {{ $value->account_status == 1 ? 'Active' : 'Inactive' }} </td>
+                                     <td> {{ $value->cheque_book }} </td>
                                    
                                      <td> {{ $value->chequerange_from }} </td>
                                       <td> {{ $value->chequerange_to }} </td>
                                     
-                                      <td class="d-flex gap-1">
-    <!-- Edit Icon -->
-   <a href="#" data-url="{{ route('bankacc.edit', $value->account_id) }}" 
-   class="btn btn-info btn-sm" 
-   data-size="xl" 
-   data-ajax-popup="true" 
-   data-title="Edit Ledger">
-   <i class="ti ti-edit fs-5"></i> Edit
-</a>
+                                       <td>
+                                   
+                                    <a href="#" data-size="xl" data-url="{{ route('bankacc.edit', $value->account_id) }}" data-ajax-popup="true"
+                                    data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Sells') }}"
+                                    class="btn btn-sm btn-primary">
+                                        <i class="ti ti-pencil"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" 
+                                    class="btn btn-sm bg-danger text-white shadow-sm" 
+                                    title="Delete" 
+                                    onclick="removeit('{{ route('bankacc.delete', $value->account_id) }}')">
+                                        <i class="ti ti-trash"></i>
+                                    </a>
 
 
-
-    <!-- Delete Form -->
-
-        
-     
-        <button  
-                class="btn btn-sm btn-danger" 
-                data-bs-toggle="tooltip" 
-                title="Delete">
-            <i class="ti ti-trash"></i>
-        </button>
-
-</td>
+                                </td>
 
                                </tr>
 
@@ -142,5 +136,35 @@
                 }));
             }, 2000);
         });
+
+
+        $(document).on('change', '#password_switch', function() {
+            if ($(this).is(':checked')) {
+                $('.ps_div').removeClass('d-none');
+                $('#password').attr("required", true);
+
+            } else {
+                $('.ps_div').addClass('d-none');
+                $('#password').val(null);
+                $('#password').removeAttr("required");
+            }
+        });
+        $(document).on('click', '.login_enable', function() {
+            setTimeout(function() {
+                $('.modal-body').append($('<input>', {
+                    type: 'hidden',
+                    val: 'true',
+                    name: 'login_enable'
+                }));
+            }, 2000);
+        });
+
+        function removeit(url) {
+            let cnf = confirm('Are You Sure You Want To Delete This Sell?');
+            if(cnf == true) {
+                window.location.href = url;
+            }
+        }
+   
     </script>
 @endpush

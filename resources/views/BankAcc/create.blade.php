@@ -4,7 +4,7 @@
 
     <div class="row">
 
-            <div class="col-lg-3 col-md-3 col-sm-12">
+            <!-- <div class="col-lg-3 col-md-3 col-sm-12">
       <div class="form-group">
         <label for="search" class="form-label">Account/Mobile No</label>
         <div class="form-icon-user">
@@ -36,7 +36,7 @@
         <label class="form-label d-none d-sm-block">&nbsp;</label>
         <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
       </div>
-    </div>
+    </div> -->
 
     
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -59,26 +59,40 @@
                    name="account_name" 
                    type="text" 
                    id="account_name" 
-                   required 
-                   minlength="3"
-                   maxlength="100"
-                   pattern="[A-Za-z\s]+" 
+                   required
+                   pattern="[A-Za-z\s]+"
                    title="Only letters and spaces are allowed">
         </div>
     </div>
 </div>
 
+
 <!-- Ledger Contact No -->
 <div class="col-lg-6 col-md-6 col-sm-6">
     <div class="form-group">
-        <label for="account_num" class="form-label">Ledger Contact No</label>
+        <label for="account_num" class="form-label">Account Number</label>
         <div class="form-icon-user">
             <input class="form-control alwaysvisible" 
                    name="account_num" 
                    type="text" 
                    id="account_num" 
                    required 
-                   pattern="[6-9]{1}[0-9]{9}" 
+               
+                   title="Enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9">
+        </div>
+    </div>
+</div>
+        <!-- bank name -->
+<div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="form-group">
+        <label for="account_num" class="form-label">Bank name</label>
+        <div class="form-icon-user">
+            <input class="form-control alwaysvisible" 
+                   name="Bank_name" 
+                   type="text" 
+                   id="Bank_name" 
+                   required 
+              
                    title="Enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9">
         </div>
     </div>
@@ -90,15 +104,22 @@
     <div class="form-group">
         <label for="account_type" class="form-label">Account Type</label>
         <div class="form-icon-user">
-            <input class="form-control onlyforformesrs" 
-                   name="account_type" 
-                   type="text" 
-                   id="account_type" 
-                   required 
-                   maxlength="50">
+            <select class="form-control onlyforformesrs" 
+                    name="account_type" 
+                    id="account_type" 
+                    
+                    required>
+                <option value="">Select Account Type</option>
+                <option value="CC LIMIT">CC LIMIT</option>
+                <option value="CURRENT">CURRENT</option>
+                <option value="LOAN">LOAN</option>
+                <option value="SAVING">SAVING</option>
+                <option value="WHR">WHR</option>
+            </select>
         </div>
     </div>
 </div>
+
 
 <!-- Checkbook Have -->
 <div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs">
@@ -168,7 +189,7 @@
 </div>
 
 </form>
-    <script>
+    <!-- <script>
 function searchLadger() {
 
             let searchVal = $("#search").val();
@@ -219,4 +240,4 @@ function searchLadger() {
 
         })
         }
-        </script>
+        </script> -->

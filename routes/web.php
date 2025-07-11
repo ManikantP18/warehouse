@@ -89,8 +89,7 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
 use App\Http\Controllers\RogringController;
-
-
+use App\Http\Controllers\BankController;
 
 
 
@@ -112,7 +111,6 @@ use App\Http\Controllers\KataParchiController;
 
 require __DIR__ . '/auth.php';
 
-Route::post('/bankacc/add', 'App\Http\Controllers\BankController@add')->name('bankacc.add')->middleware('auth');
 
 Route::get('/bankacc', 'App\Http\Controllers\BankController@index')->name('bankacc.list')->middleware('auth');
 
@@ -120,10 +118,14 @@ Route::get('/bankacc/create', 'App\Http\Controllers\BankController@create')->nam
 
 Route::post('/bankacc/add', 'App\Http\Controllers\BankController@add')->name('bankacc.add')->middleware('auth');
 
-Route::get('bankacc/edit/{id}', ['App\Http\Controllers\BankController@edit',])->name('bankacc.edit');
+Route::get('bankacc/edit/{id}', 'App\Http\Controllers\BankController@edit')->name('bankacc.edit');
 
 // Update existing account
-Route::put('bankacc/update', ['App\Http\Controllers\BankController@update',])->name('bankacc.update');
+Route::put('bankacc/update', 'App\Http\Controllers\BankController@update')->name('bankacc.update');
+
+// delete
+Route::get('bankacc/delete/{id}', 'App\Http\Controllers\BankController@delete')->name('bankacc.delete');
+
 
 Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('branches.list')->middleware('auth');
 
