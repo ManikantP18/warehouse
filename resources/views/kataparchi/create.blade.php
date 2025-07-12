@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <label for="kp_date" class="form-label">Date</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_date" type="date" id="kp_date" value="{{date('Y-m-d')}}">
+                            <input class="form-control alwaysvisible" required name="kp_date" type="date" id="kp_date" value="{{date('d-m-y')}}">
                         </div>
                     </div>
 
@@ -68,9 +68,9 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_acc_holdername" class="form-label">Account Holder Name</label>
+                        <label for="kp_acc_holdername" class="form-label">Aadhar Number</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_acc_holdername" type="text" id="kp_acc_holdername">
+                            <input class="form-control alwaysvisible" required name="kp_acc_holdername" type="number" id="kp_acc_holdername">
                         </div>
                     </div>
                 </div>
@@ -130,12 +130,14 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_vechicle_wight" class="form-label">Vehicle Weight</label>
+                        <label for="kp_vehicle_wight" class="form-label">Total  weight</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_vechicle_wight" type="number" id="kp_vechicle_wight">
+                            <input class="form-control alwaysvisible" required name="kp_vehicle_wight" type="number" id="kp_vehicle_wight">
                         </div>
                     </div>
                 </div>
+
+
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="kp_godown_name" class="form-label">Godown Name</label>
