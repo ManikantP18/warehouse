@@ -92,14 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_rakaba_acre" class="form-label">Land Acre</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible"  name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" readonly>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="kp_mo_no" class="form-label">Mobile No.</label>
@@ -112,6 +105,22 @@
                     <div class="form-group">
                         <label for="kp_rogger_name" class="form-label">Rogring By</label>
                         <input class="form-control onlyforformesrs"  name="kp_rogger_name" id="kp_rogger_name" readonly>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="kp_rakaba_acre" class="form-label">Land Acre</label>
+                        <div class="form-icon-user">
+                            <input class="form-control alwaysvisible"  name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="kp_khasra_no" class="form-label">Khasra No.</label>
+                        <div class="form-icon-user">
+                            <input class="form-control alwaysvisible"  name="kp_khasra_no" type="text" id="kp_khasra_no" readonly>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -210,6 +219,9 @@
                     $('#kp_bhoomiswami_name').val(data.farm_owner_name);
                     $('#kp_vilage').val(data.village);
                     $('#kp_rakaba_acre').val(data.farm_area_acre);
+
+                    $('#kp_khasra_no').val(data.khasra_no);
+
                     $('#kp_mo_no').val(data.phone_number);
                     $('#kp_rogger_name').val(data.Rogring_name || '');
                     $('#kp_varity').val(data.variety || '');

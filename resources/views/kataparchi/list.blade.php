@@ -60,17 +60,16 @@
                                     <th> land owner name </th>
                                     <th>village</th>
                                     <th> land acre</th>
+
+                                    <th> khasra No.</th>
+
                                     <th> Mobile no. </th>
                                     <th>Rogating agent</th>
                                     <th> variety </th>
                                     <th> RST no </th>
-
                                     <th> Total weight </th>
-
                                     <th> only vehcle weight </th>
                                     <th>  pure weight </th>
-
-
                                     <th> Godown name </th>
                                     <th> creat date </th>
                                     <th> update date </th>
@@ -88,12 +87,14 @@
                                     <td> {{ date('d/m/Y', strtotime($value->kp_date)) }} </td>
                                     <td> {{ $value->kp_acc_no }} </td>
                                     <td> {{ $value->kp_rel_name  }} </td>
-
                                     <td> {{ $value->kp_acc_holdername}} </td>
-
                                     <td> {{ $value->kp_bhoomiswami_name }} </td>
                                     <td> {{ $value->kp_vilage }} </td>
+
                                     <td> {{ $value->kp_rakaba_acre }} </td>
+
+                                     <td> {{ $value->kp_khasra_no }} </td>
+
                                     <td> {{ $value->kp_mo_no  }} </td>
                                     <td> {{ $value->kp_rogger_name }} </td>
                                     <td> {{ $value->kp_verity }} </td>
