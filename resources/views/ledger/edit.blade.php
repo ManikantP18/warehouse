@@ -1,8 +1,11 @@
-{{ Form::open(['url' => 'ledger/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
+{{ Form::open(['url' => route('ledger.update'), 'method' => 'PUT', 'class'=>'needs-validation','novalidate']) }}
+
 <div class="modal-body">
     <h6 class="sub-title">Ladger Creation</h6>
 
     <div class="row">
+        <input type="hidden" name="ladger_id " value="{{ $ledger[0]->ladger_id}}">
+
 
         <div class="form-group mb-3">
     <label for="ledger_type" class="form-label">Select Ledger Type</label>
@@ -24,9 +27,9 @@
 
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="ladger_type	" class="form-label">Account Holder</label>
+                <label for="ladger_type	" class="form-label">Aadhar No.</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="account_holder" type="text" id="account_holder" value="{{$ledger[0]->account_holder }}">
+                    <input class="form-control alwaysvisible" required="required" name="account_holder" type="number" id="account_holder" value="{{$ledger[0]->account_holder }}">
                 </div>
             </div>
         </div>
@@ -35,6 +38,22 @@
                 <label for="ladger_type	" class="form-label">Farmer Owner name </label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required="required" name="farm_owner_name" type="text" id="farm_owner_name" value="{{$ledger[0]->farm_owner_name }}">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
+            <div class="form-group">
+                <label for="ladger_type	" class="form-label">Khasra No.</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required="required" name="khasra_no" type="number" id="khasra_no" value="{{$ledger[0]->khasra_no}}">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
+            <div class="form-group">
+                <label for="ladger_type	" class="form-label">Opening Balance</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required="required" name="opening_balance" type="number" id="opening_balance" value="{{$ledger[0]->opening_balance}}">
                 </div>
             </div>
         </div>
@@ -114,7 +133,7 @@
 </div>
 <div class="modal-footer">
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
-    <input type="submit" value="Create" class="btn btn-primary">
+    <input type="submit" value="Update" class="btn btn-primary">
 </div>
 </form>
 
