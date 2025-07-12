@@ -21,8 +21,8 @@
 </div>
 
     <div class="col-md-6">
-        <label>Account Holder</label>
-        <input class="form-control" name="account_holder" type="text" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
+        <label>Aadhar No.</label>
+        <input class="form-control" name="account_holder" type="number" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
     </div>
 
     <div class="col-md-6">
@@ -38,6 +38,14 @@
     <div class="col-md-6">
         <label>Farmer Area Acre</label>
         <input class="form-control" name="farm_area_acre" type="number" required min="0" step="0.01">
+    </div>
+    <div class="col-md-6">
+        <label>Khasra No.</label>
+        <input class="form-control" name="khasra_no" type="number" required>
+    </div>
+    <div class="col-md-6">
+        <label>Opening Balance</label>
+        <input class="form-control" name="opening_balance" type="number" required>
     </div>
 
    <div class="col-md-6">
@@ -87,7 +95,7 @@
 
     <div class="col-md-6">
         <label>GST Number</label>
-        <input class="form-control" name="gst_num" type="text" required  title="Enter 15-digit GST number">
+        <input class="form-control" name="gst_num"  required  title="Enter 15-digit GST number">
     </div>
 </div>
 
@@ -123,6 +131,12 @@ function showhide(value) {
         <div class="col-md-6">
             <label>Farmer Area Acre</label>
             <input class="form-control" name="farm_area_acre" type="number">
+        </div>
+        <div class="col-md-6">
+            <label>Khasra No.</label>
+            <input class="form-control" name="khasra_no" type="number" required 
+           pattern="^[6-9][0-9]{9}$" 
+           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
         </div>
 
        <div class="col-md-6">
@@ -166,12 +180,7 @@ function showhide(value) {
 
         <div class="col-md-6">
             <label>Branch</label>
-            <input class="form-control" name="branch" type="text">
-        </div>
-
-        <div class="col-md-6">
-            <label>GST Number</label>
-            <input class="form-control" name="gst_num" required type="text">
+            <input class="form-control" name="branch" type="number">
         </div>`;
 
         let other_fields = `<div class="col-md-6">
@@ -182,8 +191,10 @@ function showhide(value) {
 </div>
 
         <div class="col-md-6">
-            <label>Account Holder</label>
-            <input class="form-control" name="account_holder" type="text" required  pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed">
+            <label>Aadhar No.</label>
+            <input class="form-control" name="account_holder" type="number" required 
+           pattern="^[6-9][0-9]{9}$" 
+           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
         </div>
 
         <div class="col-md-6">
@@ -212,7 +223,7 @@ function showhide(value) {
 
         <div class="col-md-6">
             <label>GST Number</label>
-            <input class="form-control" name="gst_num" required title="Enter 15-digit GST number" type="text">
+            <input class="form-control" name="gst_num" required title="Enter 15-digit GST number" >
         </div>`;
 
     if (value === 'farmer') {
