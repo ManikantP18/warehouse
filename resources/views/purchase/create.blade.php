@@ -8,7 +8,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="search" class="form-label">Account/Mobile No</label>
-            <input class="form-control" name="search" type="text" id="search" placeholder="Acc No / Mobile No">
+            <input class="form-control" name="search" type="text" id="search" placeholder="Acc No / Mobile No" >
           </div>
         </div>
 
@@ -57,53 +57,56 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label>Payment</label>
-            <select name="purchase_way" id="purchase_way" class="form-control">
-              <option value="cash">Cash</option>
-              <option value="credit">Credit</option>
-            </select>
+            <label>Mode of Invoice</label>
+           <select name="purchase_way" id="purchase_way" class="form-control">
+  <option value="" hidden selected>Select Mode</option>
+  <option value="cash">Cash</option>
+  <option value="credit">Credit</option>
+</select>
+
+
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
-            <label>Accountant name</label>
-            <input type="text" class="form-control" name="purchase_accountant" id="spurchase_accountant" required>
+            <label>Aadhar Number </label>
+            <input type="text" class="form-control" name="purchase_accountant" id="spurchase_accountant" required readonly>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Relational Customer name</label>
-            <input type="text" class="form-control" name="purchase_relation_cusm" id="purchase_relation_cusm" required>
+            <input type="text" class="form-control" name="purchase_relation_cusm" id="purchase_relation_cusm" required readonly>
           </div>
         </div>
 
          <div class="col-md-6">
           <div class="form-group">
             <label>Owner name</label>
-            <input type="text" class="form-control" name="purchase_owner" id="purchase_owner" required>
+            <input type="text" class="form-control" name="purchase_owner" id="purchase_owner" required readonly>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Mobile Number</label>
-            <input type="tel" class="form-control" name="purchase_phone" id="purchase_phone" required pattern="[0-9]{10}" maxlength="10">
+            <input type="tel" class="form-control" name="purchase_phone" id="purchase_phone" required pattern="[0-9]{10}" maxlength="10" readonly>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Acre</label>
-            <input type="text" class="form-control" name="purchase_acre" id="purchase_acre" required>
+            <input type="text" class="form-control" name="purchase_acre" id="purchase_acre" required readonly>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>RST No.</label>
-            <input type="text" class="form-control" name="purchase_rst_no" id="purchase_rst_no" required>
+            <input type="text" class="form-control" name="purchase_rst_no" id="purchase_rst_no" required >
           </div>
         </div>
 
@@ -117,14 +120,14 @@
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Village</label>
-            <input type="text" class="form-control" name="purchase_village" id="purchase_village" required>
+            <input type="text" class="form-control" name="purchase_village" id="purchase_village" required readonly>
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Account Number</label>
-            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required>
+            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required readonly>
           </div>
         </div>
 
@@ -145,14 +148,14 @@
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>IFSC Code</label>
-            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required>
+            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required readonly>
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Branch</label>
-            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required>
+            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required readonly>
           </div>
         </div>
 

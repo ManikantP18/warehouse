@@ -68,91 +68,91 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Accountant name</label>
-            <input type="text" class="form-control" name="purchase_accountant" id="spurchase_accountant" required value="{{$purchase[0]->purchase_accountant}}">
+            <input type="text" class="form-control" name="purchase_accountant" id="spurchase_accountant" required value="{{$purchase[0]->purchase_accountant}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Relational Customer name</label>
-            <input type="text" class="form-control" name="purchase_relation_cusm" id="purchase_relation_cusm" required value="{{$purchase[0]->purchase_relation_cusm}}">
+            <input type="text" class="form-control" name="purchase_relation_cusm" id="purchase_relation_cusm" required value="{{$purchase[0]->purchase_relation_cusm}}" readonly>
           </div>
         </div>
 
          <div class="col-md-6">
           <div class="form-group">
             <label>Owner name</label>
-            <input type="text" class="form-control" name="purchase_owner" id="purchase_owner" required value="{{$purchase[0]->purchase_owner}}">
+            <input type="text" class="form-control" name="purchase_owner" id="purchase_owner" required value="{{$purchase[0]->purchase_owner}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Mobile Number</label>
-            <input type="tel" class="form-control" name="purchase_phone" id="purchase_phone" required pattern="[0-9]{10}" maxlength="10" value="{{$purchase[0]->purchase_phone}}">
+            <input type="tel" class="form-control" name="purchase_phone" id="purchase_phone" required pattern="[0-9]{10}" maxlength="10" value="{{$purchase[0]->purchase_phone}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Acre</label>
-            <input type="text" class="form-control" name="purchase_acre" id="purchase_acre" required value="{{$purchase[0]->purchase_acre}}">
+            <input type="text" class="form-control" name="purchase_acre" id="purchase_acre" required value="{{$purchase[0]->purchase_acre}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>RST No.</label>
-            <input type="text" class="form-control" name="purchase_rst_no" id="purchase_rst_no" required value="{{$purchase[0]->purchase_rst_no}}">
+            <input type="text" class="form-control" name="purchase_rst_no" id="purchase_rst_no" required value="{{$purchase[0]->purchase_rst_no}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>LOT No.</label>
-            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required value="{{$purchase[0]->purchase_lot_no}}">
+            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required value="{{$purchase[0]->purchase_lot_no}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Village</label>
-            <input type="text" class="form-control" name="purchase_village" id="purchase_village" required value="{{$purchase[0]->purchase_village}}">
+            <input type="text" class="form-control" name="purchase_village" id="purchase_village" required value="{{$purchase[0]->purchase_village}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Account Number</label>
-            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required value="{{$purchase[0]->purchase_account_no}}">
+            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required value="{{$purchase[0]->purchase_account_no}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Bank Name</label>
-            <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required value="{{$purchase[0]->purchas_bank_name}}">
+            <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required value="{{$purchase[0]->purchas_bank_name}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>IFSC Code</label>
-            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required value="{{$purchase[0]->purchase_ifsc}}">
+            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required value="{{$purchase[0]->purchase_ifsc}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Branch</label>
-            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required value="{{$purchase[0]->purchase_branch}}">
+            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required value="{{$purchase[0]->purchase_branch}}" readonly>
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>GST No.</label>
-            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required value="{{$purchase[0]->purchase_gst_no}}">
+            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required value="{{$purchase[0]->purchase_gst_no}}" readonly>
           </div>
         </div>
 
@@ -229,7 +229,7 @@
 </div>
 <div class="modal-footer">
   <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
-  <input type="submit" value="Create" class="btn btn-primary">
+  <input type="submit" value="Update" class="btn btn-primary">
 </div>
 {{ Form::close() }}
 <script>

@@ -103,6 +103,7 @@ class PurchaseController extends Controller
     }
 
     function edit($id) {
+       
          $data['purchase'] = DB::select("select * from purchase where purchase_id = '$id' and is_deleted = 0");
             $data['products'] = DB::select("select id, name, quantity from product_services where type = 'Product'");
        // $data['items'] = DB::select("select * from product_services where type = 'Product'");

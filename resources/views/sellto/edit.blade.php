@@ -154,6 +154,18 @@
     </div>
 
     <div class="col-md-6">
+          <div class="form-group">
+            <label>Bank Name</label>
+            <select name="bank_name" id="bank_name" class="form-control">
+             @foreach($banks as $val)
+                <option value="{{ $val->account_id }}">{{ $val->bank_name }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+
+
+    <div class="col-md-6">
       <div class="form-group">
         <label>Remaining Amount</label>
         <input type="number" class="form-control" name="sellto_Remaining_amount" id="sellto_Remaining_amount" required value="{{$sellto[0]->remaining_amount}}" >

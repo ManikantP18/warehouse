@@ -97,6 +97,9 @@ class SelltoController extends Controller
         $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
 
         $data['items'] = DB::select("select * from product_services where type = 'Product'");
+
+         $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 ");
+         
         return view('sellto/edit',$data);
     } 
 
