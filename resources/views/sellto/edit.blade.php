@@ -3,7 +3,7 @@
   <div class="row">
 
     <div class="col-12">
-      <div class="row align-items-end">
+      <!-- <div class="row align-items-end">
 
         <div class="col-md-6">
           <div class="form-group">
@@ -33,7 +33,7 @@
           </div>
         </div>
 
-      </div>
+      </div> -->
     </div>
 
     <div class="col-md-6">

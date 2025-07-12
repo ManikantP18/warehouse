@@ -57,7 +57,7 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label>Payment</label>
+            <label>Mode of Invoice</label>
             <select name="sellto_cash/credit" id="sellto_cash/credit" class="form-control">
               <option value="cash">Cash</option>
               <option value="credit">Credit</option>
@@ -88,7 +88,7 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label>Account Holder Name</label>
+            <label>Aadhar Number</label>
             <input type="text" class="form-control" name="sellto_acc_holder" id="sellto_acc_holder" required>
           </div>
         </div>
@@ -132,12 +132,7 @@
             <input type="number" class="form-control" name="sellto_rate" id="sellto_rate" required value='0'>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Total Amount</label>
-            <input type="number" class="form-control" name="sellto_total_amount" id="sellto_total_amount" required value='0'>
-          </div>
-        </div>
+        
 
         <div class="col-md-6">
           <div class="form-group">
@@ -148,15 +143,26 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label>Cash Amount</label>
+            <label>Receive Cash</label>
             <input type="number" class="form-control" name="sellto_cash_amount" id="sellto_cash_amount" required value='0' onkeyup="autofill()">
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
-            <label>Credit Amount</label>
+            <label>Receive Bank</label>
             <input type="number" class="form-control" name="sellto_Credit_amount" id="sellto_Credit_amount" required value='0' onkeyup="autofill()">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Bank Name</label>
+            <select name="bank_name" id="bank_name" class="form-control">
+             @foreach($banks as $val)
+                <option value="{{ $val->account_id }}">{{ $val->bank_name }}</option>
+              @endforeach
+            </select>
           </div>
         </div>
 
@@ -164,6 +170,13 @@
           <div class="form-group">
             <label>Remaining Amount</label>
             <input type="number" class="form-control" name="sellto_Remaining_amount" id="sellto_Remaining_amount" required value='0'>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Total Amount</label>
+            <input type="number" class="form-control" name="sellto_total_amount" id="sellto_total_amount" required value='0'>
           </div>
         </div>
 
@@ -183,7 +196,16 @@
 function toggleFields() {
   let val = document.getElementById('sellto_farmer/other').value;
   $('.changehide').show();
-  if (val === 'other') $('.changehide').hide();
+  if (val === 'other') {
+    $('.changehide').hide();
+    makeFieldsEditable(); // Allow editing for "Other"
+  }
+}
+
+function makeFieldsEditable() {
+  $('#sellto_account_number, #sellto_phone, #sellto_customer_name, #sellto_acc_holder, #sellto_owner_name, #sellto_village, #sellto_gst_amount')
+    .prop('readonly', false)
+    .val('');
 }
 
 function searchLadger() {
@@ -202,7 +224,7 @@ function searchLadger() {
         });
         html += '</select>';
         $('.allfarmers').html(html).show();
-        $('#form-fields-wrapper').hide(); // still hide until selection
+        $('#form-fields-wrapper').hide();
       } else {
         alert("No matching record found.");
       }
@@ -214,14 +236,14 @@ function selectLadger(id) {
   $.get('{{ route('sellto.search') }}', { searchVal: id }, function(response) {
     if (response.success && response.data.length > 0) {
       let d = response.data[0];
-      $('#sellto_account_number').val(d.account_id);
-      $('#sellto_phone').val(d.phone_number);
-      $('#sellto_customer_name').val(d.relational_cust_name);
-      $('#sellto_acc_holder').val(d.account_holder);
-      $('#sellto_owner_name').val(d.farm_owner_name);
-      $('#sellto_village').val(d.village);
-      $('#sellto_gst_amount').val(d.gst_num);
-      $('#form-fields-wrapper').slideDown(); // show full form
+      $('#sellto_account_number').val(d.account_id).prop('readonly', true);
+      $('#sellto_phone').val(d.phone_number).prop('readonly', true);
+      $('#sellto_customer_name').val(d.relational_cust_name).prop('readonly', true);
+      $('#sellto_acc_holder').val(d.account_holder).prop('readonly', true);
+      $('#sellto_owner_name').val(d.farm_owner_name).prop('readonly', true);
+      $('#sellto_village').val(d.village).prop('readonly', true);
+      $('#sellto_gst_amount').val(d.gst_num).prop('readonly', true);
+      $('#form-fields-wrapper').slideDown();
     }
   });
 }
@@ -234,25 +256,21 @@ function autofill() {
   if (product) {
     $('#sellto_rate').val(product.sale_price);
     let ratetotal = product.sale_price * qty;
-let gst = (ratetotal / 100) * product.rate;
+    let gst = (ratetotal / 100) * product.rate;
 
-$('#sellto_total_amount').val((ratetotal + gst).toFixed(2));
-$('#sellto_gst_amount').val(gst.toFixed(2));
+    $('#sellto_total_amount').val((ratetotal + gst).toFixed(2));
+    $('#sellto_gst_amount').val(gst.toFixed(2));
 
-// Ensure numeric fallback
-let cash = parseFloat($('#sellto_cash_amount').val()) || 0;
-let credit = parseFloat($('#sellto_Credit_amount').val()) || 0;
+    let cash = parseFloat($('#sellto_cash_amount').val()) || 0;
+    let credit = parseFloat($('#sellto_Credit_amount').val()) || 0;
 
-let remaining = (ratetotal + gst) - (cash + credit);
-$('#sellto_Remaining_amount').val(remaining.toFixed(2));
-
+    let remaining = (ratetotal + gst) - (cash + credit);
+    $('#sellto_Remaining_amount').val(remaining.toFixed(2));
   }
 }
 
-// ✅ Initial setup to hide form
 $(document).ready(function () {
   $('#form-fields-wrapper').hide();
   $('.allfarmers').hide();
 });
 </script>
-<!-- ✅ Script Ends -->

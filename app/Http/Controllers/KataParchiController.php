@@ -105,8 +105,20 @@ class KataParchiController extends Controller
         kp_godown_name = '$kp_goween',
         pure_update_hide = '$hideFlag'
         WHERE kp_id = '$id'");
+
+        $ladgerinfo = DB::select("SELECT * FROM ladgers where account_id = '$kpacc'");
+
+        $gst = $ladgerinfo[0]->gst_num;
+
+        $kpvarity = 1;
+
+        $products = DB::select("select * from product_services where id = '$kpvarity'");
+
+        $rate = $products[0]->purchase_price;
+
+        DB::insert("Insert into purchase (purchase_relation_cusm,purchase_accountant,purchase_owner,purchase_village,purchase_acre,purchase_phone,purchase_rst_no,purchase_lot_no,purchase_account_no,purchas_bank_name,purchase_ifsc,purchase_branch,purchase_gst_no,purchase_item,purchase_quantity,purchase_rate,purchase_total) VALUES ('$kprel' , '$kpacc_hold_name', '$kp_land_owner' ,'$kpvilage','$kp_acre', '$kpmn','$kprst','' ,'', '','' ,'', '$gst' ,'$kpvarity','1','$rate','$rate' )");
     
-    return Redirect::to('kataparchi');
+        return Redirect::to('kataparchi');
 }
 
 

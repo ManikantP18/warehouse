@@ -201,7 +201,7 @@ Route::get('/purchase/edit/{id}', 'App\Http\Controllers\PurchaseController@edit'
  
 Route::get('/purchase/getrst', 'App\Http\Controllers\PurchaseController@getrst')->name('purchase.getrst')->middleware('auth');
 
-Route::get('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
+Route::post('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
 
 
 Route::get('/purchase/delete/{id}', 'App\Http\Controllers\PurchaseController@delete')->name('purchase.delete')->middleware('auth');

@@ -16,11 +16,11 @@
     </script>
 @endpush
 @section('page-title')
-    {{ __('Manage Ladgers') }}
+    {{ __('Manage Purchase') }}
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item">{{ __('Ladgers') }}</li>
+    <li class="breadcrumb-item">{{ __('Purchase') }}</li>
 @endsection
 
 @section('action-btn')
@@ -91,11 +91,11 @@
                                     <td>
                                             
                                    
-                                    <!-- <a href="#" data-size="xl" data-url="{{ route('purchase.edit', $value->purchase_id) }}" data-ajax-popup="true"
+                                    <a href="#" data-size="xl" data-url="{{ route('purchase.edit', $value->purchase_id) }}" data-ajax-popup="true"
                                     data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Purchase') }}"
                                     class="btn btn-sm btn-primary">
                                         <i class="ti ti-pencil"></i>
-                                    </a> -->
+                                    </a>
                                     <a href="javascript:void(0)" 
                                     class="btn btn-sm bg-danger text-white shadow-sm" 
                                     title="Delete" 
