@@ -167,7 +167,7 @@
           <div class="form-group">
             <label>Purchase Item</label>
             <select name="purchase_item" id="purchase_item" class="form-control" >
-              <option value="" hidden>Select Item</option>
+              <!-- <option value="" hidden>Select Item</option> -->
 
               @foreach($products AS $value) :
                   <option value="{{$value->id}}">{{$value->name}} {{$value->quantity}} KG</option>

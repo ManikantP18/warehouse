@@ -120,7 +120,7 @@
                 <div class="form-group">
                     <label for="kp_varity" class="form-label">variety </label>
                     <div class="form-icon-user">
-                        <input class="form-control " required pattern="[A-Za-z ]+" title="Only letters allowed" name="kp_varity" type="text" id="kp_varity" value="{{$kataparchi[0]->kp_verity}}">
+                        <input class="form-control "  name="kp_varity" type="text" id="kp_varity" value="{{$kataparchi[0]->kp_verity}}">
                     </div>
                 </div>
             </div>
