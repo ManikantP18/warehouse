@@ -79,14 +79,21 @@
                     </div>
                 </div>
             </div>
-            
-        
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="kp_rakaba_acre" class="form-label">land acre</label>
                     <div class="form-icon-user">
                         <input class="form-control " required="required" name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" value="{{$kataparchi[0]->kp_rakaba_acre}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="kp_khasra_no" class="form-label">Khasra No.</label>
+                    <div class="form-icon-user">
+                        <input class="form-control " required="required" name="kp_khasra_no" type="text" id="kp_khasra_no" value="{{$kataparchi[0]->kp_rakaba_acre}}">
                     </div>
                 </div>
             </div>
@@ -144,6 +151,7 @@
                     </div>
                 </div>
             </div>
+            
              <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="kp_pure_wigth" class="form-label">pure weight</label>

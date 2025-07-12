@@ -66,12 +66,17 @@ class SelltoController extends Controller
             AND village LIKE '%$searchVillage%')
             ");
 
+            $variety = DB::select("SELECT * FROM product_services join sell_to on sell_to.item_selled = product_services.id
+            WHERE sell_to.sell_account_number LIKE '%$searchVal%'
+            ");
+
 
 
             if ($searchData) {
                 return response()->json([
                     'success' => true,
-                    'data' => $searchData
+                    'data' => $searchData,
+                    'products' => $variety
                 ]);
             } else {
                 return response()->json([

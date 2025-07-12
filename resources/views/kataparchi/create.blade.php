@@ -1,11 +1,13 @@
 {{ Form::open(['url' => 'kataparchi/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
     <h6 class="sub-title">kataparchi</h6>
-    <div class="row">
+    
+    
+    <div class="row" >
         <div class="col-lg-12">
             <div class="row align-items-end">
                 <div class="col-lg-3">
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label for="search" class="form-label">Account/Mobile No</label>
                         <div class="form-icon-user">
                             <input class="form-control onlyforformesrs" name="search" type="text" id="search" placeholder="Acc No / Mobile No">
@@ -16,7 +18,7 @@
                     <div class="form-group">
                         <label for="search_name" class="form-label">Farmer Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="search_name" type="text" id="search_name" placeholder="Farmer Name">
+                            <input class="form-control onlyforformesrs" name="search_name" type="text" id="search_name" placeholder="Farmer Name" >
                         </div>
                     </div>
                 </div>
@@ -54,7 +56,7 @@
                     <div class="form-group">
                         <label for="kp_acc_no" class="form-label">Account No.</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_acc_no" type="text" id="kp_acc_no">
+                            <input class="form-control alwaysvisible"  name="kp_acc_no" type="text" id="kp_acc_no" readonly>
                         </div>
                     </div>
                 </div>
@@ -62,7 +64,7 @@
                     <div class="form-group">
                         <label for="kp_rel_name" class="form-label">Customer Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" required name="kp_rel_name" type="text" id="kp_rel_name">
+                            <input class="form-control onlyforformesrs"  name="kp_rel_name" type="text" id="kp_rel_name" readonly>
                         </div>
                     </div>
                 </div>
@@ -78,7 +80,7 @@
                     <div class="form-group">
                         <label for="kp_bhoomiswami_name" class="form-label">Land Owner Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" required name="kp_bhoomiswami_name" type="text" id="kp_bhoomiswami_name">
+                            <input class="form-control onlyforformesrs"  name="kp_bhoomiswami_name" type="text" id="kp_bhoomiswami_name" readonly>
                         </div>
                     </div>
                 </div>
@@ -86,37 +88,47 @@
                     <div class="form-group">
                         <label for="kp_vilage" class="form-label">Village</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" required name="kp_vilage" type="text" id="kp_vilage">
+                            <input class="form-control onlyforformesrs"  name="kp_vilage" type="text" id="kp_vilage" readonly>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_rakaba_acre" class="form-label">Land Acre</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_rakaba_acre" type="text" id="kp_rakaba_acre">
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="kp_mo_no" class="form-label">Mobile No.</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" required name="kp_mo_no" type="number" id="kp_mo_no">
+                            <input class="form-control onlyforformesrs"  name="kp_mo_no" type="number" id="kp_mo_no" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="kp_rogger_name" class="form-label">Rogring By</label>
-                        <input class="form-control onlyforformesrs" required name="kp_rogger_name" id="kp_rogger_name">
+                        <input class="form-control onlyforformesrs"  name="kp_rogger_name" id="kp_rogger_name" readonly>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="kp_rakaba_acre" class="form-label">Land Acre</label>
+                        <div class="form-icon-user">
+                            <input class="form-control alwaysvisible"  name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="kp_khasra_no" class="form-label">Khasra No.</label>
+                        <div class="form-icon-user">
+                            <input class="form-control alwaysvisible"  name="kp_khasra_no" type="text" id="kp_khasra_no" readonly>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="kp_varity" class="form-label">Variety</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_varity" type="text" id="kp_varity">
+                            <select class="form-control alwaysvisible" required name="kp_varity" id="kp_varity">
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -208,9 +220,19 @@
                     $('#kp_bhoomiswami_name').val(data.farm_owner_name);
                     $('#kp_vilage').val(data.village);
                     $('#kp_rakaba_acre').val(data.farm_area_acre);
+
+                    $('#kp_khasra_no').val(data.khasra_no);
+
                     $('#kp_mo_no').val(data.phone_number);
                     $('#kp_rogger_name').val(data.Rogring_name || '');
-                    $('#kp_varity').val(data.variety || '');
+
+                    let opt = `<option value=""> select Item </option>`;
+
+                    response.products.forEach((variety) =>{
+                        opt += `<option value="${variety.id}">${variety.name}</option>`;
+                    })
+
+                    $('#kp_varity').html(opt);
 
                     $('#form-fields-wrapper').slideDown();
                 } else {
@@ -227,4 +249,6 @@
         $('#form-fields-wrapper').hide();
         //$('.allfarmers').hide();
     });
+
+
 </script>
