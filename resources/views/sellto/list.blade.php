@@ -77,19 +77,21 @@
                                 <tr>
                                     <th>account no.</th>
                                     <th>Customer name </th>
-                                    <th> account holder </th>
+                                    <th> Aadhar Number </th>
                                     <th> field owner </th>
                                     <th>village</th>
                                     <th> mobile no. </th>
-                                    <th> selled itme  </th>
+                                    <th> selled item  </th>
                                     <th>quantity </th>
                                     <th> rate </th>
-                                    <th> total ammount </th>
-                                    <th> gst ammount </th>
-                                    <th> Cash  Paid </th>
-                                    <th> Credit Paid </th>
-                                    <th> Reaining Ammount </th>
-                                    <th>Cash/creadit</th>
+                                    <th> total amount </th>
+                                    <th> gst amount </th>
+                                    <th> Received cash </th>
+                                    <th> recieved bank </th>
+                                    
+                                    <th> bank name </th>
+                                    <th> Remaining Amount </th>
+                                    <th>Mode of Invoice</th>
                                     <th>action</th>
                                 </tr>
                             </thead>
@@ -111,6 +113,8 @@
                                     <td> {{$value->sell_gst_ammount}} </td>
                                     <td> {{$value->cash_amount}} </td>
                                     <td> {{$value->credit_amount}} </td>
+                                    
+                                    <td> {{$value->branchname}} </td>
                                     <td> {{$value->remaining_amount}} </td>
                                     <td> {{$value->sell_way}} </td>
                                   

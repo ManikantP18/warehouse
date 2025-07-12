@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2025 at 10:13 AM
+-- Generation Time: Jul 12, 2025 at 09:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,16 +44,21 @@ CREATE TABLE `sell_to` (
   `sell_created_date` datetime NOT NULL,
   `sell_way` varchar(255) NOT NULL,
   `sell_to` varchar(255) NOT NULL,
-  `item_selled` varchar(255) NOT NULL
+  `item_selled` varchar(255) NOT NULL,
+  `cash_amount` int(11) NOT NULL,
+  `credit_amount` int(11) NOT NULL,
+  `remaining_amount` int(11) NOT NULL,
+  `bank_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sell_to`
 --
 
-INSERT INTO `sell_to` (`sell_id`, `sell_account_number`, `sell_relation_customer`, `sell_account_name`, `sell_property_owner`, `sell_village`, `sell_phone`, `sell_quantity`, `sell_rate`, `sell_total_ammount`, `sell_gst_ammount`, `sell_status`, `is_deleted`, `sell_created_date`, `sell_way`, `sell_to`, `item_selled`) VALUES
-(1, '12345678909876543', 'nikita', 'nikita', 'nikita', 'thibgaon', '1234567890', 3, 4.5, 150000, 200, 1, 0, '2025-06-28 09:38:02', 'cash', '', ''),
-(11, 'cust-1', 'Manikant Patidar', 'Sukhraj', 'Tulsi', 'badgaon', '7744551122', 0, 0, 3343, 0, 1, 0, '0000-00-00 00:00:00', 'cash', 'farmer', 'tulsi');
+INSERT INTO `sell_to` (`sell_id`, `sell_account_number`, `sell_relation_customer`, `sell_account_name`, `sell_property_owner`, `sell_village`, `sell_phone`, `sell_quantity`, `sell_rate`, `sell_total_ammount`, `sell_gst_ammount`, `sell_status`, `is_deleted`, `sell_created_date`, `sell_way`, `sell_to`, `item_selled`, `cash_amount`, `credit_amount`, `remaining_amount`, `bank_name`) VALUES
+(1, 'cust-1', 'Manikant Patidar', 'Sukhraj', 'Tulsi', 'Bada Gaon', '7744551122', 1, 10000, 11000, 1000, 1, 0, '0000-00-00 00:00:00', 'cash', 'farmer', '1', 1200, 1300, 8500, ''),
+(2, 'cust-2', 'Manikant Patidar', 'Sukhraj', 'Tulsi', 'gogawan', '7744551122', 1, 0, 0, 0, 1, 0, '0000-00-00 00:00:00', 'cash', 'farmer', '', 0, 0, 0, '2'),
+(3, 'cust-1', 'Manikant Patidar', 'Sukhraj', 'Tulsi', 'Bada Gaon', '7744551122', 1, 0, 0, 0, 1, 0, '0000-00-00 00:00:00', 'cash', 'farmer', '', 0, 0, 0, '4');
 
 --
 -- Indexes for dumped tables
@@ -73,7 +78,7 @@ ALTER TABLE `sell_to`
 -- AUTO_INCREMENT for table `sell_to`
 --
 ALTER TABLE `sell_to`
-  MODIFY `sell_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `sell_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

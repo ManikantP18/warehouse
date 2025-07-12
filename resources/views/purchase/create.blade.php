@@ -131,7 +131,14 @@
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Bank Name</label>
-            <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required>
+           <select name="purchase_item" id="purchase_item" class="form-control" >
+              <option value="" hidden>Select Bank</option>
+
+              @foreach($banks AS $value) :
+                  <option value="{{$value->account_id}}">{{$value->bank_name}}</option>
+              @endforeach
+              
+            </select>
           </div>
         </div>
 

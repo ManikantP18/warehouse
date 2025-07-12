@@ -127,7 +127,8 @@
                     <div class="form-group">
                         <label for="kp_varity" class="form-label">Variety</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_varity" type="text" id="kp_varity">
+                            <select class="form-control alwaysvisible" required name="kp_varity" id="kp_varity">
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -224,7 +225,14 @@
 
                     $('#kp_mo_no').val(data.phone_number);
                     $('#kp_rogger_name').val(data.Rogring_name || '');
-                    $('#kp_varity').val(data.variety || '');
+
+                    let opt = `<option value=""> select Item </option>`;
+
+                    response.products.forEach((variety) =>{
+                        opt += `<option value="${variety.id}">${variety.name}</option>`;
+                    })
+
+                    $('#kp_varity').html(opt);
 
                     $('#form-fields-wrapper').slideDown();
                 } else {
