@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="form-group">
-                <label for="Rogring_name" class="form-label">Rogring Name</label>
+                <label for="Rogring_name" class="form-label">Rogrowing Responsible</label>
                 <div class="form-icon-user">
                     {{ Form::text('Rogring_name', null, ['class' => 'form-control alwaysvisible', 'required' => true, 'id' => 'Rogring_name']) }}
                 </div>

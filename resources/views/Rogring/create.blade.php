@@ -10,7 +10,7 @@
 
         <div class="col-lg-12 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="Rogring_name" class="form-label">Rogring Name</label>
+                <label for="Rogring_name" class="form-label">Rogrowing Responsible</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible"required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed" name="Rogring_name" type="text" id="Rogring_name "placeholder ="Rogring Name">
                 </div>

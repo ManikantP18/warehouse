@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label for="kp_date" class="form-label">Date</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_date" type="date" id="kp_date" value="{{date('d-m-y')}}">
+                            <input class="form-control alwaysvisible" required name="kp_date" type="date" id="kp_date" value="{{date('Y-m-d')}}">
                         </div>
                     </div>
 
@@ -72,7 +72,7 @@
                     <div class="form-group">
                         <label for="kp_acc_holdername" class="form-label">Aadhar Number</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_acc_holdername" type="number" id="kp_acc_holdername">
+                            <input class="form-control alwaysvisible" required name="kp_acc_holdername" type="number" id="kp_acc_holdername" readonly>
                         </div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                     <div class="form-group">
                         <label for="kp_vehicle_wight" class="form-label">Total  weight</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_vehicle_wight" type="number" id="kp_vehicle_wight">
+                            <input class="form-control alwaysvisible" required name="kp_vehicle_wight" type="number" id="kp_vehicle_wight" step="0.01">
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,19 @@
                     <div class="form-group">
                         <label for="kp_godown_name" class="form-label">Godown Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" required name="kp_godown_name" type="text" id="kp_godown_name">
+
+                          <select class="form-control onlyforformesrs" required name="kp_godown_name" id="kp_godown_name">
+
+                          <option value=""> Select Branch </option>
+
+                          @foreach($branches as $b) :
+
+                            <option value="{{$b->branch_id}}"> {{$b->branch_name}} </option>
+
+
+                          @endforeach
+
+                        </select>
                         </div>
                     </div>
                 </div>

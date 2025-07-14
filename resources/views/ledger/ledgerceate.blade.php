@@ -41,7 +41,7 @@
     </div>
     <div class="col-md-6">
         <label>Khasra No.</label>
-        <input class="form-control" name="khasra_no" type="number" required>
+        <input class="form-control" name="khasra_no" type="text" required>
     </div>
     <div class="col-md-6">
         <label>Opening Balance</label>
@@ -90,13 +90,10 @@
 
     <div class="col-md-6">
         <label>Branch</label>
-        <input class="form-control" name="branch" type="text" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
+        <input class="form-control" name="branch" type="text" required minlength="2">
     </div>
 
-    <div class="col-md-6">
-        <label>GST Number</label>
-        <input class="form-control" name="gst_num"  required  title="Enter 15-digit GST number">
-    </div>
+    
 </div>
 
 
@@ -114,7 +111,7 @@ function showhide(value) {
         </div>
 
         <div class="col-md-6">
-            <label>Account Holder</label>
+            <label>Aadhar No.</label>
             <input class="form-control" name="account_holder" required type="text">
         </div>
 
@@ -130,11 +127,11 @@ function showhide(value) {
 
         <div class="col-md-6">
             <label>Farmer Area Acre</label>
-            <input class="form-control" name="farm_area_acre" type="number">
+            <input class="form-control" name="farm_area_acre" type="number" step="0.01">
         </div>
         <div class="col-md-6">
             <label>Khasra No.</label>
-            <input class="form-control" name="khasra_no" type="number" required 
+            <input class="form-control" name="khasra_no" type="text" required 
            pattern="^[6-9][0-9]{9}$" 
            title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
         </div>
@@ -180,7 +177,7 @@ function showhide(value) {
 
         <div class="col-md-6">
             <label>Branch</label>
-            <input class="form-control" name="branch" type="number">
+            <input class="form-control" name="branch" type="text" required minlength="2">
         </div>`;
 
         let other_fields = `<div class="col-md-6">

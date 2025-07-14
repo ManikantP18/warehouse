@@ -118,9 +118,11 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="kp_varity" class="form-label">variety </label>
+                    <label for="kp_verity" class="form-label">variety </label>
                     <div class="form-icon-user">
-                        <input class="form-control "  name="kp_varity" type="text" id="kp_varity" value="{{$kataparchi[0]->kp_verity}}">
+                        <select name="kp_verity" class="form-control " id="kp_varity">
+                            <option value="{{$kataparchi[0]->kp_verity}}"> {{$kataparchi[0]->veriety}} </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -167,7 +169,18 @@
                 <div class="form-group">
                     <label for="kp_godown_name" class="form-label"> Godown name</label>
                     <div class="form-icon-user">
-                        <input class="form-control " required pattern="[A-Za-z ]+" title="Only letters allowed" name="kp_godown_name" type="text" id="kp_godown_name" value="{{$kataparchi[0]->kp_godown_name}}">
+                        <select class="form-control onlyforformesrs" required name="kp_godown_name" id="kp_godown_name">
+
+                          <option value=""> Select Branch </option>
+
+                          @foreach($branches as $b) :
+
+                            <option value="{{$b->branch_id}}" {{$b->branch_id == $kataparchi[0]->kp_godown_name ? 'selected' : ''}}> {{$b->branch_name}} </option>
+
+
+                          @endforeach
+
+                        </select>
                     </div>
                 </div>
             </div>

@@ -110,7 +110,7 @@
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>LOT No.</label>
-            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required value="{{$purchase[0]->purchase_lot_no}}" readonly>
+            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required value="{{$purchase[0]->purchase_lot_no}}">
           </div>
         </div>
 
@@ -180,20 +180,20 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Quantity</label>
-            <input type="number" class="form-control" name="purchase_quantity" id="purchase_quantity" value="1" required onkeyup="autofill()" onchange="autofill()" value="1">
+            <input type="number" class="form-control" name="purchase_quantity" id="purchase_quantity" required onkeyup="autofill()" onchange="autofill()" value='{{$purchase[0]->purchase_quantity}}'>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Rate</label>
-            <input type="number" onkeyup="autofill()" class="form-control" name="purchase_rate" id="purchase_rate" required value='0'>
+            <input type="number" onkeyup="autofill()" class="form-control" name="purchase_rate" id="purchase_rate" required value='{{$purchase[0]->purchase_rate}}'>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label>Total Amount</label>
-            <input type="number" class="form-control" name="purchase_total" id="purchase_total" required value='0'>
+            <input type="number" class="form-control" name="purchase_total" id="purchase_total" required value='{{$purchase[0]->purchase_total}}'>
           </div>
         </div>
 

@@ -57,7 +57,7 @@
                             <thead>
                                 <tr>
                                     <th>Rogring Id</th>
-                                    <th> Rogring Name</th>
+                                    <th> Rogrowing Responsible</th>
                                     <th> Relational Cust. Name </th>
                                     <th> Farmer Owner Name </th>
                                     <th> Village </th>

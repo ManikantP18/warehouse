@@ -14,7 +14,7 @@ class LedgerController extends Controller
 {
     public function index(){
 
-        $data['ledger'] = DB::select('select * from ladgers where ladger_type = 1 and is_deleted = 0');
+        $data['ledger'] = DB::select('select * from ladgers where ladger_type = 1 and is_deleted = 0 order by ladger_id DESC');
 
         return view('ledger/ledgerlist',$data);
 
