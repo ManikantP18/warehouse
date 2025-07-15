@@ -3,7 +3,7 @@
   <div class="row">
 
     <div class="col-12">
-      <div class="row align-items-end">
+      <!-- <div class="row align-items-end">
 
         <div class="col-md-6">
           <div class="form-group">
@@ -33,7 +33,7 @@
           </div>
         </div>
 
-      </div>
+      </div> -->
     </div>
 
     <div class="col-md-6">
@@ -79,22 +79,22 @@
 
     <div class="col-md-6">
       <div class="form-group">
-        <label for="sellto_acc_holder" class="form-label">Account Holder Name</label>
-        <input class="form-control alwaysvisible" required name="sellto_acc_holder" type="text" id="sellto_acc_holder" value="{{$sellto[0]->sell_account_name}}">
+        <label for="sellto_acc_holder" class="form-label">Aadhar Number</label>
+        <input class="form-control alwaysvisible" required name="sellto_acc_holder" type="text" id="sellto_acc_holder" value="{{$sellto[0]->sell_account_name}}" readonly>
       </div>
     </div>
 
     <div class="col-md-6 changehide">
       <div class="form-group">
         <label for="sellto_owner_name" class="form-label">Field Owner Name</label>
-        <input class="form-control onlyforformesrs" required name="sellto_owner_name" type="text" id="sellto_owner_name" value="{{$sellto[0]->sell_property_owner}}">
+        <input class="form-control onlyforformesrs" required name="sellto_owner_name" type="text" id="sellto_owner_name" value="{{$sellto[0]->sell_property_owner}}" readonly>
       </div>
     </div>
 
     <div class="col-md-6">
       <div class="form-group">
         <label for="sellto_village" class="form-label">Village</label>
-        <input class="form-control onlyforformesrs" required pattern="[A-Za-z ]+" title="Only letters allowed" name="sellto_village" type="text" id="sellto_village" value="{{$sellto[0]->sell_village}}">
+        <input class="form-control onlyforformesrs" required pattern="[A-Za-z ]+" title="Only letters allowed" name="sellto_village" type="text" id="sellto_village" value="{{$sellto[0]->sell_village}}" readonly>
       </div>
     </div>
 
@@ -102,9 +102,9 @@
       <div class="form-group">
         <label for="sellto_item_selled" class="form-label">Item Selled</label>
         <select name="sellto_item_selled" id="sellto_item_selled" class="form-control onlyforformesrs" onchange='autofill()'>
-          <option value="{{$sellto[0]->item_selled}}" hidden>Select Item</option>
+          <option value="" hidden>Select Item</option>
           @foreach($items AS $val):
-            <option value="{{$val->id}}">{{$val->name}} - {{$val->quantity}} KG</option>
+            <option value="{{$val->id}}" {{$val->id == $sellto[0]->item_selled ? 'selected' : ''}}>{{$val->name}} - {{$val->quantity}} KG</option>
           @endforeach
         </select>
       </div>
@@ -120,7 +120,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label for="sellto_rate" class="form-label">Rate</label>
-        <input class="form-control onlyforformesrs" required name="sellto_quantity" type="number" min="1" step="any" title="Enter a valid number" id="sellto_quantity" value="{{$sellto[0]->sell_rate}}">
+        <input class="form-control onlyforformesrs" required name="sellto_rate" type="number" min="1" step="any" title="Enter a valid number" id="sellto_quantity" value="{{$sellto[0]->sell_rate}}">
       </div>
     </div>
 
@@ -152,6 +152,18 @@
         <input type="number" class="form-control" name="sellto_Credit_amount" id="sellto_Credit_amount" required value="{{$sellto[0]->credit_amount}}" onkeyup="autofill()">
       </div>
     </div>
+
+    <div class="col-md-6">
+          <div class="form-group">
+            <label>Bank Name</label>
+            <select name="bank_name" id="bank_name" class="form-control">
+             @foreach($banks as $val)
+                <option value="{{ $val->account_id }}" {{ $val->account_id == $sellto[0]->bank_name ?  'selected' : ''}}>{{ $val->bank_name }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+
 
     <div class="col-md-6">
       <div class="form-group">

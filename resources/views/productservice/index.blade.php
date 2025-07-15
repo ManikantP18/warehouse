@@ -92,8 +92,8 @@
                                 <tr class="font-style">
                                     <td> {{ $productService->name}}</td>
                                     <td>{{ $productService->sku }}</td>
-                                    <td>{{ \Auth::user()->priceFormat($productService->sale_price) }}</td>
-                                    <td>{{  \Auth::user()->priceFormat($productService->purchase_price )}}</td>
+                                    <td>{{ $productService->sale_price }}</td>
+                                    <td>{{  $productService->purchase_price }}</td>
                                     <td>
                                         @if(!empty($productService->tax_id))
                                             @php

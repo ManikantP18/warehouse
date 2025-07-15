@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class RogringController extends Controller
 {
     public function index(){
-        $data['rogring'] = DB::select('select * from rogring JOIN ladgers ON ladgers.ladger_id  = rogring.ladgers WHERE Rogring_status = 1');
+        $data['rogring'] = DB::select('select * from rogring JOIN ladgers ON ladgers.ladger_id  = rogring.ledgers WHERE Rogring_status = 1');
         return view('Rogring/list',$data);
     }
 
@@ -27,7 +27,7 @@ class RogringController extends Controller
 
             DB::table('rogring')->insert([
                 'Rogring_name' => $req->input('Rogring_name'),
-                'ladgers' => $farmers[$i],
+                'ledgers' => $farmers[$i],
             ]);
 
         }

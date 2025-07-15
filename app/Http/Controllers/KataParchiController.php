@@ -21,8 +21,8 @@ class KataParchiController extends Controller
 
     function create(){
 
-        //$data['items'] = DB::select("select * from ladgers join rogring on ladgers.ladger_id = rogring.ledgers"); 
-        return view('kataparchi/create');
+        $data['branches'] = DB::select("select * from branches"); 
+        return view('kataparchi/create',$data);
     }
 
     function add(Request $req){
@@ -36,6 +36,9 @@ class KataParchiController extends Controller
         $kp_land_owner = $req->input('kp_bhoomiswami_name');
         $kpvilage = $req->input('kp_vilage');
         $kp_acre = $req->input('kp_rakaba_acre');
+
+        $kp_acre = $req->input('kp_khasra_no');
+
         $kpmn = $req->input('kp_mo_no');
         $kp_rogger = $req->input('kp_rogger_name');
         $kpvarity = $req->input('kp_varity');
@@ -56,9 +59,9 @@ class KataParchiController extends Controller
     }
 
     function edit($id) {
-        $data['kataparchi'] = DB::select("select * from kata_parchi where kp_id = '$id' and is_deleted = 0");
+        $data['kataparchi'] = DB::select("select kata_parchi.*, product_services.name as veriety from kata_parchi JOIN product_services ON product_services.id = kata_parchi.kp_verity where kp_id = '$id' and is_deleted = 0");
+        $data['branches'] = DB::select("select * from branches");
         return view('kataparchi/edit',$data);
-
         //return redirect::to ('kataparchi')->with('success','kataparchi update successfully.');
     } 
 
@@ -71,9 +74,12 @@ class KataParchiController extends Controller
     $kp_land_owner = $req->input('kp_bhoomiswami_name');
     $kpvilage = $req->input('kp_vilage');
     $kp_acre = $req->input('kp_rakaba_acre');
+
+    $kp_acre = $req->input('kp_khasra_no');
+
     $kpmn = $req->input('kp_mo_no');
     $kp_rogger = $req->input('kp_rogger_name');
-    $kpvarity = $req->input('kp_varity');
+    $kpvarity = $req->input('kp_verity');
     $kprst = $req->input('kp_rstno');
     $kp_vwihgt = $req->input('kp_vehicle_wight');
     $kp_only_vechicle_w = $req->input('kp_only_vechicle_w');
@@ -95,6 +101,7 @@ class KataParchiController extends Controller
         kp_bhoomiswami_name = '$kp_land_owner',
         kp_vilage = '$kpvilage',
         kp_rakaba_acre = '$kp_acre',
+        kp_khasra_no = '$kp_acre',
         kp_mo_no = '$kpmn',
         kp_rogger_name = '$kp_rogger',
         kp_verity = '$kpvarity',
@@ -105,8 +112,28 @@ class KataParchiController extends Controller
         kp_godown_name = '$kp_goween',
         pure_update_hide = '$hideFlag'
         WHERE kp_id = '$id'");
+
+        $ladgerinfo = DB::select("SELECT * FROM ladgers where account_id = '$kpacc'");
+
+        $gst = $ladgerinfo[0]->gst_num;
+
+        $acc = $ladgerinfo[0]->account_number;
+
+        $bank_name = $ladgerinfo[0]->bank_name;
+
+        $ifsc_code = $ladgerinfo[0]->ifsc_code;
+
+        $branch = $ladgerinfo[0]->branch;
+
+        $kpvarity = 1;
+
+        $products = DB::select("select * from product_services where id = '$kpvarity'");
+
+        $rate = $products[0]->purchase_price;
+
+        DB::insert("Insert into purchase (purchase_relation_cusm,purchase_accountant,purchase_owner,purchase_village,purchase_acre,purchase_phone,purchase_rst_no,purchase_lot_no,purchase_account_no,purchas_bank_name,purchase_ifsc,purchase_branch,purchase_gst_no,purchase_item,purchase_quantity,purchase_rate,purchase_total) VALUES ('$kprel' , '$kpacc_hold_name', '$kp_land_owner' ,'$kpvilage','$kp_acre', '$kpmn','$kprst','' ,'$acc', '$bank_name','$ifsc_code' ,'$branch', '$gst' ,'$kpvarity','1','$rate','$rate' )");
     
-    return Redirect::to('kataparchi');
+        return Redirect::to('kataparchi');
 }
 
 

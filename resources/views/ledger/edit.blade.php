@@ -45,7 +45,7 @@
             <div class="form-group">
                 <label for="ladger_type	" class="form-label">Khasra No.</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="khasra_no" type="number" id="khasra_no" value="{{$ledger[0]->khasra_no}}">
+                    <input class="form-control alwaysvisible" required="required" name="khasra_no" type="text" id="khasra_no" value="{{$ledger[0]->khasra_no}}">
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
             <div class="form-group">
                 <label for="ladger_type	" class="form-label">Farmer Area acre</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required, digit" name="farm_area_acre" type="number" id="farm_area_acre" value="{{$ledger[0]->farm_area_acre }}">
+                    <input class="form-control alwaysvisible" required="required, digit" name="farm_area_acre" type="number" id="farm_area_acre" value="{{$ledger[0]->farm_area_acre }}" step="0.01">
                 </div>
             </div>
         </div>
@@ -129,14 +129,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">GST Details</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required, digit" name="gst_num" type="number" id="gst_num" value="{{$ledger[0]->gst_num }}">
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>
 <div class="modal-footer">

@@ -79,14 +79,21 @@
                     </div>
                 </div>
             </div>
-            
-        
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="kp_rakaba_acre" class="form-label">land acre</label>
                     <div class="form-icon-user">
                         <input class="form-control " required="required" name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" value="{{$kataparchi[0]->kp_rakaba_acre}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="kp_khasra_no" class="form-label">Khasra No.</label>
+                    <div class="form-icon-user">
+                        <input class="form-control " required="required" name="kp_khasra_no" type="text" id="kp_khasra_no" value="{{$kataparchi[0]->kp_rakaba_acre}}">
                     </div>
                 </div>
             </div>
@@ -111,9 +118,11 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="kp_varity" class="form-label">variety </label>
+                    <label for="kp_verity" class="form-label">variety </label>
                     <div class="form-icon-user">
-                        <input class="form-control " required pattern="[A-Za-z ]+" title="Only letters allowed" name="kp_varity" type="text" id="kp_varity" value="{{$kataparchi[0]->kp_verity}}">
+                        <select name="kp_verity" class="form-control " id="kp_varity">
+                            <option value="{{$kataparchi[0]->kp_verity}}"> {{$kataparchi[0]->veriety}} </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -129,7 +138,7 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="kp_vehicle_wight" class="form-label">Total weight </label>
+                    <label for="kp_vehicle_wight" class="form-label">Gross weight </label>
                     <div class="form-icon-user">
                         <input class="form-control "  title="Only letters allowed" name="kp_vehicle_wight" type="text" id="kp_vehicle_wight" value="{{$kataparchi[0]->kp_vehicle_wight}}">
                     </div>
@@ -138,12 +147,13 @@
 
              <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="kp_only_vechicle_w" class="form-label">only vehcle weight</label>
+                    <label for="kp_only_vechicle_w" class="form-label">Tare weight</label>
                     <div class="form-icon-user">
                         <input class="form-control "  title="Only letters allowed" name="kp_only_vechicle_w" type="text" id="kp_only_vechicle_w" value="{{$kataparchi[0]->kp_only_vechicle_w}}">
                     </div>
                 </div>
             </div>
+            
              <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="kp_pure_wigth" class="form-label">pure weight</label>
@@ -159,7 +169,18 @@
                 <div class="form-group">
                     <label for="kp_godown_name" class="form-label"> Godown name</label>
                     <div class="form-icon-user">
-                        <input class="form-control " required pattern="[A-Za-z ]+" title="Only letters allowed" name="kp_godown_name" type="text" id="kp_godown_name" value="{{$kataparchi[0]->kp_godown_name}}">
+                        <select class="form-control onlyforformesrs" required name="kp_godown_name" id="kp_godown_name">
+
+                          <option value=""> Select Branch </option>
+
+                          @foreach($branches as $b) :
+
+                            <option value="{{$b->branch_id}}" {{$b->branch_id == $kataparchi[0]->kp_godown_name ? 'selected' : ''}}> {{$b->branch_name}} </option>
+
+
+                          @endforeach
+
+                        </select>
                     </div>
                 </div>
             </div>

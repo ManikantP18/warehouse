@@ -16,11 +16,11 @@
     </script>
 @endpush
 @section('page-title')
-    {{ __('Manage kataparchi') }}
+    {{ __('Manage Sales Return') }}
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item">{{ __('kataparchi') }}</li>
+    <li class="breadcrumb-item">{{ __('Sales Return') }}</li>
 @endsection
 
 @section('action-btn')
@@ -36,7 +36,7 @@
         </a>
 
         <a href="#" data-size="xl" data-url="{{ route('kataparchi.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create kataparchi') }}"
+            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Sales Return') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
         </a>
@@ -53,61 +53,41 @@
                             <thead>
                                 <tr>
                                     <th>kp_Id</th>
-                                    <th> kataparchi date</th>
-                                    <th> Acc No. </th>
-                                    <th> customer name </th>
+                                    <th> Cash / Credit</th>
                                     <th> Aadhar Number </th>
-                                    <th> land owner name </th>
+                                    <th> Relational customer name </th>
                                     <th>village</th>
-                                    <th> land acre</th>
-
-                                    <th> khasra No.</th>
-
                                     <th> Mobile no. </th>
-                                    <th>Rogating agent</th>
-                                    <th> variety </th>
-                                    <th> RST no </th>
-                                    <th> Gross weight </th>
-                                    <th> Tare weight </th>
-                                    <th>  pure weight </th>
-                                    <th> Godown name </th>
+                                    <th> Item to sale</th>
+                                    <th> Quantity </th>
+                                    <th> Rate </th>
+                                    <th> total amount  </th>
+                                    <th> GSt amount </th>                      
                                     <th> creat date </th>
                                     <th> update date </th>
                                     <th> status </th>
-
                                      <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                            @foreach($kataparchi AS $value):
+                            @foreach($CN AS $value):
 
                                 <tr>
                                     <td> {{ $value->kp_id }} </td>
-                                    <td> {{ date('d/m/Y', strtotime($value->kp_date)) }} </td>
-                                    <td> {{ $value->kp_acc_no }} </td>
-                                    <td> {{ $value->kp_rel_name  }} </td>
-                                    <td> {{ $value->kp_acc_holdername}} </td>
-                                    <td> {{ $value->kp_bhoomiswami_name }} </td>
+                                    <td> {{ $value->cash_credit }} </td>
+                                    <td> {{ $value->aadhar_no }} </td>
+                                    <td> {{ $value->r_cust}} </td>
+                                    <td> {{ $value->village }} </td>
                                     <td> {{ $value->kp_vilage }} </td>
-
-                                    <td> {{ $value->kp_rakaba_acre }} </td>
-
-                                     <td> {{ $value->kp_khasra_no }} </td>
-
-                                    <td> {{ $value->kp_mo_no  }} </td>
-                                    <td> {{ $value->kp_rogger_name }} </td>
-                                    <td> {{ $value->kp_verity }} </td>
-                                    <td> {{ $value->kp_rstno }} </td>
-
-                                    <td> {{ $value->kp_vehicle_wight }} </td>
-                                    
-                                    <td> {{ $value->kp_only_vechicle_w }} </td>
-                                    <td> {{ $value->kp_pure_wigth }} </td>
-
-                                    <td> {{ $value->kp_godown_name  }} </td>
+                                    <td> {{ $value->mo_no }} </td>
+                                     <td> {{ $value->item_sale }} </td>
+                                    <td> {{ $value->quantity }} </td>
+                                    <td> {{ $value->rate }} </td>
+                                    <td> {{ $value->total_amount }} </td>
+                                    <td> {{ $value->GST_amount }} </td>
                                     <td> {{ $value->creat_at }} </td>
-                                    <td> {{ $value->update_at}} </td>
+                                    <td> {{ $value->UPdate_at}} </td>
                                     <td> {{ $value->status }} </td>
 
                                     <td> 

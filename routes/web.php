@@ -89,6 +89,7 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
 use App\Http\Controllers\RogringController;
+use App\Http\Controllers\BankController;
 use App\Http\Controllers\StagingController;
 
 
@@ -119,9 +120,24 @@ Route::get('/staging/delete/{id}', 'App\Http\Controllers\StagingController@delet
 Route::get('/staging/edit/{id}', 'App\Http\Controllers\StagingController@edit')->name('staging.edit')->middleware('auth');
 Route::put('/staging/edit/', 'App\Http\Controllers\StagingController@update')->name('staging.update')->middleware('auth');
 
+
+Route::get('/bankacc', 'App\Http\Controllers\BankController@index')->name('bankacc.list')->middleware('auth');
+
+Route::get('/bankacc/create', 'App\Http\Controllers\BankController@create')->name('bankacc.create')->middleware('auth');
+
+Route::post('/bankacc/add', 'App\Http\Controllers\BankController@add')->name('bankacc.add')->middleware('auth');
+
+Route::get('bankacc/edit/{id}', 'App\Http\Controllers\BankController@edit')->name('bankacc.edit');
+
+// Update existing account
+Route::put('bankacc/update', 'App\Http\Controllers\BankController@update')->name('bankacc.update');
+
+// delete
+Route::get('bankacc/delete/{id}', 'App\Http\Controllers\BankController@delete')->name('bankacc.delete');
+
+
 Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('branches.list')->middleware('auth');
 
-Route::get('/branches/create', 'App\Http\Controllers\BranchesController@create')->name('branches.create')->middleware('auth');
 
 Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->name('branches.add')->middleware('auth');
 
@@ -201,10 +217,11 @@ Route::get('/purchase/edit/{id}', 'App\Http\Controllers\PurchaseController@edit'
  
 Route::get('/purchase/getrst', 'App\Http\Controllers\PurchaseController@getrst')->name('purchase.getrst')->middleware('auth');
 
-Route::get('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
+Route::post('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
 
 
 Route::get('/purchase/delete/{id}', 'App\Http\Controllers\PurchaseController@delete')->name('purchase.delete')->middleware('auth');
+
 
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice')->middleware('auth');
