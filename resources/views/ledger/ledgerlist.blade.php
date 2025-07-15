@@ -90,6 +90,7 @@
         <th>Village</th>
         <th class="farmer-only">Farmer Area Acre</th>
          <th class="farmer-only">Khasra No.</th>
+         <th class="farmer-only">Bhumi gram</th>
          <th class="farmer-only">Opening balance</th>
         <th>Phone No.</th>
         <th  class="farmer-only">Bank Account Name</th>
@@ -112,6 +113,7 @@
     <td>{{ $value->village }}</td>
     <td class="farmer-only">{{ $value->farm_area_acre }}</td> {{-- corrected --}}
     <td class="farmer-only">{{ $value->khasra_no}}</td> {{-- corrected --}}
+    <td class="farmer-only">{{ $value->bhumi_gram}}</td> {{-- corrected --}}
     <td class="farmer-only">{{ $value->opening_balance}}</td> {{-- corrected --}}
     <td>{{ $value->phone_number }}</td>
     <td class="farmer-only">{{ $value->bank_account_name }}</td>

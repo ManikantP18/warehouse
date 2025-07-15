@@ -138,7 +138,7 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="kp_vehicle_wight" class="form-label">Total weight </label>
+                    <label for="kp_vehicle_wight" class="form-label">Gross weight </label>
                     <div class="form-icon-user">
                         <input class="form-control "  title="Only letters allowed" name="kp_vehicle_wight" type="text" id="kp_vehicle_wight" value="{{$kataparchi[0]->kp_vehicle_wight}}">
                     </div>
@@ -147,7 +147,7 @@
 
              <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="kp_only_vechicle_w" class="form-label">only vehcle weight</label>
+                    <label for="kp_only_vechicle_w" class="form-label">Tare weight</label>
                     <div class="form-icon-user">
                         <input class="form-control "  title="Only letters allowed" name="kp_only_vechicle_w" type="text" id="kp_only_vechicle_w" value="{{$kataparchi[0]->kp_only_vechicle_w}}">
                     </div>

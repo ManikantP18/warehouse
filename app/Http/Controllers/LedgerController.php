@@ -33,6 +33,7 @@ class LedgerController extends Controller
         $village = $req->input('village');
          $farm_area_acre = $req->input('farm_area_acre');
          $khasra_no = $req->input('khasra_no');
+         $bhumi_gram = $req->input('bhumi_gram');
          $opening_balance = $req->input('opening_balance');
           $phone_number	 = $req->input('phone_number');
            $bank_account_name	 = $req->input('bank_account_name');
@@ -45,7 +46,7 @@ class LedgerController extends Controller
                 
 
 
-       DB::insert("Insert into ladgers ( account_id,ladger_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num,khasra_no,opening_balance) VALUES ('$account_id',$ladger_type,'$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num','$khasra_no','$opening_balance')");
+       DB::insert("Insert into ladgers ( account_id,ladger_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num,khasra_no,opening_balance,bhumi_gram) VALUES ('$account_id',$ladger_type,'$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num','$khasra_no','$opening_balance','$bhumi_gram')");
 
         if($ladger_type == 1){
             return Redirect::to('ledger')->with('success', 'Ledger Create Successfully');
@@ -95,11 +96,12 @@ class LedgerController extends Controller
 
     function update(Request $req) {
        
-        $ladger_id = $req->input('ladger_id_');
+        $ladger_id = $req->input('ladger_id');
         $relational_cust_name	 = $req->input('relational_cust_name');
         $account_holder	 = $req->input('account_holder');
         $farm_owner_name = $req->input('farm_owner_name');
         $khasra_no = $req->input('khasra_no');
+        $bhumi_gram = $req->input('bhumi_gram');
         $opening_balance = $req->input('opening_balance');
         $village = $req->input('village');
          $farm_area_acre = $req->input('farm_area_acre');
@@ -113,7 +115,7 @@ class LedgerController extends Controller
                 
 
 
-       DB::update("update ladgers set relational_cust_name = '$relational_cust_name' ,account_holder = '$account_holder',farm_owner_name = '$farm_owner_name',village = '$village',farm_area_acre = '$farm_area_acre',phone_number = '$phone_number',bank_account_name = '$bank_account_name',account_number = '$account_number',bank_name = '$bank_name',ifsc_code = '$ifsc_code',branch = '$branch',gst_num = '$gst_num',khasra_no = '$khasra_no',opening_balance = '$opening_balance'  where ladger_id = '$ladger_id'");
+       DB::update("update ladgers set relational_cust_name = '$relational_cust_name' ,account_holder = '$account_holder',farm_owner_name = '$farm_owner_name',village = '$village',farm_area_acre = '$farm_area_acre',phone_number = '$phone_number',bank_account_name = '$bank_account_name',account_number = '$account_number',bank_name = '$bank_name',ifsc_code = '$ifsc_code',branch = '$branch',gst_num = '$gst_num',khasra_no = '$khasra_no',opening_balance = '$opening_balance',bhumi_gram = '$bhumi_gram'  where ladger_id = '$ladger_id'");
 
        /*echo "update ladgers set relational_cust_name = '$relational_cust_name' ,account_holder = '$account_holder',farm_owner_name = '$farm_owner_name',village = '$village',farm_area_acre = '$farm_area_acre',phone_number = '$phone_number',bank_account_name = '$bank_account_name',account_number = '$account_number',bank_name = '$bank_name',ifsc_code = '$ifsc_code',branch = '$branch',gst_num = '$gst_num',khasra_no = '$khasra_no',opening_balance = '$opening_balance'  where ladger_id = '$ladger_id'"; exit;*/
 

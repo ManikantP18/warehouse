@@ -101,9 +101,7 @@ class KataParchiController extends Controller
         kp_bhoomiswami_name = '$kp_land_owner',
         kp_vilage = '$kpvilage',
         kp_rakaba_acre = '$kp_acre',
-
         kp_khasra_no = '$kp_acre',
-        
         kp_mo_no = '$kpmn',
         kp_rogger_name = '$kp_rogger',
         kp_verity = '$kpvarity',

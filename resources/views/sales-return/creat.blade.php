@@ -6,6 +6,7 @@
     <div class="row" >
         <div class="col-lg-12">
             <div class="row align-items-end">
+
                 <div class="col-lg-3">
                     <div class="form-group" >
                         <label for="search" class="form-label">Account/Mobile No</label>
@@ -14,6 +15,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label for="search_name" class="form-label">Farmer Name</label>
@@ -22,6 +24,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label for="search_village" class="form-label">Village Name</label>
@@ -30,12 +33,14 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label class="form-label d-none d-sm-block">&nbsp;</label>
                         <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
                     </div>
                 </div>
+                
             </div>
             <div class="form-group">
                 <div class="form-icon-user allfarmers"></div>
@@ -43,15 +48,7 @@
         </div>
         <div id="form-fields-wrapper" style="display: none;">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_date" class="form-label">Date</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_date" type="date" id="kp_date" value="{{date('Y-m-d')}}">
-                        </div>
-                    </div>
-
-                </div>
+                
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="kp_acc_no" class="form-label">Account No.</label>
