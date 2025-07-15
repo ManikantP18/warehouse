@@ -35,6 +35,11 @@
         <input class="form-control" name="village" type="text" required minlength="2" pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed" >
     </div>
 
+     <div class="col-md-6">
+        <label>Bhumi Gram</label>
+        <input class="form-control" name="bhumi_gram" type="text" required minlength="2" pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed" >
+    </div>
+
     <div class="col-md-6">
         <label>Farmer Area Acre</label>
         <input class="form-control" name="farm_area_acre" type="number" required min="0" step="0.01">
@@ -129,6 +134,11 @@ function showhide(value) {
         </div>
 
         <div class="col-md-6">
+        <label>Bhumi Gram</label>
+        <input class="form-control" name="bhumi_gram" type="text" required minlength="2" pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed" >
+      </div>
+
+        <div class="col-md-6">
             <label>Farmer Area Acre</label>
             <input class="form-control" name="farm_area_acre" type="number">
         </div>
@@ -202,6 +212,7 @@ function showhide(value) {
             <input class="form-control" name="village" type="text" required  pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed">
         </div>
 
+       
        <div class="col-md-6">
     <label>Phone No.</label>
     <input class="validphone form-control @error('phone_number') is-invalid @enderror" 

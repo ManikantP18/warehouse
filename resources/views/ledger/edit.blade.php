@@ -4,7 +4,7 @@
     <h6 class="sub-title">Ladger Creation</h6>
 
     <div class="row">
-        <input type="hidden" name="ladger_id " value="{{ $ledger[0]->ladger_id}}">
+        <input type="hidden" name="ladger_id" value="{{ $ledger[0]->ladger_id}}">
 
 
         <div class="form-group mb-3">
@@ -46,6 +46,14 @@
                 <label for="ladger_type	" class="form-label">Khasra No.</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required="required" name="khasra_no" type="number" id="khasra_no" value="{{$ledger[0]->khasra_no}}">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
+            <div class="form-group">
+                <label for="ladger_type	" class="form-label">Bhumi Gram</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required="required" name="bhumi_gram" type="text" id="bhumi_gram" value="{{$ledger[0]->bhumi_gram}}">
                 </div>
             </div>
         </div>
