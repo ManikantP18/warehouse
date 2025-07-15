@@ -52,6 +52,7 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
+                                    <th>Purchase Date</th>
                                     <th>cash/Credit</th>
                                     <th> Relational Customer Name</th>
                                     <th> Accountant Name </th>
@@ -74,6 +75,7 @@
                            @foreach($purchase AS $value):
 
                                 <tr>
+                                    <td> {{date('d/m/Y',strtotime($value->purchase_date))}} </td>
                                     <td> {{$value->purchase_way}} </td>
                                     <td> {{$value->purchase_relation_cusm}} </td>
                                     <td> {{$value->purchase_accountant}}</td>

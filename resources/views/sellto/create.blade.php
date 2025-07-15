@@ -107,38 +107,50 @@
           </div>
         </div>
 
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Item Selled</label>
-            <select name="sellto_item_selled" id="sellto_item_selled" class="form-control" onchange="autofill()">
-              <option value="" hidden>Select Item</option>
-              @foreach($items as $val)
-                <option value="{{ $val->id }}">{{ $val->item_name }} - {{ $val->quantity }} KG</option>
-              @endforeach
-            </select>
-          </div>
-        </div>
+        <div id="item-wrapper">
+          <div class="item-group">
+              <div class="row">
 
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Quantity</label>
-            <input type="number" class="form-control" name="sellto_quantity" id="sellto_quantity" value="1" required onkeyup="autofill()" onchange="autofill()">
-          </div>
-        </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Item Selled</label>
+                        <select name="sellto_item_selled[]" id="sellto_item_selled" class="form-control sellto_item_selled" dataid="1">
+                          <option value="" hidden>Select Item</option>
+                          @foreach($items as $val)
+                            <option value="{{ $val->id }}">{{ $val->item_name }} - {{ $val->quantity }} KG</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
 
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Rate</label>
-            <input type="number" class="form-control" name="sellto_rate" id="sellto_rate" required value='0'>
-          </div>
-        </div>
-        
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity" value="1" required onkeyup="autofill()" onchange="autofill()">
+                      </div>
+                    </div>
 
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>GST Amount</label>
-            <input type="number" class="form-control" name="sellto_gst_amount" id="sellto_gst_amount" required value='0'>
-          </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Rate</label>
+                        <input type="number" class="form-control sellto_rate" name="sellto_rate[]" id="sellto_rate" required value='0'>
+                      </div>
+                    </div>
+                    
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>GST Amount</label>
+                        <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" id="sellto_gst_amount" required value='0'>
+                      </div>
+                    </div>
+
+                </div>
+              </div>
+            </div>
+
+        <div class="text-end mb-3" id="add-more-container">
+          <button type="button" class="btn btn-sm btn-success" onclick="addMoreItem()">+ Add More Items</button>
         </div>
 
         <div class="col-md-6">
@@ -176,7 +188,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Total Amount</label>
-            <input type="number" class="form-control" name="sellto_total_amount" id="sellto_total_amount" required value='0'>
+            <input type="number" class="form-control sellto_total_amount" name="sellto_total_amount" id="sellto_total_amount" required value='0'>
           </div>
         </div>
 
@@ -269,8 +281,55 @@ function autofill() {
   }
 }
 
+$(document).on("change", ".sellto_item_selled", function() {
+  let did = $(this).attr('dataid');
+
+  let item = $(this).val();
+  let qty = $('#sellto_quantity').val();
+  let data = JSON.parse($('#itemsdata').val());
+  let product = data.find(d => d.id == item);
+  if (product) {
+    $('.sellto_rate').last().val(product.sale_price);
+    let ratetotal = product.sale_price * qty;
+    let gst = (ratetotal / 100) * product.rate;
+
+    $('#sellto_total_amount').val((ratetotal + gst).toFixed(2));
+    $('.sellto_gst_amount').last().val(gst.toFixed(2));
+
+    let cash = parseFloat($('#sellto_cash_amount').val()) || 0;
+    let credit = parseFloat($('#sellto_Credit_amount').val()) || 0;
+
+    let remaining = (ratetotal + gst) - (cash + credit);
+    $('#sellto_Remaining_amount').val(remaining.toFixed(2));
+  }
+
+})
+
+function autofillbyitems() {
+  
+}
+
 $(document).ready(function () {
   $('#form-fields-wrapper').hide();
   $('.allfarmers').hide();
 });
+
+function addMoreItem() {
+ let $parent = $('#item-wrapper');
+  let $clone = $parent.find('.item-group').first().clone();
+
+  // Clear all inputs, selects, and textareas inside the clone
+  $clone.find('input, select, textarea').val('');
+
+  // Append the clone
+
+  $parent.append('<hr> ');
+  $parent.append($clone);
+
+  $('.sellto_item_selled').last().attr('dataid', '2');
+
+  $('.sellto_quantity').last().val(1);
+
+
+}
 </script>
