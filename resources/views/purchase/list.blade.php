@@ -63,9 +63,7 @@
                                     <th> RST No. </th>
                                     <th> LOT No. </th>
                                     <th> GST Details </th>
-                                    <th> Purchase Item </th>
-                                    <th> Quantity </th>
-                                    <th> Rate </th>
+                                   
                                     <th> Total Amount </th>
                                     <th> Action </th>
                                 </tr>
@@ -86,9 +84,7 @@
                                     <td> {{$value->purchase_rst_no}} </td>
                                     <td> {{$value->purchase_lot_no}} </td>
                                     <td>{{$value->purchase_gst_no}} </td>
-                                    <td> {{$value->name}} {{$value->quantity}} KG</td>
-                                    <td> {{$value->purchase_quantity}}</td>
-                                    <td>{{$value->purchase_rate}} </td>
+                                    
                                     <td> {{$value->purchase_total}}</td>
                                     <td>
                                             
