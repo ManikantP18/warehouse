@@ -107,47 +107,69 @@
           </div>
         </div>
 
-        <div id="item-wrapper">
-          <div class="item-group">
-              <div class="row">
 
-                  <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Item Selled</label>
-                        <select name="sellto_item_selled[]" id="sellto_item_selled" class="form-control sellto_item_selled" dataid="1">
-                          <option value="" hidden>Select Item</option>
-                          @foreach($items as $val)
-                            <option value="{{ $val->id }}">{{ $val->item_name }} - {{ $val->quantity }} KG</option>
-                          @endforeach
-                        </select>
-                      </div>
-                    </div>
+        <!--- Nikku Created List View -->
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Quantity</label>
-                        <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity" value="1" required onkeyup="autofill()" onchange="autofill()">
-                      </div>
-                    </div>
+        @for($i = 0; $i < count($items); $i++)
+  <div class="row mb-3">
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Rate</label>
-                        <input type="number" class="form-control sellto_rate" name="sellto_rate[]" id="sellto_rate" required value='0'>
-                      </div>
-                    </div>
-                    
+    <div class="col-md-2">
+      <div class="form-group">
+       <label>Item Selled</label>
+        <select name="sellto_item_selled[]" id="sellto_item_selled" class="form-control sellto_item_selled" dataid="1">
+          <option value="" hidden>Select Item</option>
+          @foreach($items as $val)
+            <option value="{{ $val->id }}">{{ $val->item_name }} - {{ $val->quantity }} KG</option>
+          @endforeach
+        </select>
+      </div>
+    </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>GST Amount</label>
-                        <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" id="sellto_gst_amount" required value='0'>
-                      </div>
-                    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity" value="1" required onkeyup="autofill()" onchange="autofill()">
+      </div>
+    </div>
 
-                </div>
-              </div>
-            </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Unit</label>
+          <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $i }}" onchange="autofill({{ $i }})">
+            <option value="" hidden>Select Unit</option>
+             @foreach($items as $val)
+                <option value="{{ $val->id }}">{{ $val->item_name }} - {{ $val->quantity }} KG</option>
+             @endforeach
+          </select>
+        </div>
+      </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>Rate</label>
+        <input type="number" class="form-control sellto_rate" name="sellto_rate[]" id="sellto_rate" required value='0'>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>GST Amount</label>
+        <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" id="sellto_gst_amount" required value='0'>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>Total Amount</label>
+        <input type="number" class="form-control" name="item_total[]" id="purchase_total_{{ $i }}" value="0">
+      </div>
+    </div>
+
+  </div>
+@endfor
+
+        <!-- End List view -->
 
         <div class="text-end mb-3" id="add-more-container">
           <button type="button" class="btn btn-sm btn-success" onclick="addMoreItem()">+ Add More Items</button>
