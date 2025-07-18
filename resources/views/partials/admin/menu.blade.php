@@ -265,6 +265,13 @@
                             <span class="dash-mtext">kataparchi</span>
                         </a>
                     </li>
+
+                    <li class="dash-item {{ Request::route()->getName() == 'Sales-Return.list' ? ' active' : '' }} ">
+                        <a href="{{ route('Sales-Return.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Sales Return</span>
+                        </a>
+                    </li>
                  
                     <li class="dash-item {{ Request::route()->getName() == 'sellto.list' ? ' active' : '' }} ">
                         <a href="{{ route('sellto.list') }}" class="dash-link ">
