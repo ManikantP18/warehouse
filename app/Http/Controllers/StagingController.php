@@ -21,8 +21,10 @@ class StagingController extends Controller
     }
 
     function create(){
+
+        $data['lotnumbers'] = DB::select("select purchase_lot_no from purchase where purchase_status = 1 AND is_deleted = 0");
         
-        return view('staging/create');
+        return view('staging/create',$data);
     }
 
    function add(Request $req){
