@@ -13,13 +13,16 @@ use DB;
 class SelltoController extends Controller
 {
     public function index(){
-        $data['sellto'] = DB::select("select * from sell_to where sell_to = 'farmer' and is_deleted = 0");
+        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname  from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name where sell_to = 'farmer' and is_deleted = 0 order by sell_id DESC");
         return view('sellto/list',$data);
 
     }
 
      function create(){
-        $data['items'] = DB::select("select * from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
+        $data['items'] = DB::select("select *, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
+
+
+        $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
        
         return view('sellto/create',$data);
     }
@@ -41,8 +44,12 @@ class SelltoController extends Controller
         $cashamm = $req->input('sellto_cash_amount');
         $creditamm = $req->input('sellto_Credit_amount');
         $remainamm = $req->input('sellto_Remaining_amount');
-
-        DB::insert("Insert into sell_to (sell_way,sell_to,sell_account_number,sell_phone,sell_relation_customer,sell_account_name,sell_property_owner,sell_village,item_selled,sell_quantity,sell_rate,sell_total_ammount,sell_gst_ammount,cash_amount,credit_amount,remaining_amount) VALUES ('$cashcredit', '$farmerother' , '$accno', '$phone' ,'$csname', '$accholder','$oname', '$village' ,'$itemselled', '$quantity','$rate' ,'$total', '$gst','$cashamm' ,'$creditamm', '$remainamm')");
+        $bank_name = $req->input('bank_name');
+        DB::insert("Insert into sell_to (sell_way,sell_to,sell_account_number,sell_phone,sell_relation_customer,sell_account_name,sell_property_owner,sell_village,item_selled,sell_quantity,sell_rate,sell_total_ammount,sell_gst_ammount,cash_amount,credit_amount,remaining_amount,bank_name) VALUES ('$cashcredit', '$farmerother' , '$accno', '$phone' ,'$csname', '$accholder','$oname', '$village' ,'$itemselled', '$quantity','$rate' ,'$total', '$gst','$cashamm' ,'$creditamm', '$remainamm','$bank_name')");
+        
+        
+        
+        
         if($farmerother == 'farmer') {
             return Redirect::to('sellto');
         }
@@ -63,12 +70,17 @@ class SelltoController extends Controller
             AND village LIKE '%$searchVillage%')
             ");
 
+            $variety = DB::select("SELECT * FROM product_services join sell_to on sell_to.item_selled = product_services.id
+            WHERE sell_to.sell_account_number LIKE '%$searchVal%'
+            ");
+
 
 
             if ($searchData) {
                 return response()->json([
                     'success' => true,
-                    'data' => $searchData
+                    'data' => $searchData,
+                    'products' => $variety
                 ]);
             } else {
                 return response()->json([
@@ -94,6 +106,9 @@ class SelltoController extends Controller
         $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
 
         $data['items'] = DB::select("select * from product_services where type = 'Product'");
+
+         $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 ");
+         
         return view('sellto/edit',$data);
     } 
 
@@ -114,10 +129,10 @@ class SelltoController extends Controller
         $cashamm = $req->input('sellto_cash_amount');
         $creditamm = $req->input('sellto_Credit_amount');
         $remainamm = $req->input('sellto_Remaining_amount');
-         $id = $req->input('kp_id');
+         $id = $req->input('sell_id');
 
 
-        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',item_selled = '$itemselled',sell_quantity = '$quantity',sell_rate = '$rate',sell_total_ammount = '$total',sell_gst_ammount = '$gst' , cash_amount = '$cashamm',credit_amount = '$creditamm'  remaining_amount = '$remainamm'  where kp_id = '$id'");
+        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',item_selled = '$itemselled',sell_quantity = '$quantity',sell_rate = '$rate',sell_total_ammount = '$total',sell_gst_ammount = '$gst' , cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
 
         return Redirect::to('sellto');
     }

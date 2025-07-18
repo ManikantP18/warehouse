@@ -2,8 +2,6 @@
 @php
     $profile = asset(Storage::url('uploads/avatar/'));
 @endphp
-
-
 @push('script-page')
     <script>
         $(document).on('click', '#billing_data', function() {
@@ -17,14 +15,12 @@
         })
     </script>
 @endpush
-
 @section('page-title')
-    {{ __('Manage Rogring') }}
+    {{ __('Manage Purchase') }}
 @endsection
-
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item">{{ __('Rogrings') }}</li>
+    <li class="breadcrumb-item">{{ __('Purchase') }}</li>
 @endsection
 
 @section('action-btn')
@@ -39,8 +35,8 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-        <a href="#" data-size="xl" data-url="{{ route('Rogring.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Ladger') }}"
+        <a href="#" data-size="xl" data-url="{{ route('purchase.create') }}" data-ajax-popup="true"
+            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Purchase') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
         </a>
@@ -56,50 +52,60 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>Rogring Id</th>
-                                    <th> Rogrowing Responsible</th>
-                                    <th> Relational Cust. Name </th>
-                                    <th> Farmer Owner Name </th>
+                                    <th>Purchase Date</th>
+                                    <th>cash/Credit</th>
+                                    <th> Relational Customer Name</th>
+                                    <th> Accountant Name </th>
+                                    <th> Owner Name </th>
                                     <th> Village </th>
-                                    <th> Status </th>
+                                    <th> Field Acre </th>
+                                    <th> Mobile Number </th>
+                                    <th> RST No. </th>
+                                    <th> LOT No. </th>
+                                    <th> GST Details </th>
+                                   
+                                    <th> Total Amount </th>
                                     <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($rogring as $value)
+
+                           @foreach($purchase AS $value):
+
                                 <tr>
-                                    <td>{{ $value->Rogring_id }}</td>
-                                    <td>{{ $value->Rogring_name }}</td>
-                                    <td>{{ $value->relational_cust_name }}</td>
-                                    <td>{{ $value->farm_owner_name }}</td>
-                                    <td>{{ $value->village }}</td>
-                                    <td>{{ $value->Rogring_status == 1 ? 'Active' : 'Inactive' }}</td>
+                                    <td> {{date('d/m/Y',strtotime($value->purchase_date))}} </td>
+                                    <td> {{$value->purchase_way}} </td>
+                                    <td> {{$value->purchase_relation_cusm}} </td>
+                                    <td> {{$value->purchase_accountant}}</td>
+                                    <td>{{$value->purchase_owner}} </td>
+                                    <td>{{$value->purchase_village}} </td>
+                                    <td> {{$value->purchase_acre}}</td>
+                                    <td>{{$value->purchase_phone}} </td>
+                                    <td> {{$value->purchase_rst_no}} </td>
+                                    <td> {{$value->purchase_lot_no}} </td>
+                                    <td>{{$value->purchase_gst_no}} </td>
+                                    
+                                    <td> {{$value->purchase_total}}</td>
                                     <td>
-                                     <!--  <div class="d-flex">
-                                        <a href="#"
-                                         data-url="{{ route('rogring.edit', $value->Rogring_id) }}"
+                                            
+                                   
+                                    <a href="#" data-size="xl" data-url="{{ route('purchase.edit', $value->purchase_id) }}" data-ajax-popup="true"
+                                    data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Purchase') }}"
+                                    class="btn btn-sm btn-primary">
+                                        <i class="ti ti-pencil"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" 
+                                    class="btn btn-sm bg-danger text-white shadow-sm" 
+                                    title="Delete" 
+                                    onclick="removeit('{{ route('purchase.delete', $value->purchase_id) }}')">
+                                        <i class="ti ti-trash"></i>
+                                    </a>
 
-                                             data-ajax-popup="true"
-                                               data-title="{{ __('Edit Rogring') }}"
-                                               class="btn btn-sm btn-primary me-2"
-                                               data-bs-toggle="tooltip" title="{{ __('Edit') }}">
-                                                <i class="ti ti-pencil"></i>
-                                            </a>
-                                             -->
 
-                                            <form method="POST" action="{{ route('Rogring.destroy', $value->Rogring_id) }}"
-                                          onsubmit="return confirm('{{ __('Are you sure you want to delete this Rogring?') }}');">
-                                          @csrf
-                                              @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
-                                        data-bs-toggle="tooltip" title="{{ __('Delete') }}">
-                                      <i class="ti ti-trash"></i>
-                                         </button>
-                                             </form>
+                                </td>
 
-                                        </div>
-                                    </td>
-                                </tr>
+                                    
+                               </tr>
                             @endforeach
                             </tbody>
                         </table>
@@ -116,13 +122,13 @@
             if ($(this).is(':checked')) {
                 $('.ps_div').removeClass('d-none');
                 $('#password').attr("required", true);
+
             } else {
                 $('.ps_div').addClass('d-none');
                 $('#password').val(null);
                 $('#password').removeAttr("required");
             }
         });
-
         $(document).on('click', '.login_enable', function() {
             setTimeout(function() {
                 $('.modal-body').append($('<input>', {
@@ -132,5 +138,12 @@
                 }));
             }, 2000);
         });
+
+         function removeit(url) {
+            let cnf = confirm('Are You Sure You Want To Delete This Purchase?');
+            if(cnf == true) {
+                window.location.href = url;
+            }
+        }
     </script>
 @endpush

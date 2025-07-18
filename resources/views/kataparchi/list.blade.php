@@ -56,15 +56,20 @@
                                     <th> kataparchi date</th>
                                     <th> Acc No. </th>
                                     <th> customer name </th>
-                                    <th> account holder name </th>
+                                    <th> Aadhar Number </th>
                                     <th> land owner name </th>
                                     <th>village</th>
                                     <th> land acre</th>
+
+                                    <th> khasra No.</th>
+
                                     <th> Mobile no. </th>
                                     <th>Rogating agent</th>
                                     <th> variety </th>
                                     <th> RST no </th>
-                                    <th> vehcle weight </th>
+                                    <th> Gross weight </th>
+                                    <th> Tare weight </th>
+                                    <th>  pure weight </th>
                                     <th> Godown name </th>
                                     <th> creat date </th>
                                     <th> update date </th>
@@ -79,20 +84,27 @@
 
                                 <tr>
                                     <td> {{ $value->kp_id }} </td>
-                                    <td> {{ $value->kp_date }} </td>
+                                    <td> {{ date('d/m/Y', strtotime($value->kp_date)) }} </td>
                                     <td> {{ $value->kp_acc_no }} </td>
                                     <td> {{ $value->kp_rel_name  }} </td>
-
                                     <td> {{ $value->kp_acc_holdername}} </td>
-
                                     <td> {{ $value->kp_bhoomiswami_name }} </td>
                                     <td> {{ $value->kp_vilage }} </td>
+
                                     <td> {{ $value->kp_rakaba_acre }} </td>
+
+                                     <td> {{ $value->kp_khasra_no }} </td>
+
                                     <td> {{ $value->kp_mo_no  }} </td>
                                     <td> {{ $value->kp_rogger_name }} </td>
                                     <td> {{ $value->kp_verity }} </td>
                                     <td> {{ $value->kp_rstno }} </td>
+
                                     <td> {{ $value->kp_vehicle_wight }} </td>
+                                    
+                                    <td> {{ $value->kp_only_vechicle_w }} </td>
+                                    <td> {{ $value->kp_pure_wigth }} </td>
+
                                     <td> {{ $value->kp_godown_name  }} </td>
                                     <td> {{ $value->creat_at }} </td>
                                     <td> {{ $value->update_at}} </td>
@@ -101,13 +113,13 @@
                                     <td> 
                                         <div class="d-flex">
                                             
-                                        <a href="#"
+                                        <a href="#" data-size="xl"
                                                 data-url="{{ route('kataparchi.edit', $value->kp_id) }}"
                                                 data-ajax-popup="true"
-                                                 data-title="{{ __('EDit kataparchi') }}"
+                                                 data-title="{{ __('Edit kataparchi') }}"
                                                  
                                                  class="btn btn-sm btn-primary me-2"
-                                                data-bs-toggle="tooltip" title="{{ __('Edite')}}">
+                                                data-bs-toggle="tooltip" title="{{ __('Edit')}}">
                                                 <i class="ti ti-pencil"></i>
                                             </a> 
 

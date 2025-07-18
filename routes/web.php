@@ -89,6 +89,8 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\LadgerController;
 use App\Http\Controllers\BranchesController;
 use App\Http\Controllers\RogringController;
+use App\Http\Controllers\BankController;
+use App\Http\Controllers\StagingController;
 
 
 
@@ -97,6 +99,9 @@ use App\Http\Controllers\RogringController;
 use App\Http\Controllers\LedgerController;
 
 use App\Http\Controllers\KataParchiController;
+
+use App\Http\Controllers\CNController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -111,10 +116,31 @@ use App\Http\Controllers\KataParchiController;
 
 
 require __DIR__ . '/auth.php';
+Route::get('/staging', 'App\Http\Controllers\StagingController@index')->name('staging.list')->middleware('auth');
+Route::get('/staging/create', 'App\Http\Controllers\StagingController@create')->name('staging.create')->middleware('auth');
+Route::post('/staging/add', 'App\Http\Controllers\StagingController@add')->name('staging.add')->middleware('auth');
+Route::get('/staging/delete/{id}', 'App\Http\Controllers\StagingController@delete')->name('staging.delete')->middleware('auth');
+Route::get('/staging/edit/{id}', 'App\Http\Controllers\StagingController@edit')->name('staging.edit')->middleware('auth');
+Route::put('/staging/edit/', 'App\Http\Controllers\StagingController@update')->name('staging.update')->middleware('auth');
+
+
+Route::get('/bankacc', 'App\Http\Controllers\BankController@index')->name('bankacc.list')->middleware('auth');
+
+Route::get('/bankacc/create', 'App\Http\Controllers\BankController@create')->name('bankacc.create')->middleware('auth');
+
+Route::post('/bankacc/add', 'App\Http\Controllers\BankController@add')->name('bankacc.add')->middleware('auth');
+
+Route::get('bankacc/edit/{id}', 'App\Http\Controllers\BankController@edit')->name('bankacc.edit');
+
+// Update existing account
+Route::put('bankacc/update', 'App\Http\Controllers\BankController@update')->name('bankacc.update');
+
+// delete
+Route::get('bankacc/delete/{id}', 'App\Http\Controllers\BankController@delete')->name('bankacc.delete');
+
 
 Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('branches.list')->middleware('auth');
 
-Route::get('/branches/create', 'App\Http\Controllers\BranchesController@create')->name('branches.create')->middleware('auth');
 
 Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->name('branches.add')->middleware('auth');
 
@@ -165,6 +191,22 @@ Route::get('/kataparchi/edit/{id}', 'App\Http\Controllers\KataParchiController@e
 
 Route::put('/kataparchi/update', 'App\Http\Controllers\KataParchiController@update')->name('kataparchi.update')->middleware('auth');
 
+//-------------salse return----------------
+
+Route::get('/Sales-Return', 'App\Http\Controllers\CNController@index')->name('Sales-Return.list')->middleware('auth');
+
+Route::get('/Sales-Return/create', 'App\Http\Controllers\CNController@create')->name('Sales-Return.create')->middleware('auth');
+
+Route::post('/SalesReturn/add', 'App\Http\Controllers\CNController@add')->name('Sales-Return.add')->middleware('auth');
+
+Route::get('/SalesReturn/delete/{id}', 'App\Http\Controllers\CNController@delete')->name('Sales-Return.delete')->middleware('auth');
+
+Route::get('/SalesReturn/edit/{id}', 'App\Http\Controllers\CNController@edit')->name('Sales-Return.edit')->middleware('auth');
+
+Route::put('/SalesReturn/update', 'App\Http\Controllers\CNController@update')->name('Sales-Return.update')->middleware('auth');
+
+// --------------End selse return ------------
+
 
 Route::get('/Rogring', 'App\Http\Controllers\RogringController@index')->name('Rogring.list')->middleware('auth');
 
@@ -194,6 +236,22 @@ Route::get('/SellsQuatation/edit/{id}', 'App\Http\Controllers\SellesQuatationCon
 
 Route::put('/SellsQuatation/update', 'App\Http\Controllers\SellesQuatationController@update')->name('SellsQuatation.update')->middleware('auth');
 
+Route::get('/purchase', 'App\Http\Controllers\PurchaseController@index')->name('purchase.list')->middleware('auth');
+
+Route::get('/purchase/create', 'App\Http\Controllers\PurchaseController@create')->name('purchase.create')->middleware('auth');
+
+Route::post('/purchase/add', 'App\Http\Controllers\PurchaseController@add')->name('purchase.add')->middleware('auth');
+
+Route::get('/purchase/search', 'App\Http\Controllers\PurchaseController@search')->name('purchase.search')->middleware('auth');
+
+Route::get('/purchase/edit/{id}', 'App\Http\Controllers\PurchaseController@edit')->name('purchase.edit')->middleware('auth');
+ 
+Route::get('/purchase/getrst', 'App\Http\Controllers\PurchaseController@getrst')->name('purchase.getrst')->middleware('auth');
+
+Route::post('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
+
+
+Route::get('/purchase/delete/{id}', 'App\Http\Controllers\PurchaseController@delete')->name('purchase.delete')->middleware('auth');
 
 
 

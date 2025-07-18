@@ -265,6 +265,13 @@
                             <span class="dash-mtext">kataparchi</span>
                         </a>
                     </li>
+
+                    <li class="dash-item {{ Request::route()->getName() == 'Sales-Return.list' ? ' active' : '' }} ">
+                        <a href="{{ route('Sales-Return.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Sales Return</span>
+                        </a>
+                    </li>
                  
                     <li class="dash-item {{ Request::route()->getName() == 'sellto.list' ? ' active' : '' }} ">
                         <a href="{{ route('sellto.list') }}" class="dash-link ">
@@ -284,6 +291,19 @@
                         <a href="{{ route('SellsQuatation.list') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
                             <span class="dash-mtext">Selles Quatation</span>
+                     <li class="dash-item {{ Request::route()->getName() == 'bankacc.list' ? ' active' : '' }} ">
+                        <a href="{{ route('bankacc.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Bank Account</span>
+
+                    <li class="dash-item {{ Request::route()->getName() == 'purchase.list' ? ' active' : '' }} ">
+                        <a href="{{ route('purchase.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Purchase</span>
+                      <li class="dash-item {{ Request::route()->getName() == 'staging.list' ? ' active' : '' }} ">
+                        <a href="{{ route('staging.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-mtext">Staging</span>
                         </a>
                     </li>
     

@@ -88,4 +88,11 @@
             }
         }
     }
+
+$(document).ready(function () {
+    $('#commonModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+});
 </script>
