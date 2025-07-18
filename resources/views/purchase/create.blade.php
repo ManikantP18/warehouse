@@ -58,15 +58,13 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Mode of Invoice</label>
-           <select name="purchase_way" id="purchase_way" class="form-control">
-  <option value="" hidden selected>Select Mode</option>
-  <option value="cash">Cash</option>
-  <option value="credit">Credit</option>
-</select>
-
-
+              <select name="purchase_way" id="purchase_way" class="form-control">
+                <option value="cash">Cash</option>
+                <option value="credit">Credit</option>
+              </select>
           </div>
         </div>
+
 
         <div class="col-md-6">
           <div class="form-group">
@@ -134,14 +132,7 @@
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Bank Name</label>
-           <select name="purchase_item" id="purchase_item" class="form-control" >
-              <option value="" hidden>Select Bank</option>
-
-              @foreach($banks AS $value) :
-                  <option value="{{$value->account_id}}">{{$value->bank_name}}</option>
-              @endforeach
-              
-            </select>
+           <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required readonly>
           </div>
         </div>
 
@@ -172,40 +163,61 @@
             <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required>
           </div>
         </div> -->
+        
+       @for($i = 0; $i < count($products); $i++)
+  <div class="row mb-3">
 
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Purchase Item</label>
-            <select name="purchase_item" id="purchase_item" class="form-control" >
-              <option value="" hidden>Select Item</option>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Purchase Item</label>
+        <select name="purchase_item[]" id="purchase_item_{{ $i }}" class="form-control allitems" onchange="handleChage({{ $i }})">
+          <option value="" hidden>Select Item</option>
+          @foreach($products as $value)
+            <option value="{{ $value->id }}">
+                {{ $value->name }}
+            </option>
+          @endforeach
+        </select>
+      </div>
+    </div>
 
-              @foreach($products AS $value) :
-                  <option value="{{$value->id}}">{{$value->name}} {{$value->quantity}} KG</option>
-              @endforeach
-              
-            </select>
-          </div>
-        </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_{{ $i }}" value="1" required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})">
+      </div>
+    </div>
 
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Quantity</label>
-            <input type="number" class="form-control" name="purchase_quantity" id="purchase_quantity" value="1" required onkeyup="autofill()" onchange="autofill()" value="1">
-          </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Unit</label>
+          <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $i }}">
+            <option value="" hidden>Select Unit</option>
+            @foreach($units as $value)
+            <option value="{{ $value->id }}">{{ $value->name }}</option>
+            @endforeach
+          </select>
         </div>
+      </div>
 
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Rate</label>
-            <input type="number" onkeyup="autofill()" class="form-control" name="purchase_rate" id="purchase_rate" required value='0'>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Total Amount</label>
-            <input type="number" class="form-control" name="purchase_total" id="purchase_total" required value='0'>
-          </div>
-        </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>Rate</label>
+        <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_{{ $i }}" value="0" onkeyup="autofill({{ $i }})">
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>Total Amount</label>
+        <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_{{ $i }}" required value="0">
+      </div>
+    </div>
+
+  </div>
+@endfor
+
 
         <!--
         <div class="col-md-6">
@@ -247,6 +259,28 @@
   if (val === 'other') $('.changehide').hide();
 }
 
+function handleChage(flag) {
+  let val = $("#purchase_item_" + flag).val();
+
+  let isDuplicate = false;
+
+  $(".allitems").each(function () {
+    // Fix: Remove space in '!='
+    if ($(this).attr('id') !== 'purchase_item_' + flag && $(this).val() !== '') {
+      if ($(this).val() === val) {
+        isDuplicate = true;
+        return false; // break out of loop
+      }
+    }
+  });
+
+  if (isDuplicate) {
+    alert('Same item already selected');
+    $("#purchase_item_" + flag).val(''); // reset the value
+  }
+}
+
+
 function searchLadger() {
   let searchVal = $('#search').val();
   let searchVillage = $('#search_village').val();
@@ -279,7 +313,7 @@ function selectLadger(id) {
       $.ajax({
         url: '{{ route('purchase.getrst') }}',
         type: 'GET',
-        data: { account_id: d.ladger_id},
+        data: { account_id: d.account_id},
         success: function(res) {
           if (res.success && res.data) {
               $('#purchase_rst_no').val(res.data[0].kp_rstno);
@@ -287,7 +321,7 @@ function selectLadger(id) {
         }
 
       });
-      $('#purchase_way').val(d.purchase_way);
+     
       $('#purchase_relation_cusm').val(d.relational_cust_name);
       $('#spurchase_accountant').val(d.account_holder);
       $('#purchase_owner').val(d.farm_owner_name);
@@ -297,7 +331,7 @@ function selectLadger(id) {
        
       $('#purchase_lot_no').val(d.purchase_lot_no);
       $('#purchase_account_no').val(d.account_number);
-      $('#purchas_bank_name').val(d.bank_name);
+      $('#purchas_bank_name').val(d.ladgers_bank);
       $('#purchase_ifsc').val(d.ifsc_code);
       $('#purchase_branch').val(d.branch);
       $('#purchase_gst_no').val(d.gst_no);
@@ -311,8 +345,8 @@ function selectLadger(id) {
   });
 }
 
-function autofill() {
- $("#purchase_total").val(parseInt($("#purchase_quantity").val()) * parseInt($("#purchase_rate").val()));
+function autofill(id) {
+ $("#purchase_total_"+id).val(parseInt($("#purchase_quantity_"+id).val()) * parseInt($("#purchase_rate_"+id).val()));
 }
 
 // ✅ Initial setup to hide form

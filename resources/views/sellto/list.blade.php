@@ -75,6 +75,7 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
+                                    <th>Sell Date</th>
                                     <th>account no.</th>
                                     <th>Customer name </th>
                                     <th> Aadhar Number </th>
@@ -100,6 +101,7 @@
                             @foreach($sellto AS $value):
 
                                 <tr>
+                                    <td> {{date('d/m/Y',strtotime($value->sell_created_date))}} </td>
                                     <td> {{$value->sell_account_number}} </td>
                                     <td> {{$value->sell_relation_customer}} </td>
                                     <td> {{$value->sell_account_name}} </td>

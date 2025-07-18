@@ -113,13 +113,13 @@
                                     <td> 
                                         <div class="d-flex">
                                             
-                                        <a href="#"
+                                        <a href="#" data-size="xl"
                                                 data-url="{{ route('kataparchi.edit', $value->kp_id) }}"
                                                 data-ajax-popup="true"
-                                                 data-title="{{ __('EDit kataparchi') }}"
+                                                 data-title="{{ __('Edit kataparchi') }}"
                                                  
                                                  class="btn btn-sm btn-primary me-2"
-                                                data-bs-toggle="tooltip" title="{{ __('Edite')}}">
+                                                data-bs-toggle="tooltip" title="{{ __('Edit')}}">
                                                 <i class="ti ti-pencil"></i>
                                             </a> 
 

@@ -46,6 +46,10 @@ class SelltoController extends Controller
         $remainamm = $req->input('sellto_Remaining_amount');
         $bank_name = $req->input('bank_name');
         DB::insert("Insert into sell_to (sell_way,sell_to,sell_account_number,sell_phone,sell_relation_customer,sell_account_name,sell_property_owner,sell_village,item_selled,sell_quantity,sell_rate,sell_total_ammount,sell_gst_ammount,cash_amount,credit_amount,remaining_amount,bank_name) VALUES ('$cashcredit', '$farmerother' , '$accno', '$phone' ,'$csname', '$accholder','$oname', '$village' ,'$itemselled', '$quantity','$rate' ,'$total', '$gst','$cashamm' ,'$creditamm', '$remainamm','$bank_name')");
+        
+        
+        
+        
         if($farmerother == 'farmer') {
             return Redirect::to('sellto');
         }
