@@ -182,6 +182,18 @@ Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update
 
 Route::get('Rogring/search', 'App\Http\Controllers\RogringController@search')->name('Rogring.search')->middleware('auth');
 
+Route::get('/SellsQuatation', 'App\Http\Controllers\SellesQuatationController@index')->name('SellsQuatation.list')->middleware('auth');
+
+Route::get('/SellsQuatation/create', 'App\Http\Controllers\SellesQuatationController@create')->name('SellsQuatation.create')->middleware('auth');
+
+Route::post('/SellsQuatation/add', 'App\Http\Controllers\SellesQuatationController@add')->name('SellsQuatation.add')->middleware('auth');
+
+Route::get('/SellsQuatation/delete/{id}', 'App\Http\Controllers\SellesQuatationController@delete')->name('SellsQuatation.delete')->middleware('auth');
+
+Route::get('/SellsQuatation/edit/{id}', 'App\Http\Controllers\SellesQuatationController@edit')->name('SellsQuatation.edit')->middleware('auth');
+
+Route::put('/SellsQuatation/update', 'App\Http\Controllers\SellesQuatationController@update')->name('SellsQuatation.update')->middleware('auth');
+
 
 
 

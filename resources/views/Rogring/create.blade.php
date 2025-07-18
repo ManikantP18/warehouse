@@ -10,7 +10,7 @@
 
         <div class="col-lg-12 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="Rogring_name" class="form-label">Rogring Name</label>
+                <label for="Rogring_name" class="form-label">Rogring Respensible</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible"required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed" name="Rogring_name" type="text" id="Rogring_name "placeholder ="Rogring Name">
                 </div>
@@ -24,7 +24,7 @@
       <div class="form-group">
         <label for="search" class="form-label">Account/Mobile No</label>
         <div class="form-icon-user">
-          <input class="form-control onlyforformesrs"  name="search" type="text" id="search" placeholder="Acc No / Mobile No">
+          <input class="form-control onlyforformesrs" name="search" type="text" id="search" placeholder="Acc No / Mobile No">
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
       <div class="form-group">
         <label for="search_name" class="form-label">Farmer Name</label>
         <div class="form-icon-user">
-          <input class="form-control onlyforformesrs"  name="search_name" type="text" id="search_name" placeholder="Farmer Name">
+          <input class="form-control onlyforformesrs" name="search_name" type="text" id="search_name" placeholder="Farmer Name">
         </div>
       </div>
     </div>
