@@ -1,6 +1,6 @@
-{{ Form::open(['url' => 'kataparchi/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
+{{ Form::open(['url' => 'SalesReturn/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
-    <h6 class="sub-title">kataparchi</h6>
+    <h6 class="sub-title">Sales-Return</h6>
     
     
     <div class="row" >
@@ -9,27 +9,27 @@
 
                 <div class="col-lg-3">
                     <div class="form-group" >
-                        <label for="search" class="form-label">Account/Mobile No</label>
+                        <label for="mo_no" class="form-label">Mobile No</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="search" type="text" id="search" placeholder="Acc No / Mobile No">
+                            <input class="form-control onlyforformesrs" name="mo_no" type="text" id="mo_no" placeholder="Mobile No">
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-3">
                     <div class="form-group">
-                        <label for="search_name" class="form-label">Farmer Name</label>
+                        <label for="r_cust" class="form-label">Farmer Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="search_name" type="text" id="search_name" placeholder="Farmer Name" >
+                            <input class="form-control onlyforformesrs" name="r_cust" type="text" id="r_cust" placeholder="Farmer Name" >
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-3">
                     <div class="form-group">
-                        <label for="search_village" class="form-label">Village Name</label>
+                        <label for="village" class="form-label">Village Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="search_village" type="text" id="search_village" placeholder="Village Name">
+                            <input class="form-control onlyforformesrs" name="village" type="text" id="village" placeholder="Village Name">
                         </div>
                     </div>
                 </div>
@@ -51,122 +51,61 @@
                 
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_acc_no" class="form-label">Account No.</label>
+                        <label for="cash_credit" class="form-label">CASH / CREDIT</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible"  name="kp_acc_no" type="text" id="kp_acc_no" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_rel_name" class="form-label">Customer Name</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="kp_rel_name" type="text" id="kp_rel_name" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_acc_holdername" class="form-label">Aadhar Number</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_acc_holdername" type="number" id="kp_acc_holdername" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_bhoomiswami_name" class="form-label">Land Owner Name</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="kp_bhoomiswami_name" type="text" id="kp_bhoomiswami_name" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_vilage" class="form-label">Village</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="kp_vilage" type="text" id="kp_vilage" readonly>
+                            <input class="form-control alwaysvisible"  name="cash_credit" type="text" id="cash_credit" >
                         </div>
                     </div>
                 </div>
                 
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_mo_no" class="form-label">Mobile No.</label>
+                        <label for="aadhar_no" class="form-label">Aadhar Number</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="kp_mo_no" type="number" id="kp_mo_no" readonly>
+                            <input class="form-control alwaysvisible" required name="aadhar_no" type="number" id="aadhar_no" >
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_rogger_name" class="form-label">Rogring By</label>
-                        <input class="form-control onlyforformesrs"  name="kp_rogger_name" id="kp_rogger_name" readonly>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_rakaba_acre" class="form-label">Land Acre</label>
+                        <label for="item_sale" class="form-label">ITEM TO BE SALE</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible"  name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" readonly>
+                            <input class="form-control onlyforformesrs"  name="item_sale" type="text" id="item_sale" >
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_khasra_no" class="form-label">Khasra No.</label>
+                        <label for="quantity" class="form-label">QUANTITY</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible"  name="kp_khasra_no" type="text" id="kp_khasra_no" readonly>
+                            <input class="form-control onlyforformesrs"  name="quantity" type="text" id="quantity" >
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="rate" class="form-label">RATE</label>
+                        <div class="form-icon-user">
+                            <input class="form-control onlyforformesrs"  name="rate" type="number" id="rate" >
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_varity" class="form-label">Variety</label>
-                        <div class="form-icon-user">
-                            <select class="form-control alwaysvisible" required name="kp_varity" id="kp_varity">
-                            </select>
-                        </div>
+                        <label for="total_amount" class="form-label">TOTAL AMOUNT</label>
+                        <input class="form-control onlyforformesrs"  name="total_amount" id="total_amount" >
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_rstno" class="form-label">RST No</label>
+                        <label for="GST_amount" class="form-label">GST AMOUNT</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" required name="kp_rstno" type="text" id="kp_rstno">
+                            <input class="form-control alwaysvisible"  name="GST_amount" type="text" id="GST_amount" >
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_vehicle_wight" class="form-label">Gross weight</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="kp_vehicle_wight" type="number" id="kp_vehicle_wight" step="0.01">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="kp_godown_name" class="form-label">Godown Name</label>
-                        <div class="form-icon-user">
-
-                          <select class="form-control onlyforformesrs" required name="kp_godown_name" id="kp_godown_name">
-
-                          <option value=""> Select Branch </option>
-
-                          @foreach($branches as $b) :
-
-                            <option value="{{$b->branch_id}}"> {{$b->branch_name}} </option>
-
-
-                          @endforeach
-
-                        </select>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -179,9 +118,9 @@
 
 <script>
     function searchLadger() {
-        let searchVal = $('#search').val();
-        let searchVillage = $('#search_village').val();
-        let searchname = $('#search_name').val();
+        let searchVal = $('#mo_no').val();
+        let searchVillage = $('#searcvillageh_village').val();
+        let searchname = $('#r_cust').val();
 
         $.ajax({
             url: '{{ route('sellto.search') }}',
@@ -223,17 +162,14 @@
                 if (response.success && response.data.length > 0) {
                     const data = response.data[0];
 
-                    $('#kp_acc_no').val(data.account_id);
-                    $('#kp_rel_name').val(data.relational_cust_name);
-                    $('#kp_acc_holdername').val(data.account_holder);
-                    $('#kp_bhoomiswami_name').val(data.farm_owner_name);
-                    $('#kp_vilage').val(data.village);
-                    $('#kp_rakaba_acre').val(data.farm_area_acre);
-
-                    $('#kp_khasra_no').val(data.khasra_no);
-
-                    $('#kp_mo_no').val(data.phone_number);
-                    $('#kp_rogger_name').val(data.Rogring_name || '');
+                    //$('#kp_acc_no').val(data.account_id);
+                   // $('#kp_rel_name').val(data.relational_cust_name);
+                  //  $('#kp_acc_holdername').val(data.account_holder);
+                   // $('#kp_bhoomiswami_name').val(data.farm_owner_name);
+                   // $('#kp_vilage').val(data.village);
+                  //  $('#kp_rakaba_acre').val(data.farm_area_acre);
+                   // $('#kp_mo_no').val(data.phone_number);
+                  //  $('#kp_rogger_name').val(data.Rogring_name || '');
 
                     let opt = `<option value=""> select Item </option>`;
 

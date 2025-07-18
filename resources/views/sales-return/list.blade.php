@@ -16,11 +16,11 @@
     </script>
 @endpush
 @section('page-title')
-    {{ __('Manage Sales Return') }}
+    {{ __('Manage Sales-Return') }}
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item">{{ __('Sales Return') }}</li>
+    <li class="breadcrumb-item">{{ __('Sales-Return') }}</li>
 @endsection
 
 @section('action-btn')
@@ -35,8 +35,8 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-        <a href="#" data-size="xl" data-url="{{ route('kataparchi.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Sales Return') }}"
+        <a href="#" data-size="xl" data-url="{{ route('Sales-Return.create') }}" data-ajax-popup="true"
+            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create SalesReturn') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
         </a>
@@ -52,7 +52,7 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>kp_Id</th>
+                                    <th>cn_id</th>
                                     <th> Cash / Credit</th>
                                     <th> Aadhar Number </th>
                                     <th> Relational customer name </th>
@@ -71,54 +71,47 @@
                             </thead>
                             <tbody>
 
-                            @foreach($CN AS $value):
-
+                          @foreach($SalesReturn as $value)
                                 <tr>
-                                    <td> {{ $value->kp_id }} </td>
-                                    <td> {{ $value->cash_credit }} </td>
-                                    <td> {{ $value->aadhar_no }} </td>
-                                    <td> {{ $value->r_cust}} </td>
-                                    <td> {{ $value->village }} </td>
-                                    <td> {{ $value->kp_vilage }} </td>
-                                    <td> {{ $value->mo_no }} </td>
-                                     <td> {{ $value->item_sale }} </td>
-                                    <td> {{ $value->quantity }} </td>
-                                    <td> {{ $value->rate }} </td>
-                                    <td> {{ $value->total_amount }} </td>
-                                    <td> {{ $value->GST_amount }} </td>
-                                    <td> {{ $value->creat_at }} </td>
-                                    <td> {{ $value->UPdate_at}} </td>
-                                    <td> {{ $value->status }} </td>
+                                    <td>{{ $value->cn_id }}</td>
+                                    <td>{{ $value->cash_credit }}</td>
+                                    <td>{{ $value->aadhar_no }}</td>
+                                    <td>{{ $value->r_cust }}</td>
+                                    <td>{{ $value->village }}</td>
+                                    <td>{{ $value->mo_no }}</td>
+                                    <td>{{ $value->item_sale }}</td>
+                                    <td>{{ $value->quantity }}</td>
+                                    <td>{{ $value->rate }}</td>
+                                    <td>{{ $value->total_amount }}</td>
+                                    
+                                    <td>{{ $value->GST_amount }}</td>
+                                    <td>{{ $value->creat_at }}</td>
+                                    <td>{{ $value->UPdate_at }}</td>
+                                    <td>{{ $value->status }}</td>
 
-                                    <td> 
+                                    <td>
                                         <div class="d-flex">
-                                            
-                                        <a href="#"
-                                                data-url="{{ route('kataparchi.edit', $value->kp_id) }}"
-                                                data-ajax-popup="true"
-                                                 data-title="{{ __('EDit kataparchi') }}"
-                                                 
-                                                 class="btn btn-sm btn-primary me-2"
-                                                data-bs-toggle="tooltip" title="{{ __('Edite')}}">
+                                            <a href="#"
+                                            data-url="{{ route('Sales-Return.edit', $value->cn_id) }}"
+                                            data-ajax-popup="true"
+                                            data-title="{{ __('EDit Sales-Return') }}"
+                                            class="btn btn-sm btn-primary me-2"
+                                            data-bs-toggle="tooltip" title="{{ __('Edite') }}">
                                                 <i class="ti ti-pencil"></i>
-                                            </a> 
+                                            </a>
 
-                                                
-
-                                                @csrf
-                                                    @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="{{ __('DELETE') }}" onclick="removeParch('{{ route('kataparchi.delete',$value->kp_id) }}')">
-                                                    <i class="ti ti-trash"></i>
-
-                                                </button>
-                                               
-                                             </div>
-
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip"
+                                                    title="{{ __('DELETE') }}"
+                                                    onclick="removeParch('{{ route('Sales-Return.delete', $value->cn_id) }}')">
+                                                <i class="ti ti-trash"></i>
+                                            </button>
+                                        </div>
                                     </td>
-                                         
-                               </tr>
-
+                                </tr>
                             @endforeach
+
                                
                             </tbody>
                         </table>

@@ -4,10 +4,6 @@
 
     <div class="row">
             
-
-           <div class="col-12">
- 
-
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label for="kp_date" class="form-label">date</label>
@@ -24,8 +20,6 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
             
 
             <div class="col-lg-6 col-md-6 col-sm-6">
