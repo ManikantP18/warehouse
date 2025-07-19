@@ -16,7 +16,7 @@
     </script>
 @endpush
 @section('page-title')
-    {{ __('Manage Ladgers') }}
+    {{ __('Manage Bank Accounts') }}
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
@@ -36,7 +36,7 @@
         </a>
 
         <a href="#" data-size="xl" data-url="{{ route('bankacc.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Ladger') }}"
+            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Bank Account') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
         </a>
@@ -53,11 +53,12 @@
                             <thead>
                                 <tr>
                                  
-                                    <th> Ledger Name</th>
+                                    <th> AC Holder Name</th>
                                       <th> Account  Num</th>
                                        <th> Bank Name</th>
+                                       <th> Opening Bal</th>
                                     <th> Account Type </th>
-                                    <th> CheckBook  </th>
+                                    <th> ChequeBook  </th>
                                     <th> ChequeRangefrom </th>
                                     <th> ChequeRangeto </th>
                                     <th> Action </th>
@@ -74,16 +75,17 @@
                                     <td> {{ $value->account_name }} </td>
                                     <td> {{ $value->account_num }} </td>
                                      <td> {{ $value->bank_name }} </td>
+                                      <td> {{ $value->opening_bal }} </td>
                                     <td> {{ $value->account_type }} </td>
-                                     <td> {{ $value->cheque_book }} </td>
+                                    <td> {{ $value->cheque_book }} </td>
                                    
-                                     <td> {{ $value->chequerange_from }} </td>
-                                      <td> {{ $value->chequerange_to }} </td>
+                                    <td> {{ $value->chequerange_from }} </td>
+                                    <td> {{ $value->chequerange_to }} </td>
                                     
-                                       <td>
+                                    <td>
                                    
                                     <a href="#" data-size="xl" data-url="{{ route('bankacc.edit', $value->account_id) }}" data-ajax-popup="true"
-                                    data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Sells') }}"
+                                    data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('Edit Bank Account') }}"
                                     class="btn btn-sm btn-primary">
                                         <i class="ti ti-pencil"></i>
                                     </a>

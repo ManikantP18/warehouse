@@ -10,7 +10,7 @@ class BankController extends Controller
 {
     public function index()
     {
-        $data['bankacc'] = DB::select("SELECT * FROM ledgerbank_accounts WHERE account_status = 1");
+        $data['bankacc'] = DB::select("SELECT * FROM ledgerbank_accounts WHERE account_status = is_deleted=0");
         return view('bankacc.list', $data);
     }
 
@@ -29,6 +29,7 @@ class BankController extends Controller
             'chequerange_from' => $req->input('chequerange_from'),
             'chequerange_to' => $req->input('chequerange_to'),
              'Bank_name' => $req->input('Bank_name'),
+            'opening_bal' => $req->input('opening_bal'),
         ]);
 
         return Redirect::to('bankacc')->with('success', 'Bank account added successfully.');
@@ -49,6 +50,7 @@ class BankController extends Controller
     $cheque_book = $req->input('cheque_book');
     $chequerange_from = $req->input('chequerange_from');
     $chequerange_to = $req->input('chequerange_to');
+      $opening_bal = $req->input('opening_bal');
 
     DB::table('ledgerbank_accounts')->where('account_id', $account_id)->update([
         'ledger_id' => $ledger_id,
@@ -58,12 +60,13 @@ class BankController extends Controller
         'cheque_book' => $cheque_book,
         'chequerange_from' => $chequerange_from,
         'chequerange_to' => $chequerange_to,
+         'opening_bal' => $opening_bal,
     ]);
 
     return Redirect::to('/bankacc')->with('success', 'Bank detail edited successfully.');
 }
 function delete($id) { 
-        DB::update("update ledgerbank_accounts set account_status = 1 where account_id = '$id'");
+        DB::update("update ledgerbank_accounts set is_deleted = 1 where account_id = '$id'");
         //  return view('sellto/delete');
          return Redirect::to('bankacc');
     }

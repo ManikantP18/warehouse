@@ -1,6 +1,5 @@
 {{ Form::open(['url' => 'bankacc/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
-    <h6 class="sub-title">Branches Creation</h6>
 
     <div class="row">
 
@@ -98,6 +97,22 @@
     </div>
 </div>
 
+ <!-- Opening Bal -->
+<div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="form-group">
+        <label for="account_num" class="form-label">Opening Balance</label>
+        <div class="form-icon-user">
+            <input class="form-control alwaysvisible" 
+                   name="opening_bal" 
+                   type="number" 
+                   id="opening_bal" 
+                   required 
+              
+                   title="Enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9" value="0">
+        </div>
+    </div>
+</div>
+
 
 <!-- Account Type -->
 <div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs">
@@ -126,7 +141,7 @@
     <div class="form-group">
         <label class="form-label d-block">Checkbook Have?</label>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" 
+            <input class="form-check-input cheque_book" 
                    type="radio" 
                    name="cheque_book" 
                    id="cheque_book_yes" 
@@ -135,7 +150,7 @@
             <label class="form-check-label" for="cheque_book_yes">Yes</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" 
+            <input class="form-check-input cheque_book" 
                    type="radio" 
                    name="cheque_book" 
                    id="cheque_book_no" 
@@ -147,7 +162,7 @@
 </div>
 
 <!-- Checkbook Range -->
-<div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs">
+<div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs" id="checkbook-range-section" style="display: none;">
     <div class="form-group">
         <label class="form-label">Checkbook Range?</label>
         <div class="row">
@@ -160,7 +175,7 @@
                            id="chequerange_from" 
                            placeholder="From" 
                            min="1"
-                           required>
+                           value="0">
                 </div>
             </div>
             <!-- To Input -->
@@ -172,13 +187,12 @@
                            id="chequerange_to" 
                            placeholder="To" 
                            min="1"
-                           required>
+                           value="0">
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
     </div>
@@ -241,3 +255,27 @@ function searchLadger() {
         })
         }
         </script> -->
+
+
+        <script>
+
+
+$(document).ready(function () {
+    // Listen to change event on radio buttons with class .cheque_book
+    $(".cheque_book").on("change", function () {
+        if ($(this).val() === "yes") {
+            $("#checkbook-range-section").show();
+            $("#chequerange_from, #chequerange_to").prop("required", true);
+        } else {
+            $("#checkbook-range-section").hide();
+            $("#chequerange_from, #chequerange_to")
+                .prop("required", false)
+                .val(""); // clear values if hiding
+        }
+    });
+
+    // Trigger the change event on page load to set initial state
+    $(".cheque_book:checked").trigger("change");
+});
+
+</script>
