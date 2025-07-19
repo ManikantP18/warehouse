@@ -247,50 +247,50 @@
 
                 <li class="dash-item {{ Request::route()->getName() == 'branches.list' ? ' active' : '' }} ">
                         <a href="{{ route('branches.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-micon"><i class="ti ti-building-bank"></i></span>
                             <span class="dash-mtext">Branches</span>
                         </a>
                 </li>
 
                 <li class="dash-item {{ Request::route()->getName() == 'ledger.list' ? ' active' : '' }} ">
                         <a href="{{ route('ledger.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-micon"><i class="ti ti-notebook"></i></span>
                             <span class="dash-mtext">Ladgers</span>
                         </a>
                     </li>
 
                     <li class="dash-item {{ Request::route()->getName() == 'kataparchi.list' ? ' active' : '' }} ">
                         <a href="{{ route('kataparchi.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-micon"><i class="ti ti-file-text"></i></span>
                             <span class="dash-mtext">kataparchi</span>
                         </a>
                     </li>
                  
                     <li class="dash-item {{ Request::route()->getName() == 'sellto.list' ? ' active' : '' }} ">
                         <a href="{{ route('sellto.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-micon"><i class="ti ti-users"></i></span>
                             <span class="dash-mtext">Sell To</span>
                         </a>
                 </li>
 
                     <li class="dash-item {{ Request::route()->getName() == 'Rogring.list' ? ' active' : '' }} ">
                         <a href="{{ route('Rogring.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-micon"><i class="ti ti-rotate-clockwise-2"></i></span>
                             <span class="dash-mtext">Rogrings</span>
                         </a>
                     </li>
                      <li class="dash-item {{ Request::route()->getName() == 'bankacc.list' ? ' active' : '' }} ">
                         <a href="{{ route('bankacc.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-micon"><i class="ti ti-credit-card"></i></span>
                             <span class="dash-mtext">Bank Account</span>
 
                     <li class="dash-item {{ Request::route()->getName() == 'purchase.list' ? ' active' : '' }} ">
                         <a href="{{ route('purchase.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-micon"><i class="ti ti-shopping-cart"></i></span>
                             <span class="dash-mtext">Purchase</span>
                       <li class="dash-item {{ Request::route()->getName() == 'staging.list' ? ' active' : '' }} ">
                         <a href="{{ route('staging.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                            <span class="dash-micon"><i class="ti ti-database"></i></span>
                             <span class="dash-mtext">Staging</span>
                         </a>
                     </li>

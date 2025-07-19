@@ -219,8 +219,12 @@ Route::get('/purchase/getrst', 'App\Http\Controllers\PurchaseController@getrst')
 
 Route::post('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
 
+Route::get('/otherspurchase', 'App\Http\Controllers\PurchaseController@others')->name('purchase.other')->middleware('auth');
+
 
 Route::get('/purchase/delete/{id}', 'App\Http\Controllers\PurchaseController@delete')->name('purchase.delete')->middleware('auth');
+
+Route::get('/purchase/filter', 'App\Http\Controllers\PurchaseController@filter')->name('purchase.filter')->middleware('auth');
 
 
 
