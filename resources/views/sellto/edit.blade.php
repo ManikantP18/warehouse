@@ -105,7 +105,7 @@
 
         <div class="col-md-4">
           <div class="form-group">
-            <label>Purchase Item</label>
+            <label>Sell Item</label>
             <select name="purchase_item[]" id="purchase_item_{{ $i }}" class="form-control allitems" onchange="handleChage({{ $i }})">
               <option value="" hidden>Select Item</option>
               @foreach($items as $value)
@@ -161,7 +161,7 @@
 
         <div class="col-md-4">
           <div class="form-group">
-            <label>Purchase Item</label>
+            <label>Sell Item</label>
             <select name="sellto_item_selled[]" id="purchase_item_{{ 1000+$i }}" class="form-control allitems" onchange="handleChage({{ $i }})">
               <option value="" hidden>Select Item</option>
               @foreach($items as $value)
@@ -176,7 +176,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Quantity</label>
-            <input type="number" class="form-control" name="sellto_quantity[]" id="purchase_quantity_{{ $j }}" value="1" required onkeyup="autofill({{ $j }})" onchange="autofill({{ $j }})">
+            <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_{{ $j }}" value="1" required onkeyup="autofill({{ $j }})" onchange="autofill({{ $j }})">
           </div>
         </div>
 
@@ -196,14 +196,21 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Rate</label>
-            <input type="number" class="form-control" name="sellto_rate[]" id="purchase_rate_{{ $j }}" value="0" onkeyup="autofill({{ $j }})">
+            <input type="number" class="form-control sellto_rate" name="sellto_rate[]" id="sellto_rate_{{ $j }}" value="0" onkeyup="autofill({{ $j }})">
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>GST</label>
+            <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" onchange="autofill({{$j}})" id="sellto_gst_amount_{{$j}}" required value='0'>
           </div>
         </div>
 
         <div class="col-md-2">
           <div class="form-group">
             <label>Total Amount</label>
-            <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_{{ $j }}" required value="0">
+            <input type="number" class="form-control purchase_total" name="sell_total[]" id="sell_total_{{ $j }}" required value="0">
           </div>
         </div>
 
