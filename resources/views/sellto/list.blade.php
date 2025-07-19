@@ -82,11 +82,7 @@
                                     <th> field owner </th>
                                     <th>village</th>
                                     <th> mobile no. </th>
-                                    <th> selled item  </th>
-                                    <th>quantity </th>
-                                    <th> rate </th>
-                                    <th> total amount </th>
-                                    <th> gst amount </th>
+                                   
                                     <th> Received cash </th>
                                     <th> recieved bank </th>
                                     
@@ -108,11 +104,7 @@
                                     <td> {{$value->sell_property_owner}} </td>
                                     <td> {{$value->sell_village}} </td>
                                     <td> {{$value->sell_phone}} </td>
-                                    <td> {{$value->item_selled}} </td>
-                                    <td> {{$value->sell_quantity}} </td>
-                                    <td> {{$value->sell_rate}} </td>
-                                    <td> {{$value->sell_total_ammount}} </td>
-                                    <td> {{$value->sell_gst_ammount}} </td>
+                                    
                                     <td> {{$value->cash_amount}} </td>
                                     <td> {{$value->credit_amount}} </td>
                                     

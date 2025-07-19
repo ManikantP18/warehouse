@@ -100,6 +100,9 @@ use App\Http\Controllers\LedgerController;
 
 use App\Http\Controllers\KataParchiController;
 
+use App\Http\Controllers\CNController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -188,6 +191,22 @@ Route::get('/kataparchi/edit/{id}', 'App\Http\Controllers\KataParchiController@e
 
 Route::put('/kataparchi/update', 'App\Http\Controllers\KataParchiController@update')->name('kataparchi.update')->middleware('auth');
 
+//-------------salse return----------------
+
+Route::get('/Sales-Return', 'App\Http\Controllers\CNController@index')->name('Sales-Return.list')->middleware('auth');
+
+Route::get('/Sales-Return/create', 'App\Http\Controllers\CNController@create')->name('Sales-Return.create')->middleware('auth');
+
+Route::post('/SalesReturn/add', 'App\Http\Controllers\CNController@add')->name('Sales-Return.add')->middleware('auth');
+
+Route::get('/SalesReturn/delete/{id}', 'App\Http\Controllers\CNController@delete')->name('Sales-Return.delete')->middleware('auth');
+
+Route::get('/SalesReturn/edit/{id}', 'App\Http\Controllers\CNController@edit')->name('Sales-Return.edit')->middleware('auth');
+
+Route::put('/SalesReturn/update', 'App\Http\Controllers\CNController@update')->name('Sales-Return.update')->middleware('auth');
+
+// --------------End selse return ------------
+
 
 Route::get('/Rogring', 'App\Http\Controllers\RogringController@index')->name('Rogring.list')->middleware('auth');
 
@@ -204,6 +223,18 @@ Route::get('Rogring/{id}/edit', 'App\Http\Controllers\RogringController@edit')->
 Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update')->name('rogring.update')->middleware('auth');
 
 Route::get('Rogring/search', 'App\Http\Controllers\RogringController@search')->name('Rogring.search')->middleware('auth');
+
+Route::get('/SellsQuatation', 'App\Http\Controllers\SellesQuatationController@index')->name('SellsQuatation.list')->middleware('auth');
+
+Route::get('/SellsQuatation/create', 'App\Http\Controllers\SellesQuatationController@create')->name('SellsQuatation.create')->middleware('auth');
+
+Route::post('/SellsQuatation/add', 'App\Http\Controllers\SellesQuatationController@add')->name('SellsQuatation.add')->middleware('auth');
+
+Route::get('/SellsQuatation/delete/{id}', 'App\Http\Controllers\SellesQuatationController@delete')->name('SellsQuatation.delete')->middleware('auth');
+
+Route::get('/SellsQuatation/edit/{id}', 'App\Http\Controllers\SellesQuatationController@edit')->name('SellsQuatation.edit')->middleware('auth');
+
+Route::put('/SellsQuatation/update', 'App\Http\Controllers\SellesQuatationController@update')->name('SellsQuatation.update')->middleware('auth');
 
 Route::get('/purchase', 'App\Http\Controllers\PurchaseController@index')->name('purchase.list')->middleware('auth');
 
