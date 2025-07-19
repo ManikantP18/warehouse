@@ -224,6 +224,18 @@ Route::put('Rogring/{id}/update', 'App\Http\Controllers\RogringController@update
 
 Route::get('Rogring/search', 'App\Http\Controllers\RogringController@search')->name('Rogring.search')->middleware('auth');
 
+Route::get('/SellsQuatation', 'App\Http\Controllers\SellesQuatationController@index')->name('SellsQuatation.list')->middleware('auth');
+
+Route::get('/SellsQuatation/create', 'App\Http\Controllers\SellesQuatationController@create')->name('SellsQuatation.create')->middleware('auth');
+
+Route::post('/SellsQuatation/add', 'App\Http\Controllers\SellesQuatationController@add')->name('SellsQuatation.add')->middleware('auth');
+
+Route::get('/SellsQuatation/delete/{id}', 'App\Http\Controllers\SellesQuatationController@delete')->name('SellsQuatation.delete')->middleware('auth');
+
+Route::get('/SellsQuatation/edit/{id}', 'App\Http\Controllers\SellesQuatationController@edit')->name('SellsQuatation.edit')->middleware('auth');
+
+Route::put('/SellsQuatation/update', 'App\Http\Controllers\SellesQuatationController@update')->name('SellsQuatation.update')->middleware('auth');
+
 Route::get('/purchase', 'App\Http\Controllers\PurchaseController@index')->name('purchase.list')->middleware('auth');
 
 Route::get('/purchase/create', 'App\Http\Controllers\PurchaseController@create')->name('purchase.create')->middleware('auth');
@@ -238,8 +250,12 @@ Route::get('/purchase/getrst', 'App\Http\Controllers\PurchaseController@getrst')
 
 Route::post('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
 
+Route::get('/otherspurchase', 'App\Http\Controllers\PurchaseController@others')->name('purchase.other')->middleware('auth');
+
 
 Route::get('/purchase/delete/{id}', 'App\Http\Controllers\PurchaseController@delete')->name('purchase.delete')->middleware('auth');
+
+Route::get('/purchase/filter', 'App\Http\Controllers\PurchaseController@filter')->name('purchase.filter')->middleware('auth');
 
 
 

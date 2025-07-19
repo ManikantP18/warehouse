@@ -19,10 +19,12 @@ class SelltoController extends Controller
     }
 
      function create(){
-        $data['items'] = DB::select("select *, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
+        $data['items'] = DB::select("select *,product_services.id AS pid, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
 
 
         $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
+
+        $data['units'] = DB::select("select * from product_service_units");
        
         return view('sellto/create',$data);
     }
@@ -36,16 +38,50 @@ class SelltoController extends Controller
         $accholder = $req->input('sellto_acc_holder');
         $oname = $req->input('sellto_owner_name');
         $village = $req->input('sellto_village');
+        
+        $cashamm = $req->input('sellto_cash_amount');
+        $creditamm = $req->input('sellto_Credit_amount');
+        $remainamm = $req->input('sellto_Remaining_amount');
+        $bank_name = $req->input('bank_name');
+
+
+        $total = $req->input('sellto_total_amount');
+
+        $lastId = DB::table('sell_to')->insertGetId([
+            'sell_way'            => $cashcredit,
+            'sell_to'             => $farmerother,
+            'sell_account_number' => $accno,
+            'sell_phone'          => $phone,
+            'sell_relation_customer' => $csname,
+            'sell_account_name'   => $accholder,
+            'sell_property_owner' => $oname,
+            'sell_village'        => $village,
+            'sell_total_ammount'  => $total,
+            'cash_amount'         => $cashamm,
+            'credit_amount'       => $creditamm,
+            'remaining_amount'    => $remainamm,
+            'bank_name'           => $bank_name,
+        ]);
+
         $itemselled = $req->input('sellto_item_selled');
          $quantity = $req->input('sellto_quantity');
         $rate = $req->input('sellto_rate');
         $total = $req->input('sellto_total_amount');
          $gst = $req->input('sellto_gst_amount');
-        $cashamm = $req->input('sellto_cash_amount');
-        $creditamm = $req->input('sellto_Credit_amount');
-        $remainamm = $req->input('sellto_Remaining_amount');
-        $bank_name = $req->input('bank_name');
-        DB::insert("Insert into sell_to (sell_way,sell_to,sell_account_number,sell_phone,sell_relation_customer,sell_account_name,sell_property_owner,sell_village,item_selled,sell_quantity,sell_rate,sell_total_ammount,sell_gst_ammount,cash_amount,credit_amount,remaining_amount,bank_name) VALUES ('$cashcredit', '$farmerother' , '$accno', '$phone' ,'$csname', '$accholder','$oname', '$village' ,'$itemselled', '$quantity','$rate' ,'$total', '$gst','$cashamm' ,'$creditamm', '$remainamm','$bank_name')");
+         $units = $req->input('purchase_unit');
+
+
+         for($i=0; $i<count($itemselled); $i++){
+
+            if(!empty($itemselled[$i]) && !empty($rate[$i])){
+
+                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$lastId')");
+
+            }
+
+             
+
+         }
         
         
         
@@ -105,9 +141,15 @@ class SelltoController extends Controller
     function edit($id) {
         $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
 
+        $data['units'] = DB::select("select * from product_service_units");
+
+        $data['selleditems'] = DB::select("select * from selled_item where sell_id = '$id' and selled_status = 1");
+
         $data['items'] = DB::select("select * from product_services where type = 'Product'");
 
-         $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 ");
+        $data['products'] = DB::select("select id, name, quantity from product_services where type = 'Product' AND product_services.id NOT IN(select selled_item from selled_item where sell_id = '$id' and selled_status = 1)");
+
+        $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
          
         return view('sellto/edit',$data);
     } 

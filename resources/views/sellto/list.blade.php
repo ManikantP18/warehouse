@@ -50,26 +50,26 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body table-border-style table-border-style">
-                    <div class="table-responsive">
-                         <div class="card shadow-sm rounded-4 border-0 mb-4">
+                <div class="table-responsive">
+                <div class="card shadow-sm rounded-4 border-0 mb-4">
                 <div class="card-body pb-0">
-    <ul class="nav nav-pills nav-fill gap-2 p-2 rounded-pill bg-light border" id="sellTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a href="{{ route('sellto.list') }}"
-               class="nav-link {{ request()->routeIs('sellto.list') ? 'active' : '' }} rounded-pill" 
-               role="tab">
-                👨‍🌾 Farmers
-            </a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a href="{{ route('sellto.other') }}"
-               class="nav-link {{ request()->routeIs('sellto.other') ? 'active' : '' }} rounded-pill"
-               role="tab">
-                👥 Others
-            </a>
-        </li>
-    </ul>
-</div>
+                    <ul class="nav nav-pills nav-fill gap-2 p-2 rounded-pill bg-light border" id="sellTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a href="{{ route('sellto.list') }}"
+                            class="nav-link {{ request()->routeIs('sellto.list') ? 'active' : '' }} rounded-pill" 
+                            role="tab">
+                                👨‍🌾 Farmers
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a href="{{ route('sellto.other') }}"
+                            class="nav-link {{ request()->routeIs('sellto.other') ? 'active' : '' }} rounded-pill"
+                            role="tab">
+                                👥 Others
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
             </div>
                         <table class="table datatable">
@@ -82,11 +82,7 @@
                                     <th> field owner </th>
                                     <th>village</th>
                                     <th> mobile no. </th>
-                                    <th> selled item  </th>
-                                    <th>quantity </th>
-                                    <th> rate </th>
-                                    <th> total amount </th>
-                                    <th> gst amount </th>
+                                   
                                     <th> Received cash </th>
                                     <th> recieved bank </th>
                                     
@@ -108,11 +104,7 @@
                                     <td> {{$value->sell_property_owner}} </td>
                                     <td> {{$value->sell_village}} </td>
                                     <td> {{$value->sell_phone}} </td>
-                                    <td> {{$value->item_selled}} </td>
-                                    <td> {{$value->sell_quantity}} </td>
-                                    <td> {{$value->sell_rate}} </td>
-                                    <td> {{$value->sell_total_ammount}} </td>
-                                    <td> {{$value->sell_gst_ammount}} </td>
+                                    
                                     <td> {{$value->cash_amount}} </td>
                                     <td> {{$value->credit_amount}} </td>
                                     

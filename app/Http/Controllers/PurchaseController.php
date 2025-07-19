@@ -109,6 +109,7 @@ class PurchaseController extends Controller
 
         }
 
+        
         function delete($id) { 
             DB::update("update purchase set is_deleted = 1 where purchase_id = '$id'");
 
@@ -199,5 +200,26 @@ class PurchaseController extends Controller
         return Redirect::to('purchase');
        
     }
-  
-}
+
+        public function filter(Request $request)
+                {
+
+                    
+                    $from = $request->input('from_date');
+                    $to = $request->input('to_date');
+
+                    $nextDay = date('Y-m-d',strtotime($to) + 86400);
+
+                    if (!$from || !$to) {
+                        return response()->json(['error' => 'Both dates are required'], 400);
+                    }
+
+                    $data['purchase'] = DB::table('purchase')
+                        ->whereBetween('purchase_date', [$from, $nextDay])
+                        ->get();
+
+                   
+                    return view('purchase/filter',$data);
+                }
+
+    }
