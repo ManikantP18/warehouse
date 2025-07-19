@@ -162,7 +162,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Purchase Item</label>
-            <select name="purchase_item[]" id="purchase_item_{{ 1000+$i }}" class="form-control allitems" onchange="handleChage({{ $i }})">
+            <select name="sellto_item_selled[]" id="purchase_item_{{ 1000+$i }}" class="form-control allitems" onchange="handleChage({{ $i }})">
               <option value="" hidden>Select Item</option>
               @foreach($items as $value)
                 <option value="{{ $value->id }}">
@@ -176,7 +176,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Quantity</label>
-            <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_{{ $j }}" value="1" required onkeyup="autofill({{ $j }})" onchange="autofill({{ $j }})">
+            <input type="number" class="form-control" name="sellto_quantity[]" id="purchase_quantity_{{ $j }}" value="1" required onkeyup="autofill({{ $j }})" onchange="autofill({{ $j }})">
           </div>
         </div>
 
@@ -196,7 +196,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Rate</label>
-            <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_{{ $j }}" value="0" onkeyup="autofill({{ $j }})">
+            <input type="number" class="form-control" name="sellto_rate[]" id="purchase_rate_{{ $j }}" value="0" onkeyup="autofill({{ $j }})">
           </div>
         </div>
 
@@ -345,4 +345,123 @@ function autofill() {
 
 
 
-</script> 
+</script>
+
+<script>
+
+function calculateAmt(){
+  let sellto_cash_amount = parseInt($("#sellto_cash_amount").val());
+  let sellto_Credit_amount = parseInt($("#sellto_Credit_amount").val());
+  let sellto_total_amount = parseInt($("#sellto_total_amount").val());
+
+  let remainAmt = sellto_total_amount - sellto_cash_amount - sellto_Credit_amount;
+
+  $("#sellto_Remaining_amount").val(remainAmt)
+
+
+}
+
+
+
+function selectItem(did, el) {
+  const item = String($(el).val()); // convert to string to avoid type mismatch
+console.log(item)
+  // 🔄 Reset if empty
+  if (!item) {
+    $('#sellto_rate_' + did).val('');
+    $('#sellto_gst_amount_' + did).val('');
+    $('#purchase_total_' + did).val('');
+    autofill();
+    return;
+  }
+
+  let isDuplicate = false;
+
+  $(".sellto_item_selled").each(function () {
+    const currentVal = String($(this).val());
+    const currentDid = String($(this).attr("dataid"));
+
+    // ✅ Skip current select box
+    if (currentDid != String(did)) { console.log(currentVal, item)
+      if (currentVal === item) {
+        isDuplicate = true;
+        return false; // break loop
+      }
+    }
+  });
+
+  if (isDuplicate) {
+    alert("Same item already selected.");
+    $(el).val(''); // Reset value
+    $('#sellto_rate_' + did).val('');
+    $('#sellto_gst_amount_' + did).val('');
+    $('#purchase_total_' + did).val('');
+    autofill();
+    return;
+  }
+
+  // ✅ Proceed with calculations
+  const qty = parseFloat($('#sellto_quantity_' + did).val()) || 0;
+  const data = JSON.parse($('#itemsdata').val());
+  const product = data.find(d => String(d.pid) === item);
+
+  if (product) {
+    const salePrice = parseFloat(product.sale_price) || 0;
+    const taxRate = parseFloat(product.rate) || 0;
+
+    $('#sellto_rate_' + did).val(salePrice);
+
+    const ratetotal = salePrice * qty;
+    const gst = (ratetotal / 100) * taxRate;
+
+    $('#purchase_total_' + did).val((ratetotal + gst).toFixed(2));
+    $('#sellto_gst_amount_' + did).val(gst.toFixed(2));
+
+    autofill();
+
+   /* const cash = parseFloat($('#sellto_cash_amount').val()) || 0;
+    const credit = parseFloat($('#sellto_Credit_amount').val()) || 0;
+    const remaining = (ratetotal + gst) - (cash + credit);
+
+    $('#sellto_Remaining_amount').val(remaining.toFixed(2));*/
+  }
+}
+
+
+
+    function autofill(id) {
+      
+        $("#purchase_total_" + id).val((parseInt($("#sellto_quantity_" + id).val()) * parseInt($("#sellto_rate_" + id).val())) + parseInt($("#sellto_gst_amount_" + id).val()));
+
+      let total = 0;
+
+       $(".purchase_total").each(function() {
+          let val = parseFloat($(this).val()) || 0;
+          total += val;
+        });
+
+        $("#sellto_total_amount").val(total);
+    }
+
+  function checkmode() {
+    let mode = $('#sellto_cash').val(); // Use correct ID of your select box
+    let remaining = parseFloat($('#sellto_Remaining_amount').val()) || 0;
+
+    if (mode.toLowerCase() === 'cash' && remaining > 0) {
+      alert('For cash invoices, the remaining amount must be zero.');
+      
+      
+
+      setTimeout(() => {
+
+      $("#savebtn").removeAttr("disabled");
+        
+      }, 500);
+
+      return false;
+    }
+
+    return true;
+}
+
+</script>
