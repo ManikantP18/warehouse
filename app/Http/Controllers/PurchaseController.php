@@ -124,7 +124,7 @@ class PurchaseController extends Controller
 
         }
 
-        function delete($id) { 
+        function delete($id) {
             DB::update("update purchase set is_deleted = 1 where purchase_id = '$id'");
 
             //  return view('sellto/delete');
