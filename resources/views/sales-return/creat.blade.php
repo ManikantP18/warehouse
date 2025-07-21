@@ -51,11 +51,12 @@
                 
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="cash_credit" class="form-label">CASH / CREDIT</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible"  name="cash_credit" type="text" id="cash_credit" >
-                        </div>
-                    </div>
+                        <label>Mode of Invoice</label>
+                        <select name="cash_credit" id="cash_credit" class="form-control">
+                            <option value="cash">Cash</option>
+                            <option value="credit">Credit</option>
+                        </select>
+                    </div> 
                 </div>
                 
                 <div class="col-lg-6">
@@ -66,15 +67,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+
+            <div class="row mb-3">
+                <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="item_sale" class="form-label">ITEM TO BE SALE</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="item_sale" type="text" id="item_sale" >
-                        </div>
-                    </div>
+                        <label>UNIT</label>
+                        <select class="form-control" name="item[]" id="item">
+                            <option value="" hidden>Select ITEM</option>
+                            @foreach($units as $value)
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>          
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="quantity" class="form-label">QUANTITY</label>
                         <div class="form-icon-user">
@@ -82,8 +88,22 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-lg-6">
+
+                 <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>UNIT</label>
+                        <select class="form-control" name="unit[]" id="unit">
+                            <option value="" hidden>Select Unit</option>
+                            @foreach($units as $value)
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row mb-3">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="rate" class="form-label">RATE</label>
                         <div class="form-icon-user">
@@ -91,13 +111,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="total_amount" class="form-label">TOTAL AMOUNT</label>
                         <input class="form-control onlyforformesrs"  name="total_amount" id="total_amount" >
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label for="GST_amount" class="form-label">GST AMOUNT</label>
                         <div class="form-icon-user">
@@ -105,7 +125,7 @@
                         </div>
                     </div>
                 </div>
-                
+               </div> 
             </div>
         </div>
     </div>
@@ -162,22 +182,12 @@
                 if (response.success && response.data.length > 0) {
                     const data = response.data[0];
 
-                    //$('#kp_acc_no').val(data.account_id);
-                   // $('#kp_rel_name').val(data.relational_cust_name);
-                  //  $('#kp_acc_holdername').val(data.account_holder);
-                   // $('#kp_bhoomiswami_name').val(data.farm_owner_name);
-                   // $('#kp_vilage').val(data.village);
-                  //  $('#kp_rakaba_acre').val(data.farm_area_acre);
-                   // $('#kp_mo_no').val(data.phone_number);
-                  //  $('#kp_rogger_name').val(data.Rogring_name || '');
+                   
 
-                    let opt = `<option value=""> select Item </option>`;
 
-                    response.products.forEach((variety) =>{
-                        opt += `<option value="${variety.id}">${variety.name}</option>`;
-                    })
 
-                    $('#kp_varity').html(opt);
+
+
 
                     $('#form-fields-wrapper').slideDown();
                 } else {

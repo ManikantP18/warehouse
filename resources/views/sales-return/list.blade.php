@@ -60,6 +60,7 @@
                                     <th> Mobile no. </th>
                                     <th> Item to sale</th>
                                     <th> Quantity </th>
+                                    <th> UNIT </th>
                                     <th> Rate </th>
                                     <th> total amount  </th>
                                     <th> GSt amount </th>                      
@@ -81,6 +82,7 @@
                                     <td>{{ $value->mo_no }}</td>
                                     <td>{{ $value->item_sale }}</td>
                                     <td>{{ $value->quantity }}</td>
+                                    <td>{{ $value->unit }}</td>
                                     <td>{{ $value->rate }}</td>
                                     <td>{{ $value->total_amount }}</td>
                                     
@@ -146,7 +148,7 @@
         });
 
         function removeParch(url){
-            let conf = confirm("ARE You Sure You Want To Delete THis Kata Parchi?")
+            let conf = confirm("ARE You Sure You Want To Delete This sales return ?")
 
             if(conf == true){
                 window.location.href = url;

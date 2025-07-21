@@ -13,7 +13,7 @@ use DB;
 class SelltoController extends Controller
 {
     public function index(){
-        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname  from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name where sell_to = 'farmer' and is_deleted = 0 order by sell_id DESC");
+        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname  from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name where sell_to = 'farmer' and sell_to.is_deleted = 0 order by sell_id DESC");
         return view('sellto/list',$data);
 
     }

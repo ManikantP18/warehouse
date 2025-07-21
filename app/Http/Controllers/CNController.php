@@ -12,13 +12,17 @@ class CNController extends Controller
 {
 
  public function index() {
-    $data['SalesReturn'] = DB::select('SELECT * FROM sales_return');
+    $data['SalesReturn'] = DB::select('SELECT * FROM sales_return where is_deleted = 0');
     return view('sales-return.list', $data);
 }
 
 function create(){
 
         $data['branches'] = DB::select("select * from sales_return"); 
+
+         $data['units'] = DB::select("select * from product_service_units");
+
+         $data['item'] = DB::select("select * from product_services where type = 'Product' ");
         return view('sales-return/creat',$data);
     }
 
@@ -31,13 +35,14 @@ function create(){
         $mo_no = $req->input('mo_no');
         $item_sale = $req->input('item_sale');
         $quantity = $req->input('quantity');
+        $unit = $req->input('unit');
         $rate = $req->input('rate');
         $total_amount = $req->input('total_amount');
         $GST_amount = $req->input('GST_amount');
         
         
 
-        DB::insert("Insert into sales_return (cash_credit,aadhar_no,r_cust,village,mo_no,item_sale,quantity,rate,total_amount,GST_amount) VALUES ('$cash_credit','$aadhar_no','$r_cust','$village','$mo_no','$item_sale','$quantity','$rate','$total_amount','$GST_amount')");
+        DB::insert("Insert into sales_return (cash_credit,aadhar_no,r_cust,village,mo_no,item_sale,quantity,unit,rate,total_amount,GST_amount) VALUES ('$cash_credit','$aadhar_no','$r_cust','$village','$mo_no','$item_sale','$quantity','$unit','$rate','$total_amount','$GST_amount')");
 
         return Redirect::to('Sales-Return');
     }

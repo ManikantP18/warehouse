@@ -285,10 +285,11 @@ function searchLadger() {
   let searchVal = $('#search').val();
   let searchVillage = $('#search_village').val();
   let searchname = $('#search_name').val();
+  let all = 'yes';
   $.ajax({
     url: '{{ route('purchase.search') }}',
     type: 'GET',
-    data: { searchVal, searchVillage, searchname },
+    data: { searchVal, searchVillage, searchname, all },
     success: function(response) {
       if (response.success && response.data) {
         let html = '<select class="form-control" onchange="selectLadger(this.value)"><option value="">Select Farmer</option>';
@@ -306,7 +307,7 @@ function searchLadger() {
 }
 
 function selectLadger(id) {
-  $.get('{{ route('purchase.search') }}', { searchVal: id }, function(response) { 
+  $.get('{{ route('purchase.search') }}', { searchVal: id, all : 'no' }, function(response) { 
     if (response.success && response.data) {
       let d = response.data[0];
      

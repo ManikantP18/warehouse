@@ -186,10 +186,12 @@
         let searchVillage = $('#search_village').val();
         let searchname = $('#search_name').val();
 
+        let all = 'yes';
+
         $.ajax({
             url: '{{ route('sellto.search') }}',
             type: 'GET',
-            data: { searchVal, searchVillage, searchname },
+            data: { searchVal, searchVillage, searchname, all },
             success: function (response) {
                 if (response.success && response.data.length > 0) {
                     let html = `
@@ -221,7 +223,7 @@
         $.ajax({
             url: '{{ route('sellto.search') }}',
             type: 'GET',
-            data: { searchVal: account_id },
+            data: { searchVal: account_id, all : 'no' },
             success: function (response) {
                 if (response.success && response.data.length > 0) {
                     const data = response.data[0];

@@ -50,26 +50,26 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body table-border-style table-border-style">
-                    <div class="table-responsive">
-                         <div class="card shadow-sm rounded-4 border-0 mb-4">
+                <div class="table-responsive">
+                <div class="card shadow-sm rounded-4 border-0 mb-4">
                 <div class="card-body pb-0">
-    <ul class="nav nav-pills nav-fill gap-2 p-2 rounded-pill bg-light border" id="sellTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a href="{{ route('sellto.list') }}"
-               class="nav-link {{ request()->routeIs('sellto.list') ? 'active' : '' }} rounded-pill" 
-               role="tab">
-                👨‍🌾 Farmers
-            </a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a href="{{ route('sellto.other') }}"
-               class="nav-link {{ request()->routeIs('sellto.other') ? 'active' : '' }} rounded-pill"
-               role="tab">
-                👥 Others
-            </a>
-        </li>
-    </ul>
-</div>
+                    <ul class="nav nav-pills nav-fill gap-2 p-2 rounded-pill bg-light border" id="sellTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a href="{{ route('sellto.list') }}"
+                            class="nav-link {{ request()->routeIs('sellto.list') ? 'active' : '' }} rounded-pill" 
+                            role="tab">
+                                👨‍🌾 Farmers
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a href="{{ route('sellto.other') }}"
+                            class="nav-link {{ request()->routeIs('sellto.other') ? 'active' : '' }} rounded-pill"
+                            role="tab">
+                                👥 Others
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
             </div>
                         <table class="table datatable">

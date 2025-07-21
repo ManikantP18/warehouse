@@ -355,7 +355,6 @@ function calculateAmt(){
   let sellto_total_amount = parseInt($("#sellto_total_amount").val());
 
   let remainAmt = sellto_total_amount - sellto_cash_amount - sellto_Credit_amount;
-  alert(remainAmt)
 
   $("#sellto_Remaining_amount").val(remainAmt)
 
@@ -366,7 +365,6 @@ function calculateAmt(){
 
 function selectItem(did, el) {
   const item = String($(el).val()); // convert to string to avoid type mismatch
-  alert(item)
 console.log(item)
   // 🔄 Reset if empty
   if (!item) {
@@ -415,8 +413,6 @@ console.log(item)
 
     const ratetotal = salePrice * qty;
     const gst = (ratetotal / 100) * taxRate;
-
-    alert(did)
 
     $('#purchase_total_' + did).val((ratetotal + gst).toFixed(2));
     $('#sellto_gst_amount_' + did).val(gst.toFixed(2));
