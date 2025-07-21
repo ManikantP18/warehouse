@@ -13,7 +13,7 @@ use DB;
 class SelltoController extends Controller
 {
     public function index(){
-        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname  from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name where sell_to = 'farmer' and is_deleted = 0 order by sell_id DESC");
+        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname  from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name where sell_to = 'farmer' and sell_to.is_deleted = 0 order by sell_id DESC");
         return view('sellto/list',$data);
 
     }
@@ -174,7 +174,28 @@ class SelltoController extends Controller
          $id = $req->input('sell_id');
 
 
-        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',item_selled = '$itemselled',sell_quantity = '$quantity',sell_rate = '$rate',sell_total_ammount = '$total',sell_gst_ammount = '$gst' , cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
+        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',sell_total_ammount = '$total' , cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
+
+        $itemselled = $req->input('sellto_item_selled');
+         $quantity = $req->input('sellto_quantity');
+        $rate = $req->input('sellto_rate');
+        $total = $req->input('sellto_total_amount');
+         $gst = $req->input('sellto_gst_amount');
+         $units = $req->input('purchase_unit');
+
+        DB::delete("delete from selled_item where sell_id = '$id'");
+
+         for($i=0; $i<count($itemselled); $i++){
+
+            if(!empty($itemselled[$i]) && !empty($rate[$i])){
+
+                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$id')");
+
+            }
+
+             
+
+         }
 
         return Redirect::to('sellto');
     }

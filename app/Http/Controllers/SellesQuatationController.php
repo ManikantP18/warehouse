@@ -14,14 +14,14 @@ class SellesQuatationController extends Controller
 {
     public function index(){
         $data['sellsquatation'] = DB::select("select * from sellsquatation ");
-        return view('SellsQuatation/list',$data);
+        return view('sellsquatation/list',$data);
 
     }
 
      function create(){
         $data['items'] = DB::select("select * from sellsquatation"); 
        
-        return view('SellsQuatation/create',$data);
+        return view('sellsquatation/create',$data);
     }
     
 
@@ -40,18 +40,18 @@ class SellesQuatationController extends Controller
 
         DB::insert("Insert into sellsquatation (Cash_Credit	,Account_holders_name,Users_name,Village,Contact_no,Item_To_Be_Sale,Quantity,Rate,Total_Amount,GST_Amount) VALUES ('$cashcredit', '$accholder' , '$Users_name', '$Village' ,'$Contact_no', '$Item_To_Be_Sale','$Quantity', '$Rate' ,'$Total_Amount', '$GST_Amount')");
        
-        return Redirect::to('SellsQuatation');
+        return Redirect::to('sellsquatation');
     }
 
     function delete($id){
         DB::table('sellsquatation')->where('id', $id)->delete();
-        return Redirect::to('SellsQuatation')->with('success', ' Quatations Deleted Successfully');
+        return Redirect::to('sellsquatation')->with('success', ' Quatations Deleted Successfully');
     
      }
 
     function edit($id) {
         $data['sellsquatation'] = DB::select("select * from sellsquatation where id = '$id'");
-        return view('SellsQuatation/edit',$data);
+        return view('sellsquatation/edit',$data);
     
 
     } 
@@ -72,7 +72,7 @@ class SellesQuatationController extends Controller
 
         DB::update("update sellsquatation set Cash_Credit = '$cashcredit',Account_holders_name = '$accholder' ,Users_name = '$Users_name',Village = '$Village',Contact_no = '$Contact_no',Item_To_Be_Sale = '$Item_To_Be_Sale',Quantity = '$Quantity',Rate = '$Rate',Total_Amount = '$Total_Amount',GST_Amount = '$GST_Amount' where id = '$id'");
 
-        return Redirect::to('SellsQuatation');
+        return Redirect::to('sellsquatation');
     }
 
 

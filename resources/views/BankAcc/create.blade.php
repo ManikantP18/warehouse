@@ -1,6 +1,5 @@
 {{ Form::open(['url' => 'bankacc/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
-    <h6 class="sub-title">Branches Creation</h6>
 
     <div class="row">
 
@@ -105,11 +104,11 @@
         <div class="form-icon-user">
             <input class="form-control alwaysvisible" 
                    name="opening_bal" 
-                   type="text" 
+                   type="number" 
                    id="opening_bal" 
                    required 
               
-                   title="Enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9">
+                   title="Enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9" value="0">
         </div>
     </div>
 </div>

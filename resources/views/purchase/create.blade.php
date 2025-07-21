@@ -117,4 +117,83 @@ function removeRow(button) {
   // Optionally recalculate total
   $(".purchase_total").each(() => autofill());
 }
+<<<<<<< HEAD
+=======
+
+
+function searchLadger() {
+  let searchVal = $('#search').val();
+  let searchVillage = $('#search_village').val();
+  let searchname = $('#search_name').val();
+  let all = 'yes';
+  $.ajax({
+    url: '{{ route('purchase.search') }}',
+    type: 'GET',
+    data: { searchVal, searchVillage, searchname, all },
+    success: function(response) {
+      if (response.success && response.data) {
+        let html = '<select class="form-control" onchange="selectLadger(this.value)"><option value="">Select Farmer</option>';
+        response.data.forEach(d => {
+          html += `<option value="${d.account_id}">${d.relational_cust_name} - ${d.farm_owner_name}</option>`;
+        });
+        html += '</select>';
+        $('.allfarmers').html(html).show();
+        $('#form-fields-wrapper').hide(); // still hide until selection
+      } else {
+        alert("No matching record found.");
+      }
+    }
+  });
+}
+
+function selectLadger(id) {
+  $.get('{{ route('purchase.search') }}', { searchVal: id, all : 'no' }, function(response) { 
+    if (response.success && response.data) {
+      let d = response.data[0];
+     
+      $.ajax({
+        url: '{{ route('purchase.getrst') }}',
+        type: 'GET',
+        data: { account_id: d.account_id},
+        success: function(res) {
+          if (res.success && res.data) {
+              $('#purchase_rst_no').val(res.data[0].kp_rstno);
+          }
+        }
+
+      });
+     
+      $('#purchase_relation_cusm').val(d.relational_cust_name);
+      $('#spurchase_accountant').val(d.account_holder);
+      $('#purchase_owner').val(d.farm_owner_name);
+      $('#purchase_village').val(d.village);
+      $('#purchase_acre').val(d.farm_area_acre);
+      $('#purchase_phone').val(d.phone_number);
+       
+      $('#purchase_lot_no').val(d.purchase_lot_no);
+      $('#purchase_account_no').val(d.account_number);
+      $('#purchas_bank_name').val(d.ladgers_bank);
+      $('#purchase_ifsc').val(d.ifsc_code);
+      $('#purchase_branch').val(d.branch);
+      $('#purchase_gst_no').val(d.gst_no);
+
+      
+
+      $('#purchase_item').val(d.item_selled ?? '');
+      
+      $('#form-fields-wrapper').slideDown(); // show full form
+    }
+  });
+}
+
+function autofill(id) {
+ $("#purchase_total_"+id).val(parseInt($("#purchase_quantity_"+id).val()) * parseInt($("#purchase_rate_"+id).val()));
+}
+
+// ✅ Initial setup to hide form
+$(document).ready(function () {
+  $('#form-fields-wrapper').hide();
+  $('.allfarmers').hide();
+});
+>>>>>>> 7072487da5571d5b8f716f39268a08657a8a570e
 </script>
