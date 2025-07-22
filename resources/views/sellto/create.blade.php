@@ -107,74 +107,63 @@
           </div>
         </div>
 
-        <!-- Multy Products Selling Nikku -->
+       <!-- Product Items Wrapper -->
+<div id="item-wrapper">
 
-        @for($i = 0; $i < count($items); $i++)
-  <div class="row mb-3 ms-1" style="background-color: #c6c6c6;">
-
+  <!-- Initial Product Row -->
+  <div class="row mb-3 item-group" style="background-color: #f2f2f2; padding:10px; border-radius:5px;">
     <div class="col-md-2">
-      <div class="form-group">
-        <label>Sell Item</label>
-        <select
-          name="sellto_item_selled[]"
-          class="form-control sellto_item_selled sellto_item_selled_{{$i}}"
-          dataid="{{$i}}"
-          onchange="selectItem({{$i}}, this)">
-          <option value="">Select Item</option>
-          @foreach($items as $val)
-            <option value="{{ $val->pid }}">{{ $val->item_name }}</option>
-          @endforeach
-       </select>
-
-
-      </div>
+      <label>Sell Item</label>
+      <select name="sellto_item_selled[]" class="form-control sellto_item_selled" dataid="0" onchange="selectItem(0, this)">
+        <option value="">Select Item</option>
+        @foreach($items as $val)
+          <option value="{{ $val->pid }}">{{ $val->item_name }}</option>
+        @endforeach
+      </select>
     </div>
 
     <div class="col-md-2">
-      <div class="form-group">
-        <label>Quantity</label>
-         <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_{{$i}}" value="1" required onkeyup="autofill({{$i}})" onchange="autofill({{$i}})">
-      </div>
-    </div>
-
-      <div class="col-md-2">
-        <div class="form-group">
-          <label>Unit</label>
-          <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $i }}">
-            <option value="" hidden>Select Unit</option>
-            @foreach($units as $value)
-            <option value="{{ $value->id }}">{{ $value->name }}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-
-
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>Rate</label>
-        <input type="number" class="form-control sellto_rate" onchange="autofill({{$i}})" name="sellto_rate[]" id="sellto_rate_{{$i}}" required value='0'>
-      </div>
+      <label>Quantity</label>
+      <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
     </div>
 
     <div class="col-md-2">
-      <div class="form-group">
-        <label>GST</label>
-        <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" onchange="autofill({{$i}})" id="sellto_gst_amount_{{$i}}" required value='0'>
-      </div>
+      <label>Unit</label>
+      <select class="form-control" name="purchase_unit[]" id="purchase_unit_0">
+        <option value="" hidden>Select Unit</option>
+        @foreach($units as $value)
+          <option value="{{ $value->id }}">{{ $value->name }}</option>
+        @endforeach
+      </select>
     </div>
 
     <div class="col-md-2">
-      <div class="form-group">
-        <label>Total Amount</label>
-        <input type="number" class="form-control purchase_total" name="sell_total[]" id="purchase_total_{{ $i }}" required value="0">
-      </div>
+      <label>Rate</label>
+      <input type="number" class="form-control sellto_rate" name="sellto_rate[]" id="sellto_rate_0" value="0" onchange="autofill(0)">
     </div>
 
+    <div class="col-md-2">
+      <label>GST</label>
+      <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" id="sellto_gst_amount_0" value="0" onchange="autofill(0)">
+    </div>
+
+    <div class="col-md-1">
+      <label>Total</label>
+      <input type="number" class="form-control purchase_total" name="sell_total[]" id="purchase_total_0" value="0" required>
+    </div>
+
+    <div class="col-md-1">
+      <label>&nbsp;</label>
+      <button type="button" class="btn btn-danger form-control" onclick="removeRow(this)">🗑</button>
+    </div>
   </div>
-@endfor
+</div>
 
-<!-- End of multy products selling -->
+<!-- Add More Button -->
+<div class="mt-2">
+  <button type="button" class="btn btn-primary" onclick="addMoreItem()">+ Add More</button>
+</div>
+
 
         <div class="col-md-6">
           <div class="form-group">
@@ -223,6 +212,7 @@
   <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
   <input type="submit" value="Create" class="btn btn-primary" id="savebtn">
 </div>
+
 {{ Form::close() }}
 
 <input type="hidden" id="itemsdata" value="{{ json_encode($items) }}">
@@ -260,10 +250,11 @@ function searchLadger() {
   let searchVal = $('#search').val();
   let searchVillage = $('#search_village').val();
   let searchname = $('#search_name').val();
+  let all = 'yes';
   $.ajax({
     url: '{{ route('sellto.search') }}',
     type: 'GET',
-    data: { searchVal, searchVillage, searchname },
+    data: { searchVal, searchVillage, searchname, all },
     success: function(response) {
       if (response.success && response.data) {
         let html = '<select class="form-control" onchange="selectLadger(this.value)"><option value="">Select Farmer</option>';
@@ -281,7 +272,7 @@ function searchLadger() {
 }
 
 function selectLadger(id) {
-  $.get('{{ route('sellto.search') }}', { searchVal: id }, function(response) {
+  $.get('{{ route('sellto.search') }}', { searchVal: id, all : 'no' }, function(response) {
     if (response.success && response.data.length > 0) {
       let d = response.data[0];
       $('#sellto_account_number').val(d.account_id).prop('readonly', true);
@@ -425,4 +416,67 @@ console.log(item)
 }
 
 </script>
+<script>
+let rowIndex = 1;
+
+function addMoreItem() {
+  let $template = $('.item-group').first().clone();
+  
+  $template.find('input, select').each(function () {
+    let $el = $(this);
+    let name = $el.attr('name');
+    let oldId = $el.attr('id');
+    let newId = oldId ? oldId.replace(/\d+/, rowIndex) : '';
+
+    if (newId) {
+      $el.attr('id', newId);
+    }
+
+    $el.val('');
+    if (name === 'sellto_quantity[]') $el.val(1);
+    if (name === 'sell_total[]') $el.val(0);
+    if ($el.hasClass('sellto_item_selled')) {
+      $el.attr('dataid', rowIndex);
+      $el.attr('onchange', 'selectItem(' + rowIndex + ', this)');
+    }
+
+    if (name === 'sellto_quantity[]' || name === 'sellto_rate[]' || name === 'sellto_gst_amount[]') {
+      $el.attr('onkeyup', 'autofill(' + rowIndex + ')');
+      $el.attr('onchange', 'autofill(' + rowIndex + ')');
+    }
+  });
+
+  $('#item-wrapper').append($template);
+  rowIndex++;
+}
+
+function removeRow(button) {
+  if ($('.item-group').length > 1) {
+    $(button).closest('.item-group').remove();
+    updateTotalAmount(); // optional: re-calculate total after remove
+  } else {
+    alert("At least one row is required.");
+  }
+}
+
+function autofill(id) {
+  let qty = parseFloat($("#sellto_quantity_" + id).val()) || 0;
+  let rate = parseFloat($("#sellto_rate_" + id).val()) || 0;
+  let gst = parseFloat($("#sellto_gst_amount_" + id).val()) || 0;
+
+  let total = (qty * rate) + gst;
+  $("#purchase_total_" + id).val(total.toFixed(2));
+
+  updateTotalAmount();
+}
+
+function updateTotalAmount() {
+  let grandTotal = 0;
+  $(".purchase_total").each(function () {
+    grandTotal += parseFloat($(this).val()) || 0;
+  });
+  $("#sellto_total_amount").val(grandTotal.toFixed(2));
+}
+</script>
+
 

@@ -1,6 +1,5 @@
 {{ Form::open(['url' => 'bankacc/update', 'method' => 'put', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
-    <h6 class="sub-title">Branches Creation</h6>
 
     <div class="row">
 
@@ -110,7 +109,7 @@
         <div class="form-icon-user">
             <input class="form-control alwaysvisible" 
                    name="opening_bal" 
-                   type="text" 
+                   type="number" 
                    id="opening_bal" 
                    required 
                 value="{{$bankacc[0]->opening_bal	}}"

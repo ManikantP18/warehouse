@@ -36,7 +36,7 @@
         </a>
 
         <a href="#" data-size="xl" data-url="{{ route('bankacc.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Ladger') }}"
+            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Bank Account') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
         </a>
@@ -77,15 +77,15 @@
                                      <td> {{ $value->bank_name }} </td>
                                       <td> {{ $value->opening_bal }} </td>
                                     <td> {{ $value->account_type }} </td>
-                                     <td> {{ $value->cheque_book }} </td>
+                                    <td> {{ $value->cheque_book }} </td>
                                    
-                                     <td> {{ $value->chequerange_from }} </td>
-                                      <td> {{ $value->chequerange_to }} </td>
+                                    <td> {{ $value->chequerange_from }} </td>
+                                    <td> {{ $value->chequerange_to }} </td>
                                     
-                                       <td>
+                                    <td>
                                    
                                     <a href="#" data-size="xl" data-url="{{ route('bankacc.edit', $value->account_id) }}" data-ajax-popup="true"
-                                    data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Sells') }}"
+                                    data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('Edit Bank Account') }}"
                                     class="btn btn-sm btn-primary">
                                         <i class="ti ti-pencil"></i>
                                     </a>
