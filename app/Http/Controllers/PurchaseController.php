@@ -20,6 +20,7 @@ class PurchaseController extends Controller
         $data['products'] = DB::select("select id, name, quantity from product_services where type = 'Product'");
         $data['units'] = DB::select("select * from product_service_units");
         //  $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
+         
         return view('purchase/create',$data);
     }
     function add(Request $req){
