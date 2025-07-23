@@ -11,7 +11,7 @@
                     <div class="form-group" >
                         <label for="mo_no" class="form-label">Mobile No</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="mo_no" type="text" id="mo_no" placeholder="Mobile No">
+                            <input class="form-control onlyforformesrs" name="mo_no" type="text" id="mo_no" placeholder="Mobile No" required>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label for="r_cust" class="form-label">Farmer Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="r_cust" type="text" id="r_cust" placeholder="Farmer Name" >
+                            <input class="form-control onlyforformesrs" name="r_cust" type="text" id="r_cust" placeholder="Farmer Name" required>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                     <div class="form-group">
                         <label for="village" class="form-label">Village Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="village" type="text" id="village" placeholder="Village Name">
+                            <input class="form-control onlyforformesrs" name="village" type="text" id="village" placeholder="Village Name"required>
                         </div>
                     </div>
                 </div>
@@ -69,22 +69,24 @@
                 </div>
 
             <div class="row mb-3">
+
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label>UNIT</label>
-                        <select class="form-control" name="item[]" id="item">
+                        <label>ITEM</label>
+                        <select class="form-control" name="item_sale[]" id="item" required>
                             <option value="" hidden>Select ITEM</option>
-                            @foreach($units as $value)
+                            @foreach($item as $value)
                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                             @endforeach
                         </select>
                     </div>          
                 </div>
+
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="quantity" class="form-label">QUANTITY</label>
+                        <label for="quantity"  class="form-label">QUANTITY</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="quantity" type="text" id="quantity" >
+                            <input class="form-control onlyforformesrs" required name="quantity" type="text" id="quantity" >
                         </div>
                     </div>
                 </div>
@@ -92,7 +94,7 @@
                  <div class="col-lg-4">
                     <div class="form-group">
                         <label>UNIT</label>
-                        <select class="form-control" name="unit[]" id="unit">
+                        <select class="form-control" name="unit[]" id="unit" required>
                             <option value="" hidden>Select Unit</option>
                             @foreach($units as $value)
                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -107,21 +109,21 @@
                     <div class="form-group">
                         <label for="rate" class="form-label">RATE</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="rate" type="number" id="rate" >
+                            <input class="form-control onlyforformesrs" required name="rate" type="number" id="rate" >
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="total_amount" class="form-label">TOTAL AMOUNT</label>
-                        <input class="form-control onlyforformesrs"  name="total_amount" id="total_amount" >
+                        <input class="form-control onlyforformesrs"required  name="total_amount" id="total_amount" >
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="GST_amount" class="form-label">GST AMOUNT</label>
                         <div class="form-icon-user">
-                            <input class="form-control alwaysvisible"  name="GST_amount" type="text" id="GST_amount" >
+                            <input class="form-control alwaysvisible" required name="GST_amount" type="text" id="GST_amount" >
                         </div>
                     </div>
                 </div>

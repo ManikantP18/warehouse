@@ -205,6 +205,7 @@ Route::get('/SalesReturn/edit/{id}', 'App\Http\Controllers\CNController@edit')->
 
 Route::put('/SalesReturn/update', 'App\Http\Controllers\CNController@update')->name('Sales-Return.update')->middleware('auth');
 
+
 // --------------End selse return ------------
 
 

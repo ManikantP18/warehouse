@@ -117,8 +117,6 @@ function removeRow(button) {
   // Optionally recalculate total
   $(".purchase_total").each(() => autofill());
 }
-<<<<<<< HEAD
-=======
 
 
 function searchLadger() {
@@ -195,5 +193,4 @@ $(document).ready(function () {
   $('#form-fields-wrapper').hide();
   $('.allfarmers').hide();
 });
->>>>>>> 7072487da5571d5b8f716f39268a08657a8a570e
 </script>
