@@ -68,9 +68,6 @@ if (is_array($item_sales) && count($item_sales) > 0) {
     return back()->with('error', 'No sale items found.');
 }
 
-
-
-
         return Redirect::to('Sales-Return');
     }
 
