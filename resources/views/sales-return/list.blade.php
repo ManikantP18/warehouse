@@ -48,48 +48,74 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body table-border-style table-border-style">
+
+                 <div class="mb-3">
+                        <label><strong>Show/Hide Columns:</strong></label><br>
+                        @php
+                            $columns = [
+                                ['label' => 'cn_id', 'index' => 0],
+                                ['label' => 'Aadhar Number ', 'index' => 2],
+                                ['label' => 'Mobile no.', 'index' => 5],
+                                ['label' => 'Item to sale', 'index' => 6],
+                                ['label' => 'Quantity', 'index' => 7],
+                                ['label' => 'UNIT', 'index' => 8],
+                                ['label' => 'Rate', 'index' => 9],
+                                ['label' => 'total amount ', 'index' => 10],
+                                ['label' => 'GSt amount', 'index' => 11],
+                                ['label' => 'creat date', 'index' => 12],
+                                ['label' => 'update date', 'index' => 13],
+                                ['label' => 'status', 'index' => 14],
+                               
+                            ];
+                        @endphp
+
+                        @foreach($columns as $col)
+                            <label class="form-check-label me-3">
+                                <input type="checkbox" class="form-check-input toggle-col" data-col="{{ $col['index'] }}"> {{ $col['label'] }}
+                            </label>
+                        @endforeach
+                    </div>
                     <div class="table-responsive">
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>cn_id</th>
+                                    <th style="display:none">cn_id</th>
                                     <th> Cash / Credit</th>
-                                    <th> Aadhar Number </th>
+                                    <th style="display:none"> Aadhar Number </th>
                                     <th> Relational customer name </th>
                                     <th>village</th>
-                                    <th> Mobile no. </th>
-                                    <th> Item to sale</th>
-                                    <th> Quantity </th>
-                                    <th> UNIT </th>
-                                    <th> Rate </th>
-                                    <th> total amount  </th>
-                                    <th> GSt amount </th>                      
-                                    <th> creat date </th>
-                                    <th> update date </th>
-                                    <th> status </th>
-                                     <th> Action </th>
+                                    <th style="display:none"> Mobile no. </th>
+                                    <th style="display:none"> Item to sale</th>
+                                    <th style="display:none"> Quantity </th>
+                                    <th style="display:none"> UNIT </th>
+                                    <th style="display:none"> Rate </th>
+                                    <th style="display:none"> total amount  </th>
+                                    <th style="display:none"> GSt amount </th> 
+                                    <th style="display:none"> creat date </th>
+                                    <th style="display:none"> update date </th>
+                                    <th style="display:none"> status </th>
+                                    <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
 
                           @foreach($SalesReturn as $value)
                                 <tr>
-                                    <td>{{ $value->cn_id }}</td>
+                                    <td style="display:none">{{ $value->cn_id }}</td>
                                     <td>{{ $value->cash_credit }}</td>
-                                    <td>{{ $value->aadhar_no }}</td>
+                                    <td style="display:none">{{ $value->aadhar_no }}</td>
                                     <td>{{ $value->r_cust }}</td>
                                     <td>{{ $value->village }}</td>
-                                    <td>{{ $value->mo_no }}</td>
-                                    <td>{{ $value->item_sale }}</td>
-                                    <td>{{ $value->quantity }}</td>
-                                    <td>{{ $value->unit }}</td>
-                                    <td>{{ $value->rate }}</td>
-                                    <td>{{ $value->total_amount }}</td>
-                                    
-                                    <td>{{ $value->GST_amount }}</td>
-                                    <td>{{ $value->creat_at }}</td>
-                                    <td>{{ $value->UPdate_at }}</td>
-                                    <td>{{ $value->status }}</td>
+                                    <td style="display:none">{{ $value->mo_no }}</td>
+                                    <td style="display:none">{{ $value->item_sale }}</td>
+                                    <td style="display:none">{{ $value->quantity }}</td>
+                                    <td style="display:none">{{ $value->unit }}</td>
+                                    <td style="display:none">{{ $value->rate }}</td>
+                                    <td style="display:none">{{ $value->total_amount }}</td>
+                                    <td style="display:none">{{ $value->GST_amount }}</td>
+                                    <td style="display:none">{{ $value->creat_at }}</td>
+                                    <td style="display:none">{{ $value->UPdate_at }}</td>
+                                    <td style="display:none">{{ $value->status }}</td>
 
                                     <td>
                                         <div class="d-flex">
@@ -154,5 +180,27 @@
                 window.location.href = url;
             }
         }
+
+        $(document).ready(function () {
+    $('.toggle-col').on('change', function () {
+        const colIndex = $(this).data('col');
+        const isVisible = $(this).is(':checked');
+        const display = isVisible ? '' : 'none';
+        $('table tr').each(function () {
+            $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', display);
+        });
+    });
+
+    // Initial checkboxes state sync (optional)
+    $('.toggle-col').each(function () {
+        const colIndex = $(this).data('col');
+        if (!$(this).is(':checked')) {
+            $('table tr').each(function () {
+                $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', 'none');
+            });
+        }
+    });
+});
+
     </script>
 @endpush
