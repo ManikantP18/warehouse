@@ -21,6 +21,13 @@
 
         <div class="col-md-6">
           <div class="form-group">
+            <label for="search_owner" class="form-label">Land Owner</label>
+            <input class="form-control" name="search_owner" type="text" id="search_owner" placeholder="Owner Name">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
             <label for="search_village" class="form-label">Village Name</label>
             <input class="form-control" name="search_village" type="text" id="search_village" placeholder="Village Name">
           </div>
@@ -46,10 +53,10 @@
     <div id="form-fields-wrapper" style="display: none;">
       <div class="row">
         <div class="col-md-6">
-          <div class="form-group">
+         <div class="form-group">
             <label>Sell To</label>
-            <select name="purchase_to" id="purchase_to" class="form-control" onchange="toggleFields()">
-              <option value="farmer">Farmer</option>
+            <select id="purchase_to" class="form-control" onchange="toggleFields()">
+              <option value="farmer" selected>Farmer</option>
               <option value="other">Other</option>
             </select>
           </div>
@@ -104,65 +111,58 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>RST No.</label>
-            <input type="text" class="form-control" name="purchase_rst_no" id="purchase_rst_no" required >
+            <input type="text" class="form-control" name="purchase_rst_no" id="purchase_rst_no"  >
           </div>
         </div>
 
-        <div class="col-md-6 changehide">
+        <div class="col-md-6 ">
           <div class="form-group">
             <label>LOT No.</label>
             <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required>
           </div>
         </div>
-
-        <div class="col-md-6 changehide">
+        <div class="col-md-6 ">
           <div class="form-group">
             <label>Village</label>
             <input type="text" class="form-control" name="purchase_village" id="purchase_village" required readonly>
           </div>
         </div>
 
-        <div class="col-md-6 changehide">
+        <div class="col-md-6 ">
           <div class="form-group">
             <label>Account Number</label>
             <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required readonly>
           </div>
         </div>
 
-        <div class="col-md-6 changehide">
+        <div class="col-md-6 ">
           <div class="form-group">
             <label>Bank Name</label>
            <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required readonly>
           </div>
         </div>
 
-        <div class="col-md-6 changehide">
+        <div class="col-md-6 ">
           <div class="form-group">
             <label>IFSC Code</label>
             <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required readonly>
           </div>
         </div>
 
-        <div class="col-md-6 changehide">
+        <div class="col-md-6 ">
           <div class="form-group">
             <label>Branch</label>
             <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required readonly>
           </div>
         </div>
 
-        <div class="col-md-6 changehide">
-          <div class="form-group">
+        <div class="col-md-6 changehide ">
+          <div class="form-group changehide" style="display: none;">
             <label>GST No.</label>
-            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required>
+            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no">
           </div>
         </div>
 
-        <!-- <div class="col-md-6 changehide">
-          <div class="form-group">
-            <label>GST No.</label>
-            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required>
-          </div>
-        </div> -->
         
    <!-- Wrapper for purchase item rows -->
 <div id="item-wrapper">
@@ -241,11 +241,8 @@
 </div>
 {{ Form::close() }}
 <script>
-    function toggleFields() {
-  let val = document.getElementById('sellto_farmer/other').value;
-  $('.changehide').show();
-  if (val === 'other') $('.changehide').hide();
-}
+ 
+
 
 function handleChage(flag) {
   let val = $("#purchase_item_" + flag).val();
@@ -273,11 +270,12 @@ function searchLadger() {
   let searchVal = $('#search').val();
   let searchVillage = $('#search_village').val();
   let searchname = $('#search_name').val();
+  let searchowner = $('#search_owner').val();
   let all = 'yes';
   $.ajax({
     url: '{{ route('purchase.search') }}',
     type: 'GET',
-    data: { searchVal, searchVillage, searchname, all },
+    data: { searchVal, searchVillage, searchname,searchowner, all },
     success: function(response) {
       if (response.success && response.data) {
         let html = '<select class="form-control" onchange="selectLadger(this.value)"><option value="">Select Farmer</option>';
@@ -395,4 +393,22 @@ function removeRow(button) {
   }
 }
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function toggleFields() {
+    const val = document.getElementById('purchase_to').value;
+
+    if (val === 'farmer') {
+      $('.changehide').hide();
+      $('#purchase_gst_no').removeAttr('required');
+    } else {
+      $('.changehide').show();
+      $('#purchase_gst_no').attr('required', 'required');
+    }
+  }
+
+  // ✅ Call once when the page loads
+  document.addEventListener('DOMContentLoaded', toggleFields);
+</script>
+
   

@@ -275,6 +275,8 @@
   </div>
 @endfor
 
+        
+
         <input class="form-control" required name="purchase_id" type="hidden" id="sellto_account_number" value="{{$purchase[0]->purchase_id}}">
 
         <!--

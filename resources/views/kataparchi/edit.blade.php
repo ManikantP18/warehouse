@@ -105,7 +105,7 @@
                 <div class="form-group">
                     <label for="kp_rogger_name" class="form-label"> Rogating agent name </label>
                     <div class="form-icon-user">
-                        <input class="form-control " required pattern="[A-Za-z ]+" title="Only letters allowed" name="kp_rogger_name" type="text" id="kp_rogger_name" value="{{$kataparchi[0]->kp_rogger_name	}}">
+                        <input class="form-control " title="Only letters allowed" name="kp_rogger_name" type="text" id="kp_rogger_name" value="{{$kataparchi[0]->kp_rogger_name	}}">
                     </div>
                 </div>
             </div>

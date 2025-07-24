@@ -217,33 +217,7 @@
                     </li>
                 @endif
 
-                {{-- -------  Product & Stock ---------- --}}
-                @if (Gate::check('manage product & service'))
-                    <li class="dash-item {{ Request::segment(1) == 'productstock' ? 'active' : '' }}">
-                        <a href="{{ route('productstock.index') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-box"></i></span>
-                            <span class="dash-mtext">{{ __('Product Stock') }}</span>
-                        </a>
-                    </li>
-                @endif
-
-                {{-- -------  Customer ---------- --}}
-                @if (Gate::check('manage customer'))
-                    <li class="dash-item {{ Request::segment(1) == 'customer' ? 'active' : '' }}">
-                        <a href="{{ route('customer.index') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-user-plus"></i></span>
-                            <span class="dash-mtext">{{ __('Customer') }}</span>
-                        </a>
-                    </li>
-
-                   <!-- <li class="dash-item {{ Request::segment(1) == 'ladger' ? 'active' : '' }}">
-                        <a href="{{ route('ladger.index') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-user-plus"></i></span>
-                            <span class="dash-mtext">{{ __('Ladgers') }}</span>
-                        </a>
-                    </li>
-                -->
-                @endif
+                
 
                 <li class="dash-item {{ Request::route()->getName() == 'branches.list' ? ' active' : '' }} ">
                         <a href="{{ route('branches.list') }}" class="dash-link ">

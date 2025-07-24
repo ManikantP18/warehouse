@@ -76,8 +76,8 @@ public function search(Request $req)
             $searchVal = $req->input('searchVal'); // Account No or Mobile No
             $searchVillage = $req->input('searchVillage');
             $searchname = $req->input('searchname');
+            $searchowner = $req->input('searchowner');
 
-           
 
            /* $searchData = DB::select("SELECT ladger_id,relational_cust_name FROM ladgers
             WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
@@ -95,6 +95,7 @@ public function search(Request $req)
     })
     ->where('relational_cust_name', 'LIKE', "%$searchname%")
     ->where('village', 'LIKE', "%$searchVillage%")
+    ->where('farm_owner_name', 'LIKE', "%$searchowner%")
     ->pluck('relational_cust_name', 'ladger_id') // This gives associative array: [id => name]
     ->toArray(); // Convert collection to array
 

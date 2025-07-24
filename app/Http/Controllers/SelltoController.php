@@ -97,13 +97,13 @@ class SelltoController extends Controller
             $searchVal = $req->input('searchVal'); // Account No or Mobile No
             $searchVillage = $req->input('searchVillage');
             $searchname = $req->input('searchname');
-
+            $searchowner = $req->input('searchowner');
            
 
             $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
             WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
             AND (relational_cust_name LIKE '%$searchname%'
-            AND village LIKE '%$searchVillage%')
+            AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
             ");
 
             $variety = DB::select("SELECT * FROM product_services join selled_item ON selled_item.selled_item = product_services.id join sell_to on sell_to.sell_id =  selled_item.sell_id

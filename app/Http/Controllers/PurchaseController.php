@@ -12,7 +12,7 @@ use DB;
 class PurchaseController extends Controller
 {
     function index() {
-         $data['purchase'] = DB::select("select * from purchase where purchase_status = 1 AND is_deleted = 0 order by purchase_id DESC");
+         $data['purchase'] = DB::select("select * from purchase where purchase_status = 1 AND is_deleted = 0 AND is_hide = 0 order by purchase_id DESC");
         return view('purchase/list',$data);
     }
 
@@ -87,7 +87,7 @@ class PurchaseController extends Controller
             $searchVal = $req->input('searchVal'); // Account No or Mobile No
             $searchVillage = $req->input('searchVillage');
             $searchname = $req->input('searchname');
-
+            $searchowner = $req->input('searchowner');
             $all = $req->input('all') ? $req->input('all') : 'no';
 
             if($all == 'no'){
@@ -95,7 +95,8 @@ class PurchaseController extends Controller
                 $searchData = DB::select("SELECT *,ladgers.bank_name as ladgers_bank,product_services.name AS item_name FROM ladgers left join sell_to ON sell_to.sell_account_number = ladgers.account_id left join product_services ON sell_to.item_selled = product_services.id
                 WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
-                AND village LIKE '%$searchVillage%')
+                AND village LIKE '%$searchVillage%'
+                AND farm_owner_name LIKE '%$searchowner%')
                 group by sell_to.sell_account_number order by sell_to.sell_id");
 
             } else {
@@ -103,7 +104,8 @@ class PurchaseController extends Controller
                 $searchData = DB::select("SELECT *,ladgers.bank_name as ladgers_bank FROM ladgers
                 WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
-                AND village LIKE '%$searchVillage%')");
+                AND village LIKE '%$searchVillage%'
+                AND farm_owner_name LIKE '%$searchowner%')");
 
             }
 
@@ -185,18 +187,17 @@ class PurchaseController extends Controller
         $purchase_ifsc = $req->input('purchase_ifsc');
          $purchase_branch = $req->input('purchase_branch');
         $purchase_gst_no = $req->input('purchase_gst_no');
-        
         $purchase_to = $req->input('purchase_to');
         $id = $req->input('purchase_id');
-
         $purchase_total = $req->input('purchase_total');
-
+        $purchase_item = $req->input('purchase_item');
         $sum_total = array_sum($purchase_total);
 
         
         
-        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to' , purchase_total = '$sum_total' WHERE purchase_id = '$id'");
+        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to' , purchase_total = '$sum_total', is_hide = '1' WHERE purchase_id = '$id'");
 
+        $today = date('Y-m-d H:i:s');
 
         DB::delete("delete from purchase_item where purchase_id = '$id'");
 
@@ -209,6 +210,25 @@ class PurchaseController extends Controller
                  for($i = 0 ; $i < count($purchase_rate) ; $i++) {
                     if($purchase_rate[$i] != '' && $purchase_rate[$i] != 0) {
                          DB::insert("Insert into purchase_item (purchase_id,purchased_item,purchased_rate,purchased_qty,purchased_unit,purchased_total) values ('$id','$purchase_item[$i]','$purchase_rate[$i]','$purchase_quantity[$i]','$purchase_unit[$i]','$purchase_total[$i]')" );
+
+
+                        // $staging_id = DB::select("SELECT staging_id FROM staging WHERE select_lot_no = '$purchase_lot_no' AND staging_varity = '$purchase_item[$i]' LIMIT 1");
+
+                        $staging_row = DB::selectOne("SELECT staging_id FROM staging WHERE select_lot_no = '$purchase_lot_no' AND staging_varity = '$purchase_item[$i]' LIMIT 1");
+
+                        $staging_id = $staging_row->staging_id ?? null;
+
+                       $existing = DB::table('staging')
+                        ->where('select_lot_no', $purchase_lot_no)
+                        ->where('staging_varity', $purchase_item[$i])
+                        ->first();
+
+
+                        if($existing) {
+                             DB::update("update staging set select_lot_no = '$purchase_lot_no',staging_varity='$purchase_item[$i]',staging_date='$today',rst_no = '$purchase_rst_no' , farmer_name = '$purchase_relation_cusm' where staging_id = '$staging_id'");
+                        } else {
+                            DB::insert("Insert into staging (select_lot_no,staging_varity,staging_date,rst_no,farmer_name) VALUES ('$purchase_lot_no', '$purchase_item[$i]','$today','$purchase_rst_no','$purchase_relation_cusm')");
+                        }
                     }
                  }
        
