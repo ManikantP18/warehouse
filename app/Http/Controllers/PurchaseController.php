@@ -87,7 +87,7 @@ class PurchaseController extends Controller
             $searchVal = $req->input('searchVal'); // Account No or Mobile No
             $searchVillage = $req->input('searchVillage');
             $searchname = $req->input('searchname');
-
+            $searchowner = $req->input('searchowner');
             $all = $req->input('all') ? $req->input('all') : 'no';
 
             if($all == 'no'){
@@ -95,7 +95,8 @@ class PurchaseController extends Controller
                 $searchData = DB::select("SELECT *,ladgers.bank_name as ladgers_bank,product_services.name AS item_name FROM ladgers left join sell_to ON sell_to.sell_account_number = ladgers.account_id left join product_services ON sell_to.item_selled = product_services.id
                 WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
-                AND village LIKE '%$searchVillage%')
+                AND village LIKE '%$searchVillage%'
+                AND farm_owner_name LIKE '%$searchowner%')
                 group by sell_to.sell_account_number order by sell_to.sell_id");
 
             } else {
@@ -103,7 +104,8 @@ class PurchaseController extends Controller
                 $searchData = DB::select("SELECT *,ladgers.bank_name as ladgers_bank FROM ladgers
                 WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
-                AND village LIKE '%$searchVillage%')");
+                AND village LIKE '%$searchVillage%'
+                AND farm_owner_name LIKE '%$searchowner%')");
 
             }
 
@@ -170,50 +172,90 @@ class PurchaseController extends Controller
     } 
 
     function update(Request $req) {
-        
-         $purchase_way = $req->input('purchase_way');
-        $purchase_relation_cusm = $req->input('purchase_relation_cusm');
-        $purchase_accountant = $req->input('purchase_accountant');
-        $purchase_owner = $req->input('purchase_owner');
-        $purchase_village = $req->input('purchase_village');
-        $purchase_acre = $req->input('purchase_acre');
-        $purchase_phone = $req->input('purchase_phone');
-        $purchase_rst_no = $req->input('purchase_rst_no');
-        $purchase_lot_no = $req->input('purchase_lot_no');
-         $purchase_account_no = $req->input('purchase_account_no');
-        $purchas_bank_name = $req->input('purchas_bank_name');
-        $purchase_ifsc = $req->input('purchase_ifsc');
-         $purchase_branch = $req->input('purchase_branch');
-        $purchase_gst_no = $req->input('purchase_gst_no');
-        
-        $purchase_to = $req->input('purchase_to');
-        $id = $req->input('purchase_id');
 
-        $purchase_total = $req->input('purchase_total');
+    $purchase_way = $req->input('purchase_way');
+    $purchase_relation_cusm = $req->input('purchase_relation_cusm');
+    $purchase_accountant = $req->input('purchase_accountant');
+    $purchase_owner = $req->input('purchase_owner');
+    $purchase_village = $req->input('purchase_village');
+    $purchase_acre = $req->input('purchase_acre');
+    $purchase_phone = $req->input('purchase_phone');
+    $purchase_rst_no = $req->input('purchase_rst_no');
+    $purchase_lot_no = $req->input('purchase_lot_no');
+    $purchase_account_no = $req->input('purchase_account_no');
+    $purchas_bank_name = $req->input('purchas_bank_name');
+    $purchase_ifsc = $req->input('purchase_ifsc');
+    $purchase_branch = $req->input('purchase_branch');
+    $purchase_gst_no = $req->input('purchase_gst_no');
+    $purchase_to = $req->input('purchase_to');
+    $id = $req->input('purchase_id');
+    $purchase_total = $req->input('purchase_total');
+    $purchase_item = $req->input('purchase_item');
+    $sum_total = array_sum($purchase_total);
+    $today = date('Y-m-d H:i:s');
 
-        $sum_total = array_sum($purchase_total);
+    // Update purchase table
+    DB::update("UPDATE purchase 
+        SET 
+            purchase_way = '$purchase_way',
+            purchase_relation_cusm = '$purchase_relation_cusm',
+            purchase_accountant = '$purchase_accountant',
+            purchase_owner = '$purchase_owner',
+            purchase_village = '$purchase_village',
+            purchase_acre = '$purchase_acre',
+            purchase_phone = '$purchase_phone',
+            purchase_rst_no = '$purchase_rst_no',
+            purchase_lot_no = '$purchase_lot_no',
+            purchase_account_no = '$purchase_account_no',
+            purchas_bank_name = '$purchas_bank_name',
+            purchase_ifsc = '$purchase_ifsc',
+            purchase_branch = '$purchase_branch',
+            purchase_gst_no = '$purchase_gst_no',
+            purchase_total = '$sum_total',
+            purchase_to = '$purchase_to' 
+        WHERE purchase_id = '$id'");
 
-        
-        
-        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to' , purchase_total = '$sum_total' WHERE purchase_id = '$id'");
+    // Delete existing purchase_item entries
+    DB::delete("DELETE FROM purchase_item WHERE purchase_id = '$id'");
 
+    // Loop over item arrays
+    $purchase_quantity = $req->input('purchase_quantity');
+    $purchase_rate = $req->input('purchase_rate');
+    $purchase_unit = $req->input('purchase_unit');
 
-        DB::delete("delete from purchase_item where purchase_id = '$id'");
+    for ($i = 0; $i < count($purchase_rate); $i++) {
+        if ($purchase_rate[$i] != '' && $purchase_rate[$i] != 0) {
 
-        $purchase_item = $req->input('purchase_item');
-                 $purchase_quantity = $req->input('purchase_quantity');
-                 $purchase_rate = $req->input('purchase_rate');
-                 
-                 $purchase_unit = $req->input('purchase_unit');
+            // Insert into purchase_item
+            DB::insert("INSERT INTO purchase_item 
+                (purchase_id, purchased_item, purchased_rate, purchased_qty, purchased_unit, purchased_total) 
+                VALUES 
+                ('$id', '$purchase_item[$i]', '$purchase_rate[$i]', '$purchase_quantity[$i]', '$purchase_unit[$i]', '$purchase_total[$i]')");
 
-                 for($i = 0 ; $i < count($purchase_rate) ; $i++) {
-                    if($purchase_rate[$i] != '' && $purchase_rate[$i] != 0) {
-                         DB::insert("Insert into purchase_item (purchase_id,purchased_item,purchased_rate,purchased_qty,purchased_unit,purchased_total) values ('$id','$purchase_item[$i]','$purchase_rate[$i]','$purchase_quantity[$i]','$purchase_unit[$i]','$purchase_total[$i]')" );
-                    }
-                 }
-       
-        return Redirect::to('purchase');
-       
+            // Check if staging record exists
+            $existing = DB::select("SELECT staging_id FROM staging 
+                                    WHERE select_lot_no = '$purchase_lot_no' 
+                                    AND staging_varity = '$purchase_item[$i]' 
+                                    LIMIT 1");
+
+            if ($existing) {
+                // Update existing record
+                DB::update("UPDATE staging 
+                            SET staging_date = '$today' 
+                            WHERE select_lot_no = '$purchase_lot_no' 
+                            AND staging_varity = '$purchase_item[$i]'");
+            } else {
+                // Insert new record
+                DB::insert("INSERT INTO staging 
+                    (select_lot_no, staging_varity, staging_date) 
+                    VALUES 
+                    ('$purchase_lot_no', '$purchase_item[$i]', '$today')");
+            }
+        }
     }
+
+    return Redirect::to('purchase');
+}
+
   
 }

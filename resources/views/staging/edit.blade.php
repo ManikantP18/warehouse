@@ -17,21 +17,28 @@
         {{-- Staging Variety --}}
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="staging_varity" class="form-label">Staging Variety</label>
-                <input class="form-control" required name="staging_varity" type="text" id="staging_varity"
-                       pattern="^[A-Za-z0-9\s\-]+$" value="{{ $staging[0]->staging_varity }}"
-                       placeholder="Enter Variety (letters, numbers, hyphen)">
-                <div class="invalid-feedback">Only letters, numbers, space, and hyphens are allowed.</div>
+                <div class="form-icon-user">
+                <label for="godown" class="form-label"> Variety</label>
+                <select name="staging_varity" required id="staging_varity" class="form-control">
+                        
+                            <option value="{{ $staging[0]->id }}">{{ $staging[0]->name }}</option>
+                       
+                    </select>
+                </div>
             </div>
         </div>
 
-        {{-- Godown --}}
-        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
+        
+        <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="godown" class="form-label">Godown</label>
-                <input class="form-control" required name="godown" type="text" id="godown"
-                       pattern="^[A-Za-z0-9\s\-]+$" value="{{ $staging[0]->godown }}" placeholder="Enter Godown Name">
-                <div class="invalid-feedback">Only letters, numbers, space, and hyphens are allowed.</div>
+                <label for="godown" class="form-label"> Godown</label>
+                <div class="form-icon-user">
+                    <select name="godown" required id="godown" class="form-control">
+                        @foreach($branch as $val)
+                            <option value="{{ $val->branch_name }}">{{ $val->branch_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
 

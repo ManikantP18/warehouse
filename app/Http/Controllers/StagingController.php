@@ -14,7 +14,7 @@ class StagingController extends Controller
 {
     public function index(){
 
-        $data['staging'] = DB::select('select * from staging');
+        $data['staging'] = DB::select("select * from staging join product_services on product_services.id = staging.staging_varity");
 
         return view('staging/list',$data);
 
@@ -23,6 +23,8 @@ class StagingController extends Controller
     function create(){
 
         $data['lotnumbers'] = DB::select("select purchase_lot_no from purchase where purchase_status = 1 AND is_deleted = 0");
+ $data['branch'] = DB::select("select * from branches where branch_status = 1");
+       
         
         return view('staging/create',$data);
     }
@@ -48,7 +50,8 @@ class StagingController extends Controller
     }
 
     function edit($id){
-         $data['staging'] = DB::select("select * from staging where staging_id = '$id'");
+         $data['staging'] = DB::select("select * from staging join product_services on product_services.id = staging.staging_varity where staging_id = '$id'");
+          $data['branch'] = DB::select("select * from branches where branch_status = 1");
       ///   print_r($data);
         return view('staging/edit',$data);
     }

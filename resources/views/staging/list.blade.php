@@ -71,7 +71,7 @@
                                 <tr>
                                     <td> {{ $value->staging_id}} </td>
                                     <td> {{ $value->select_lot_no}} </td>
-                                    <td> {{ $value->staging_varity}} </td>
+                                    <td> {{ $value->name}} </td>
                                     <td> {{ $value->godown}} </td>
                                      <td> {{ $value->stage_no}} </td>
                                     <td> {{ $value->no_of_begs}} </td>

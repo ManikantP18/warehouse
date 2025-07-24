@@ -34,8 +34,12 @@
             <div class="form-group">
                 <label for="godown" class="form-label">Godown</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="godown" type="text" id="godown" placeholder="Enter Godown Name">
-                    <div class="invalid-feedback">Please enter the godown name.</div>
+                    <select name="select_lot_no" required id="select_lot_no" class="form-control">
+                        <option value="" hidden>Select Godown</option>
+                        @foreach($branch as $val)
+                            <option value="{{ $val->branch_name }}">{{ $val->branch_name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>

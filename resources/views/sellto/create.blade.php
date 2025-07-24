@@ -19,6 +19,13 @@
           </div>
         </div>
 
+         <div class="col-md-6">
+          <div class="form-group">
+            <label for="search_owner" class="form-label">Land Owner</label>
+            <input class="form-control" name="search_owner" type="text" id="search_owner" placeholder="Owner Name">
+          </div>
+        </div>
+
         <div class="col-md-6">
           <div class="form-group">
             <label for="search_village" class="form-label">Village Name</label>
@@ -26,7 +33,7 @@
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6 m-auto">
           <div class="form-group">
             <label class="form-label d-none d-sm-block">&nbsp;</label>
             <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
@@ -245,16 +252,16 @@ function makeFieldsEditable() {
     .prop('readonly', false)
     .val('');
 }
-
 function searchLadger() {
   let searchVal = $('#search').val();
   let searchVillage = $('#search_village').val();
   let searchname = $('#search_name').val();
+  let searchowner = $('#search_owner').val();
   let all = 'yes';
   $.ajax({
     url: '{{ route('sellto.search') }}',
     type: 'GET',
-    data: { searchVal, searchVillage, searchname, all },
+    data: { searchVal, searchVillage, searchname,searchowner, all },
     success: function(response) {
       if (response.success && response.data) {
         let html = '<select class="form-control" onchange="selectLadger(this.value)"><option value="">Select Farmer</option>';
@@ -270,7 +277,6 @@ function searchLadger() {
     }
   });
 }
-
 function selectLadger(id) {
   $.get('{{ route('sellto.search') }}', { searchVal: id, all : 'no' }, function(response) {
     if (response.success && response.data.length > 0) {
