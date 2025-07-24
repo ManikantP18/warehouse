@@ -96,12 +96,10 @@ class ProductServiceController extends Controller
 
             $rules = [
                 'name' => 'required',
-                'sku' => 'required',
                 'sale_price' => 'required|numeric',
                 'purchase_price' => 'required|numeric',
                 'category_id' => 'required',
                 'unit_id' => 'required',
-                'type' => 'required',
                 'tax_id' => 'required',
             ];
 
@@ -116,20 +114,14 @@ class ProductServiceController extends Controller
             $productService                 = new ProductService();
             $productService->name           = $request->name;
             $productService->description    = $request->description;
-            $productService->sku            = $request->sku;
             $productService->sale_price     = $request->sale_price;
             $productService->purchase_price = $request->purchase_price;
             $productService->tax_id         = !empty($request->tax_id) ? implode(',', $request->tax_id) : '';
             $productService->unit_id        = $request->unit_id;
-            // $productService->quantity       = $request->quantity;
-            if (!empty($request->quantity)) {
-                $productService->quantity        = $request->quantity;
-            } else {
-                $productService->quantity   = 0;
-            }
+            
+            $productService->quantity   = 0;
+            
             $productService->type           = $request->type;
-            $productService->sale_chartaccount_id       = $request->sale_chartaccount_id;
-            $productService->expense_chartaccount_id    = $request->expense_chartaccount_id;
             $productService->category_id    = $request->category_id;
             $productService->created_by     = \Auth::user()->creatorId();
             $productService->save();
@@ -213,13 +205,11 @@ class ProductServiceController extends Controller
 
                 $rules = [
                     'name' => 'required',
-                    'sku' => 'required',
                     'sale_price' => 'required|numeric',
                     'purchase_price' => 'required|numeric',
                     'tax_id' => 'required',
                     'category_id' => 'required',
-                    'unit_id' => 'required',
-                    'type' => 'required',
+                    'unit_id' => 'required'
                 ];
 
                 $validator = \Validator::make($request->all(), $rules);
@@ -232,15 +222,10 @@ class ProductServiceController extends Controller
 
                 $productService->name           = $request->name;
                 $productService->description    = $request->description;
-                $productService->sku            = $request->sku;
                 $productService->sale_price     = $request->sale_price;
                 $productService->purchase_price = $request->purchase_price;
                 $productService->tax_id         = !empty($request->tax_id) ? implode(',', $request->tax_id) : '';
                 $productService->unit_id        = $request->unit_id;
-                $productService->quantity        = $request->quantity;
-                $productService->type           = $request->type;
-                $productService->sale_chartaccount_id       = $request->sale_chartaccount_id;
-                $productService->expense_chartaccount_id    = $request->expense_chartaccount_id;
                 $productService->category_id    = $request->category_id;
                 $productService->created_by     = \Auth::user()->creatorId();
                 $productService->save();

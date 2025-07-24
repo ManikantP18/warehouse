@@ -1,25 +1,191 @@
-<!-- Product Items Wrapper -->
+{{ Form::open(['url' => 'purchase/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
+<div class="modal-body">
+  <div class="row">
+
+    <!-- Search Fields -->
+    <div class="col-12">
+      <div class="row align-items-end">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="search" class="form-label">Account/Mobile No</label>
+            <input class="form-control" name="search" type="text" id="search" placeholder="Acc No / Mobile No" >
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="search_name" class="form-label">Farmer Name</label>
+            <input class="form-control" name="search_name" type="text" id="search_name" placeholder="Farmer Name">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="search_village" class="form-label">Village Name</label>
+            <input class="form-control" name="search_village" type="text" id="search_village" placeholder="Village Name">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label d-none d-sm-block">&nbsp;</label>
+            <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Farmer Selection -->
+    <div class="col-12">
+      <div class="form-group">
+        <div class="form-icon-user allfarmers"></div>
+      </div>
+    </div>
+
+    <!-- Form Fields Wrapper -->
+    <div id="form-fields-wrapper" style="display: none;">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Sell To</label>
+            <select name="purchase_to" id="purchase_to" class="form-control" onchange="toggleFields()">
+              <option value="farmer">Farmer</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Mode of Invoice</label>
+              <select name="purchase_way" id="purchase_way" class="form-control">
+                <option value="cash">Cash</option>
+                <option value="credit">Credit</option>
+              </select>
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Aadhar Number </label>
+            <input type="text" class="form-control" name="purchase_accountant" id="spurchase_accountant" required readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Relational Customer name</label>
+            <input type="text" class="form-control" name="purchase_relation_cusm" id="purchase_relation_cusm" required readonly>
+          </div>
+        </div>
+
+         <div class="col-md-6">
+          <div class="form-group">
+            <label>Owner name</label>
+            <input type="text" class="form-control" name="purchase_owner" id="purchase_owner" required readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="tel" class="form-control" name="purchase_phone" id="purchase_phone" required pattern="[0-9]{10}" maxlength="10" readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Acre</label>
+            <input type="text" class="form-control" name="purchase_acre" id="purchase_acre" required readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>RST No.</label>
+            <input type="text" class="form-control" name="purchase_rst_no" id="purchase_rst_no" required >
+          </div>
+        </div>
+
+        <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>LOT No.</label>
+            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required>
+          </div>
+        </div>
+
+        <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>Village</label>
+            <input type="text" class="form-control" name="purchase_village" id="purchase_village" required readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>Account Number</label>
+            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>Bank Name</label>
+           <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>IFSC Code</label>
+            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>Branch</label>
+            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required readonly>
+          </div>
+        </div>
+
+        <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>GST No.</label>
+            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>GST No.</label>
+            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required>
+          </div>
+        </div> -->
+        
+   <!-- Wrapper for purchase item rows -->
 <div id="item-wrapper">
 
-  <!-- Initial Item Row -->
-  <div class="row mb-3 item-group" style="background-color: #c6c6c6; padding:10px; border-radius:5px;">
+  <!-- Initial Row -->
+  <div class="row mb-3 item-group" style="background-color:#f2f2f2; padding:10px; border-radius:5px;">
 
-    <div class="col-md-2">
+    <div class="col-md-4">
       <div class="form-group">
-        <label>Sell Item</label>
-        <select name="sellto_item_selled[]" class="form-control sellto_item_selled" dataid="0" onchange="selectItem(0, this)">
-          <option value="">Select Item</option>
-          @foreach($items as $val)
-            <option value="{{ $val->pid }}">{{ $val->item_name }}</option>
+        <label>Purchase Item</label>
+        <select name="purchase_item[]" id="purchase_item_0" class="form-control allitems" onchange="handleChage(0)">
+          <option value="" hidden>Select Item</option>
+          @foreach($products as $value)
+            <option value="{{ $value->id }}">{{ $value->name }}</option>
           @endforeach
         </select>
       </div>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-1">
       <div class="form-group">
         <label>Quantity</label>
-        <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
+        <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
       </div>
     </div>
 
@@ -38,24 +204,18 @@
     <div class="col-md-2">
       <div class="form-group">
         <label>Rate</label>
-        <input type="number" class="form-control sellto_rate" name="sellto_rate[]" id="sellto_rate_0" value="0" onchange="autofill(0)">
+        <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_0" value="0" onkeyup="autofill(0)">
       </div>
     </div>
 
     <div class="col-md-2">
       <div class="form-group">
-        <label>GST</label>
-        <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" id="sellto_gst_amount_0" value="0" onchange="autofill(0)">
-      </div>
-    </div>
-
-    <div class="col-md-1">
-      <div class="form-group">
         <label>Total</label>
-        <input type="number" class="form-control purchase_total" name="sell_total[]" id="purchase_total_0" value="0" required>
+        <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_0" required value="0">
       </div>
     </div>
 
+    <!-- 🗑 Remove Button -->
     <div class="col-md-1">
       <div class="form-group">
         <label>&nbsp;</label>
@@ -68,54 +228,44 @@
 
 <!-- Add More Button -->
 <div class="mt-2">
-  <button type="button" class="btn btn-primary" onclick="addMoreItem()">+ Add More</button>
+  <button type="button" class="btn btn-primary" onclick="addMorePurchaseRow()">+ Add More</button>
 </div>
-<script>let rowIndex = 1;
 
-function addMoreItem() {
-  let $wrapper = $('#item-wrapper');
-  let $template = $wrapper.find('.item-group').first().clone();
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
+  <input type="submit" value="Create" class="btn btn-primary">
+</div>
+{{ Form::close() }}
+<script>
+    function toggleFields() {
+  let val = document.getElementById('sellto_farmer/other').value;
+  $('.changehide').show();
+  if (val === 'other') $('.changehide').hide();
+}
 
-  $template.find('input, select').each(function () {
-    let $el = $(this);
-    let name = $el.attr('name');
-    let id = $el.attr('id');
+function handleChage(flag) {
+  let val = $("#purchase_item_" + flag).val();
 
-    // Update id & event bindings
-    if (id) {
-      let newId = id.replace(/\d+/, rowIndex);
-      $el.attr('id', newId);
-    }
+  let isDuplicate = false;
 
-    // Reset values
-    if ($el.is('input')) $el.val($el.hasClass('sellto_quantity') ? 1 : 0);
-    else $el.val('');
-
-    // Update event attributes
-    if (name === 'sellto_quantity[]' || name === 'sellto_rate[]' || name === 'sellto_gst_amount[]') {
-      $el.attr('onkeyup', 'autofill(' + rowIndex + ')');
-      $el.attr('onchange', 'autofill(' + rowIndex + ')');
-    }
-
-    if ($el.hasClass('sellto_item_selled')) {
-      $el.attr('dataid', rowIndex);
-      $el.attr('onchange', 'selectItem(' + rowIndex + ', this)');
+  $(".allitems").each(function () {
+    // Fix: Remove space in '!='
+    if ($(this).attr('id') !== 'purchase_item_' + flag && $(this).val() !== '') {
+      if ($(this).val() === val) {
+        isDuplicate = true;
+        return false; // break out of loop
+      }
     }
   });
 
-  $wrapper.append($template);
-  rowIndex++;
-}
-
-function removeRow(button) {
-  if ($('.item-group').length > 1) {
-    $(button).closest('.item-group').remove();
-  } else {
-    alert("At least one item is required.");
+  if (isDuplicate) {
+    alert('Same item already selected');
+    $("#purchase_item_" + flag).val(''); // reset the value
   }
-
-  // Optionally recalculate total
-  $(".purchase_total").each(() => autofill());
 }
 
 
@@ -136,7 +286,7 @@ function searchLadger() {
         });
         html += '</select>';
         $('.allfarmers').html(html).show();
-        $('#form-fields-wrapper').hide(); // still hide until selection
+        $('#form-fields-wrapper').hide();
       } else {
         alert("No matching record found.");
       }
@@ -145,7 +295,7 @@ function searchLadger() {
 }
 
 function selectLadger(id) {
-  $.get('{{ route('purchase.search') }}', { searchVal: id, all : 'no' }, function(response) { 
+  $.get('{{ route('purchase.search') }}', { searchVal: id }, function(response) { 
     if (response.success && response.data) {
       let d = response.data[0];
      
@@ -194,3 +344,55 @@ $(document).ready(function () {
   $('.allfarmers').hide();
 });
 </script>
+
+
+<script>
+let rowIndex = 1;
+
+function addMorePurchaseRow() {
+  let $wrapper = $('#item-wrapper');
+  let $clone = $wrapper.find('.item-group').first().clone();
+
+  // Clear values and update IDs
+  $clone.find('input, select').each(function () {
+    let $el = $(this);
+    let oldId = $el.attr('id');
+
+    if (oldId) {
+      let newId = oldId.replace(/\d+/, rowIndex);
+      $el.attr('id', newId);
+    }
+
+    // Reset value
+    $el.val('');
+
+    // Update function bindings
+    if ($el.is('select') && $el.hasClass('allitems')) {
+      $el.attr('onchange', 'handleChage(' + rowIndex + ')');
+    }
+
+    if ($el.attr('name') === 'purchase_quantity[]') {
+      $el.attr('onkeyup', 'autofill(' + rowIndex + ')');
+      $el.attr('onchange', 'autofill(' + rowIndex + ')');
+    }
+
+    if ($el.attr('name') === 'purchase_rate[]') {
+      $el.attr('onkeyup', 'autofill(' + rowIndex + ')');
+    }
+  });
+
+  $wrapper.append($clone);
+  rowIndex++;
+}
+</script>
+<script>
+function removeRow(button) {
+  // Only remove if more than one row exists
+  if ($('.item-group').length > 1) {
+    $(button).closest('.item-group').remove();
+  } else {
+    alert("At least one row is required.");
+  }
+}
+</script>
+  
