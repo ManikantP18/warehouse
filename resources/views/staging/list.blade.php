@@ -54,10 +54,13 @@
                                 <tr>
                                     <th>Staging Id</th>
                                     <th>Select Lot No.</th>
+                                    <th>Farmer Name</th>
                                     <th> Staging Varity </th>
+                                    <th>Rst number</th>
                                     <th> Godown </th>
                                     <th>Stage No. </th>
                                     <th> No of Begs </th>
+                                    <th>Final Weight</th>
                                     <th>Pay for staging </th>
                                     <th>Date </th>
                                     <th> Status </th>
@@ -71,10 +74,13 @@
                                 <tr>
                                     <td> {{ $value->staging_id}} </td>
                                     <td> {{ $value->select_lot_no}} </td>
+                                    <td>{{ $value->farmer_name}}</td>
                                     <td> {{ $value->name}} </td>
+                                    <td>{{ $value->rst_no}}</td>
                                     <td> {{ $value->godown}} </td>
                                      <td> {{ $value->stage_no}} </td>
                                     <td> {{ $value->no_of_begs}} </td>
+                                    <td>{{ $value->final_weight}}</td>
                                      <td> {{ $value->pay_for_staging}} </td>
                                       <td> {{ $value->staging_date}} </td>
                                     <td> {{ $value->staging_status == 1 ? 'Active' : 'Inactive' }} </td>

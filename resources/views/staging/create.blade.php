@@ -55,6 +55,35 @@
             </div>
         </div>
 
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Farmer Name</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="farmer_name" type="text" id="farmer_name"  placeholder="Enter farmer Name">
+                    <div class="invalid-feedback">Please enter a valid Name.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Rst No.</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="rst" type="nmuber" id="rst"  placeholder="Enter rst no.">
+                    <div class="invalid-feedback">Please enter a valid rst.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Final Weight</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="final_weight" type="number" id="final_weight"  placeholder="Enter rst no.">
+                    <div class="invalid-feedback">Please enter a final Weight</div>
+                </div>
+            </div>
+        </div>
+
         <!-- No of Bags -->
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
@@ -78,7 +107,7 @@
         </div>
 
         <!-- Pay for Staging -->
-        <div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs">
+        <div class="col-lg-6 col-md-6 col-sm-6 onlyforformesrs">
             <div class="form-group">
                 <label for="pay_for_staging" class="form-label">Pay for Staging</label>
                 <div class="form-icon-user">

@@ -52,6 +52,35 @@
             </div>
         </div>
 
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Farmer Name</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="farmer_name" type="text" id="farmer_name"  placeholder="Enter farmer Name" value="{{ $staging[0]->farmer_name }}">
+                    <div class="invalid-feedback">Please enter a valid Name.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Rst No.</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="rst" type="number" id="rst"  placeholder="Enter rst no." value="{{ $staging[0]->rst_no }}">
+                    <div class="invalid-feedback">Please enter a valid rst.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Final Weight</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="final_weight" type="number" id="final_weight"  placeholder="Enter rst no." value="{{ $staging[0]->final_weight }}">
+                    <div class="invalid-feedback">Please enter a final Weight</div>
+                </div>
+            </div>
+        </div>
+
         {{-- No of Bags --}}
         <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
             <div class="form-group">
@@ -82,7 +111,7 @@
                 <div class="invalid-feedback">Please enter valid payment amount (₹).</div>
             </div>
         </div>
-
+    <input type="hidden" name="staging_id" value="{{$staging[0]->staging_id}}">
     </div>
 </div>
 

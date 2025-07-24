@@ -22,10 +22,8 @@ class StagingController extends Controller
 
     function create(){
 
-        $data['lotnumbers'] = DB::select("select purchase_lot_no from purchase where purchase_status = 1 AND is_deleted = 0");
- $data['branch'] = DB::select("select * from branches where branch_status = 1");
-       
-        
+        $data['lotnumbers'] = DB::select("select purchase_lot_no,purchase_rst_no,purchase_relation_cusm from purchase where purchase_status = 1 AND is_deleted = 0");
+        $data['branch'] = DB::select("select * from branches where branch_status = 1");
         return view('staging/create',$data);
     }
 
@@ -37,8 +35,11 @@ class StagingController extends Controller
         $no_of_begs = $req->input('no_of_begs');
         $pay_for_staging = $req->input('pay_for_staging');
         $staging_date = $req->input('staging_date');
+        $rst = $req->input('rst');
+        $farmer_name = $req->input('farmer_name');
+        $final_weight = $req->input('final_weight');
 
-        DB::insert("Insert into staging (select_lot_no,staging_varity,godown,stage_no,no_of_begs,pay_for_staging,staging_date) VALUES ('$select_lot_no', '$staging_varity', '$godown', '$stage_no', '$no_of_begs', '$pay_for_staging','$staging_date')");
+        DB::insert("Insert into staging (select_lot_no,staging_varity,godown,stage_no,no_of_begs,pay_for_staging,staging_date,rst_no,farmer_name,final_weight) VALUES ('$select_lot_no', '$staging_varity', '$godown', '$stage_no', '$no_of_begs', '$pay_for_staging','$staging_date','$rst','$farmer_name','$final_weight')");
 
          return Redirect::to('staging')->with('success', 'Staging Create Successfully');
      }
@@ -66,11 +67,13 @@ class StagingController extends Controller
         $no_of_begs = $req->input('no_of_begs');
          $pay_for_staging = $req->input('pay_for_staging');
           $staging_date	 = $req->input('staging_date');
-           
+           $rst = $req->input('rst');
+        $farmer_name = $req->input('farmer_name');
+        $final_weight = $req->input('final_weight');
                 
 
 
-       DB::update("update staging set select_lot_no = '$select_lot_no' ,staging_varity = '$staging_varity',godown = '$godown',stage_no = '$stage_no',no_of_begs = '$no_of_begs',pay_for_staging = '$pay_for_staging',staging_date = '$staging_date' where staging_id = '$staging_id'");
+       DB::update("update staging set select_lot_no = '$select_lot_no' ,staging_varity = '$staging_varity',godown = '$godown',stage_no = '$stage_no',no_of_begs = '$no_of_begs',pay_for_staging = '$pay_for_staging',staging_date = '$staging_date' ,rst_no = '$rst' ,farmer_name = '$farmer_name' ,final_weight = '$final_weight'  where staging_id = '$staging_id'");
 
 
         return Redirect::to('/staging')->with('success', 'Staging edit Successfully');
