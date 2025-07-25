@@ -154,14 +154,14 @@
       <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" id="sellto_gst_amount_0" value="0" onchange="autofill(0)">
     </div>
 
-    <div class="col-md-1">
+    <div class="col-md-2">
       <label>Total</label>
       <input type="number" class="form-control purchase_total" name="sell_total[]" id="purchase_total_0" value="0" required>
     </div>
 
-    <div class="col-md-1">
+    <div class="col-md-2 m-auto">
       <label>&nbsp;</label>
-      <button type="button" class="btn btn-danger form-control" onclick="removeRow(this)">🗑</button>
+      <button type="button" class="btn btn-danger form-control" onclick="removeRow(this)">Delete Row</button>
     </div>
   </div>
 </div>
