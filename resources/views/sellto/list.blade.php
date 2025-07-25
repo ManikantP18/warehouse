@@ -86,7 +86,7 @@
                                 <th style="display:none">account no.</th>
                                 <th>Customer name </th>
                                 <th style="display:none"> Aadhar Number </th>
-                                <th style="display:none"> field owner </th>
+                                <th style="display:none"> Land owner </th>
                                 <th>village</th>
                                 <th style="display:none"> mobile no. </th>
                                 <th style="display:none"> Received cash </th>

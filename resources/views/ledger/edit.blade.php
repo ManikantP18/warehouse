@@ -35,7 +35,7 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
             <div class="form-group">
-                <label for="ladger_type	" class="form-label">Farmer Owner name </label>
+                <label for="ladger_type	" class="form-label">Land Owner name </label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required="required" name="farm_owner_name" type="text" id="farm_owner_name" value="{{$ledger[0]->farm_owner_name }}">
                 </div>

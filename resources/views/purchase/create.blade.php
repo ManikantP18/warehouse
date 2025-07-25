@@ -89,7 +89,7 @@
 
          <div class="col-md-6">
           <div class="form-group">
-            <label>Owner name</label>
+            <label>Land Owner name</label>
             <input type="text" class="form-control" name="purchase_owner" id="purchase_owner" required readonly>
           </div>
         </div>

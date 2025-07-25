@@ -68,66 +68,65 @@
                     </div>
                 </div>
 
-            <div class="row mb-3">
+            <div class="row mb-6">
 
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>ITEM</label>
-                        <select class="form-control" name="item_sale[]" id="item" required>
-                            <option value="" hidden>Select ITEM</option>
-                            @foreach($item as $value)
-                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>          
+                
+                 <!-- Product Items Wrapper -->
+                <div id="item-wrapper">
+
+                <!-- Initial Product Row -->
+                <div class="row mb-3 item-group" style="background-color: #f2f2f2; padding:10px; border-radius:5px;">
+                    <div class="col-md-2">
+                    <label>Sell Item</label>
+                    <select name="item_sale[]" class="form-control item_sale" dataid="0" onchange="selectItem(0, this)">
+                        <option value="">Select Item</option>
+                        @foreach($item as $value)
+                        <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                    </div>
+
+                    <div class="col-md-1">
+                        <label>Quantity</label>
+                        <input type="number" class="form-control quantity" name="quantity" id="quantity" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
+                    </div>
+
+                    <div class="col-md-2">
+                    <label>Unit</label>
+                    <select class="form-control" name="unit[]" id="unit">
+                        <option value="" hidden>Select Unit</option>
+                        @foreach($units as $value)
+                        <option value="{{$value->id}}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                    </div>
+
+                    <div class="col-md-2">
+                    <label>Rate</label>
+                    <input type="number" class="form-control rate" name="rate[]" id="rate" value="0" onchange="autofill(0)">
+                    </div>
+
+                    <div class="col-md-2">
+                    <label>GST</label>
+                    <input type="number" class="form-control GST_amount" name="GST_amount[]" id="GST_amount" value="0" onchange="autofill(0)">
+                    </div>
+
+                    <div class="col-md-3">
+                    <label>Total</label>
+                    <input type="number" class="form-control total_amount" name="total_amount[]" id="total_amount" value="0" required>
+                    </div>
+
+                    <div class="col-md-1">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-danger form-control" onclick="removeRow(this)">🗑</button>
+                    </div>
+                </div>
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="quantity"  class="form-label">QUANTITY</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" required name="quantity" type="text" id="quantity" >
-                        </div>
-                    </div>
+                <!-- Add More Button -->
+                <div class="mt-2">
+                <button type="button" class="btn btn-primary" onclick="addMoreItem()">+ Add More</button>
                 </div>
-
-                 <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>UNIT</label>
-                        <select class="form-control" name="unit[]" id="unit" required>
-                            <option value="" hidden>Select Unit</option>
-                            @foreach($units as $value)
-                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row mb-3">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="rate" class="form-label">RATE</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" required name="rate" type="number" id="rate" >
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="total_amount" class="form-label">TOTAL AMOUNT</label>
-                        <input class="form-control onlyforformesrs"required  name="total_amount" id="total_amount" >
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="GST_amount" class="form-label">GST AMOUNT</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible" required name="GST_amount" type="text" id="GST_amount" >
-                        </div>
-                    </div>
-                </div>
-               </div> 
             </div>
         </div>
     </div>
@@ -184,13 +183,6 @@
                 if (response.success && response.data.length > 0) {
                     const data = response.data[0];
 
-                   
-
-
-
-
-
-
                     $('#form-fields-wrapper').slideDown();
                 } else {
                     alert("No data found for selected farmer.");
@@ -208,4 +200,69 @@
     });
 
 
+</script>
+
+<script>
+    
+    //-------------------------------------------------
+let rowIndex = 1;
+
+function addMoreItem() {
+  let $template = $('.item-group').first().clone();
+  
+  $template.find('input, select').each(function () {
+    let $el = $(this);
+    let name = $el.attr('name');
+    let oldId = $el.attr('id');
+    let newId = oldId ? oldId.replace(/\d+/, rowIndex) : '';
+
+    if (newId) {
+      $el.attr('id', newId);
+    }
+
+    $el.val('');
+    if (name === 'quantity[]') $el.val(1);
+    if (name === 'total_amount[]') $el.val(0);
+    if ($el.hasClass('item_sale')) {
+      $el.attr('dataid', rowIndex);
+      $el.attr('onchange', 'selectItem(' + rowIndex + ', this)');
+    }
+
+    if (name === 'quantity[]' || name === 'rate[]' || name === 'sellto_gst_amount[]') {
+      $el.attr('onkeyup', 'autofill(' + rowIndex + ')');
+      $el.attr('onchange', 'autofill(' + rowIndex + ')');
+    }
+  });
+
+  $('#item-wrapper').append($template);
+  rowIndex++;
+}
+
+function removeRow(button) {
+  if ($('.item-group').length > 1) {
+    $(button).closest('.item-group').remove();
+    updateTotalAmount(); // optional: re-calculate total after remove
+  } else {
+    alert("At least one row is required.");
+  }
+}
+
+function autofill(id) {
+  let qty = parseFloat($("#quantity" + id).val()) || 0;
+  let rate = parseFloat($("#rate" + id).val()) || 0;
+  let gst = parseFloat($("#sellto_gst_amount_" + id).val()) || 0;
+
+  let total = (qty * rate) + gst;
+  $("#total_amount" + id).val(total.toFixed(2));
+
+  updateTotalAmount();
+}
+
+function updateTotalAmount() {
+  let grandTotal = 0;
+  $(".total_amount").each(function () {
+    grandTotal += parseFloat($(this).val()) || 0;
+  });
+  $("#total_amount").val(grandTotal.toFixed(2));
+}
 </script>

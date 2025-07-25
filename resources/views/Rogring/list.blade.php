@@ -59,7 +59,7 @@
                                     <th>Rogring Id</th>
                                     <th> Rogrowing Responsible</th>
                                     <th> Relational Cust. Name </th>
-                                    <th> Farmer Owner Name </th>
+                                    <th> Land Owner </th>
                                     <th> Village </th>
                                     <th> Status </th>
                                     <th> Action </th>

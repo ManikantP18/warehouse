@@ -39,7 +39,7 @@
     </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="search_owner" class="form-label">Land Owner</label>
+                        <label for="search_owner" class="form-label">Land Owner Name</label>
                         <input class="form-control" name="search_owner" type="text" id="search_owner" placeholder="Owner Name">
                     </div>
                     </div>

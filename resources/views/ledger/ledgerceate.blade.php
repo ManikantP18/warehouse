@@ -26,7 +26,7 @@
     </div>
 
     <div class="col-md-6">
-        <label>Farmer Owner Name</label>
+        <label>Land Owner Name</label>
         <input class="form-control" name="farm_owner_name" type="text" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
     </div>
 
