@@ -93,7 +93,7 @@ class SelltoController extends Controller
     }
 
     public function search(Request $req)
-        {
+    {
             $searchVal = $req->input('searchVal'); // Account No or Mobile No
             $searchVillage = $req->input('searchVillage');
             $searchname = $req->input('searchname');
@@ -106,9 +106,8 @@ class SelltoController extends Controller
             AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
             ");
 
-            $variety = DB::select("SELECT * FROM product_services join  selled_item on selled_item.selled_item = product_services.id join sell_to on sell_to.sell_id = selled_item.sell_id
-            WHERE sell_to.sell_account_number LIKE '%$searchVal%'
-            ");
+            $variety = DB::select("SELECT * FROM product_services join selled_item ON selled_item.selled_item = product_services.id join sell_to on sell_to.sell_id =  selled_item.sell_id
+            WHERE sell_to.sell_account_number = '$searchVal' group by product_services.id");
 
 
 
@@ -125,7 +124,7 @@ class SelltoController extends Controller
                 ]);
             }
 
-        }
+    }
 
     function others() {
          $data['sellto'] = DB::select("select * from sell_to where sell_to != 'farmer' and is_deleted = 0");

@@ -23,14 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                {{ Form::label('sku', __('SKU'), ['class' => 'form-label']) }}<x-required></x-required>
-                <div class="form-icon-user">
-                    {{ Form::text('sku', '', ['class' => 'form-control', 'required' => 'required']) }}
-                </div>
-            </div>
-        </div>
+        
 
         <div class="col-md-6">
             <div class="form-group">
@@ -40,19 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group col-md-6">
-            {{ Form::label('sale_chartaccount_id', __('Income Account'),['class'=>'form-label']) }}<x-required></x-required>
-            <select name="sale_chartaccount_id" class="form-control"  required="required">
-                @foreach ($incomeChartAccounts as $key => $chartAccount)
-                    <option value="{{ $key }}" class="subAccount">{{ $chartAccount }}</option>
-                    @foreach ($incomeSubAccounts as $subAccount)
-                        @if ($key == $subAccount['account'])
-                            <option value="{{ $subAccount['id'] }}" class="ms-5"> &nbsp; &nbsp;&nbsp; {{ $subAccount['name'] }}</option>
-                        @endif
-                    @endforeach
-                @endforeach
-            </select>
-        </div>
+       
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('purchase_price', __('Purchase Price'), ['class' => 'form-label']) }}<x-required></x-required>
@@ -61,19 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group col-md-6">
-            {{ Form::label('expense_chartaccount_id', __('Expense Account'),['class'=>'form-label']) }}<x-required></x-required>
-            <select name="expense_chartaccount_id" class="form-control" required="required">
-                @foreach ($expenseChartAccounts as $key => $chartAccount)
-                    <option value="{{ $key }}" class="subAccount">{{ $chartAccount }}</option>
-                    @foreach ($expenseSubAccounts as $subAccount)
-                        @if ($key == $subAccount['account'])
-                            <option value="{{ $subAccount['id'] }}" class="ms-5"> &nbsp; &nbsp;&nbsp; {{ $subAccount['name'] }}</option>
-                        @endif
-                    @endforeach
-                @endforeach
-            </select>
-        </div>
+        
         <div class="form-group col-md-6">
             {{ Form::label('tax_id', __('Tax'), ['class' => 'form-label']) }}<x-required></x-required>
             {{ Form::select('tax_id[]', $tax, null, ['class' => 'form-control select2', 'id' => 'choices-multiple1', 'multiple', 'required' => 'required']) }}
@@ -121,33 +90,10 @@
                 </div>
             </div>
         </div> -->
-        <div class="form-group col-md-6 quantity d-block">
-    {{ Form::label('quantity', __('Quantity'), ['class' => 'form-label']) }}<x-required></x-required>
-    {{ Form::text('quantity', null, ['class' => 'form-control', 'required' => 'required']) }}
-</div>
-<div class="col-md-6">
-    <div class="form-group">
-        <div class="btn-box">
-            <label class="d-block form-label">{{ __('Type') }}</label>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input type" id="customRadio5" name="type"
-                               value="Product" checked="checked">
-                        <label class="custom-control-label form-label" for="customRadio5">{{ __('Product') }}</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input type" id="customRadio6" name="type"
-                               value="Service">
-                        <label class="custom-control-label form-label" for="customRadio6">{{ __('Service') }}</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+        <input type="hidden" class="form-check-input type" id="customRadio5" name="type"
+                               value="Product">
+                               
         <div class="form-group col-md-12">
             {{ Form::label('description', __('Description'), ['class' => 'form-label']) }}
             {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2']) !!}

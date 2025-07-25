@@ -12,7 +12,7 @@ use DB;
 class PurchaseController extends Controller
 {
     function index() {
-         $data['purchase'] = DB::select("select * from purchase where purchase_status = 1 AND is_deleted = 0 order by purchase_id DESC");
+         $data['purchase'] = DB::select("select * from purchase where purchase_status = 1 AND is_deleted = 0 AND is_hide = 0 order by purchase_id DESC");
         return view('purchase/list',$data);
     }
 
@@ -127,7 +127,7 @@ class PurchaseController extends Controller
 
         }
 
-        function delete($id) { 
+        function delete($id) {
             DB::update("update purchase set is_deleted = 1 where purchase_id = '$id'");
 
             //  return view('sellto/delete');
@@ -195,7 +195,7 @@ class PurchaseController extends Controller
 
         
         
-        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to' , purchase_total = '$sum_total' WHERE purchase_id = '$id'");
+        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to' , purchase_total = '$sum_total', is_hide = '1' WHERE purchase_id = '$id'");
 
         $today = date('Y-m-d H:i:s');
 

@@ -77,16 +77,12 @@
 </div>
 <div class="mb-3">
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="cash-credit">
-        <label class="form-check-label">Cash/Credit</label>
-    </div>
-    <div class="form-check form-check-inline">
         <input class="form-check-input column-toggle" type="checkbox" data-column="accountant">
         <label class="form-check-label">Accountant Name</label>
     </div>
     <div class="form-check form-check-inline">
         <input class="form-check-input column-toggle" type="checkbox" data-column="owner">
-        <label class="form-check-label">Owner Name</label>
+        <label class="form-check-label">Land Owner Name</label>
     </div>
     <div class="form-check form-check-inline">
         <input class="form-check-input column-toggle" type="checkbox" data-column="field-acre">
@@ -121,7 +117,7 @@
                 <th >cash/Credit</th>
                 <th>Relational Customer Name</th>
                 <th class="accountant optional-column">Accountant Name</th>
-                <th class="owner optional-column">Owner Name</th>
+                <th class="owner optional-column">Land Owner Name</th>
                 <th>Village</th>
                 <th class="field-acre optional-column">Field Acre</th>
                 <th class="phone optional-column">Mobile Number</th>

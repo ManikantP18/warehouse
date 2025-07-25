@@ -86,7 +86,7 @@
 
     <div class="col-md-6 changehide">
       <div class="form-group">
-        <label for="sellto_owner_name" class="form-label">Field Owner Name</label>
+        <label for="sellto_owner_name" class="form-label">Land Owner Name</label>
         <input class="form-control onlyforformesrs" required name="sellto_owner_name" type="text" id="sellto_owner_name" value="{{$sellto[0]->sell_property_owner}}" readonly>
       </div>
     </div>

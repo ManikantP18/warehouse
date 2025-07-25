@@ -13,7 +13,7 @@ class KataParchiController extends Controller
 {
     public function index(){
 
-        $data['kataparchi'] = DB::select('select * from kata_parchi where is_deleted = 0 AND kp_pure_wigth = 0');
+        $data['kataparchi'] = DB::select('select kata_parchi.*,product_services.name as kp_verity  from kata_parchi join product_services ON kata_parchi.kp_verity = product_services.id where kata_parchi.is_deleted = 0 AND kp_pure_wigth = 0');
 
         return view('kataparchi/list',$data);
 

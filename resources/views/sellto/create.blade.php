@@ -102,7 +102,7 @@
 
         <div class="col-md-6 changehide">
           <div class="form-group">
-            <label>Field Owner Name</label>
+            <label>Land Owner Name</label>
             <input type="text" class="form-control" name="sellto_owner_name" id="sellto_owner_name" required>
           </div>
         </div>

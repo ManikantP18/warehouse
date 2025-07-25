@@ -141,6 +141,8 @@ Route::get('bankacc/delete/{id}', 'App\Http\Controllers\BankController@delete')-
 
 Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('branches.list')->middleware('auth');
 
+Route::get('/branches/create', 'App\Http\Controllers\BranchesController@create')->name('branches.create')->middleware('auth');
+
 
 Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->name('branches.add')->middleware('auth');
 
