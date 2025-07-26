@@ -78,7 +78,7 @@
             <div class="form-group">
                 <label for="stage_no" class="form-label">Final Weight</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="final_weight" type="number" id="final_weight"  placeholder="Enter rst no.">
+                    <input class="form-control alwaysvisible" required name="final_weight" type="number" id="final_weight"  placeholder="Enter rst no." step="0.01">
                     <div class="invalid-feedback">Please enter a final Weight</div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
             <div class="form-group">
                 <label for="no_of_begs" class="form-label">No of Bags</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="no_of_begs" type="number" id="no_of_begs" min="1" placeholder="Enter number of bags">
+                    <input class="form-control alwaysvisible" required name="no_of_begs" type="number" id="no_of_begs" min="1" placeholder="Enter number of bags" step="0.01">
                     <div class="invalid-feedback">Please enter number of bags.</div>
                 </div>
             </div>

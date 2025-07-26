@@ -185,7 +185,7 @@
     <div class="col-md-2">
       <div class="form-group">
         <label>Pure Wigth</label>
-        <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
+        <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)" step="0.01">
       </div>
     </div>
 
@@ -204,14 +204,14 @@
     <div class="col-md-2">
       <div class="form-group">
         <label>Rate</label>
-        <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_0" value="0" onkeyup="autofill(0)">
+        <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_0" step="0.01" value="0" onkeyup="autofill(0)">
       </div>
     </div>
 
     <div class="col-md-2">
       <div class="form-group">
         <label>Total</label>
-        <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_0" required value="0">
+        <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_0" required value="0" step="0.01">
       </div>
     </div>
 

@@ -139,7 +139,7 @@
 
       <div class="col-md-3">
         <label>Quantity</label>
-        <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
+        <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)" step="0.01">
       </div>
 
       <div class="col-md-3">

@@ -75,7 +75,7 @@ class KataParchiController extends Controller
     $kpvilage = $req->input('kp_vilage');
     $kp_acre = $req->input('kp_rakaba_acre');
 
-    $kp_acre = $req->input('kp_khasra_no');
+    $khasrano = $req->input('kp_khasra_no');
 
     $kpmn = $req->input('kp_mo_no');
     $kp_rogger = $req->input('kp_rogger_name');
@@ -101,7 +101,7 @@ class KataParchiController extends Controller
         kp_bhoomiswami_name = '$kp_land_owner',
         kp_vilage = '$kpvilage',
         kp_rakaba_acre = '$kp_acre',
-        kp_khasra_no = '$kp_acre',
+        kp_khasra_no = '$khasrano',
         kp_mo_no = '$kpmn',
         kp_rogger_name = '$kp_rogger',
         kp_verity = '$kpvarity',
@@ -124,8 +124,6 @@ class KataParchiController extends Controller
         $ifsc_code = $ladgerinfo[0]->ifsc_code;
 
         $branch = $ladgerinfo[0]->branch;
-
-        $kpvarity = 1;
 
         $products = DB::select("select * from product_services where id = '$kpvarity'");
 

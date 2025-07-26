@@ -183,7 +183,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Quantity</label>
-            <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_{{ $j }}" value="1" required onkeyup="autofill({{ $j }})" onchange="autofill({{ $j }})">
+            <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_{{ $j }}" value="1" required onkeyup="autofill({{ $j }})" onchange="autofill({{ $j }})" step="0.01">
           </div>
         </div>
 

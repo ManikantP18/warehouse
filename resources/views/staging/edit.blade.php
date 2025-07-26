@@ -75,7 +75,7 @@
             <div class="form-group">
                 <label for="stage_no" class="form-label">Final Weight</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="final_weight" type="number" id="final_weight"  placeholder="Enter rst no." value="{{ $staging[0]->final_weight }}">
+                    <input class="form-control alwaysvisible" required name="final_weight" type="number" id="final_weight"  placeholder="Enter rst no." value="{{ $staging[0]->final_weight }}" step="0.01">
                     <div class="invalid-feedback">Please enter a final Weight</div>
                 </div>
             </div>
@@ -86,7 +86,7 @@
             <div class="form-group">
                 <label for="no_of_begs" class="form-label">No of Bags</label>
                 <input class="form-control" required name="no_of_begs" type="number" min="1" id="no_of_begs"
-                       value="{{ $staging[0]->no_of_begs }}" placeholder="Enter number of bags">
+                       value="{{ $staging[0]->no_of_begs }}" placeholder="Enter number of bags" step="0.01">
                 <div class="invalid-feedback">Please enter number of bags (greater than 0).</div>
             </div>
         </div>
