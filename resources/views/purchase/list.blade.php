@@ -78,7 +78,7 @@
 <div class="mb-3">
     <div class="form-check form-check-inline">
         <input class="form-check-input column-toggle" type="checkbox" data-column="accountant">
-        <label class="form-check-label">Accountant Name</label>
+        <label class="form-check-label">Aadhar no.</label>
     </div>
     <div class="form-check form-check-inline">
         <input class="form-check-input column-toggle" type="checkbox" data-column="owner">
@@ -108,6 +108,10 @@
         <input class="form-check-input column-toggle" type="checkbox" data-column="total">
         <label class="form-check-label">Total Amount</label>
     </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input column-toggle" type="checkbox" data-column="purewigth">
+        <label class="form-check-label">Pure Wigth</label>
+    </div>
 </div>
 <div class="table-responsive mt-2" id="purchasetable">
     <table class="table datatable">
@@ -116,7 +120,7 @@
                 <th>Purchase Date</th>
                 <th >cash/Credit</th>
                 <th>Relational Customer Name</th>
-                <th class="accountant optional-column">Accountant Name</th>
+                <th class="accountant optional-column">Aadhar no.</th>
                 <th class="owner optional-column">Land Owner Name</th>
                 <th>Village</th>
                 <th class="field-acre optional-column">Field Acre</th>
@@ -125,6 +129,7 @@
                 <th class="lot optional-column">LOT No.</th>
                 <th class="gst optional-column">GST Details</th>
                 <th class="total optional-column">Total Amount</th>
+                <th class="purewigth optional-column">Pure Wigth</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -143,6 +148,7 @@
                     <td class="lot optional-column">{{ $value->purchase_lot_no }}</td>
                     <td class="gst optional-column">{{ $value->purchase_gst_no }}</td>
                     <td class="total optional-column">{{ $value->purchase_total }}</td>
+                     <td class="purewigth optional-column">{{ $value->pure_wigth }}</td>
                     <td>
                         <a href="#" data-size="xl" data-url="{{ route('purchase.edit', $value->purchase_id) }}" data-ajax-popup="true"
                             data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Purchase') }}"

@@ -58,7 +58,7 @@
 
     <div class="col-md-6">
       <div class="form-group">
-        <label for="sellto_account_number" class="form-label">Account Number</label>
+        <label for="sellto_account_number" class="form-label">Customer-ID</label>
         <input class="form-control alwaysvisible" required name="sellto_account_number" type="text" id="sellto_account_number" value="{{$sellto[0]->sell_account_number}}">
       </div>
     </div>
@@ -128,7 +128,7 @@
             <div class="form-group">
               <label>Unit</label>
               <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $i }}">
-                <option value="" hidden>Select Unit</option>
+                
                 @foreach($units as $value)
                 <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->sell_unit ? 'selected' : ''}}>{{ $value->name }}</option>
                 @endforeach
@@ -191,7 +191,7 @@
             <div class="form-group">
               <label>Unit</label>
               <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $j }}">
-                <option value="" hidden>Select Unit</option>
+                
                 @foreach($units as $value)
                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                 @endforeach

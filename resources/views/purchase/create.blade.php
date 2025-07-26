@@ -170,7 +170,7 @@
   <!-- Initial Row -->
   <div class="row mb-3 item-group" style="background-color:#f2f2f2; padding:10px; border-radius:5px;">
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="form-group">
         <label>Purchase Item</label>
         <select name="purchase_item[]" id="purchase_item_0" class="form-control allitems" onchange="handleChage(0)">
@@ -182,9 +182,9 @@
       </div>
     </div>
 
-    <div class="col-md-1">
+    <div class="col-md-2">
       <div class="form-group">
-        <label>Quantity</label>
+        <label>Pure Wigth</label>
         <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
       </div>
     </div>

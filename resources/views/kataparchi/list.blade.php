@@ -53,7 +53,7 @@
                         @php
                             $columns = [
                                 ['label' => 'kp_Id', 'index' => 0],
-                                ['label' => 'Acc No.', 'index' => 2],
+                                ['label' => 'Customer-ID', 'index' => 2],
                                 ['label' => 'Aadhar Number', 'index' => 4],
                                 ['label' => 'land owner name', 'index' => 5],
                                 ['label' => 'land acre', 'index' => 7],
@@ -83,7 +83,7 @@
                                 <tr>
                                     <th style="display:none">kp_Id</th>
                                     <th> kataparchi date</th>
-                                    <th style="display:none"> Acc No. </th>
+                                    <th style="display:none">Customer-ID </th>
                                     <th> customer name </th>
                                     <th style="display:none"> Aadhar Number </th>
                                     <th style="display:none"> land owner name </th>

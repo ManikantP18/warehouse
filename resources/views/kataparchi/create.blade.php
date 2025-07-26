@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_acc_no" class="form-label">Account No.</label>
+                        <label for="kp_acc_no" class="form-label">Customer-ID</label>
                         <div class="form-icon-user">
                             <input class="form-control alwaysvisible"  name="kp_acc_no" type="text" id="kp_acc_no" readonly>
                         </div>
@@ -111,7 +111,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="kp_rogger_name" class="form-label">Rogring By</label>
-                        <input class="form-control onlyforformesrs"  name="kp_rogger_name" id="kp_rogger_name" readonly>
+                        <input class="form-control onlyforformesrs"  name="kp_rogger_name" id="kp_rogger_name" >
                     </div>
                 </div>
                 <div class="col-lg-6">

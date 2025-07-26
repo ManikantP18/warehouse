@@ -61,7 +61,7 @@
                         <label><strong>Show/Hide Columns:</strong></label><br>
                         @php
                             $columns = [
-                                ['label' => 'Account No.', 'index' => 1],
+                                ['label' => 'Customer-ID', 'index' => 1],
                                 ['label' => 'Aadhar Number', 'index' => 3],
                                 ['label' => 'Field Owner', 'index' => 4],
                                 ['label' => 'Mobile No.', 'index' => 6],
@@ -83,7 +83,7 @@
                         <thead>
                             <tr>
                                 <th>Sell Date</th>
-                                <th style="display:none">account no.</th>
+                                <th style="display:none">Customer-ID</th>
                                 <th>Customer name </th>
                                 <th style="display:none"> Aadhar Number </th>
                                 <th style="display:none"> Land owner </th>
