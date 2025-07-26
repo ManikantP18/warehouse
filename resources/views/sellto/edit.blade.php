@@ -128,7 +128,7 @@
             <div class="form-group">
               <label>Unit</label>
               <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $i }}">
-                <option value="" hidden>Select Unit</option>
+                
                 @foreach($units as $value)
                 <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->sell_unit ? 'selected' : ''}}>{{ $value->name }}</option>
                 @endforeach
@@ -191,7 +191,7 @@
             <div class="form-group">
               <label>Unit</label>
               <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $j }}">
-                <option value="" hidden>Select Unit</option>
+                
                 @foreach($units as $value)
                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                 @endforeach

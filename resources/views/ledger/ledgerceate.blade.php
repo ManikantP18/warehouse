@@ -74,7 +74,7 @@
 
 
     <div class="col-md-6">
-        <label>Bank Account Name</label>
+        <label>Bank Account Holder Name</label>
         <input class="form-control" name="bank_account_name" type="text" required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
     </div>
 

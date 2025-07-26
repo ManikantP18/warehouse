@@ -38,11 +38,10 @@ class PurchaseController extends Controller
         $purchase_ifsc = $req->input('purchase_ifsc');
          $purchase_branch = $req->input('purchase_branch');
         $purchase_gst_no = $req->input('purchase_gst_no');
-   
         $purchase_to = $req->input('purchase_to');
-
-        
        $purchase_total = $req->input('purchase_total');
+
+//      $pure_wigth = $req->input('pure_wigth');
 
        $sum_total = array_sum($purchase_total);
 
@@ -67,14 +66,14 @@ class PurchaseController extends Controller
         ]);
 
                  $purchase_item = $req->input('purchase_item');
-                 $purchase_quantity = $req->input('purchase_quantity');
+    //           $pure_wigth = $req->input('pure_wigth');
                  $purchase_rate = $req->input('purchase_rate');
                  $purchase_total = $req->input('purchase_total');
                  $purchase_unit = $req->input('purchase_unit');
 
                  for($i = 0 ; $i < count($purchase_rate) ; $i++) {
                     if($purchase_rate[$i] != '' && $purchase_rate[$i] != 0) {
-                         DB::insert("Insert into purchase_item (purchase_id,purchased_item,purchased_rate,purchased_qty,purchased_unit,purchased_total) values ('$pid','$purchase_item[$i]','$purchase_rate[$i]','$purchase_quantity[$i]','$purchase_unit[$i]','$purchase_total[$i]')" );
+                         DB::insert("Insert into purchase_item (purchase_id,purchased_item,purchased_rate,pure_wigth,purchased_unit,purchased_total) values ('$pid','$purchase_item[$i]','$purchase_rate[$i]','$pure_wigth[$i]','$purchase_unit[$i]','$purchase_total[$i]')" );
                     }
                  }
 
@@ -109,10 +108,6 @@ class PurchaseController extends Controller
 
             }
 
-            
-
-
-
             if ($searchData) {
                 return response()->json([
                     'success' => true,
@@ -140,8 +135,6 @@ class PurchaseController extends Controller
 
             $searchData = DB::select("SELECT kp_rstno from kata_parchi where kp_acc_no = '$searchVal' order by kp_id DESC limit 1");
 
-
-
             if ($searchData) {
                 return response()->json([
                     'success' => true,
@@ -157,7 +150,7 @@ class PurchaseController extends Controller
 
     function edit($id) {
        
-         $data['purchase'] = DB::select("select * from purchase where purchase_id = '$id' and is_deleted = 0");
+        $data['purchase'] = DB::select("select * from purchase where purchase_id = '$id' and is_deleted = 0");
          
         $data['units'] = DB::select("select * from product_service_units");
          $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
