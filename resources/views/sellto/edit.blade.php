@@ -58,7 +58,7 @@
 
     <div class="col-md-6">
       <div class="form-group">
-        <label for="sellto_account_number" class="form-label">Account Number</label>
+        <label for="sellto_account_number" class="form-label">Customer-ID</label>
         <input class="form-control alwaysvisible" required name="sellto_account_number" type="text" id="sellto_account_number" value="{{$sellto[0]->sell_account_number}}">
       </div>
     </div>

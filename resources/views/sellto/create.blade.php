@@ -74,7 +74,7 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label>Account Number</label>
+            <label>Customer-ID</label>
             <input type="text" class="form-control" name="sellto_account_number" id="sellto_account_number" required>
           </div>
         </div>
