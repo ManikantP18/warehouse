@@ -173,6 +173,8 @@ Route::post('/sellto/add', 'App\Http\Controllers\SelltoController@add')->name('s
 
 Route::get('/sellto/search', 'App\Http\Controllers\SelltoController@search')->name('sellto.search')->middleware('auth');
 
+Route::get('/sellto/lotno', 'App\Http\Controllers\SelltoController@lotno')->name('sellto.lotno')->middleware('auth');
+
 Route::get('/sellto/delete/{id}', 'App\Http\Controllers\SelltoController@delete')->name('sellto.delete')->middleware('auth');
 
 Route::get('/sellto/edit/{id}', 'App\Http\Controllers\SelltoController@edit')->name('sellto.edit')->middleware('auth');

@@ -19,14 +19,38 @@ class SelltoController extends Controller
     }
 
      function create(){
+        
         $data['items'] = DB::select("select *,product_services.id AS pid, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
 
 
         $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
 
         $data['units'] = DB::select("select * from product_service_units");
+
+        
        
         return view('sellto/create',$data);
+    }
+
+    function lotno(Request $request) {
+        $itemId = $request->item;
+
+        $lotno = DB::select("SELECT `purchase_lot_no` FROM purchase WHERE purchase_item = '$itemId' AND purchase_lot_no > 0 GROUP by purchase_lot_no;");
+
+        $opt = '<option value=""> Select Lot No. </option>';
+
+        if(!empty($lotno)){
+            
+            foreach($lotno as $ln) {
+
+                $lotnumber = $ln->purchase_lot_no;
+
+                $opt .= "<option value='$lotnumber'>$lotnumber</option>";
+
+            }
+        }
+
+        echo $opt;
     }
 
     function add(Request $req){

@@ -221,7 +221,7 @@
 
 <!-- Newitem for create Niku -->
   @for($i = 0; $i < count($products); $i++)
-  {{ $j = $i+1000}}
+  <!-- {{ $j = $i+1000}} -->
   <div class="row mb-3">
 
     <div class="col-md-4">

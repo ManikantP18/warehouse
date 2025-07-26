@@ -116,55 +116,70 @@
 
        <!-- Product Items Wrapper -->
 <div id="item-wrapper">
-
   <!-- Initial Product Row -->
-  <div class="row mb-3 item-group" style="background-color: #f2f2f2; padding:10px; border-radius:5px;">
-    <div class="col-md-2">
-      <label>Sell Item</label>
-      <select name="sellto_item_selled[]" class="form-control sellto_item_selled" dataid="0" onchange="selectItem(0, this)">
-        <option value="">Select Item</option>
-        @foreach($items as $val)
-          <option value="{{ $val->pid }}">{{ $val->item_name }}</option>
-        @endforeach
-      </select>
-    </div>
+  <div class="item-group mb-3" style="background-color: #f2f2f2; padding:15px; border-radius:5px;">
+    
+    <div class="row">
+      <div class="col-md-3">
+        <label>Sell Item</label>
+        <select name="sellto_item_selled[]" class="form-control sellto_item_selled" dataid="0" onchange="selectItem(0, this)" >
+          <option value="">Select Item</option>
+          @foreach($items as $val)
+            <option value="{{ $val->pid }}">{{ $val->item_name }}</option>
+          @endforeach
+        </select>
+      </div>
 
-    <div class="col-md-2">
-      <label>Quantity</label>
-      <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
-    </div>
+      <div class="col-md-3">
+        <label>Lot No.</label>
+        <select class="form-control" name="purchase_lot_no[]" id="purchase_lot_no_0">
+          <option value="" hidden>Select Lot no.</option>
+        </select>
+      </div>
 
-    <div class="col-md-2">
-      <label>Unit</label>
-      <select class="form-control" name="purchase_unit[]" id="purchase_unit_0">
-        <option value="" hidden>Select Unit</option>
-        @foreach($units as $value)
-          <option value="{{ $value->id }}">{{ $value->name }}</option>
-        @endforeach
-      </select>
-    </div>
+      <div class="col-md-3">
+        <label>Quantity</label>
+        <input type="number" class="form-control sellto_quantity" name="sellto_quantity[]" id="sellto_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
+      </div>
 
-    <div class="col-md-2">
-      <label>Rate</label>
-      <input type="number" class="form-control sellto_rate" name="sellto_rate[]" id="sellto_rate_0" value="0" onchange="autofill(0)">
-    </div>
+      <div class="col-md-3">
+        <label>Unit</label>
+        <select class="form-control" name="purchase_unit[]" id="purchase_unit_0">
+          <option value="" hidden>Select Unit</option>
+          @foreach($units as $value)
+            <option value="{{ $value->id }}">{{ $value->name }}</option>
+          @endforeach
+        </select>
+      </div>
+    </div> <!-- end row 1 -->
 
-    <div class="col-md-2">
-      <label>GST</label>
-      <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" id="sellto_gst_amount_0" value="0" onchange="autofill(0)">
-    </div>
+    <div class="row mt-2">
+      <div class="col-md-3">
+        <label>Rate</label>
+        <input type="number" class="form-control sellto_rate" name="sellto_rate[]" id="sellto_rate_0" value="0" onchange="autofill(0)">
+      </div>
 
-    <div class="col-md-2">
-      <label>Total</label>
-      <input type="number" class="form-control purchase_total" name="sell_total[]" id="purchase_total_0" value="0" required>
-    </div>
+      <div class="col-md-3">
+        <label>GST</label>
+        <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" id="sellto_gst_amount_0" value="0" onchange="autofill(0)">
+      </div>
 
-    <div class="col-md-2 m-auto">
-      <label>&nbsp;</label>
-      <button type="button" class="btn btn-danger form-control" onclick="removeRow(this)">Delete Row</button>
-    </div>
+      <div class="col-md-3">
+        <label>Total</label>
+        <input type="number" class="form-control purchase_total" name="sell_total[]" id="purchase_total_0" value="0" required>
+      </div>
+
+      <div class="col-md-3">
+        <label>&nbsp;</label>
+        <button type="button" class="btn btn-danger form-control" onclick="removeRow(this)">
+          <i class="ti ti-trash"></i>
+        </button>
+      </div>
+    </div> <!-- end row 2 -->
+
   </div>
 </div>
+
 
 <!-- Add More Button -->
 <div class="mt-2">
@@ -381,6 +396,18 @@ console.log(item)
     const remaining = (ratetotal + gst) - (cash + credit);
 
     $('#sellto_Remaining_amount').val(remaining.toFixed(2));*/
+
+    $.ajax({
+      url: '{{ route('sellto.lotno') }}',
+      type: 'GET',
+      data: { item: item },
+      success: function(response) {
+      $("#purchase_lot_no_"+did).html(response);
+    },
+    error: function(xhr) {
+      console.error("Error fetching item details");
+    }
+    })
   }
 }
 

@@ -135,7 +135,4 @@ class KataParchiController extends Controller
     
         return Redirect::to('kataparchi');
 }
-
-
-
 }
