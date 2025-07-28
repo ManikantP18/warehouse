@@ -4,12 +4,30 @@
 
     <h6 class="sub-title">Staging Edit</h6>
     <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Farmer Name</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="farmer_name" type="text" id="farmer_name"  placeholder="Enter farmer Name" value="{{ $staging[0]->farmer_name }}" readonly>
+                    <div class="invalid-feedback">Please enter a valid Name.</div>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="land_owner" class="form-label">Land Owner</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="land_owner" type="text" id="land_owner"  placeholder="Enter Land Owner" value="{{ $staging[0]->land_owner }}" readonly>
+                    <div class="invalid-feedback">Please enter a valid Name.</div>
+                </div>
+            </div>
+        </div>
         {{-- Select Lot No --}}
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="select_lot_no" class="form-label">Select Lot No.</label>
-                <input class="form-control" required name="select_lot_no" type="number" min="1" id="select_lot_no" value="{{ $staging[0]->select_lot_no }}" placeholder="Enter Lot No">
+                <input class="form-control" required name="select_lot_no" type="text" min="1" id="select_lot_no" value="{{ $staging[0]->select_lot_no }}" placeholder="Enter Lot No" readonly>
                 <div class="invalid-feedback">Please enter a valid lot number (greater than 0).</div>
             </div>
         </div>
@@ -19,7 +37,7 @@
             <div class="form-group">
                 <div class="form-icon-user">
                 <label for="godown" class="form-label"> Variety</label>
-                <select name="staging_varity" required id="staging_varity" class="form-control">
+                <select name="staging_varity" required id="staging_varity" class="form-control" readonly>
                         
                             <option value="{{ $staging[0]->id }}">{{ $staging[0]->name }}</option>
                        
@@ -35,7 +53,7 @@
                 <div class="form-icon-user">
                     <select name="godown" required id="godown" class="form-control">
                         @foreach($branch as $val)
-                            <option value="{{ $val->branch_name }}">{{ $val->branch_name }}</option>
+                            <option value="{{ $val->branch_id }}"  {{$staging[0]->godown == $val->branch_id ? 'selected' : 'hidden'}}>{{ $val->branch_name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -46,19 +64,9 @@
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="stage_no" class="form-label">Stage No</label>
-                <input class="form-control" required name="stage_no" type="number" min="1" id="stage_no"
-                       value="{{ $staging[0]->stage_no }}" placeholder="Enter Stage No">
+                <input class="form-control" required name="stage_no" type="text"  id="stage_no"
+                       value="{{ $staging[0]->stage_no }}" placeholder="Enter Stage No" min="1">
                 <div class="invalid-feedback">Please enter a valid stage number.</div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="stage_no" class="form-label">Farmer Name</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="farmer_name" type="text" id="farmer_name"  placeholder="Enter farmer Name" value="{{ $staging[0]->farmer_name }}">
-                    <div class="invalid-feedback">Please enter a valid Name.</div>
-                </div>
             </div>
         </div>
 
@@ -66,7 +74,7 @@
             <div class="form-group">
                 <label for="stage_no" class="form-label">Rst No.</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="rst" type="number" id="rst"  placeholder="Enter rst no." value="{{ $staging[0]->rst_no }}">
+                    <input class="form-control alwaysvisible" required name="rst" type="number" id="rst"  placeholder="Enter rst no." value="{{ $staging[0]->rst_no }}" readonly>
                     <div class="invalid-feedback">Please enter a valid rst.</div>
                 </div>
             </div>
@@ -75,7 +83,7 @@
             <div class="form-group">
                 <label for="stage_no" class="form-label">Final Weight</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="final_weight" type="number" id="final_weight"  placeholder="Enter rst no." value="{{ $staging[0]->final_weight }}" step="0.01">
+                    <input class="form-control alwaysvisible" required name="final_weight" type="number" id="final_weight"  placeholder="Enter final weight" value="{{ $staging[0]->final_weight }}" step="0.01" readonly>
                     <div class="invalid-feedback">Please enter a final Weight</div>
                 </div>
             </div>
@@ -105,7 +113,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
             <div class="form-group">
                 <label for="pay_for_staging" class="form-label">Pay for Staging</label>
-                <input class="form-control" required name="pay_for_staging" type="number" min="0" step="0.01"
+                <input class="form-control" required name="pay_for_staging" type="number" min="1" step="0.01"
                        id="pay_for_staging" value="{{ $staging[0]->pay_for_staging }}"
                        placeholder="Enter amount">
                 <div class="invalid-feedback">Please enter valid payment amount (₹).</div>

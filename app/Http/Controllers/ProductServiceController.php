@@ -14,6 +14,8 @@ use App\Exports\ProductServiceExport;
 use App\Imports\ProductServiceImport;
 use App\Models\ChartOfAccount;
 
+use DB;
+
 class ProductServiceController extends Controller
 {
     public function index(Request $request)
@@ -30,7 +32,22 @@ class ProductServiceController extends Controller
 
 
             }
-            return view('productservice.index', compact('productServices', 'category'));
+
+            $unitsInfo = DB::select("SELECT * from `product_service_units`");
+
+            $newunitearr = [];
+
+            if(!empty($unitsInfo)){
+
+                foreach($unitsInfo as $val){
+
+                    $newunitearr[$val->id] = $val->name;
+
+                }
+
+            }
+
+            return view('productservice.index', compact('productServices', 'category', 'newunitearr'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -111,6 +128,8 @@ class ProductServiceController extends Controller
                 return redirect()->route('productservice.index')->with('error', $messages->first());
             }
 
+          //  print_r($request->input()); exit;
+
             $productService                 = new ProductService();
             $productService->name           = $request->name;
             $productService->description    = $request->description;
@@ -118,6 +137,10 @@ class ProductServiceController extends Controller
             $productService->purchase_price = $request->purchase_price;
             $productService->tax_id         = !empty($request->tax_id) ? implode(',', $request->tax_id) : '';
             $productService->unit_id        = $request->unit_id;
+            $productService->sec_unit_id        = $request->sec_unit;
+           $productService->first_unit_val = $request->first_unit;
+            $productService->second_unit_val = $request->second_unit;
+
             
             $productService->quantity   = 0;
             

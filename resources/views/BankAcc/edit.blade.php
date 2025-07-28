@@ -135,6 +135,7 @@
                 <option value="LOAN">LOAN</option>
                 <option value="SAVING">SAVING</option>
                 <option value="WHR">WHR</option>
+                <option value="OTHER">OTHER</option>
             </select>
         </div>
     </div>

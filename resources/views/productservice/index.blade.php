@@ -80,7 +80,9 @@
                                 <th>{{__('Purchase Price')}}</th>
                                 <th>{{__('Tax')}}</th>
                                 <th>{{__('Category')}}</th>
-                                <th>{{__('Unit')}}</th>
+                                <th>{{__('Primary Unit')}}</th>
+                                <th>{{__('Secondary Unit')}}</th>
+                                <th>{{__('Unit Conversion')}}</th>
                                 <th>{{__('Action')}}</th>
                             </tr>
                             </thead>
@@ -105,6 +107,8 @@
                                     </td>
                                     <td>{{ !empty($productService->category)?$productService->category->name:'' }}</td>
                                     <td>{{ !empty($productService->unit)?$productService->unit->name:'' }}</td>
+                                    <td>{{ !empty($newunitearr) && isset($newunitearr[$productService->sec_unit_id])? $newunitearr[$productService->sec_unit_id]:'' }}</td>
+                                    <td>{{ !empty($productService->first_unit_val)?$productService->first_unit_val.' '.$productService->unit->name . ' = '. $productService->second_unit_val.' '. $newunitearr[$productService->sec_unit_id]:'' }}</td>
                                     @if(Gate::check('edit product & service') || Gate::check('delete product & service'))
                                         <td class="Action">
                                             @can('edit product & service')

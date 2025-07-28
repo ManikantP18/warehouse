@@ -35,11 +35,11 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-        <a href="#" data-size="xl" data-url="{{ route('staging.create') }}" data-ajax-popup="true"
+        <!-- <a href="#" data-size="xl" data-url="{{ route('staging.create') }}" data-ajax-popup="true"
             data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Staging') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
-        </a>
+        </a> -->
     </div>
 @endsection
 
@@ -77,7 +77,7 @@
                                     <td>{{ $value->farmer_name}}</td>
                                     <td> {{ $value->name}} </td>
                                     <td>{{ $value->rst_no}}</td>
-                                    <td> {{ $value->godown}} </td>
+                                    <td> {{ $value->branch_name}} </td>
                                      <td> {{ $value->stage_no}} </td>
                                     <td> {{ $value->no_of_begs}} </td>
                                     <td>{{ $value->final_weight}}</td>
@@ -93,9 +93,9 @@
         </a>
  
    {{-- ✅ Delete Button: Calls JS confirm & deletes --}}
-    <button class="btn btn-sm btn-danger" onclick="deleteit('{{ route('staging.delete', $value->staging_id) }}')" title="Delete">
+    <!-- <button class="btn btn-sm btn-danger" onclick="deleteit('{{ route('staging.delete', $value->staging_id) }}')" title="Delete">
         <i class="ti ti-trash"></i>
-    </button>
+    </button> -->
   
 
 </div>

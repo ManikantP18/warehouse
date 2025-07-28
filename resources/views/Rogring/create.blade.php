@@ -58,10 +58,7 @@
         <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
       </div>
     </div>
-                   
-
-  
-
+       
 
   </div>
 </div>

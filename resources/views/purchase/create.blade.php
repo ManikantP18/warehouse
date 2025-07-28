@@ -67,7 +67,7 @@
             <label>Mode of Invoice</label>
               <select name="purchase_way" id="purchase_way" class="form-control">
                 <option value="cash">Cash</option>
-                <option value="credit">Credit</option>
+                <option value="credit" selected>Credit</option>
               </select>
           </div>
         </div>
@@ -118,7 +118,7 @@
         <div class="col-md-6 ">
           <div class="form-group">
             <label>LOT No.</label>
-            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required>
+            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" min="1" required>
           </div>
         </div>
         <div class="col-md-6 ">
@@ -131,35 +131,35 @@
         <div class="col-md-6 ">
           <div class="form-group">
             <label>Account Number</label>
-            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required readonly>
+            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required >
           </div>
         </div>
 
         <div class="col-md-6 ">
           <div class="form-group">
             <label>Bank Name</label>
-           <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required readonly>
+           <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required >
           </div>
         </div>
 
         <div class="col-md-6 ">
           <div class="form-group">
             <label>IFSC Code</label>
-            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required readonly>
+            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required >
           </div>
         </div>
 
         <div class="col-md-6 ">
           <div class="form-group">
             <label>Branch</label>
-            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required readonly>
+            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required >
           </div>
         </div>
 
         <div class="col-md-6 changehide ">
           <div class="form-group changehide" style="display: none;">
             <label>GST No.</label>
-            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no">
+            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" >
           </div>
         </div>
 
@@ -184,7 +184,7 @@
 
     <div class="col-md-2">
       <div class="form-group">
-        <label>Pure Wigth</label>
+        <label>Net Wigth</label>
         <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_0" value="1" required onkeyup="autofill(0)" onchange="autofill(0)" step="0.01">
       </div>
     </div>

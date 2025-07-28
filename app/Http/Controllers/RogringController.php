@@ -88,18 +88,18 @@ public function search(Request $req)
                // $tax          = Tax::where('account_id', 'LIKE','%'.$searchVal.'%')->orwhere('phone_number', 'LIKE','%'.$searchVal.'%')->where('relational_cust_name', 'LIKE','%'.$searchname.'%')->where('relational_cust_name', 'LIKE','%'.$searchname.'%')->get()->pluck('name', 'id');
 
                $searchData = DB::table('ladgers')
-    ->select('ladger_id', 'relational_cust_name')
-    ->where(function ($query) use ($searchVal) {
-        $query->where('account_id', 'LIKE', "%$searchVal%")
-              ->orWhere('phone_number', 'LIKE', "%$searchVal%");
-    })
-    ->where('relational_cust_name', 'LIKE', "%$searchname%")
-    ->where('village', 'LIKE', "%$searchVillage%")
-    ->where('farm_owner_name', 'LIKE', "%$searchowner%")
-    ->pluck('relational_cust_name', 'ladger_id') // This gives associative array: [id => name]
-    ->toArray(); // Convert collection to array
+                ->select('ladger_id', DB::raw("CONCAT(relational_cust_name, ' - ', farm_owner_name) AS relational_cust_name"))
+                ->where(function ($query) use ($searchVal) {
+                    $query->where('account_id', 'LIKE', "%$searchVal%")
+                        ->orWhere('phone_number', 'LIKE', "%$searchVal%");
+                })
+                ->where('relational_cust_name', 'LIKE', "%$searchname%")
+                ->where('village', 'LIKE', "%$searchVillage%")
+                ->where('farm_owner_name', 'LIKE', "%$searchowner%")
+                ->pluck('relational_cust_name', 'ladger_id') // This gives associative array: [id => name]
+                ->toArray(); // Convert collection to array
 
-            $farmers = [];
+                    $farmers = [];
 
             foreach($searchData as $key=>$values){
                 $farmers[$key] = $values;

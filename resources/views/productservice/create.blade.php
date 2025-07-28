@@ -57,9 +57,41 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            {{ Form::label('unit_id', __('Unit'), ['class' => 'form-label']) }}<x-required></x-required>
-            {{ Form::select('unit_id', $unit, null, ['class' => 'form-control select', 'required' => 'required']) }}
+            <label for="unit_id" class="form-label">Primary Unit<span class="text-danger">*</span></label>
+            <select name="unit_id" id="unit_id" class="form-control select" required onchange="toggle()">
+                <option value="">Select Unit</option> {{-- Optional default --}}
+                @foreach($unit as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                @endforeach
+            </select>
         </div>
+
+        <div id="sec_unit_wrapper" class="form-group col-md-6" style="display: none;">
+            <label for="sec_unit" class="form-label">Secondary Unit<span class="text-danger">*</span></label>
+            <select name="sec_unit" id="sec_unit" class="form-control select" required onchange="secToggle()">
+                @foreach($unit as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                @endforeach
+            </select>
+        </div>
+
+         <div id="first-unit" class="form-group col-md-2 unitconver d-none">
+            <label for="first-unit" class="form-label"><span class="text-danger">*</span></label>
+             <input type="text" name="first_unit" class="form-control" required /> <span class="fw-bold first-unit"></span>
+        </div>
+
+       <div class="form-group col-md-1 unitconver d-none mt-4 text-center">
+        <label for="second-unit" class="form-label"><span class="text-danger"></span></label>
+        =
+        </div> 
+
+         <div id="second-unit" class="form-group col-md-2 unitconver d-none">
+            <label for="second-unit" class="form-label"><span class="text-danger">*</span></label>
+            <input type="text" name="second_unit" class="form-control" required /> <span class="fw-bold second-unit"></span>
+        </div>
+
+
+
 
         <!-- <div class="form-group col-md-6">
             {{ Form::label('quantity', __('Quantity'), ['class' => 'form-label']) }}<x-required></x-required>
@@ -126,5 +158,31 @@ $(document).on('click', 'input[name="type"]', function () {
         $('input[name="quantity"]').val('').prop('required', false);
     }
 });
+
+function toggle() {
+    const selected = document.getElementById('unit_id').value;
+    const secUnitWrapper = document.getElementById('sec_unit_wrapper');
+
+    if (selected) {
+        secUnitWrapper.style.display = 'block';
+
+        $(".first-unit").html($("#unit_id option:selected").text());
+    } else {
+        secUnitWrapper.style.display = 'none';
+    }
+}
+
+function secToggle() {
+    const selectedValue = document.getElementById('sec_unit').value;
+
+    $('.unitconver').addClass('d-none');
+
+    if (selectedValue) {
+        $('.unitconver').removeClass('d-none');
+
+        $(".second-unit").html($("#sec_unit option:selected").text())
+    }
+}
+
 
 </script>

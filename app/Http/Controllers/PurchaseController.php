@@ -180,6 +180,7 @@ class PurchaseController extends Controller
         $purchase_ifsc = $req->input('purchase_ifsc');
          $purchase_branch = $req->input('purchase_branch');
         $purchase_gst_no = $req->input('purchase_gst_no');
+         $godown = $req->input('godown');
         $purchase_to = $req->input('purchase_to');
         $id = $req->input('purchase_id');
         $purchase_total = $req->input('purchase_total');
@@ -188,7 +189,7 @@ class PurchaseController extends Controller
 
         
         
-        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to' , purchase_total = '$sum_total', is_hide = '1' WHERE purchase_id = '$id'");
+        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to' , purchase_total = '$sum_total',godown = '$godown', is_hide = '1' WHERE purchase_id = '$id'");
 
         $today = date('Y-m-d H:i:s');
 
@@ -220,7 +221,7 @@ class PurchaseController extends Controller
                         if($existing) {
                              DB::update("update staging set select_lot_no = '$purchase_lot_no',staging_varity='$purchase_item[$i]',staging_date='$today',rst_no = '$purchase_rst_no' , farmer_name = '$purchase_relation_cusm' where staging_id = '$staging_id'");
                         } else {
-                            DB::insert("Insert into staging (select_lot_no,staging_varity,staging_date,rst_no,farmer_name) VALUES ('$purchase_lot_no', '$purchase_item[$i]','$today','$purchase_rst_no','$purchase_relation_cusm')");
+                            DB::insert("Insert into staging (select_lot_no,staging_varity,staging_date,rst_no,farmer_name,final_weight,land_owner,godown) VALUES ('$purchase_lot_no', '$purchase_item[$i]','$today','$purchase_rst_no','$purchase_relation_cusm',$purchase_quantity[$i],'$purchase_owner','$godown')");
                         }
                     }
                  }

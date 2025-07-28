@@ -93,13 +93,14 @@ class SelltoController extends Controller
         $total = $req->input('sellto_total_amount');
          $gst = $req->input('sellto_gst_amount');
          $units = $req->input('purchase_unit');
+         $lotno = $req->input('purchase_lot_no');
 
 
          for($i=0; $i<count($itemselled); $i++){
 
             if(!empty($itemselled[$i]) && !empty($rate[$i])){
 
-                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$lastId')");
+                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,selled_lot_no,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$lotno'[$i],'$lastId')");
 
             }
 

@@ -130,6 +130,7 @@
                 <option value="LOAN">LOAN</option>
                 <option value="SAVING">SAVING</option>
                 <option value="WHR">WHR</option>
+                <option value="OTHER">OTHER</option>
             </select>
         </div>
     </div>
@@ -155,8 +156,9 @@
                    name="cheque_book" 
                    id="cheque_book_no" 
                    value="no" 
-                   required>
-            <label class="form-check-label" for="cheque_book_no">No</label>
+                   required
+                   checked>
+            <label class="form-check-label" for="cheque_book_no" >No</label>
         </div>
     </div>
 </div>
@@ -169,23 +171,40 @@
             <!-- From Input -->
             <div class="col-md-6">
                 <div class="form-icon-user">
+                     <lable class="form-label">From Number</lable>
                     <input class="form-control onlyforformesrs" 
                            name="chequerange_from" 
                            type="number" 
                            id="chequerange_from" 
                            placeholder="From" 
                            min="1"
-                           value="0">
+                           value="0"
+                           onkeyup="totalCheck()">
                 </div>
             </div>
             <!-- To Input -->
             <div class="col-md-6">
                 <div class="form-icon-user">
+                     <lable class="form-label">To Number</lable>
                     <input class="form-control onlyforformesrs" 
                            name="chequerange_to" 
                            type="number" 
                            id="chequerange_to" 
                            placeholder="To" 
+                           min="1"
+                           value="0"
+                           onkeyup="totalCheck()">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <lable class="form-label">Total Check</lable>
+                    <input class="form-control onlyforformesrs" 
+                           name="total_check" 
+                           type="number" 
+                           id="total_check" 
+                           placeholder="total_check" 
                            min="1"
                            value="0">
                 </div>
@@ -277,5 +296,12 @@ $(document).ready(function () {
     // Trigger the change event on page load to set initial state
     $(".cheque_book:checked").trigger("change");
 });
+
+function totalCheck() {
+    let from =  $("#chequerange_from").val();
+    let to =    $("#chequerange_to").val();
+    let totalCheck = from - to ;
+    $('#total_check').val(totalCheck);
+}
 
 </script>

@@ -112,6 +112,10 @@
         <input class="form-check-input column-toggle" type="checkbox" data-column="purewigth">
         <label class="form-check-label">Pure Wigth</label>
     </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input column-toggle" type="checkbox" data-column="godown">
+        <label class="form-check-label">Godown Name</label>
+    </div>
 </div>
 <div class="table-responsive mt-2" id="purchasetable">
     <table class="table datatable">
@@ -130,6 +134,7 @@
                 <th class="gst optional-column">GST Details</th>
                 <th class="total optional-column">Total Amount</th>
                 <th class="purewigth optional-column">Pure Wigth</th>
+                <th class="godown optional-column">Godown Name</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -149,6 +154,7 @@
                     <td class="gst optional-column">{{ $value->purchase_gst_no }}</td>
                     <td class="total optional-column">{{ $value->purchase_total }}</td>
                      <td class="purewigth optional-column">{{ $value->pure_wigth }}</td>
+                     <td class="godown optional-column">{{ $value->godown }}</td>
                     <td>
                         <a href="#" data-size="xl" data-url="{{ route('purchase.edit', $value->purchase_id) }}" data-ajax-popup="true"
                             data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Purchase') }}"

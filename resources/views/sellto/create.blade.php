@@ -263,7 +263,7 @@ function toggleFields() {
 }
 
 function makeFieldsEditable() {
-  $('#sellto_account_number, #sellto_phone, #sellto_customer_name, #sellto_acc_holder, #sellto_owner_name, #sellto_village, #sellto_gst_amount')
+  $('#sellto_account_number, #sellto_phone, #sellto_customer_name, #sellto_acc_holder, #sellto_owner_name, #sellto_village, #sellto_gst_amount,#bank_name')
     .prop('readonly', false)
     .val('');
 }

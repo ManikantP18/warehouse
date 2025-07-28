@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 17, 2025 at 09:44 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: sdb-r.hosting.stackcp.net
+-- Generation Time: Jul 28, 2025 at 08:48 AM
+-- Server version: 10.6.18-MariaDB-log
+-- PHP Version: 8.3.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,20 +47,8 @@ CREATE TABLE `ledgerbank_accounts` (
 --
 
 INSERT INTO `ledgerbank_accounts` (`account_id`, `ledger_id`, `account_name`, `account_num`, `account_type`, `cheque_book`, `chequerange_from`, `chequerange_to`, `account_status`, `bank_name`, `is_deleted`, `opening_bal`) VALUES
-(1, 0, 'nikita', 223, '57373', '1', '3', '4', 1, '', 1, 0),
-(2, 0, 'sumit', 2147483647, '0', '0', '32', '2222', 1, '', 1, 0),
-(3, 0, 'sumit', 2147483647, '786', '0', '3433', '432', 1, '', 1, 0),
-(4, 0, 'sumit', 2147483647, '0', '0', '3433', '2222', 1, '', 1, 0),
-(5, 0, 'nikita', 2147483647, '0', '0', '3433', '43289', 1, '', 1, 0),
-(6, 0, 'sumit', 2147483647, '0', '0', '3433', '2222', 1, '', 1, 0),
-(7, 0, 'sumit', 2147483647, '0', '0', '3344', '34343', 1, '', 1, 0),
-(8, 0, 'nikita', 2147483647, '0', '0', '3433', '2222', 1, '', 1, 0),
-(9, 0, 'mkp', 2147483647, '0', '0', '3433', '432', 1, 'bank baroda', 1, 0),
-(10, 0, 'nikita', 2147483647, 'basic', 'no', '3433', '432', 1, 'bank baroda', 0, 0),
-(11, 0, 'sumit', 2147483647, 'trial', 'yes', '3433', '2222', 1, 'bank baroda', 0, 50),
-(12, 0, 'mkp', 2147483647, '0', '0', '3433', '432', 1, 'bank baroda', 1, 0),
-(13, 0, 'nikita', 2147483647, '0', '0', '3433', '432', 1, 'bank baroda', 1, 0),
-(14, 0, 'nikita', 2147483647, 'trial', 'no', '3433', '2222', 1, 'bank baroda', 1, 0),
+(10, 0, 'nikita', 2147483647, 'basic', 'no', '3433', '432', 1, 'Bank Of India', 0, 0),
+(11, 0, 'sumit', 2147483647, 'trial', 'yes', '3433', '2222', 1, 'Bank Of Maharashtra', 0, 50),
 (15, 0, 'sukhraj', 2147483647, 'basic', 'yes', '9', '432', 1, 'bank baroda', 0, 12),
 (16, 0, 'sukhraj', 2147483647, 'LOAN', 'yes', '98', '87', 1, 'bank baroda', 0, 50),
 (17, 0, 'sukhraj bhaiiii', 2147483647, 'enterprise', 'no', NULL, NULL, 1, 'sbi', 0, 12);

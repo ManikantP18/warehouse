@@ -24,7 +24,7 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="kp_acc_no" class="form-label">account no.</label>
+                    <label for="kp_acc_no" class="form-label">Customer-ID</label>
                     <div class="form-icon-user">
                         <input class="form-control "
                         required
@@ -105,7 +105,7 @@
                 <div class="form-group">
                     <label for="kp_rogger_name" class="form-label"> Rogating agent name </label>
                     <div class="form-icon-user">
-                        <input class="form-control " title="Only letters allowed" name="kp_rogger_name" type="text" id="kp_rogger_name" value="{{$kataparchi[0]->kp_rogger_name	}}">
+                        <input class="form-control " title="Only letters allowed" name="kp_rogger_name" type="text" id="kp_rogger_name" value="{{$kataparchi[0]->kp_rogger_name	}}" >
                     </div>
                 </div>
             </div>
@@ -150,7 +150,7 @@
             
              <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="kp_pure_wigth" class="form-label">pure weight</label>
+                    <label for="kp_pure_wigth" class="form-label">Net Weight</label>
                     <div class="form-icon-user">
 
                         <input class="form-control" title="Auto-calculated" name="kp_pure_wigth" type="text" id="kp_pure_wigth" readonly>

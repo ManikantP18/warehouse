@@ -14,7 +14,7 @@ class StagingController extends Controller
 {
     public function index(){
 
-        $data['staging'] = DB::select("select * from staging join product_services on product_services.id = staging.staging_varity");
+        $data['staging'] = DB::select("select * from staging join branches on branches.branch_id  = staging.godown join product_services on product_services.id = staging.staging_varity order by staging_id desc");
 
         return view('staging/list',$data);
 

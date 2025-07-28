@@ -111,7 +111,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="kp_rogger_name" class="form-label">Rogring By</label>
-                        <input class="form-control onlyforformesrs"  name="kp_rogger_name" id="kp_rogger_name" >
+                        <input class="form-control onlyforformesrs"  name="kp_rogger_name" id="kp_rogger_name" readonly>
                     </div>
                 </div>
                 <div class="col-lg-6">

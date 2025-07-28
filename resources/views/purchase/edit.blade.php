@@ -110,7 +110,14 @@
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>LOT No.</label>
-            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required value="{{$purchase[0]->purchase_lot_no}}">
+            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required min="1" value="{{$purchase[0]->purchase_lot_no}}">
+          </div>
+        </div>
+
+         <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>Godown Name</label>
+            <input type="text" class="form-control" name="godown" id="godown" required min="1" value="{{$purchase[0]->godown}}">
           </div>
         </div>
 
@@ -124,32 +131,32 @@
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Account Number</label>
-            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required value="{{$purchase[0]->purchase_account_no}}" readonly>
+            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required value="{{$purchase[0]->purchase_account_no}}" >
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Bank Name</label>
-            <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required value="{{$purchase[0]->purchas_bank_name}}" readonly>
+            <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required value="{{$purchase[0]->purchas_bank_name}}" >
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>IFSC Code</label>
-            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required value="{{$purchase[0]->purchase_ifsc}}" readonly>
+            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required value="{{$purchase[0]->purchase_ifsc}}" >
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Branch</label>
-            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required value="{{$purchase[0]->purchase_branch}}" readonly>
+            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required value="{{$purchase[0]->purchase_branch}}" >
           </div>
         </div>
 
-        <div class="col-md-6 changehide">
+        <div div class="form-group changehide" style="display: none;">
           <div class="form-group">
             <label>GST No.</label>
             <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required value="{{$purchase[0]->purchase_gst_no}}" readonly>
@@ -315,11 +322,7 @@
 </div>
 {{ Form::close() }}
 <script>
-    function toggleFields() {
-  let val = document.getElementById('sellto_farmer/other').value;
-  $('.changehide').show();
-  if (val === 'other') $('.changehide').hide();
-}
+   
 
 function searchLadger() {
   let searchVal = $('#search').val();
@@ -394,4 +397,21 @@ function autofill(id) {
 //   $('#form-fields-wrapper').hide();
 //   $('.allfarmers').hide();
 // });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function toggleFields() {
+    const val = document.getElementById('purchase_to').value;
+
+    if (val === 'farmer') {
+      $('.changehide').hide();
+      $('#purchase_gst_no').removeAttr('required');
+    } else {
+      $('.changehide').show();
+      $('#purchase_gst_no').attr('required', 'required');
+    }
+  }
+
+  // ✅ Call once when the page loads
+  document.addEventListener('DOMContentLoaded', toggleFields);
 </script>

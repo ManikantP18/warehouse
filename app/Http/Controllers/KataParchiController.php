@@ -134,25 +134,26 @@ class KataParchiController extends Controller
         $kp_pure_wigth = number_format((float)$kp_pure_wigth, 2, '.', '');
 
         $pid = DB::table('purchase')->insertGetId([
-    'purchase_relation_cusm' => $kprel,
-    'purchase_accountant' => $kpacc_hold_name,
-    'purchase_owner' => $kp_land_owner,
-    'purchase_village' => $kpvilage,
-    'purchase_acre' => $kp_acre,
-    'purchase_phone' => $kpmn,
-    'purchase_rst_no' => $kprst,
-    'purchase_lot_no' => '', // or null
-    'purchase_account_no' => $acc,
-    'purchas_bank_name' => $bank_name,
-    'purchase_ifsc' => $ifsc_code,
-    'purchase_branch' => $branch,
-    'purchase_gst_no' => $gst,
-    'purchase_item' => $kpvarity,
-    'purchase_quantity' => 1,
-    'purchase_rate' => $rate,
-    'purchase_total' => $rate,
-    'pure_wigth' => $kp_pure_wigth,
-]);
+        'purchase_relation_cusm' => $kprel,
+        'purchase_accountant' => $kpacc_hold_name,
+        'purchase_owner' => $kp_land_owner,
+        'purchase_village' => $kpvilage,
+        'purchase_acre' => $kp_acre,
+        'purchase_phone' => $kpmn,
+        'purchase_rst_no' => $kprst,
+        'purchase_lot_no' => '', // or null
+        'purchase_account_no' => $acc,
+        'purchas_bank_name' => $bank_name,
+        'purchase_ifsc' => $ifsc_code,
+        'purchase_branch' => $branch,
+        'purchase_gst_no' => $gst,
+        'purchase_item' => $kpvarity,
+        'purchase_quantity' => 1,
+        'purchase_rate' => $rate,
+        'purchase_total' => $rate,
+        'pure_wigth' => $kp_pure_wigth,
+        'godown' => $kp_goween,
+    ]);
 
     $unit = DB::select("select * from product_service_units where name ='kw'");
 
