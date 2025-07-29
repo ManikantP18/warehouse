@@ -10,12 +10,15 @@ use Illuminate\Support\Facades\DB;
 class RogringController extends Controller
 {
     public function index(){
-        $data['rogring'] = DB::select('select * from rogring JOIN ladgers ON ladgers.ladger_id  = rogring.ledgers WHERE Rogring_status = 1');
+        $data['rogring'] = DB::select('select *, users.name AS Rogring_name from rogring JOIN ladgers ON ladgers.ladger_id  = rogring.ledgers JOIN users ON users.id = rogring.Rogring_name WHERE Rogring_status = 1');
         return view('Rogring/list',$data);
     }
 
     function create(){
-        return view('Rogring/create');
+
+        $data['persons'] = DB::select('select * from users  WHERE type = "rowgrowing"');
+
+        return view('Rogring/create',$data);
     }  
 
     public function add(Request $req)

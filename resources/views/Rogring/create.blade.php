@@ -12,7 +12,16 @@
             <div class="form-group">
                 <label for="Rogring_name" class="form-label">Rogrowing Responsible</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible"required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed" name="Rogring_name" type="text" id="Rogring_name "placeholder ="Rogring Name">
+                    <select class="form-control alwaysvisible" name="Rogring_name" id="Rogring_name">
+                      <option value=''> Select Rogrowing Responsible </option>
+
+                      @foreach($persons as $p)
+
+                        <option value="{{$p->id}}">{{$p->name}}</option>
+
+                      @endforeach
+
+                    </select>
                 </div>
             </div>
         </div>
