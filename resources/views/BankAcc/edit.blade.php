@@ -127,7 +127,6 @@
             <select class="form-control onlyforformesrs" 
                     name="account_type" 
                     id="account_type" 
-                    
                     required>
                 <option value="">Select Account Type</option>
                 <option value="CC LIMIT">CC LIMIT</option>
@@ -142,64 +141,60 @@
 </div>
 
 
-<!-- Checkbook Have -->
-<div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs">
-    <div class="form-group">
-        <label class="form-label d-block">Checkbook Have?</label>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input cheque_book" 
-                   type="radio" 
-                   name="cheque_book" 
-                   id="cheque_book_yes" 
-                   value="yes" 
-                   required>
-            <label class="form-check-label" for="cheque_book_yes">Yes</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input cheque_book" 
-                   type="radio" 
-                   name="cheque_book" 
-                   id="cheque_book_no" 
-                   value="no" 
-                   required>
-            <label class="form-check-label" for="cheque_book_no">No</label>
-        </div>
-    </div>
-</div>
 
-<!-- Checkbook Range -->
-<div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs" id="checkbook-range-section" style="display: none;">
+
+   <div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs" id="checkbook-range-section">
     <div class="form-group">
         <label class="form-label">Checkbook Range?</label>
-        <div class="row">
-            <!-- From Input -->
-            <div class="col-md-6">
-                <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" 
-                           name="chequerange_from" 
-                           type="number" 
-                           id="chequerange_from" 
-                           placeholder="From" 
-                           min="1"
-                           value="0">
+        <div id="checkbook-range-container">
+            <!-- First Row (Default with Laravel values) -->
+             @foreach($range as $val)
+            <div class="row checkbook-range-row mb-2">
+                <div class="col-md-3">
+                    <div class="form-icon-user">
+                        <label class="form-label">From Number</label>
+                        <input class="form-control onlyforformesrs"
+                               name="chequerange_from[]"
+                               type="number"
+                               placeholder="From"
+                               min="1"
+                               value="{{ $val->check_from }}"
+                               onkeyup="totalCheck(this)">
+                    </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-icon-user">
+                        <label class="form-label">To Number</label>
+                        <input class="form-control onlyforformesrs"
+                               name="chequerange_to[]"
+                               type="number"
+                               placeholder="To"
+                               min="1"
+                               value="{{ $val->check_to }}"
+                               onkeyup="totalCheck(this)">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="form-label">Total Check</label>
+                        <input class="form-control onlyforformesrs"
+                               name="total_check[]"
+                               type="number"
+                               placeholder="Total"
+                               min="1"
+                               value="{{ $val->check_total }}"
+                               readonly>
+                    </div>
+                </div>
+                
             </div>
-            <!-- To Input -->
-            <div class="col-md-6">
-                <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" 
-                           name="chequerange_to" 
-                           type="number" 
-                           id="chequerange_to" 
-                           placeholder="To" 
-                           min="1"
-                           value="0">
-                </div>
+            @endforeach
+            <div class="col-md-3 d-flex align-items-end">
+                    <button type="button" class="btn btn-success add-checkbook-range">Add More</button>
             </div>
         </div>
     </div>
 </div>
-
 
     </div>
 </div>
@@ -210,59 +205,6 @@
 </div>
 
 </form>
-    <!-- <script>
-function searchLadger() {
-
-            let searchVal = $("#search").val();
-            let searchVillage = $("#search_village").val();
-            let searchname = $("#search_name").val();
-            $.ajax({
-            url : '{{route('sellto.search')}}',
-            type : 'GET',
-            data : {
-                searchVal : searchVal,
-                searchVillage : searchVillage,
-                searchname : searchname
-            },
-            success: function(response) {
-            if (response.success && response.data) {
-                 let data = response.data;
-
-                 console.log(data)
-
-                 let html = `
-                    <select name="sellto_farmer/other" id="sellto_farmer/other" class="form-control alwaysvisible"  onchange="selectLadger(this.value)">
-                    <option value=""> Select Farmer </option>`;
-
-                data.map((value) =>{
-
-                    html += `<option value="${value.account_id}">${value.relational_cust_name} - ${value.farm_owner_name}</option>`;
-
-                })
-
-                html += `</select>`;
-
-                $('.allfarmers').html(html);
-
-                //         $('#sellto_account_number').val(data.account_id);
-                //         $('#sellto_phone').val(data.phone_number);
-                //         $('#sellto_customer_name').val(data.relational_cust_name);
-                //         $('#sellto_acc_holder').val(data.account_holder);
-                //         $('#sellto_owner_name').val(data.farm_owner_name);
-                //         $('#sellto_village').val(data.village);
-                //         $('#sellto_gst_amount').val(data.gst_num);
-            } else {
-                alert("No matching record found.");
-            }
-        },
-        error: function(err) {
-            console.log("AJAX error:", err);
-        }
-
-        })
-        }
-        
-        </script> -->
 
         <script>
 
@@ -284,7 +226,60 @@ $(document).ready(function () {
     // Trigger the change event on page load to set initial state
     $(".cheque_book:checked").trigger("change");
 });
+function totalCheck() {
+    let from =  $("#chequerange_from").val();
+    let to =    $("#chequerange_to").val();
+    let totalCheck = to - from ;
+    $('#total_check').val(totalCheck);
+}
 
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    // Add More
+    $(document).on('click', '.add-checkbook-range', function () {
+        const row = `
+        <div class="row checkbook-range-row mb-2">
+            <div class="col-md-3">
+                <div class="form-icon-user">
+                    <label class="form-label">From Number</label>
+                    <input class="form-control onlyforformesrs" name="chequerange_from[]" type="number" placeholder="From" min="1" value="0" onkeyup="totalCheck(this)">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-icon-user">
+                    <label class="form-label">To Number</label>
+                    <input class="form-control onlyforformesrs" name="chequerange_to[]" type="number" placeholder="To" min="1" value="0" onkeyup="totalCheck(this)">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">Total Check</label>
+                    <input class="form-control onlyforformesrs" name="total_check[]" type="number" placeholder="Total" min="1" value="0" readonly>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="button" class="btn btn-danger remove-checkbook-range">Remove</button>
+            </div>
+        </div>`;
+        $('#checkbook-range-container').append(row);
+    });
+
+    // Remove Row
+    $(document).on('click', '.remove-checkbook-range', function () {
+        $(this).closest('.checkbook-range-row').remove();
+    });
+});
+
+// Auto Calculate Total Check
+function totalCheck(el) {
+    const row = $(el).closest('.checkbook-range-row');
+    const from = parseInt(row.find("input[name='chequerange_from[]']").val()) || 0;
+    const to = parseInt(row.find("input[name='chequerange_to[]']").val()) || 0;
+    const total = (to >= from) ? (to - from + 1) : 0;
+    row.find("input[name='total_check[]']").val(total);
+}
 </script>
 
 

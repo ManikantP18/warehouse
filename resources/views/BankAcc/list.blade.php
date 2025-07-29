@@ -61,6 +61,7 @@
                                     <th> ChequeBook  </th>
                                     <th> ChequeRangefrom </th>
                                     <th> ChequeRangeto </th>
+                                    <th> Total Check </th>
                                     <th> Action </th>
                                 </tr>
                             </thead>
@@ -79,8 +80,9 @@
                                     <td> {{ $value->account_type }} </td>
                                     <td> {{ $value->cheque_book }} </td>
                                    
-                                    <td> {{ $value->chequerange_from }} </td>
-                                    <td> {{ $value->chequerange_to }} </td>
+                                    <td> {{ $value->check_from }} </td>
+                                    <td> {{ $value->check_to }} </td>
+                                    <td> {{ $value->check_total }} </td>
                                     
                                     <td>
                                    

@@ -74,7 +74,7 @@
                         @endphp
                         @foreach($columns as $col)
                             <label class="form-check-label me-3">
-                                <input type="checkbox" class="form-check-input toggle-col" data-col="{{ $col['index'] }}"> {{ $col['label'] }}
+                                <input type="checkbox" onchange="handleCheckbox()" class="form-check-input toggle-col checkbox-rem" data-col="{{ $col['index'] }}"> {{ $col['label'] }}
                             </label>
                         @endforeach
                     </div>
@@ -135,11 +135,43 @@
 @endsection
 @push('script-page')
     <script>
+        
         function removeit(url) {
             let cnf = confirm('Are You Sure You Want To Delete This Sell?');
             if (cnf == true) {
                 window.location.href = url;
             }
         }
+
+        function handleCheckbox() {
+            let arr = [];
+
+            $(".checkbox-rem").each(function () {
+                if ($(this).is(":checked")) {
+                    arr.push($(this).attr('data-col'));
+                }
+            });
+
+            localStorage.setItem('checkedItems', JSON.stringify(arr));
+        }
+
+        $(document).ready(function () {
+            let items = JSON.parse(localStorage.getItem('checkedItems')) || [];
+
+            $(".checkbox-rem").each(function () {
+                if (items.includes($(this).attr('data-col'))) {
+                    $(this).prop("checked", true); // ✅ Proper way to check a checkbox
+
+                    const colIndex = $(this).data('col');
+                        const isVisible = $(this).is(':checked');
+                        const display = isVisible ? '' : 'none';
+                        $(`table tr`).each(function () {
+                            $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', display);
+                        });
+                }
+            });
+        });
+
+
     </script>
 @endpush

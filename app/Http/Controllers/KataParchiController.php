@@ -47,6 +47,12 @@ class KataParchiController extends Controller
 
         $kp_goween = $req->input('kp_godown_name');
 
+         
+
+         if(empty($kpvarity)) {
+            $kpvarity = $req->input('kp_other_varity');
+         }
+
         DB::insert("Insert into kata_parchi (kp_date,kp_acc_no,kp_rel_name,kp_acc_holdername,kp_bhoomiswami_name,kp_vilage,kp_rakaba_acre,kp_mo_no,kp_rogger_name,kp_verity,kp_rstno,kp_vehicle_wight,kp_godown_name) VALUES ('$kpdate','$kpacc','$kprel','$kpacc_hold_name','$kp_land_owner','$kpvilage','$kp_acre','$kpmn','$kp_rogger','$kpvarity','$kprst','$kp_vwihgt','$kp_goween')");
 
         return Redirect::to('kataparchi');

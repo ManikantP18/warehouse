@@ -77,43 +77,43 @@
 </div>
 <div class="mb-3">
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="accountant">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="accountant" onchange="handleCheckbox()" data-id='1'> 
         <label class="form-check-label">Aadhar no.</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="owner">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="owner" onchange="handleCheckbox()" data-id='2'>
         <label class="form-check-label">Land Owner Name</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="field-acre">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="field-acre" onchange="handleCheckbox()" data-id='3'>
         <label class="form-check-label">Field Acre</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="phone">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="phone " onchange="handleCheckbox()" data-id='4'>
         <label class="form-check-label">Mobile Number</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="rst">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="rst" onchange="handleCheckbox()" data-id='5'>
         <label class="form-check-label">RST No.</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="lot">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="lot" onchange="handleCheckbox()" data-id='6'>
         <label class="form-check-label">LOT No.</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="gst">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="gst" onchange="handleCheckbox()" data-id='7'>
         <label class="form-check-label">GST Details</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="total">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="total" onchange="handleCheckbox()" data-id='8'>
         <label class="form-check-label">Total Amount</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="purewigth">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="purewigth" onchange="handleCheckbox()" data-id='9'>
         <label class="form-check-label">Pure Wigth</label>
     </div>
     <div class="form-check form-check-inline">
-        <input class="form-check-input column-toggle" type="checkbox" data-column="godown">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="godown" onchange="handleCheckbox()" data-id='10'>
         <label class="form-check-label">Godown Name</label>
     </div>
 </div>
@@ -210,5 +210,38 @@
             }
         });
     }
+
+    function handleCheckbox() {
+            let arr = [];
+
+            $(".checkbox-rem").each(function () {
+                if ($(this).is(":checked")) {
+                    arr.push($(this).attr('data-id'));
+                }
+            });
+
+            localStorage.setItem('purchase', JSON.stringify(arr));
+        }
+
+        $(document).ready(function () {
+            let items = JSON.parse(localStorage.getItem('purchase')) || [];
+
+            $(".checkbox-rem").each(function () {
+                if (items.includes($(this).attr('data-id'))) {
+                    $(this).prop("checked", true); 
+
+                    const colIndex = $(this).data('col');
+                        const isVisible = $(this).is(':checked');
+                        const display = isVisible ? '' : 'none';
+                        const columnClass = $(this).data('column');
+                         toggleColumn(columnClass, $(this).is(':checked'));
+                        $(`table tr`).each(function () {
+                            $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', display);
+                        });
+                }
+
+                
+            });
+        });
 </script>
 @endpush

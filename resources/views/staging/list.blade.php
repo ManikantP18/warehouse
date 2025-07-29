@@ -48,6 +48,33 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body table-border-style table-border-style">
+                     <div class="mb-3">
+                        <label><strong>Show/Hide Columns:</strong></label><br>
+                       @php
+                        $columns = [
+                            ['label' => 'Staging Id', 'index' => 0],
+                            ['label' => 'Select Lot No.', 'index' => 1],
+                            ['label' => 'Farmer Name', 'index' => 2],
+                            ['label' => 'Staging Varity', 'index' => 3],
+                            ['label' => 'Rst number', 'index' => 4],
+                            ['label' => 'Godown', 'index' => 5],
+                            ['label' => 'Stage No.', 'index' => 6],
+                            ['label' => 'No of Begs', 'index' => 7],
+                            ['label' => 'Final Weight', 'index' => 8],
+                            ['label' => 'Pay for staging', 'index' => 9],
+                            ['label' => 'Date', 'index' => 10],
+                            ['label' => 'Status', 'index' => 11],
+                            ['label' => 'Action', 'index' => 12],
+                        ];
+                    @endphp
+
+                    @foreach($columns as $col)
+                        <label class="form-check-label me-3">
+                            <input type="checkbox" class="form-check-input checkbox-rem" data-column="{{ $col['index'] }}" onchange="handleCheckbox()"> {{ $col['label'] }}
+                        </label>
+                    @endforeach
+
+                    </div>
                     <div class="table-responsive">
                         <table class="table datatable">
                             <thead>
@@ -143,5 +170,66 @@
                 window.location.href = url;
             }
         }
+         $(document).ready(function () {
+    $('.toggle-col').on('change', function () {
+        const colIndex = $(this).data('col');
+        const isVisible = $(this).is(':checked');
+        const display = isVisible ? '' : 'none';
+        $('table tr').each(function () {
+            $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', display);
+        });
+    });
+
+    // Initial checkboxes state sync (optional)
+    $('.toggle-col').each(function () {
+        const colIndex = $(this).data('col');
+        if (!$(this).is(':checked')) {
+            $('table tr').each(function () {
+                $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', 'none');
+            });
+        }
+    });
+});
+
+
+function handleCheckbox() {
+    let arr = [];
+
+    $(".checkbox-rem").each(function () {
+        if ($(this).is(":checked")) {
+            arr.push($(this).attr("data-column"));
+        }
+    });
+
+    localStorage.setItem("purchase", JSON.stringify(arr));
+}
+
+function toggleColumn(colIndex, show) {
+    const display = show ? "" : "none";
+
+    $("table tr").each(function () {
+        $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css("display", display);
+    });
+}
+
+$(document).ready(function () {
+    const items = JSON.parse(localStorage.getItem("purchase")) || [];
+
+    $(".checkbox-rem").each(function () {
+        const colIndex = $(this).attr("data-column");
+        const shouldShow = items.includes(colIndex);
+
+        $(this).prop("checked", shouldShow);
+        toggleColumn(colIndex, shouldShow);
+    });
+
+    $(".checkbox-rem").on("change", function () {
+        const colIndex = $(this).attr("data-column");
+        toggleColumn(colIndex, $(this).is(":checked"));
+        handleCheckbox();
+    });
+});
+
+
     </script>
 @endpush

@@ -123,16 +123,37 @@ class SelltoController extends Controller
             $searchVillage = $req->input('searchVillage');
             $searchname = $req->input('searchname');
             $searchowner = $req->input('searchowner');
+
+            $all = $req->input('all');
+            
+
+            if($all == 'no'){
+
+                $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
+                WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
+                AND (relational_cust_name LIKE '%$searchname%'
+                AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
+                ");
+
+            } else {
+
+                $searchData = DB::select("SELECT * FROM ladgers
+                WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
+                AND (relational_cust_name LIKE '%$searchname%'
+                AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
+                ");
+                
+            }
            
 
-            $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
-            WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
-            AND (relational_cust_name LIKE '%$searchname%'
-            AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
-            ");
+            
 
             $variety = DB::select("SELECT * FROM product_services join selled_item ON selled_item.selled_item = product_services.id join sell_to on sell_to.sell_id =  selled_item.sell_id
             WHERE sell_to.sell_account_number = '$searchVal' group by product_services.id");
+
+             $Othervariety = DB::select("SELECT * FROM product_services group by product_services.id");
+
+            
 
 
 
@@ -140,7 +161,8 @@ class SelltoController extends Controller
                 return response()->json([
                     'success' => true,
                     'data' => $searchData,
-                    'products' => $variety
+                    'products' => $variety,
+                    'otherProducts' => $Othervariety
                 ]);
             } else {
                 return response()->json([

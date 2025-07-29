@@ -222,59 +222,7 @@
 </div>
 
 </form>
-    <!-- <script>
-function searchLadger() {
-
-            let searchVal = $("#search").val();
-            let searchVillage = $("#search_village").val();
-            let searchname = $("#search_name").val();
-            $.ajax({
-            url : '{{route('sellto.search')}}',
-            type : 'GET',
-            data : {
-                searchVal : searchVal,
-                searchVillage : searchVillage,
-                searchname : searchname
-            },
-            success: function(response) {
-            if (response.success && response.data) {
-                 let data = response.data;
-
-                 console.log(data)
-
-                 let html = `
-                    <select name="sellto_farmer/other" id="sellto_farmer/other" class="form-control alwaysvisible"  onchange="selectLadger(this.value)">
-                    <option value=""> Select Farmer </option>`;
-
-                data.map((value) =>{
-
-                    html += `<option value="${value.account_id}">${value.relational_cust_name} - ${value.farm_owner_name}</option>`;
-
-                })
-
-                html += `</select>`;
-
-                $('.allfarmers').html(html);
-
-                //         $('#sellto_account_number').val(data.account_id);
-                //         $('#sellto_phone').val(data.phone_number);
-                //         $('#sellto_customer_name').val(data.relational_cust_name);
-                //         $('#sellto_acc_holder').val(data.account_holder);
-                //         $('#sellto_owner_name').val(data.farm_owner_name);
-                //         $('#sellto_village').val(data.village);
-                //         $('#sellto_gst_amount').val(data.gst_num);
-            } else {
-                alert("No matching record found.");
-            }
-        },
-        error: function(err) {
-            console.log("AJAX error:", err);
-        }
-
-        })
-        }
-        </script> -->
-
+   
 
         <script>
 
@@ -300,7 +248,7 @@ $(document).ready(function () {
 function totalCheck() {
     let from =  $("#chequerange_from").val();
     let to =    $("#chequerange_to").val();
-    let totalCheck = from - to ;
+    let totalCheck = to - from ;
     $('#total_check').val(totalCheck);
 }
 

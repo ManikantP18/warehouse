@@ -1,4 +1,4 @@
-{{ Form::open(['url' => 'kataparchi/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
+{{ Form::open(['url' => 'kataparchi/add', 'method' => 'post', 'class'=>'needs-validation','novalidate', 'onsubmit' => 'return validForm()']) }}
 <div class="modal-body">
     <h6 class="sub-title">kataparchi</h6>
     
@@ -134,7 +134,17 @@
                     <div class="form-group">
                         <label for="kp_varity" class="form-label">Variety</label>
                         <div class="form-icon-user">
-                            <select class="form-control alwaysvisible" required name="kp_varity" id="kp_varity">
+                            <select class="form-control alwaysvisible"  name="kp_varity" id="kp_varity">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="kp_other_varity" class="form-label">Other Variety</label>
+                        <div class="form-icon-user">
+                            <select class="form-control alwaysvisible"  name="kp_other_varity" id="kp_other_varity">
                             </select>
                         </div>
                     </div>
@@ -183,7 +193,7 @@
 </div>
 <div class="modal-footer">
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
-    <input type="submit" value="Create" class="btn btn-primary">
+    <input type="submit" value="Create" class="btn btn-primary" id="savebtn">
 </div>
 {{ Form::close() }}
 
@@ -251,9 +261,19 @@
 
                     response.products.forEach((variety) =>{
                         opt += `<option value="${variety.id}">${variety.name}</option>`;
-                    })
+                    });
 
                     $('#kp_varity').html(opt);
+
+
+                    let opt1 = `<option value=""> select Item </option>`;
+
+                    response.otherProducts.forEach((othervariety) =>{
+                        opt1 += `<option value="${othervariety.id}">${othervariety.name}</option>`;
+                    })
+
+                    $('#kp_other_varity').html(opt1);
+                    
 
                     $('#form-fields-wrapper').slideDown();
                 } else {
@@ -271,5 +291,33 @@
         //$('.allfarmers').hide();
     });
 
+function validForm() {
+    let mveriety = $("#kp_varity").val();
+    let overiety = $("#kp_other_varity").val();
 
+    if(mveriety == '' && overiety == '')
+    {
+        alert("Please Select At Least One Variety Or Other Variety!");
+
+        setTimeout(() => {
+
+        $("#savebtn").removeAttr("disabled");
+            
+        }, 500);
+        return false;
+    }
+
+    if(mveriety != '' && overiety != '')
+    {
+        alert("Only One Variety Or Other Variety Can Be Select!");
+        setTimeout(() => {
+
+        $("#savebtn").removeAttr("disabled");
+            
+        }, 500);
+        return false;
+    }
+
+    return true;
+}
 </script>
