@@ -16,11 +16,11 @@
     </script>
 @endpush
 @section('page-title')
-    {{ __('Manage Godown') }}
+    {{ __('Manage Company') }}
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item">{{ __('Godown') }}</li>
+    <li class="breadcrumb-item">{{ __('Company') }}</li>
 @endsection
 
 @section('action-btn')
@@ -35,8 +35,8 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-        <a href="#" data-size="xl" data-url="{{ route('branches.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Godown') }}"
+        <a href="#" data-size="xl" data-url="{{ route('company.create') }}" data-ajax-popup="true"
+            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Company') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
         </a>
@@ -52,31 +52,35 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>Branch Id</th>
-                                    <th> Branch Name</th>
+                                    <th>Company Id</th>
                                     <th> Company Name</th>
-                                    <th> Branch Phone </th>
-                                    <th> Branch Address </th>
-                                    <th> Status </th>
+                                    <th> Company Address </th>
                                     <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                            @foreach($branches AS $value):
+                            @foreach($company AS $val)
 
                                 <tr>
-                                    <td> {{ $value->branch_id }} </td>
-                                    <td> {{ $value->branch_name }} </td>
-                                    <td> {{ $value->company_name }} </td>
-                                    <td> {{ $value->branch_cont }} </td>
-                                    <td> {{ $value->branch_address }} </td>
-                                    <td> {{ $value->branch_status == 1 ? 'Active' : 'Inactive' }} </td>
-                                    <td> </td>
+                                    <td>{{$val->company_id}}</td>
+                                    <td>{{$val->company_name}}</td>
+                                    <td>{{$val->company_address}}</td>
+                                    <td>
+                                         <a href="#" data-size="xl" data-url="{{ route('company.edit', $val->company_id) }}" data-ajax-popup="true"
+                                            data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Company') }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="ti ti-pencil"></i>
+                                        </a>
+                                        <a href="javascript:void(0)" class="btn btn-sm bg-danger text-white shadow-sm" title="Delete"
+                                            onclick="removeit('{{ route('company.delete',$val->company_id) }}')">
+                                            <i class="ti ti-trash"></i>
+                                        </a>
+                                    </td>
                                </tr>
 
+                           
                             @endforeach
-                               
                             </tbody>
                         </table>
                     </div>
@@ -108,5 +112,13 @@
                 }));
             }, 2000);
         });
+
+        function removeit(url) {
+            let cnf = confirm('Are You Sure You Want To Delete This Sell?');
+            if (cnf == true) {
+                window.location.href = url;
+            }
+        }
+
     </script>
 @endpush

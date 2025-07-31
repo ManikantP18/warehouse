@@ -151,6 +151,7 @@ class PurchaseController extends Controller
     function edit($id) {
        
         $data['purchase'] = DB::select("select * from purchase where purchase_id = '$id' and is_deleted = 0");
+         $data['branches'] = DB::select("select * from branches");
          
         $data['units'] = DB::select("select * from product_service_units");
          $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
@@ -159,7 +160,7 @@ class PurchaseController extends Controller
 
         $data['products'] = DB::select("select id, name, quantity from product_services where type = 'Product' AND product_services.id NOT IN(select purchased_item from purchase_item where purchase_id = '$id' and purchased_status = 1)");
 
-        $data['allproducts'] = DB::select("select id, name, quantity from product_services where type = 'Product'");
+        $data['allproducts'] = DB::select("select * from product_services where type = 'Product'");
        // $data['items'] = DB::select("select * from product_services where type = 'Product'");
         return view('purchase/edit',$data);
     } 

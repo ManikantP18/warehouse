@@ -93,35 +93,7 @@
 
 
 
-        <!-- <div class="form-group col-md-6">
-            {{ Form::label('quantity', __('Quantity'), ['class' => 'form-label']) }}<x-required></x-required>
-            {{ Form::text('quantity', null, ['class' => 'form-control', 'required' => 'required']) }}
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <div class="btn-box">
-                    <label class="d-block form-label">{{ __('Type') }}</label>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="customRadio5" name="type"
-                                    value="Product" checked="checked" onclick="hide_show(this)">
-                                <label class="custom-control-label form-label"
-                                    for="customRadio5">{{ __('Product') }}</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="customRadio6" name="type"
-                                    value="Service" onclick="hide_show(this)">
-                                <label class="custom-control-label form-label"
-                                    for="customRadio6">{{ __('Service') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+      
 
         <input type="hidden" class="form-check-input type" id="customRadio5" name="type"
                                value="Product">

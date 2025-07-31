@@ -219,13 +219,7 @@
 
                 
 
-                <li class="dash-item {{ Request::route()->getName() == 'branches.list' ? ' active' : '' }} ">
-                        <a href="{{ route('branches.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-building-bank"></i></span>
-                            <span class="dash-mtext">Branches</span>
-                        </a>
-                </li>
-
+                
                 <li class="dash-item {{ Request::route()->getName() == 'ledger.list' ? ' active' : '' }} ">
                         <a href="{{ route('ledger.list') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-notebook"></i></span>
@@ -244,42 +238,38 @@
                    
 
 
-                     <li class="dash-item dash-hasmenu {{ Request::segment(1) == 'users' || Request::segment(1) == 'roles' || Request::segment(1) == 'permissions' ? 'active dash-trigger' : '' }}">
-    <a href="#!" class="dash-link">
-        <span class="dash-micon"><i class="ti ti-users"></i></span>
-        <span class="dash-mtext">{{ __('Sales') }}</span>
-        <span class="dash-arrow"><i data-feather="chevron-right"></i></span>
-    </a>
+                <li class="dash-item dash-hasmenu {{ Request::segment(1) == 'users' || Request::segment(1) == 'roles' || Request::segment(1) == 'permissions' ? 'active dash-trigger' : '' }}">
+                    <a href="#!" class="dash-link">
+                        <span class="dash-micon"><i class="ti ti-users"></i></span>
+                        <span class="dash-mtext">{{ __('Sales') }}</span>
+                        <span class="dash-arrow"><i data-feather="chevron-right"></i></span>
+                    </a>
 
-    <ul class="dash-submenu {{ Request::segment(1) == 'users' || Request::segment(1) == 'roles' || Request::segment(1) == 'permissions' ? 'show' : '' }}">
-        @can('manage role')
-            <li class="dash-item {{ Request::route()->getName() == 'sellto.list' ? 'active' : '' }}">
-                <a href="{{ route('sellto.list') }}" class="dash-link">
-                    <span class="dash-micon"><i class="ti ti-users"></i></span>
-                    <span class="dash-mtext">Sell To</span>
-                </a>
-            </li>
+                    <ul class="dash-submenu {{ Request::segment(1) == 'users' || Request::segment(1) == 'roles' || Request::segment(1) == 'permissions' ? 'show' : '' }}">
+                        @can('manage role')
+                            <li class="dash-item {{ Request::route()->getName() == 'sellto.list' ? 'active' : '' }}">
+                                <a href="{{ route('sellto.list') }}" class="dash-link">
+                                    <span class="dash-micon"><i class="ti ti-users"></i></span>
+                                    <span class="dash-mtext">Sell To</span>
+                                </a>
+                            </li>
 
-            <li class="dash-item {{ Request::route()->getName() == 'Sales-Return.list' ? 'active' : '' }}">
-                <a href="{{ route('Sales-Return.list') }}" class="dash-link">
-                    <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
-                    <span class="dash-mtext">Sales Return</span>
-                </a>
-            </li>
+                            <li class="dash-item {{ Request::route()->getName() == 'Sales-Return.list' ? 'active' : '' }}">
+                                <a href="{{ route('Sales-Return.list') }}" class="dash-link">
+                                    <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                                    <span class="dash-mtext">Sales Return</span>
+                                </a>
+                            </li>
 
-            <li class="dash-item {{ Request::route()->getName() == 'SellsQuatation.list' ? 'active' : '' }}">
-                <a href="{{ route('SellsQuatation.list') }}" class="dash-link">
-                    <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
-                    <span class="dash-mtext">Selles Quatation</span>
-                </a>
-            </li>
-        @endcan
-    </ul>
-</li>
-
-
-
-
+                            <li class="dash-item {{ Request::route()->getName() == 'SellsQuatation.list' ? 'active' : '' }}">
+                                <a href="{{ route('SellsQuatation.list') }}" class="dash-link">
+                                    <span class="dash-micon"><i class="ti ti-file-invoice"></i></span>
+                                    <span class="dash-mtext">Selles Quatation</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
 
 
                     <li class="dash-item {{ Request::route()->getName() == 'Rogring.list' ? ' active' : '' }} ">
@@ -294,17 +284,36 @@
                         <a href="{{ route('bankacc.list') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-credit-card"></i></span>
                             <span class="dash-mtext">Bank Account</span>
+                        </a>
+                    </li>
 
                     <li class="dash-item {{ Request::route()->getName() == 'purchase.list' ? ' active' : '' }} ">
                         <a href="{{ route('purchase.list') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-shopping-cart"></i></span>
                             <span class="dash-mtext">Purchase</span>
+                        </a>
+                    </li>
                       <li class="dash-item {{ Request::route()->getName() == 'staging.list' ? ' active' : '' }} ">
                         <a href="{{ route('staging.list') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-database"></i></span>
                             <span class="dash-mtext">Staging</span>
                         </a>
                     </li>
+
+                    <li class="dash-item {{ Request::route()->getName() == 'company.list' ? ' active' : '' }} ">
+                        <a href="{{ route('company.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-rotate-clockwise-2"></i></span>
+                            <span class="dash-mtext">Company</span>
+                        </a>
+                    </li>
+
+                    <li class="dash-item {{ Request::route()->getName() == 'branches.list' ? ' active' : '' }} ">
+                        <a href="{{ route('branches.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-building-bank"></i></span>
+                            <span class="dash-mtext">Godown</span>
+                        </a>
+                </li>
+
     
                 <!-- {{-- -------  Vendor ---------- --}}
                 @if (Gate::check('manage vender'))

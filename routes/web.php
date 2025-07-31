@@ -181,6 +181,17 @@ Route::get('/sellto/edit/{id}', 'App\Http\Controllers\SelltoController@edit')->n
 
 Route::put('/sellto/update', 'App\Http\Controllers\SelltoController@update')->name('sellto.update')->middleware('auth');
 
+Route::get('/company', 'App\Http\Controllers\CompanyController@index')->name('company.list')->middleware('auth');
+
+Route::get('/company/create', 'App\Http\Controllers\CompanyController@create')->name('company.create')->middleware('auth');
+
+Route::post('/company/add', 'App\Http\Controllers\CompanyController@add')->name('company.add')->middleware('auth');
+
+Route::get('/company/delete/{id}', 'App\Http\Controllers\CompanyController@delete')->name('company.delete')->middleware('auth');
+
+Route::get('/company/edit/{id}', 'App\Http\Controllers\CompanyController@edit')->name('company.edit')->middleware('auth');
+
+Route::post('/company/update', 'App\Http\Controllers\CompanyController@update')->name('company.update')->middleware('auth');
 
 
 Route::get('/kataparchi', 'App\Http\Controllers\KataParchiController@index')->name('kataparchi.list')->middleware('auth');

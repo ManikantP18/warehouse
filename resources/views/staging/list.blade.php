@@ -35,11 +35,6 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-        <!-- <a href="#" data-size="xl" data-url="{{ route('staging.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Staging') }}"
-            class="btn btn-sm btn-primary">
-            <i class="ti ti-plus"></i>
-        </a> -->
     </div>
 @endsection
 
@@ -70,7 +65,7 @@
 
                     @foreach($columns as $col)
                         <label class="form-check-label me-3">
-                            <input type="checkbox" class="form-check-input checkbox-rem" data-column="{{ $col['index'] }}" onchange="handleCheckbox()"> {{ $col['label'] }}
+                            <input type="checkbox" class="form-check-input checkbox-rem toggle-col" data-col="{{ $col['index'] }}" onchange="handleCheckbox()"> {{ $col['label'] }}
                         </label>
                     @endforeach
 
@@ -79,19 +74,19 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>Staging Id</th>
-                                    <th>Select Lot No.</th>
+                                    <th >Staging Id</th>
+                                    <th style="display:none">Select Lot No.</th>
                                     <th>Farmer Name</th>
-                                    <th> Staging Varity </th>
-                                    <th>Rst number</th>
+                                    <th style="display:none"> Staging Varity </th>
+                                    <th style="display:none">Rst number</th>
                                     <th> Godown </th>
-                                    <th>Stage No. </th>
-                                    <th> No of Begs </th>
-                                    <th>Final Weight</th>
-                                    <th>Pay for staging </th>
+                                    <th style="display:none">Stage No. </th>
+                                    <th style="display:none"> No of Begs </th>
+                                    <th style="display:none">Final Weight</th>
+                                    <th style="display:none">Pay for staging </th>
                                     <th>Date </th>
-                                    <th> Status </th>
-                                    <th> Action </th>
+                                    <th style="display:none"> Status </th>
+                                    <th > Action </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,34 +95,30 @@
 
                                 <tr>
                                     <td> {{ $value->staging_id}} </td>
-                                    <td> {{ $value->select_lot_no}} </td>
-                                    <td>{{ $value->farmer_name}}</td>
-                                    <td> {{ $value->name}} </td>
-                                    <td>{{ $value->rst_no}}</td>
+                                    <td style="display:none"> {{ $value->select_lot_no}} </td>
+                                    <td >{{ $value->farmer_name}}</td>
+                                    <td style="display:none"> {{ $value->name}} </td>
+                                    <td style="display:none">{{ $value->rst_no}}</td>
                                     <td> {{ $value->branch_name}} </td>
-                                     <td> {{ $value->stage_no}} </td>
-                                    <td> {{ $value->no_of_begs}} </td>
-                                    <td>{{ $value->final_weight}}</td>
-                                     <td> {{ $value->pay_for_staging}} </td>
+                                     <td style="display:none"> {{ $value->stage_no}} </td>
+                                    <td style="display:none"> {{ $value->no_of_begs}} </td>
+                                    <td style="display:none">{{ $value->final_weight}}</td>
+                                     <td style="display:none"> {{ $value->pay_for_staging}} </td>
                                       <td> {{ $value->staging_date}} </td>
-                                    <td> {{ $value->staging_status == 1 ? 'Active' : 'Inactive' }} </td>
-                            <td>
-                                       <div class="flex gap-4">
-  
-   <a href="#" data-url="{{ route('staging.edit', $value->staging_id) }}"  data-size="xl"data-ajax-popup="true" data-bs-toggle="tooltip" 
-            class="btn btn-sm btn-success">
-           <i class="ti ti-pencil"></i>
-        </a>
- 
-   {{-- ✅ Delete Button: Calls JS confirm & deletes --}}
-    <!-- <button class="btn btn-sm btn-danger" onclick="deleteit('{{ route('staging.delete', $value->staging_id) }}')" title="Delete">
-        <i class="ti ti-trash"></i>
-    </button> -->
-  
+                                    <td style="display:none"> {{ $value->staging_status == 1 ? 'Active' : 'Inactive' }} </td>
+                                    <td>
+                                            <div class="flex gap-4">
+        
+                                        <a href="#" data-url="{{ route('staging.edit', $value->staging_id) }}"  data-size="xl"data-ajax-popup="true" data-bs-toggle="tooltip" 
+                                            class="btn btn-sm btn-success">
+                                        <i class="ti ti-pencil"></i>
+                                        </a>
+                                
+                                        
 
-</div>
-                                         </td>
-                               </tr>
+                                        </div>
+                                    </td>
+                                </tr>
 
                             @endforeach
                                
@@ -141,8 +132,7 @@
 @endsection
 
 @push('script-page')
-    <script>
-        $(document).on('change', '#password_switch', function() {
+<script> $(document).on('change', '#password_switch', function() {
             if ($(this).is(':checked')) {
                 $('.ps_div').removeClass('d-none');
                 $('#password').attr("required", true);
@@ -162,15 +152,7 @@
                 }));
             }, 2000);
         });
-
-        function deleteit(url){
-            let cnt = confirm("Are you sure you want to delete this Ledger?")
-
-            if(cnt == true){
-                window.location.href = url;
-            }
-        }
-         $(document).ready(function () {
+     $(document).ready(function () {
     $('.toggle-col').on('change', function () {
         const colIndex = $(this).data('col');
         const isVisible = $(this).is(':checked');
@@ -179,57 +161,37 @@
             $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', display);
         });
     });
-
-    // Initial checkboxes state sync (optional)
-    $('.toggle-col').each(function () {
-        const colIndex = $(this).data('col');
-        if (!$(this).is(':checked')) {
-            $('table tr').each(function () {
-                $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', 'none');
-            });
-        }
-    });
 });
 
 
 function handleCheckbox() {
-    let arr = [];
+            let arr = [];
 
-    $(".checkbox-rem").each(function () {
-        if ($(this).is(":checked")) {
-            arr.push($(this).attr("data-column"));
+            $(".checkbox-rem").each(function () {
+                if ($(this).is(":checked")) {
+                    arr.push($(this).attr('data-col'));
+                }
+            });
+
+            localStorage.setItem('staging', JSON.stringify(arr));
         }
-    });
 
-    localStorage.setItem("purchase", JSON.stringify(arr));
-}
+        $(document).ready(function () {
+            let items = JSON.parse(localStorage.getItem('staging')) || [];
 
-function toggleColumn(colIndex, show) {
-    const display = show ? "" : "none";
+            $(".checkbox-rem").each(function () {
+                if (items.includes($(this).attr('data-col'))) {
+                    $(this).prop("checked", true); 
 
-    $("table tr").each(function () {
-        $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css("display", display);
-    });
-}
-
-$(document).ready(function () {
-    const items = JSON.parse(localStorage.getItem("purchase")) || [];
-
-    $(".checkbox-rem").each(function () {
-        const colIndex = $(this).attr("data-column");
-        const shouldShow = items.includes(colIndex);
-
-        $(this).prop("checked", shouldShow);
-        toggleColumn(colIndex, shouldShow);
-    });
-
-    $(".checkbox-rem").on("change", function () {
-        const colIndex = $(this).attr("data-column");
-        toggleColumn(colIndex, $(this).is(":checked"));
-        handleCheckbox();
-    });
-});
-
-
-    </script>
+                    const colIndex = $(this).data('col');
+                        const isVisible = $(this).is(':checked');
+                        const display = isVisible ? '' : 'none';
+                        $(`table tr`).each(function () {
+                            $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', display);
+                        });
+                }
+            });
+        });
+</script>
 @endpush
+

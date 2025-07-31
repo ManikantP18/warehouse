@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-3">
+                <div class="col-md-6 m-auto">
                     <div class="form-group">
                         <label class="form-label d-none d-sm-block">&nbsp;</label>
                         <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>

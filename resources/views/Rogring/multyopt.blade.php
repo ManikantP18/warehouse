@@ -4,19 +4,6 @@
             {{ Form::select('ladger_id[]', $farmers, null, ['class' => 'form-control select2', 'id' => 'choices-multiple1', 'multiple', 'required' => 'required']) }}
 
 
-            <div class="form-group">
-    {{ Form::label('ladger_id', __('Select Ledgers'), ['class' => 'form-label']) }}
-    <x-required />
-
-    {{ Form::select('ladger_id[]', $farmers, null, [
-        'class' => 'form-control select2',
-        'id' => 'choices-multiple1',
-        'multiple' => 'multiple',
-        'required' => 'required'
-    ]) }}
-</div>
-
-
             <!-- Warning Section Ends -->
 <!-- Required Js -->
 <script src="{{asset('js/jquery.min.js')}}"></script>

@@ -3,39 +3,6 @@
 
     <div class="row">
 
-            <!-- <div class="col-lg-3 col-md-3 col-sm-12">
-      <div class="form-group">
-        <label for="search" class="form-label">Account/Mobile No</label>
-        <div class="form-icon-user">
-          <input class="form-control onlyforformesrs"  name="search" type="text" id="search" placeholder="Acc No / Mobile No">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-12">
-      <div class="form-group">
-        <label for="search_name" class="form-label">Farmer Name</label>
-        <div class="form-icon-user">
-          <input class="form-control onlyforformesrs"  name="search_name" type="text" id="search_name" placeholder="Farmer Name">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-12">
-      <div class="form-group">
-        <label for="search_village" class="form-label">Village Name</label>
-        <div class="form-icon-user">
-          <input class="form-control onlyforformesrs"  name="search_village" type="text" id="search_village" placeholder="Village Name">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-12">
-      <div class="form-group">
-        <label class="form-label d-none d-sm-block">&nbsp;</label>
-        <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
-      </div>
-    </div> -->
 
     
             <div class="col-lg-12 col-md-12 col-sm-12">
