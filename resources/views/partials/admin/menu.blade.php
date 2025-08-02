@@ -300,7 +300,15 @@
                         </a>
                     </li>
 
-                    <li class="dash-item {{ Request::route()->getName() == 'packing.list' ? ' active' : '' }} ">
+                   
+                    <li class="dash-item {{ Request::route()->getName() == 'gredding.list' ? ' active' : '' }} ">
+                        <a href="{{ route('gredding.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-database"></i></span>
+                            <span class="dash-mtext">Gredding</span>
+                        </a>
+                    </li>
+
+                     <li class="dash-item {{ Request::route()->getName() == 'packing.list' ? ' active' : '' }} ">
                         <a href="{{ route('packing.list') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-database"></i></span>
                             <span class="dash-mtext">Packing</span>
@@ -333,7 +341,7 @@
                 @endif
 
                 {{-- -------  Proposal ---------- --}}
-                <!-- @if (Gate::check('manage proposal'))
+                <! @if (Gate::check('manage proposal'))
 <li class="dash-item {{ Request::segment(1) == 'proposal' ? 'active' : '' }}">
                         <a href="{{ route('proposal.index') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-receipt"></i></span>

@@ -16,11 +16,11 @@
     </script>
 @endpush
 @section('page-title')
-    {{ __('Manage Packing') }}
+    {{ __('Manage Gredding') }}
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item">{{ __('Packing') }}</li>
+    <li class="breadcrumb-item">{{ __('Gredding') }}</li>
 @endsection
 
 @section('action-btn')
@@ -35,7 +35,7 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-        
+       
     </div>
 @endsection
 
@@ -48,50 +48,61 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>Packing Date</th>
-                                    <th>Farmer Name</th>
-                                    <th>Land Owner</th>
-                                    <th> Packing Godown </th>
-                                    <th> Gredded quantity </th>
-                                    <th> Packing total bag </th>
-                                    <th> Pay for packing </th>
-                                    <th>rst no.</th>
-                                    <th>packing verity</th>
-                                    <th>stage no.</th>
-                                    <th>final weight</th>
+                                    <th>Gredding Id</th>
+                                    <th>Farmar Name</th>
+                                    <th>Land Owner name</th>
+                                    <th>Select Lot No.</th>
+                                    <th> Gredding Varity </th>
+                                    <th> Godown </th>
+                                    <th>Stage No. </th>
+                                    <th>Final Waigth</th>
+                                    <th> No of Begs </th>
+                                    <th> Gredded  Quantity </th>
+                                    <th> Undersize Quantity </th>
+                                    <th>Pay for staging </th>
+                                    <th>Date </th>
+                                    <th> Status </th>
                                     <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                            
-
-                                @foreach($packing AS $value):
+                            @foreach($gredding AS $value):
 
                                 <tr>
-                                    <td> {{ $value->packing_date }} </td>
-                                    <td> {{ $value->farmer_name }} </td>
-                                    <td> {{ $value->land_owner }} </td>
-                                    <td> {{ $value->branch_name }} </td>
-                                    <td> {{ $value->packing_gredded_quantity }} </td>
-                                    <td> {{ $value->packing_no_of_begs }} </td>
-                                    <td> {{ $value->packing_pay }} </td>
-                                    <td> {{ $value->rst_no }} </td>
-                                    <td> {{ $value->name }} </td>
-                                     <td> {{ $value->packing_stage_no }} </td>
-                                    <td> {{ $value->final_weight }} </td>
-                                    <td>  
-                                        <a href="#" data-size="xl" data-url="{{ route('packing.edit', $value->packing_id) }}" data-ajax-popup="true"
-                                            data-bs-toggle="tooltip" title="{{ __('Edit') }}" data-title="{{ __('Edit Packing') }}"
-                                            class="btn btn-sm btn-primary">
-                                            <i class="ti ti-pencil"></i>
-                                        </a>
-                                    </td>
+                                    <td> {{ $value->gredding_id}} </td>
+                                    <td> {{ $value->farmar_name}} </td>
+                                    <td> {{ $value->land_owner}} </td>
+
+                                    <td> {{ $value->gredding_lot_no}} </td>
+                                    <td> {{ $value->gredding_verity}} </td>
+                                    <td> {{ $value->gredding_godown}} </td>
+                                    <td> {{ $value->gred_stage_no}} </td>
+                                    <td> {{ $value->final_waigth}} </td>
+
+                                    <td> {{ $value->gred_no_begs}} </td>
+                                    <td> {{ $value->gredded_quantity}} </td>
+                                    <td> {{ $value->undersize_quantity}} </td>
+                                     <td> {{ $value->pay_gredding}} </td>
+                                      <td> {{ $value->gredding_date}} </td>
+                                    <td> {{ $value->gredding_status == 1 ? 'Active' : 'Inactive' }} </td>
+                                <td>
+                                    <div class="d-flex">
+                                            
+                                        <a href="#" data-size="xl"
+                                                data-url="{{ route('gredding.edit', $value->gredding_id) }}"
+                                                data-ajax-popup="true"
+                                                 data-title="{{ __('Edit gredding') }}"
+                                                 
+                                                 class="btn btn-sm btn-primary me-2"
+                                                data-bs-toggle="tooltip" title="{{ __('Edit')}}">
+                                                <i class="ti ti-pencil"></i>
+                                            </a> 
+                                    </div>
+                                </td>
                                </tr>
 
                             @endforeach
-
-                            
                                
                             </tbody>
                         </table>
@@ -124,5 +135,13 @@
                 }));
             }, 2000);
         });
+
+         function deleteit(url){
+           let cnt = confirm("Are you sure you want to delete this Ledger?")
+
+            if(cnt == true){
+                 window.location.href = url;
+             }
+         }
     </script>
 @endpush

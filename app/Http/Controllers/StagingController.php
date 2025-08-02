@@ -53,7 +53,7 @@ class StagingController extends Controller
     function edit($id){
          $data['staging'] = DB::select("select * from staging join product_services on product_services.id = staging.staging_varity where staging_id = '$id'");
           $data['branch'] = DB::select("select * from branches where branch_status = 1");
-      ///   print_r($data);
+     
         return view('staging/edit',$data);
     }
 
