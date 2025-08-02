@@ -75,6 +75,8 @@ class StagingController extends Controller
 
        DB::update("update staging set select_lot_no = '$select_lot_no' ,staging_varity = '$staging_varity',godown = '$godown',stage_no = '$stage_no',no_of_begs = '$no_of_begs',pay_for_staging = '$pay_for_staging',staging_date = '$staging_date' ,rst_no = '$rst' ,farmer_name = '$farmer_name' ,final_weight = '$final_weight'  where staging_id = '$staging_id'");
 
+       
+
 
         return Redirect::to('/staging')->with('success', 'Staging edit Successfully');
     }
