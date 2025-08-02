@@ -133,6 +133,16 @@
           </div>
         </div>
 
+        <div class="form-group col-md-6">
+            <label for="company_id" class="form-label">Company Name</label>
+            <select name="company_id" id="company_id" class="form-control select" required>
+                 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}" {{ $value->company_id == $purchase[0]->company_id ? 'selected' : ''}}>{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Account Number</label>
@@ -490,124 +500,91 @@ function autofill(id) {
   }*/
 
     function handleChage(rid) {
+  let all = JSON.parse($("#allproductsinfo").val());
+  let allunits = JSON.parse($("#allunitsinfo").val());
 
-      let all = JSON.parse($("#allproductsinfo").val());
+  let pid = $("#purchase_item_" + rid).val();
+  let qty = parseFloat($("#purchase_quantity_" + rid).val());
 
-      let allunits = JSON.parse($("#allunitsinfo").val());
+  let selectedUnitName = $("#purchase_unit_" + rid + " option:selected").text().trim();
+  let prevUnitShort = $("#prev_unit_" + rid).val(); // old unit short name
 
-    let pid = $("#purchase_item_"+rid).val();
-    let qty = $("#purchase_quantity_"+rid).val();
-    let uid = $("#purchase_unit_" + rid + " option:selected").text();
+  let currentUnitShort = ''; // selected unit short name
+  let firstUnitShort = '';
+  let secondUnitShort = '';
 
-    let pushort = $("#prev_unit_" + rid).val();
-    console.log(pushort)
-    let cushort = '';
+  let firstUnitValue = 0;
+  let secondUnitValue = 0;
 
-    let secQty = '';
+  let secQty = '';
 
-    all.forEach((val) => {
-
-      var first_unit_val = val.first_unit_val;
-      var sec_unit_val = val.second_unit_val;
-
-      var first_unit = val.unit_id;
-      var sec_unit = val.sec_unit_id;
-
-      let funit, sunit = '';
-
-      if(val.id == pid){
-
-    allunits.forEach(ut => {
-
-      if(ut.name == uid){
-
-        cushort = ut.short_unit;
-
-      }
-      
-    });
-
-   allunits.forEach(ut => {
-
-      if(ut.id == first_unit){
-
-        funit = ut.short_unit;
-
-      }
-
-      if(ut.id == sec_unit){
-
-        sunit = ut.short_unit;
-        console.log('changing....',pushort)
-
-      }
-      
-    });
-
-    if(funit == 'bag' || sunit == 'bag'){
-
-      console.log(' selected unit = ', pushort)
-      console.log("second unit val = ",sec_unit_val)
-
-      if(pushort == 'kg' && (funit == 'kw' || sunit == 'kw')){
-       secQty = ((qty/100) * sec_unit_val)+' bag';   
-      } else if(pushort == 'kg'){
-        secQty = (qty/first_unit_val)+' bag';
-      } else if(pushort == 'kw'){
-       secQty = (100 / first_unit_val)+' bag';   
-      }
-
-      $("#other_qty_val").html(secQty)
-
-      $("#prev_unit_" + rid).val(cushort)
-
-      return true;
+  // Step 1: Find short name of current unit (selected)
+  allunits.forEach(ut => {
+    if (ut.name.trim() === selectedUnitName) {
+      currentUnitShort = ut.short_unit;
     }
-
-      if(pushort != cushort){
-
-        switch (`${cushort}-${pushort}`.trim()) {
-          case 'kg-kw':
-          secQty = (qty / 100)+' '+ pushort;
-          break;
-          case 'kw-kg':
-            console.log('quantity = ',qty)
-            secQty = (qty * 100)+' '+ pushort;
-            break;
-          case 'kg-bag':
-            secQty = (qty / sec_unit_val)+' '+ pushort;
-            break;
-          case 'bag-kg':
-            secQty = (qty * first_unit_val)+' '+ pushort;
-            break;
-          case 'bag-kw':
-            secQty = ((qty * first_unit_val)/100)+' '+ pushort;
-            break;
-          case 'kw-bag':
-            secQty = ((qty * 100)/first_unit_val)+' '+ pushort;
-            break;
-          default:
-            console.log(qty+' '+pushort);
-      }
-
-    }
-
-  }
-
   });
 
-  console.log('DEBUG:', {
-  cushort,
-  pushort,
-  switchCase: `${cushort}-${pushort}`
-});
+  // Step 2: Loop through all products to find selected one
+  all.forEach((product) => {
+    if (product.id == pid) {
+      firstUnitValue = parseFloat(product.first_unit_val);
+      secondUnitValue = parseFloat(product.second_unit_val);
 
-  alert(secQty)
+      // First & second unit IDs
+      let firstUnitId = product.unit_id;
+      let secondUnitId = product.sec_unit_id;
 
-  $("#other_qty_val").html(secQty)
+      // Get short names of product's first & second units
+      allunits.forEach(ut => {
+        if (ut.id == firstUnitId) {
+          firstUnitShort = ut.short_unit;
+        }
+        if (ut.id == secondUnitId) {
+          secondUnitShort = ut.short_unit;
+        }
+      });
 
-  $("#prev_unit_" + rid).val(cushort)
+      // 🔄 Step 3: Check if bag involved
+      if (firstUnitShort === 'bag' || secondUnitShort === 'bag') {
+        console.log('Bag logic triggered');
+
+        if (currentUnitShort === 'kg' && (firstUnitShort === 'bag' || secondUnitShort === 'bag')) {
+          secQty = (qty / firstUnitValue).toFixed(2) + ' bag';
+        } else if (currentUnitShort === 'kw' && (firstUnitShort === 'bag' || secondUnitShort === 'bag')) {
+          let kg = qty * 100;
+          secQty = (kg / firstUnitValue).toFixed(2) + ' bag';
+        } else if (currentUnitShort === 'bag' && (firstUnitShort === 'kg' || secondUnitShort === 'kg')) {
+          secQty = (qty * firstUnitValue).toFixed(2) + ' kg';
+        } else if (currentUnitShort === 'bag' && (firstUnitShort === 'kw' || secondUnitShort === 'kw')) {
+          let kg = qty * firstUnitValue;
+          secQty = (kg / 100).toFixed(2) + ' kw';
+        }
+      } else {
+        // 🔄 Step 4: Fallback conversion using switch
+        if (currentUnitShort !== prevUnitShort) {
+          switch (`${currentUnitShort}-${prevUnitShort}`) {
+            case 'kg-kw':
+              secQty = (qty / 100).toFixed(2) + ' kw';
+              break;
+            case 'kw-kg':
+              secQty = (qty * 100).toFixed(2) + ' kg';
+              break;
+            default:
+              secQty = qty + ' ' + currentUnitShort;
+              break;
+          }
+        }
+      }
     }
+  });
+
+  // Step 5: Show result
+  console.log('Converted Qty:', secQty);
+  $("#other_qty_val").html(secQty);
+  $("#prev_unit_" + rid).val(currentUnitShort); // update old unit
+}
+
 
 
 </script>

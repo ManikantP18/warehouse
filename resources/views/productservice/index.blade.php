@@ -79,6 +79,7 @@
                                 <th>{{__('Sale Price')}}</th>
                                 <th>{{__('Purchase Price')}}</th>
                                 <th>{{__('Tax')}}</th>
+                                <th>{{__('Company Name')}}</th>
                                 <th>{{__('Category')}}</th>
                                 <th>{{__('Primary Unit')}}</th>
                                 <th>{{__('Secondary Unit')}}</th>
@@ -105,6 +106,7 @@
                                             -
                                         @endif
                                     </td>
+                                    <td>{{  $productService->company_name }}</td>
                                     <td>{{ !empty($productService->category)?$productService->category->name:'' }}</td>
                                     <td>{{ !empty($productService->unit)?$productService->unit->name:'' }}</td>
                                     <td>{{ !empty($newunitearr) && isset($newunitearr[$productService->sec_unit_id])? $newunitearr[$productService->sec_unit_id]:'' }}</td>

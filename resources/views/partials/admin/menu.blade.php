@@ -293,10 +293,17 @@
                             <span class="dash-mtext">Purchase</span>
                         </a>
                     </li>
-                      <li class="dash-item {{ Request::route()->getName() == 'staging.list' ? ' active' : '' }} ">
+                    <li class="dash-item {{ Request::route()->getName() == 'staging.list' ? ' active' : '' }} ">
                         <a href="{{ route('staging.list') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-database"></i></span>
                             <span class="dash-mtext">Staging</span>
+                        </a>
+                    </li>
+
+                    <li class="dash-item {{ Request::route()->getName() == 'packing.list' ? ' active' : '' }} ">
+                        <a href="{{ route('packing.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-database"></i></span>
+                            <span class="dash-mtext">Packing</span>
                         </a>
                     </li>
 

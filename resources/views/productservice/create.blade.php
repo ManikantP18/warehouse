@@ -97,6 +97,16 @@
 
         <input type="hidden" class="form-check-input type" id="customRadio5" name="type"
                                value="Product">
+
+         <div class="form-group col-md-6">
+            <label for="unit_id" class="form-label">Company Name</label>
+            <select name="company_id" id="company_id" class="form-control select" required>
+                <option value="">Select Company Name</option> 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
                                
         <div class="form-group col-md-12">
             {{ Form::label('description', __('Description'), ['class' => 'form-label']) }}

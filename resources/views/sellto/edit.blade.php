@@ -98,6 +98,16 @@
       </div>
     </div>
 
+    <div class="form-group col-md-6">
+            <label for="company_id" class="form-label">Company Name</label>
+            <select name="company_id" id="company_id" class="form-control select" required>
+                 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}" {{ $value->company_id == $sellto[0]->company_id ? 'selected' : ''}}>{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
     <!-- Multy Products Sells -->
 
      @for($i = 0; $i < count($selleditems); $i++)

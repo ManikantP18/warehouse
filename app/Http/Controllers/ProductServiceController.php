@@ -26,9 +26,9 @@ class ProductServiceController extends Controller
             $category->prepend('Select Category', '');
 
             if (!empty($request->category)) {
-                $productServices = ProductService::with(['unit', 'category', 'taxes'])->where('created_by', '=', \Auth::user()->creatorId())->where('category_id', $request->category)->orderBy('created_at', 'desc')->get();
+                $productServices = ProductService::with(['unit', 'category', 'taxes'])->join('company', 'company.id', '=', 'product_services.company_id')->where('created_by', '=', \Auth::user()->creatorId())->where('category_id', $request->category)->orderBy('created_at', 'desc')->get();
             } else {
-                $productServices = ProductService::with(['unit', 'category', 'taxes'])->where('created_by', '=', \Auth::user()->creatorId())->orderBy('created_at', 'desc')->get();
+                $productServices = ProductService::with(['unit', 'category', 'taxes'])->join('company', 'company.company_id', '=', 'product_services.company_id')->where('created_by', '=', \Auth::user()->creatorId())->orderBy('created_at', 'desc')->get();
 
 
             }
@@ -99,11 +99,13 @@ class ProductServiceController extends Controller
                 ->where('chart_of_accounts.created_by', \Auth::user()->creatorId())
                 ->get()
                 ->toArray();
+                $company = DB::select("select * from company where company_status = 1 and is_deleted = 0");
 
-            return view('productservice.create', compact('category', 'unit', 'tax', 'customFields', 'incomeChartAccounts', 'incomeSubAccounts', 'expenseChartAccounts', 'expenseSubAccounts'));
+            return view('productservice.create', compact('category', 'unit', 'tax', 'customFields', 'incomeChartAccounts', 'incomeSubAccounts', 'expenseChartAccounts', 'expenseSubAccounts','company'));
         } else {
             return response()->json(['error' => __('Permission denied.')], 401);
         }
+        
     }
 
 
@@ -140,7 +142,7 @@ class ProductServiceController extends Controller
             $productService->sec_unit_id        = $request->sec_unit;
            $productService->first_unit_val = $request->first_unit;
             $productService->second_unit_val = $request->second_unit;
-
+            $productService->company_id = $request->company_id;
             
             $productService->quantity   = 0;
             
@@ -210,7 +212,9 @@ class ProductServiceController extends Controller
                     ->get()
                     ->toArray();
 
-                return view('productservice.edit', compact('category', 'unit', 'tax', 'productService', 'customFields', 'incomeChartAccounts', 'incomeSubAccounts', 'expenseChartAccounts', 'expenseSubAccounts'));
+                     $company = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
+                return view('productservice.edit', compact('category', 'unit', 'tax', 'productService', 'customFields', 'incomeChartAccounts', 'incomeSubAccounts', 'expenseChartAccounts', 'expenseSubAccounts','company'));
             } else {
                 return response()->json(['error' => __('Permission denied.')], 401);
             }
@@ -250,6 +254,7 @@ class ProductServiceController extends Controller
                 $productService->tax_id         = !empty($request->tax_id) ? implode(',', $request->tax_id) : '';
                 $productService->unit_id        = $request->unit_id;
                 $productService->category_id    = $request->category_id;
+                $productService->company_id    = $request->company_id;
                 $productService->created_by     = \Auth::user()->creatorId();
                 $productService->save();
                 CustomField::saveData($productService, $request->customField);

@@ -114,6 +114,16 @@
           </div>
         </div>
 
+        <div class="form-group col-md-6">
+            <label for="company_id" class="form-label">Company Name</label>
+            <select name="company_id" id="company_id" class="form-control select" required>
+                <option value="">Select Company Name</option> 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
        <!-- Product Items Wrapper -->
 <div id="item-wrapper">
   <!-- Initial Product Row -->

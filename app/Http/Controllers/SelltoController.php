@@ -13,7 +13,7 @@ use DB;
 class SelltoController extends Controller
 {
     public function index(){
-        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname  from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name where sell_to = 'farmer' and sell_to.is_deleted = 0 order by sell_id DESC");
+        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to = 'farmer' and sell_to.is_deleted = 0 order by sell_id DESC");
         return view('sellto/list',$data);
 
     }
@@ -27,7 +27,7 @@ class SelltoController extends Controller
 
         $data['units'] = DB::select("select * from product_service_units");
 
-        
+        $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
        
         return view('sellto/create',$data);
     }
@@ -67,6 +67,7 @@ class SelltoController extends Controller
         $creditamm = $req->input('sellto_Credit_amount');
         $remainamm = $req->input('sellto_Remaining_amount');
         $bank_name = $req->input('bank_name');
+        $comp_id = $req->input('company_id');
 
 
         $total = $req->input('sellto_total_amount');
@@ -85,6 +86,7 @@ class SelltoController extends Controller
             'credit_amount'       => $creditamm,
             'remaining_amount'    => $remainamm,
             'bank_name'           => $bank_name,
+            'company_id'          => $comp_id
         ]);
 
         $itemselled = $req->input('sellto_item_selled');
@@ -96,11 +98,13 @@ class SelltoController extends Controller
          $lotno = $req->input('purchase_lot_no');
 
 
+
+
          for($i=0; $i<count($itemselled); $i++){
 
             if(!empty($itemselled[$i]) && !empty($rate[$i])){
 
-                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,selled_lot_no,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$lotno'[$i],'$lastId')");
+                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,selled_lot_no,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$lotno[$i]','$lastId')");
 
             }
 
@@ -196,6 +200,8 @@ class SelltoController extends Controller
         $data['products'] = DB::select("select id, name, quantity from product_services where type = 'Product' AND product_services.id NOT IN(select selled_item from selled_item where sell_id = '$id' and selled_status = 1)");
 
         $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
+
+         $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
          
         return view('sellto/edit',$data);
     } 
@@ -218,9 +224,10 @@ class SelltoController extends Controller
         $creditamm = $req->input('sellto_Credit_amount');
         $remainamm = $req->input('sellto_Remaining_amount');
          $id = $req->input('sell_id');
+         $cid = $req->input('company_id');
 
 
-        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',sell_total_ammount = '$total' , cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
+        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',sell_total_ammount = '$total' ,company_id = '$cid', cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
 
         $itemselled = $req->input('sellto_item_selled');
          $quantity = $req->input('sellto_quantity');

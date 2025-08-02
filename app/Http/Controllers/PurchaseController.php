@@ -12,7 +12,7 @@ use DB;
 class PurchaseController extends Controller
 {
     function index() {
-         $data['purchase'] = DB::select("select * from purchase where purchase_status = 1 AND is_deleted = 0 AND is_hide = 0 order by purchase_id DESC");
+         $data['purchase'] = DB::select("select * from purchase left join company on company.company_id = purchase.company_id where purchase_status = 1 AND purchase.is_deleted = 0 AND is_hide = 0 order by purchase_id DESC");
         return view('purchase/list',$data);
     }
 
@@ -20,7 +20,7 @@ class PurchaseController extends Controller
         $data['products'] = DB::select("select id, name, quantity from product_services where type = 'Product'");
         $data['units'] = DB::select("select * from product_service_units");
         //  $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
-         
+          $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
         return view('purchase/create',$data);
     }
     function add(Request $req){
@@ -40,6 +40,7 @@ class PurchaseController extends Controller
         $purchase_gst_no = $req->input('purchase_gst_no');
         $purchase_to = $req->input('purchase_to');
        $purchase_total = $req->input('purchase_total');
+        $comp_id = $req->input('company_id');
 
 //      $pure_wigth = $req->input('pure_wigth');
 
@@ -62,7 +63,8 @@ class PurchaseController extends Controller
             'purchase_branch' => $purchase_branch,
             'purchase_gst_no' => $purchase_gst_no,
             'purchase_to' => $purchase_to,
-            'purchase_total' => $sum_total
+            'purchase_total' => $sum_total,
+            'company_id'     => $comp_id
         ]);
 
                  $purchase_item = $req->input('purchase_item');
@@ -152,7 +154,7 @@ class PurchaseController extends Controller
        
         $data['purchase'] = DB::select("select * from purchase where purchase_id = '$id' and is_deleted = 0");
          $data['branches'] = DB::select("select * from branches");
-         
+          $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
         $data['units'] = DB::select("select * from product_service_units");
          $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
 
@@ -187,10 +189,11 @@ class PurchaseController extends Controller
         $purchase_total = $req->input('purchase_total');
         $purchase_item = $req->input('purchase_item');
         $sum_total = array_sum($purchase_total);
+        $cid = $req->input('company_id');
 
         
         
-        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to' , purchase_total = '$sum_total',godown = '$godown', is_hide = '1' WHERE purchase_id = '$id'");
+        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to',company_id = '$cid' , purchase_total = '$sum_total',godown = '$godown', is_hide = '1' WHERE purchase_id = '$id'");
 
         $today = date('Y-m-d H:i:s');
 

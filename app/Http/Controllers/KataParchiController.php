@@ -161,7 +161,7 @@ class KataParchiController extends Controller
         'godown' => $kp_goween,
     ]);
 
-    $unit = DB::select("select * from product_service_units where name ='kw'");
+    $unit = DB::select("select * from product_service_units where short_unit ='kw'");
 
     $punit = 2;
     if (!empty($unit)){

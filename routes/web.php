@@ -124,6 +124,11 @@ Route::get('/staging/edit/{id}', 'App\Http\Controllers\StagingController@edit')-
 Route::put('/staging/edit/', 'App\Http\Controllers\StagingController@update')->name('staging.update')->middleware('auth');
 
 
+Route::get('/packing', 'App\Http\Controllers\PackingController@index')->name('packing.list')->middleware('auth');
+Route::get('/packing/edit/{id}', 'App\Http\Controllers\PackingController@edit')->name('packing.edit')->middleware('auth');
+Route::put('/packing/update/', 'App\Http\Controllers\PackingController@update')->name('packing.update')->middleware('auth');
+
+
 Route::get('/bankacc', 'App\Http\Controllers\BankController@index')->name('bankacc.list')->middleware('auth');
 
 Route::get('/bankacc/create', 'App\Http\Controllers\BankController@create')->name('bankacc.create')->middleware('auth');

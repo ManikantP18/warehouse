@@ -94,6 +94,7 @@
                                 <th style="display:none"> bank name </th>
                                 <th style="display:none"> Remaining Amount </th>
                                 <th >Mode of Invoice</th>
+                                <th > Company Name </th>
                                 <th>action</th>
                             </tr>
                         </thead>
@@ -112,6 +113,7 @@
                                     <td style="display:none">{{ $value->branchname }}</td>
                                     <td style="display:none">{{ $value->remaining_amount }}</td>
                                     <td >{{ $value->sell_way }}</td>
+                                    <td >{{ $value->company_name }}</td>
                                     <td>
                                         <a href="#" data-size="xl" data-url="{{ route('sellto.edit', $value->sell_id) }}" data-ajax-popup="true"
                                             data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Sells') }}"

@@ -116,6 +116,10 @@
         <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="godown" onchange="handleCheckbox()" data-id='10'>
         <label class="form-check-label">Godown Name</label>
     </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input column-toggle checkbox-rem" type="checkbox" data-column="company" onchange="handleCheckbox()" data-id='11'>
+        <label class="form-check-label">Company Name</label>
+    </div>
 </div>
 <div class="table-responsive mt-2" id="purchasetable">
     <table class="table datatable">
@@ -135,6 +139,7 @@
                 <th class="total optional-column">Total Amount</th>
                 <th class="purewigth optional-column">Pure Wigth</th>
                 <th class="godown optional-column">Godown Name</th>
+                <th class="company optional-column">Company Name</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -155,6 +160,7 @@
                     <td class="total optional-column">{{ $value->purchase_total }}</td>
                      <td class="purewigth optional-column">{{ $value->pure_wigth }}</td>
                      <td class="godown optional-column">{{ $value->godown }}</td>
+                      <td class="company optional-column">{{ $value->company_name }}</td>
                     <td>
                         <a href="#" data-size="xl" data-url="{{ route('purchase.edit', $value->purchase_id) }}" data-ajax-popup="true"
                             data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Purchase') }}"
