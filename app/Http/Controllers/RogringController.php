@@ -10,12 +10,15 @@ use Illuminate\Support\Facades\DB;
 class RogringController extends Controller
 {
     public function index(){
-        $data['rogring'] = DB::select('select * from rogring JOIN ladgers ON ladgers.ladger_id  = rogring.ledgers WHERE Rogring_status = 1');
+        $data['rogring'] = DB::select('select *, users.name AS Rogring_name from rogring JOIN ladgers ON ladgers.ladger_id  = rogring.ledgers JOIN users ON users.id = rogring.Rogring_name WHERE Rogring_status = 1');
         return view('Rogring/list',$data);
     }
 
     function create(){
-        return view('Rogring/create');
+
+        $data['persons'] = DB::select('select * from users  WHERE type = "rowgrowing"');
+
+        return view('Rogring/create',$data);
     }  
 
     public function add(Request $req)
@@ -76,8 +79,8 @@ public function search(Request $req)
             $searchVal = $req->input('searchVal'); // Account No or Mobile No
             $searchVillage = $req->input('searchVillage');
             $searchname = $req->input('searchname');
+            $searchowner = $req->input('searchowner');
 
-           
 
            /* $searchData = DB::select("SELECT ladger_id,relational_cust_name FROM ladgers
             WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
@@ -88,17 +91,18 @@ public function search(Request $req)
                // $tax          = Tax::where('account_id', 'LIKE','%'.$searchVal.'%')->orwhere('phone_number', 'LIKE','%'.$searchVal.'%')->where('relational_cust_name', 'LIKE','%'.$searchname.'%')->where('relational_cust_name', 'LIKE','%'.$searchname.'%')->get()->pluck('name', 'id');
 
                $searchData = DB::table('ladgers')
-    ->select('ladger_id', 'relational_cust_name')
-    ->where(function ($query) use ($searchVal) {
-        $query->where('account_id', 'LIKE', "%$searchVal%")
-              ->orWhere('phone_number', 'LIKE', "%$searchVal%");
-    })
-    ->where('relational_cust_name', 'LIKE', "%$searchname%")
-    ->where('village', 'LIKE', "%$searchVillage%")
-    ->pluck('relational_cust_name', 'ladger_id') // This gives associative array: [id => name]
-    ->toArray(); // Convert collection to array
+                ->select('ladger_id', DB::raw("CONCAT(relational_cust_name, ' - ', farm_owner_name) AS relational_cust_name"))
+                ->where(function ($query) use ($searchVal) {
+                    $query->where('account_id', 'LIKE', "%$searchVal%")
+                        ->orWhere('phone_number', 'LIKE', "%$searchVal%");
+                })
+                ->where('relational_cust_name', 'LIKE', "%$searchname%")
+                ->where('village', 'LIKE', "%$searchVillage%")
+                ->where('farm_owner_name', 'LIKE', "%$searchowner%")
+                ->pluck('relational_cust_name', 'ladger_id') // This gives associative array: [id => name]
+                ->toArray(); // Convert collection to array
 
-            $farmers = [];
+                    $farmers = [];
 
             foreach($searchData as $key=>$values){
                 $farmers[$key] = $values;

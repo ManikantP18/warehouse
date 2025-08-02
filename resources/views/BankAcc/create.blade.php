@@ -1,42 +1,8 @@
 {{ Form::open(['url' => 'bankacc/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
-    <h6 class="sub-title">Branches Creation</h6>
 
     <div class="row">
 
-            <!-- <div class="col-lg-3 col-md-3 col-sm-12">
-      <div class="form-group">
-        <label for="search" class="form-label">Account/Mobile No</label>
-        <div class="form-icon-user">
-          <input class="form-control onlyforformesrs"  name="search" type="text" id="search" placeholder="Acc No / Mobile No">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-12">
-      <div class="form-group">
-        <label for="search_name" class="form-label">Farmer Name</label>
-        <div class="form-icon-user">
-          <input class="form-control onlyforformesrs"  name="search_name" type="text" id="search_name" placeholder="Farmer Name">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-12">
-      <div class="form-group">
-        <label for="search_village" class="form-label">Village Name</label>
-        <div class="form-icon-user">
-          <input class="form-control onlyforformesrs"  name="search_village" type="text" id="search_village" placeholder="Village Name">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-12">
-      <div class="form-group">
-        <label class="form-label d-none d-sm-block">&nbsp;</label>
-        <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
-      </div>
-    </div> -->
 
     
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -98,6 +64,22 @@
     </div>
 </div>
 
+ <!-- Opening Bal -->
+<div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="form-group">
+        <label for="account_num" class="form-label">Opening Balance</label>
+        <div class="form-icon-user">
+            <input class="form-control alwaysvisible" 
+                   name="opening_bal" 
+                   type="number" 
+                   id="opening_bal" 
+                   required 
+              
+                   title="Enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9" value="0">
+        </div>
+    </div>
+</div>
+
 
 <!-- Account Type -->
 <div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs">
@@ -115,6 +97,7 @@
                 <option value="LOAN">LOAN</option>
                 <option value="SAVING">SAVING</option>
                 <option value="WHR">WHR</option>
+                <option value="OTHER">OTHER</option>
             </select>
         </div>
     </div>
@@ -126,7 +109,7 @@
     <div class="form-group">
         <label class="form-label d-block">Checkbook Have?</label>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" 
+            <input class="form-check-input cheque_book" 
                    type="radio" 
                    name="cheque_book" 
                    id="cheque_book_yes" 
@@ -135,50 +118,67 @@
             <label class="form-check-label" for="cheque_book_yes">Yes</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" 
+            <input class="form-check-input cheque_book" 
                    type="radio" 
                    name="cheque_book" 
                    id="cheque_book_no" 
                    value="no" 
-                   required>
-            <label class="form-check-label" for="cheque_book_no">No</label>
+                   required
+                   checked>
+            <label class="form-check-label" for="cheque_book_no" >No</label>
         </div>
     </div>
 </div>
 
 <!-- Checkbook Range -->
-<div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs">
+<div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs" id="checkbook-range-section" style="display: none;">
     <div class="form-group">
         <label class="form-label">Checkbook Range?</label>
         <div class="row">
             <!-- From Input -->
             <div class="col-md-6">
                 <div class="form-icon-user">
+                     <lable class="form-label">From Number</lable>
                     <input class="form-control onlyforformesrs" 
                            name="chequerange_from" 
                            type="number" 
                            id="chequerange_from" 
                            placeholder="From" 
                            min="1"
-                           required>
+                           value="0"
+                           onkeyup="totalCheck()">
                 </div>
             </div>
             <!-- To Input -->
             <div class="col-md-6">
                 <div class="form-icon-user">
+                     <lable class="form-label">To Number</lable>
                     <input class="form-control onlyforformesrs" 
                            name="chequerange_to" 
                            type="number" 
                            id="chequerange_to" 
                            placeholder="To" 
                            min="1"
-                           required>
+                           value="0"
+                           onkeyup="totalCheck()">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <lable class="form-label">Total Check</lable>
+                    <input class="form-control onlyforformesrs" 
+                           name="total_check" 
+                           type="number" 
+                           id="total_check" 
+                           placeholder="total_check" 
+                           min="1"
+                           value="0">
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
     </div>
@@ -189,55 +189,34 @@
 </div>
 
 </form>
-    <!-- <script>
-function searchLadger() {
+   
 
-            let searchVal = $("#search").val();
-            let searchVillage = $("#search_village").val();
-            let searchname = $("#search_name").val();
-            $.ajax({
-            url : '{{route('sellto.search')}}',
-            type : 'GET',
-            data : {
-                searchVal : searchVal,
-                searchVillage : searchVillage,
-                searchname : searchname
-            },
-            success: function(response) {
-            if (response.success && response.data) {
-                 let data = response.data;
+        <script>
 
-                 console.log(data)
 
-                 let html = `
-                    <select name="sellto_farmer/other" id="sellto_farmer/other" class="form-control alwaysvisible"  onchange="selectLadger(this.value)">
-                    <option value=""> Select Farmer </option>`;
-
-                data.map((value) =>{
-
-                    html += `<option value="${value.account_id}">${value.relational_cust_name} - ${value.farm_owner_name}</option>`;
-
-                })
-
-                html += `</select>`;
-
-                $('.allfarmers').html(html);
-
-                //         $('#sellto_account_number').val(data.account_id);
-                //         $('#sellto_phone').val(data.phone_number);
-                //         $('#sellto_customer_name').val(data.relational_cust_name);
-                //         $('#sellto_acc_holder').val(data.account_holder);
-                //         $('#sellto_owner_name').val(data.farm_owner_name);
-                //         $('#sellto_village').val(data.village);
-                //         $('#sellto_gst_amount').val(data.gst_num);
-            } else {
-                alert("No matching record found.");
-            }
-        },
-        error: function(err) {
-            console.log("AJAX error:", err);
+$(document).ready(function () {
+    // Listen to change event on radio buttons with class .cheque_book
+    $(".cheque_book").on("change", function () {
+        if ($(this).val() === "yes") {
+            $("#checkbook-range-section").show();
+            $("#chequerange_from, #chequerange_to").prop("required", true);
+        } else {
+            $("#checkbook-range-section").hide();
+            $("#chequerange_from, #chequerange_to")
+                .prop("required", false)
+                .val(""); // clear values if hiding
         }
+    });
 
-        })
-        }
-        </script> -->
+    // Trigger the change event on page load to set initial state
+    $(".cheque_book:checked").trigger("change");
+});
+
+function totalCheck() {
+    let from =  $("#chequerange_from").val();
+    let to =    $("#chequerange_to").val();
+    let totalCheck = to - from ;
+    $('#total_check').val(totalCheck);
+}
+
+</script>

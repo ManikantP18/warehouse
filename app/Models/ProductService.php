@@ -18,6 +18,9 @@ class ProductService extends Model
         'sale_chartaccount_id',
         'expense_chartaccount_id',
         'created_by',
+        'sec_unit_id',
+        'first_unit_val',
+        'second_unit_val'
     ];
 
     public function taxes()

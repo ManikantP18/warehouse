@@ -14,6 +14,8 @@ use App\Exports\ProductServiceExport;
 use App\Imports\ProductServiceImport;
 use App\Models\ChartOfAccount;
 
+use DB;
+
 class ProductServiceController extends Controller
 {
     public function index(Request $request)
@@ -30,7 +32,22 @@ class ProductServiceController extends Controller
 
 
             }
-            return view('productservice.index', compact('productServices', 'category'));
+
+            $unitsInfo = DB::select("SELECT * from `product_service_units`");
+
+            $newunitearr = [];
+
+            if(!empty($unitsInfo)){
+
+                foreach($unitsInfo as $val){
+
+                    $newunitearr[$val->id] = $val->name;
+
+                }
+
+            }
+
+            return view('productservice.index', compact('productServices', 'category', 'newunitearr'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -96,12 +113,10 @@ class ProductServiceController extends Controller
 
             $rules = [
                 'name' => 'required',
-                'sku' => 'required',
                 'sale_price' => 'required|numeric',
                 'purchase_price' => 'required|numeric',
                 'category_id' => 'required',
                 'unit_id' => 'required',
-                'type' => 'required',
                 'tax_id' => 'required',
             ];
 
@@ -113,23 +128,23 @@ class ProductServiceController extends Controller
                 return redirect()->route('productservice.index')->with('error', $messages->first());
             }
 
+          //  print_r($request->input()); exit;
+
             $productService                 = new ProductService();
             $productService->name           = $request->name;
             $productService->description    = $request->description;
-            $productService->sku            = $request->sku;
             $productService->sale_price     = $request->sale_price;
             $productService->purchase_price = $request->purchase_price;
             $productService->tax_id         = !empty($request->tax_id) ? implode(',', $request->tax_id) : '';
             $productService->unit_id        = $request->unit_id;
-            // $productService->quantity       = $request->quantity;
-            if (!empty($request->quantity)) {
-                $productService->quantity        = $request->quantity;
-            } else {
-                $productService->quantity   = 0;
-            }
+            $productService->sec_unit_id        = $request->sec_unit;
+           $productService->first_unit_val = $request->first_unit;
+            $productService->second_unit_val = $request->second_unit;
+
+            
+            $productService->quantity   = 0;
+            
             $productService->type           = $request->type;
-            $productService->sale_chartaccount_id       = $request->sale_chartaccount_id;
-            $productService->expense_chartaccount_id    = $request->expense_chartaccount_id;
             $productService->category_id    = $request->category_id;
             $productService->created_by     = \Auth::user()->creatorId();
             $productService->save();
@@ -213,13 +228,11 @@ class ProductServiceController extends Controller
 
                 $rules = [
                     'name' => 'required',
-                    'sku' => 'required',
                     'sale_price' => 'required|numeric',
                     'purchase_price' => 'required|numeric',
                     'tax_id' => 'required',
                     'category_id' => 'required',
-                    'unit_id' => 'required',
-                    'type' => 'required',
+                    'unit_id' => 'required'
                 ];
 
                 $validator = \Validator::make($request->all(), $rules);
@@ -232,15 +245,10 @@ class ProductServiceController extends Controller
 
                 $productService->name           = $request->name;
                 $productService->description    = $request->description;
-                $productService->sku            = $request->sku;
                 $productService->sale_price     = $request->sale_price;
                 $productService->purchase_price = $request->purchase_price;
                 $productService->tax_id         = !empty($request->tax_id) ? implode(',', $request->tax_id) : '';
                 $productService->unit_id        = $request->unit_id;
-                $productService->quantity        = $request->quantity;
-                $productService->type           = $request->type;
-                $productService->sale_chartaccount_id       = $request->sale_chartaccount_id;
-                $productService->expense_chartaccount_id    = $request->expense_chartaccount_id;
                 $productService->category_id    = $request->category_id;
                 $productService->created_by     = \Auth::user()->creatorId();
                 $productService->save();

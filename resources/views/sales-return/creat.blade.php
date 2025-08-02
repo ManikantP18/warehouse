@@ -11,7 +11,7 @@
                     <div class="form-group" >
                         <label for="mo_no" class="form-label">Mobile No</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="mo_no" type="text" id="mo_no" placeholder="Mobile No">
+                            <input class="form-control onlyforformesrs" name="mo_no" type="text" id="mo_no" placeholder="Mobile No" required>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label for="r_cust" class="form-label">Farmer Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="r_cust" type="text" id="r_cust" placeholder="Farmer Name" >
+                            <input class="form-control onlyforformesrs" name="r_cust" type="text" id="r_cust" placeholder="Farmer Name" required>
                         </div>
                     </div>
                 </div>
@@ -29,12 +29,12 @@
                     <div class="form-group">
                         <label for="village" class="form-label">Village Name</label>
                         <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs" name="village" type="text" id="village" placeholder="Village Name">
+                            <input class="form-control onlyforformesrs" name="village" type="text" id="village" placeholder="Village Name"required>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-lg-3">
+                <div class="col-md-6 m-auto">
                     <div class="form-group">
                         <label class="form-label d-none d-sm-block">&nbsp;</label>
                         <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
@@ -51,11 +51,12 @@
                 
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="cash_credit" class="form-label">CASH / CREDIT</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible"  name="cash_credit" type="text" id="cash_credit" >
-                        </div>
-                    </div>
+                        <label>Mode of Invoice</label>
+                        <select name="cash_credit" id="cash_credit" class="form-control">
+                            <option value="cash">Cash</option>
+                            <option value="credit">Credit</option>
+                        </select>
+                    </div> 
                 </div>
                 
                 <div class="col-lg-6">
@@ -66,46 +67,66 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="item_sale" class="form-label">ITEM TO BE SALE</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="item_sale" type="text" id="item_sale" >
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="quantity" class="form-label">QUANTITY</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="quantity" type="text" id="quantity" >
-                        </div>
-                    </div>
-                </div>
+
+            <div class="row mb-6">
+
                 
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="rate" class="form-label">RATE</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="rate" type="number" id="rate" >
-                        </div>
+                 <!-- Product Items Wrapper -->
+                <div id="item-wrapper">
+
+                <!-- Initial Product Row -->
+                <div class="row mb-3 item-group" style="background-color: #f2f2f2; padding:10px; border-radius:5px;">
+                    <div class="col-md-2">
+                    <label>Sell Item</label>
+                    <select name="item_sale[]" class="form-control item_sale" dataid="0" onchange="selectItem(0, this)">
+                        <option value="">Select Item</option>
+                        @foreach($item as $value)
+                        <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                    </div>
+
+                    <div class="col-md-1">
+                        <label>Quantity</label>
+                        <input type="number" class="form-control quantity" name="quantity" id="quantity" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
+                    </div>
+
+                    <div class="col-md-2">
+                    <label>Unit</label>
+                    <select class="form-control" name="unit[]" id="unit">
+                        <option value="" hidden>Select Unit</option>
+                        @foreach($units as $value)
+                        <option value="{{$value->id}}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                    </div>
+
+                    <div class="col-md-2">
+                    <label>Rate</label>
+                    <input type="number" class="form-control rate" name="rate[]" id="rate" value="0" onchange="autofill(0)">
+                    </div>
+
+                    <div class="col-md-2">
+                    <label>GST</label>
+                    <input type="number" class="form-control GST_amount" name="GST_amount[]" id="GST_amount" value="0" onchange="autofill(0)">
+                    </div>
+
+                    <div class="col-md-3">
+                    <label>Total</label>
+                    <input type="number" class="form-control total_amount" name="total_amount[]" id="total_amount" value="0" required>
+                    </div>
+
+                    <div class="col-md-1">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-danger form-control" onclick="removeRow(this)">🗑</button>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="total_amount" class="form-label">TOTAL AMOUNT</label>
-                        <input class="form-control onlyforformesrs"  name="total_amount" id="total_amount" >
-                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="GST_amount" class="form-label">GST AMOUNT</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible"  name="GST_amount" type="text" id="GST_amount" >
-                        </div>
-                    </div>
+
+                <!-- Add More Button -->
+                <div class="mt-2">
+                <button type="button" class="btn btn-primary" onclick="addMoreItem()">+ Add More</button>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -162,23 +183,6 @@
                 if (response.success && response.data.length > 0) {
                     const data = response.data[0];
 
-                    //$('#kp_acc_no').val(data.account_id);
-                   // $('#kp_rel_name').val(data.relational_cust_name);
-                  //  $('#kp_acc_holdername').val(data.account_holder);
-                   // $('#kp_bhoomiswami_name').val(data.farm_owner_name);
-                   // $('#kp_vilage').val(data.village);
-                  //  $('#kp_rakaba_acre').val(data.farm_area_acre);
-                   // $('#kp_mo_no').val(data.phone_number);
-                  //  $('#kp_rogger_name').val(data.Rogring_name || '');
-
-                    let opt = `<option value=""> select Item </option>`;
-
-                    response.products.forEach((variety) =>{
-                        opt += `<option value="${variety.id}">${variety.name}</option>`;
-                    })
-
-                    $('#kp_varity').html(opt);
-
                     $('#form-fields-wrapper').slideDown();
                 } else {
                     alert("No data found for selected farmer.");
@@ -196,4 +200,69 @@
     });
 
 
+</script>
+
+<script>
+    
+    //-------------------------------------------------
+let rowIndex = 1;
+
+function addMoreItem() {
+  let $template = $('.item-group').first().clone();
+  
+  $template.find('input, select').each(function () {
+    let $el = $(this);
+    let name = $el.attr('name');
+    let oldId = $el.attr('id');
+    let newId = oldId ? oldId.replace(/\d+/, rowIndex) : '';
+
+    if (newId) {
+      $el.attr('id', newId);
+    }
+
+    $el.val('');
+    if (name === 'quantity[]') $el.val(1);
+    if (name === 'total_amount[]') $el.val(0);
+    if ($el.hasClass('item_sale')) {
+      $el.attr('dataid', rowIndex);
+      $el.attr('onchange', 'selectItem(' + rowIndex + ', this)');
+    }
+
+    if (name === 'quantity[]' || name === 'rate[]' || name === 'sellto_gst_amount[]') {
+      $el.attr('onkeyup', 'autofill(' + rowIndex + ')');
+      $el.attr('onchange', 'autofill(' + rowIndex + ')');
+    }
+  });
+
+  $('#item-wrapper').append($template);
+  rowIndex++;
+}
+
+function removeRow(button) {
+  if ($('.item-group').length > 1) {
+    $(button).closest('.item-group').remove();
+    updateTotalAmount(); // optional: re-calculate total after remove
+  } else {
+    alert("At least one row is required.");
+  }
+}
+
+function autofill(id) {
+  let qty = parseFloat($("#quantity" + id).val()) || 0;
+  let rate = parseFloat($("#rate" + id).val()) || 0;
+  let gst = parseFloat($("#sellto_gst_amount_" + id).val()) || 0;
+
+  let total = (qty * rate) + gst;
+  $("#total_amount" + id).val(total.toFixed(2));
+
+  updateTotalAmount();
+}
+
+function updateTotalAmount() {
+  let grandTotal = 0;
+  $(".total_amount").each(function () {
+    grandTotal += parseFloat($(this).val()) || 0;
+  });
+  $("#total_amount").val(grandTotal.toFixed(2));
+}
 </script>

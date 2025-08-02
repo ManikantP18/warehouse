@@ -13,20 +13,44 @@ use DB;
 class SelltoController extends Controller
 {
     public function index(){
-        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname  from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name where sell_to = 'farmer' and is_deleted = 0 order by sell_id DESC");
+        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname  from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name where sell_to = 'farmer' and sell_to.is_deleted = 0 order by sell_id DESC");
         return view('sellto/list',$data);
 
     }
 
      function create(){
+        
         $data['items'] = DB::select("select *,product_services.id AS pid, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
 
 
         $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
 
         $data['units'] = DB::select("select * from product_service_units");
+
+        
        
         return view('sellto/create',$data);
+    }
+
+    function lotno(Request $request) {
+        $itemId = $request->item;
+
+        $lotno = DB::select("SELECT `purchase_lot_no` FROM purchase WHERE purchase_item = '$itemId' AND purchase_lot_no > 0 GROUP by purchase_lot_no;");
+
+        $opt = '<option value=""> Select Lot No. </option>';
+
+        if(!empty($lotno)){
+            
+            foreach($lotno as $ln) {
+
+                $lotnumber = $ln->purchase_lot_no;
+
+                $opt .= "<option value='$lotnumber'>$lotnumber</option>";
+
+            }
+        }
+
+        echo $opt;
     }
 
     function add(Request $req){
@@ -69,13 +93,14 @@ class SelltoController extends Controller
         $total = $req->input('sellto_total_amount');
          $gst = $req->input('sellto_gst_amount');
          $units = $req->input('purchase_unit');
+         $lotno = $req->input('purchase_lot_no');
 
 
          for($i=0; $i<count($itemselled); $i++){
 
             if(!empty($itemselled[$i]) && !empty($rate[$i])){
 
-                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$lastId')");
+                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,selled_lot_no,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$lotno'[$i],'$lastId')");
 
             }
 
@@ -93,22 +118,42 @@ class SelltoController extends Controller
     }
 
     public function search(Request $req)
-        {
+    {
             $searchVal = $req->input('searchVal'); // Account No or Mobile No
             $searchVillage = $req->input('searchVillage');
             $searchname = $req->input('searchname');
+            $searchowner = $req->input('searchowner');
 
+            $all = $req->input('all');
+            
+
+            if($all == 'no'){
+
+                $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
+                WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
+                AND (relational_cust_name LIKE '%$searchname%'
+                AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
+                ");
+
+            } else {
+
+                $searchData = DB::select("SELECT * FROM ladgers
+                WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
+                AND (relational_cust_name LIKE '%$searchname%'
+                AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
+                ");
+                
+            }
            
 
-            $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
-            WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
-            AND (relational_cust_name LIKE '%$searchname%'
-            AND village LIKE '%$searchVillage%')
-            ");
+            
 
-            $variety = DB::select("SELECT * FROM product_services join sell_to on sell_to.item_selled = product_services.id
-            WHERE sell_to.sell_account_number LIKE '%$searchVal%'
-            ");
+            $variety = DB::select("SELECT * FROM product_services join selled_item ON selled_item.selled_item = product_services.id join sell_to on sell_to.sell_id =  selled_item.sell_id
+            WHERE sell_to.sell_account_number = '$searchVal' group by product_services.id");
+
+             $Othervariety = DB::select("SELECT * FROM product_services group by product_services.id");
+
+            
 
 
 
@@ -116,7 +161,8 @@ class SelltoController extends Controller
                 return response()->json([
                     'success' => true,
                     'data' => $searchData,
-                    'products' => $variety
+                    'products' => $variety,
+                    'otherProducts' => $Othervariety
                 ]);
             } else {
                 return response()->json([
@@ -125,7 +171,7 @@ class SelltoController extends Controller
                 ]);
             }
 
-        }
+    }
 
     function others() {
          $data['sellto'] = DB::select("select * from sell_to where sell_to != 'farmer' and is_deleted = 0");
@@ -174,7 +220,28 @@ class SelltoController extends Controller
          $id = $req->input('sell_id');
 
 
-        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',item_selled = '$itemselled',sell_quantity = '$quantity',sell_rate = '$rate',sell_total_ammount = '$total',sell_gst_ammount = '$gst' , cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
+        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',sell_total_ammount = '$total' , cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
+
+        $itemselled = $req->input('sellto_item_selled');
+         $quantity = $req->input('sellto_quantity');
+        $rate = $req->input('sellto_rate');
+        $total = $req->input('sellto_total_amount');
+         $gst = $req->input('sellto_gst_amount');
+         $units = $req->input('purchase_unit');
+
+        DB::delete("delete from selled_item where sell_id = '$id'");
+
+         for($i=0; $i<count($itemselled); $i++){
+
+            if(!empty($itemselled[$i]) && !empty($rate[$i])){
+
+                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$id')");
+
+            }
+
+             
+
+         }
 
         return Redirect::to('sellto');
     }

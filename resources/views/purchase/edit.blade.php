@@ -81,7 +81,7 @@
 
          <div class="col-md-6">
           <div class="form-group">
-            <label>Owner name</label>
+            <label>Land Owner name</label>
             <input type="text" class="form-control" name="purchase_owner" id="purchase_owner" required value="{{$purchase[0]->purchase_owner}}" readonly>
           </div>
         </div>
@@ -110,7 +110,19 @@
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>LOT No.</label>
-            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required value="{{$purchase[0]->purchase_lot_no}}">
+            <input type="text" class="form-control" name="purchase_lot_no" id="purchase_lot_no" required min="1" value="{{$purchase[0]->purchase_lot_no}}">
+          </div>
+        </div>
+
+         <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>Godown Name</label>
+            
+            <select name="godown" id="godown" class="form-control">
+              @foreach($branches  as $val)
+              <option value="{{ $val->branch_id }}"  {{$purchase[0]->godown == $val->branch_id ? 'selected' : 'hidden'}}>{{ $val->branch_name }}</option>
+              @endforeach
+            </select>
           </div>
         </div>
 
@@ -124,32 +136,32 @@
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Account Number</label>
-            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required value="{{$purchase[0]->purchase_account_no}}" readonly>
+            <input type="text" class="form-control" name="purchase_account_no" id="purchase_account_no" required value="{{$purchase[0]->purchase_account_no}}" >
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Bank Name</label>
-            <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required value="{{$purchase[0]->purchas_bank_name}}" readonly>
+            <input type="text" class="form-control" name="purchas_bank_name" id="purchas_bank_name" required value="{{$purchase[0]->purchas_bank_name}}" >
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>IFSC Code</label>
-            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required value="{{$purchase[0]->purchase_ifsc}}" readonly>
+            <input type="text" class="form-control" name="purchase_ifsc" id="purchase_ifsc" required value="{{$purchase[0]->purchase_ifsc}}" >
           </div>
         </div>
 
         <div class="col-md-6 changehide">
           <div class="form-group">
             <label>Branch</label>
-            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required value="{{$purchase[0]->purchase_branch}}" readonly>
+            <input type="text" class="form-control" name="purchase_branch" id="purchase_branch" required value="{{$purchase[0]->purchase_branch}}" >
           </div>
         </div>
 
-        <div class="col-md-6 changehide">
+        <div div class="form-group changehide" style="display: none;">
           <div class="form-group">
             <label>GST No.</label>
             <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required value="{{$purchase[0]->purchase_gst_no}}" readonly>
@@ -185,19 +197,30 @@
     <div class="col-md-2">
       <div class="form-group">
         <label>Quantity</label>
-        <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_{{ $i }}" value="{{$items[$i]->purchased_qty}}" required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})">
+        <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_{{ $i }}" value="{{$items[$i]->purchased_qty}}" required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})" step="0.01">
+        <span id="other_qty_val"></span>
       </div>
     </div>
 
       <div class="col-md-2">
         <div class="form-group">
           <label>Unit</label>
-          <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $i }}">
+          <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $i }}" onchange="handleChage({{ $i }})">
             <option value="" hidden>Select Unit</option>
             @foreach($units as $value)
-            <option value="{{ $value->id }}" {{ $value->id == $items[$i]->purchased_unit ? 'selected' : ''}}>{{ $value->name }}</option>
+            <option value="{{ $value->id }}" {{ $value->id == $items[$i]->purchased_unit ? 'selected' : ''}} >{{ $value->name }}</option>
             @endforeach
           </select>
+
+          @foreach($units as $value)
+
+              @if($value->id == $items[$i]->purchased_unit)
+                  <input type="hidden" value="{{$value->short_unit}}" id="prev_unit_{{ $i }}">
+              @endif
+
+          @endforeach
+
+          
         </div>
       </div>
 
@@ -221,13 +244,15 @@
 
 <!-- Newitem for create Niku -->
   @for($i = 0; $i < count($products); $i++)
-  {{ $j = $i+1000}}
+ @php
+    $j = $i + 1000;
+@endphp
   <div class="row mb-3">
 
     <div class="col-md-4">
       <div class="form-group">
         <label>Purchase Item</label>
-        <select name="purchase_item[]" id="purchase_item_{{ 1000+$i }}" class="form-control allitems" onchange="handleChage({{ $i }})">
+        <select name="purchase_item[]" id="purchase_item_{{ 1000+$i }}" class="form-control allitems">
           <option value="" hidden>Select Item</option>
           @foreach($allproducts as $value)
             <option value="{{ $value->id }}">
@@ -275,6 +300,8 @@
   </div>
 @endfor
 
+        
+
         <input class="form-control" required name="purchase_id" type="hidden" id="sellto_account_number" value="{{$purchase[0]->purchase_id}}">
 
         <!--
@@ -309,13 +336,11 @@
   <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
   <input type="submit" value="Update" class="btn btn-primary">
 </div>
+<input type="hidden" id="allproductsinfo" value="{{json_encode($allproducts)}}">
+<input type="hidden" id="allunitsinfo" value="{{json_encode($units)}}">
 {{ Form::close() }}
 <script>
-    function toggleFields() {
-  let val = document.getElementById('sellto_farmer/other').value;
-  $('.changehide').show();
-  if (val === 'other') $('.changehide').hide();
-}
+   
 
 function searchLadger() {
   let searchVal = $('#search').val();
@@ -383,6 +408,7 @@ function selectLadger(id) {
 
 function autofill(id) {
  $("#purchase_total_"+id).val(parseInt($("#purchase_quantity_"+id).val()) * parseInt($("#purchase_rate_"+id).val()));
+ handleChage(id)
 }
 
 // ✅ Initial setup to hide form
@@ -390,4 +416,198 @@ function autofill(id) {
 //   $('#form-fields-wrapper').hide();
 //   $('.allfarmers').hide();
 // });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function toggleFields() {
+    const val = document.getElementById('purchase_to').value;
+
+    if (val === 'farmer') {
+      $('.changehide').hide();
+      $('#purchase_gst_no').removeAttr('required');
+    } else {
+      $('.changehide').show();
+      $('#purchase_gst_no').attr('required', 'required');
+    }
+  }
+
+  // ✅ Call once when the page loads
+  document.addEventListener('DOMContentLoaded', toggleFields);
+
+  /*function handleChage(rid) {
+
+    let all = JSON.parse($("#allproductsinfo").val());
+
+    let pid = $("#purchase_item_"+rid).val();
+    let qty = parseInt($("#purchase_quantity_"+rid).val());
+    let uid = $("#purchase_unit_"+rid).val();
+
+    let other_unit = 'bag';
+
+    let secQty = '';
+
+    all.forEach((val) => {
+
+      if(val.id == pid){
+
+        if(val.unit_id == uid){
+
+          var first_unit_val = val.first_unit_val;
+          var sec_unit_val = val.second_unit_val;
+
+          secQty = (qty / first_unit_val) * sec_unit_val;
+
+          if(val.second_unit_val == 2){
+            other_unit = 'kg';
+          } else if(val.second_unit_val == 2) {
+            other_unit = 'kw';
+          }
+
+
+
+        } else {
+
+          var first_unit_val = val.first_unit_val;
+          var sec_unit_val = val.second_unit_val;
+
+          secQty = (qty / sec_unit_val) * first_unit_val;
+
+          if(val.first_unit_val == 2){
+            other_unit = 'kg';
+          } else if(val.first_unit_val == 2) {
+            other_unit = 'kw';
+          }
+
+
+        }
+
+      }
+      
+    });
+
+    $("#other_qty_val").html(secQty+' '+other_unit)
+    
+  }*/
+
+    function handleChage(rid) {
+
+      let all = JSON.parse($("#allproductsinfo").val());
+
+      let allunits = JSON.parse($("#allunitsinfo").val());
+
+    let pid = $("#purchase_item_"+rid).val();
+    let qty = $("#purchase_quantity_"+rid).val();
+    let uid = $("#purchase_unit_" + rid + " option:selected").text();
+
+    let pushort = $("#prev_unit_" + rid).val();
+    console.log(pushort)
+    let cushort = '';
+
+    let secQty = '';
+
+    all.forEach((val) => {
+
+      var first_unit_val = val.first_unit_val;
+      var sec_unit_val = val.second_unit_val;
+
+      var first_unit = val.unit_id;
+      var sec_unit = val.sec_unit_id;
+
+      let funit, sunit = '';
+
+      if(val.id == pid){
+
+    allunits.forEach(ut => {
+
+      if(ut.name == uid){
+
+        cushort = ut.short_unit;
+
+      }
+      
+    });
+
+   allunits.forEach(ut => {
+
+      if(ut.id == first_unit){
+
+        funit = ut.short_unit;
+
+      }
+
+      if(ut.id == sec_unit){
+
+        sunit = ut.short_unit;
+        console.log('changing....',pushort)
+
+      }
+      
+    });
+
+    if(funit == 'bag' || sunit == 'bag'){
+
+      console.log(' selected unit = ', pushort)
+      console.log("second unit val = ",sec_unit_val)
+
+      if(pushort == 'kg' && (funit == 'kw' || sunit == 'kw')){
+       secQty = ((qty/100) * sec_unit_val)+' bag';   
+      } else if(pushort == 'kg'){
+        secQty = (qty/first_unit_val)+' bag';
+      } else if(pushort == 'kw'){
+       secQty = (100 / first_unit_val)+' bag';   
+      }
+
+      $("#other_qty_val").html(secQty)
+
+      $("#prev_unit_" + rid).val(cushort)
+
+      return true;
+    }
+
+      if(pushort != cushort){
+
+        switch (`${cushort}-${pushort}`.trim()) {
+          case 'kg-kw':
+          secQty = (qty / 100)+' '+ pushort;
+          break;
+          case 'kw-kg':
+            console.log('quantity = ',qty)
+            secQty = (qty * 100)+' '+ pushort;
+            break;
+          case 'kg-bag':
+            secQty = (qty / sec_unit_val)+' '+ pushort;
+            break;
+          case 'bag-kg':
+            secQty = (qty * first_unit_val)+' '+ pushort;
+            break;
+          case 'bag-kw':
+            secQty = ((qty * first_unit_val)/100)+' '+ pushort;
+            break;
+          case 'kw-bag':
+            secQty = ((qty * 100)/first_unit_val)+' '+ pushort;
+            break;
+          default:
+            console.log(qty+' '+pushort);
+      }
+
+    }
+
+  }
+
+  });
+
+  console.log('DEBUG:', {
+  cushort,
+  pushort,
+  switchCase: `${cushort}-${pushort}`
+});
+
+  alert(secQty)
+
+  $("#other_qty_val").html(secQty)
+
+  $("#prev_unit_" + rid).val(cushort)
+    }
+
+
 </script>

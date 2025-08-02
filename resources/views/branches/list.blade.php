@@ -16,11 +16,11 @@
     </script>
 @endpush
 @section('page-title')
-    {{ __('Manage Ladgers') }}
+    {{ __('Manage Godown') }}
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item">{{ __('Ladgers') }}</li>
+    <li class="breadcrumb-item">{{ __('Godown') }}</li>
 @endsection
 
 @section('action-btn')
@@ -36,7 +36,7 @@
         </a>
 
         <a href="#" data-size="xl" data-url="{{ route('branches.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Ladger') }}"
+            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Godown') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
         </a>
@@ -54,6 +54,7 @@
                                 <tr>
                                     <th>Branch Id</th>
                                     <th> Branch Name</th>
+                                    <th> Company Name</th>
                                     <th> Branch Phone </th>
                                     <th> Branch Address </th>
                                     <th> Status </th>
@@ -67,6 +68,7 @@
                                 <tr>
                                     <td> {{ $value->branch_id }} </td>
                                     <td> {{ $value->branch_name }} </td>
+                                    <td> {{ $value->company_name }} </td>
                                     <td> {{ $value->branch_cont }} </td>
                                     <td> {{ $value->branch_address }} </td>
                                     <td> {{ $value->branch_status == 1 ? 'Active' : 'Inactive' }} </td>

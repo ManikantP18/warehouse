@@ -23,14 +23,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                {{ Form::label('sku', __('SKU'), ['class' => 'form-label']) }}<x-required></x-required>
-                <div class="form-icon-user">
-                    {{ Form::text('sku', null, ['class' => 'form-control', 'required' => 'required']) }}
-                </div>
-            </div>
-        </div>
 
         <div class="col-md-6">
             <div class="form-group">
@@ -41,21 +33,6 @@
             </div>
         </div>
 
-        <div class="form-group col-md-6">
-            {{ Form::label('sale_chartaccount_id', __('Income Account'),['class'=>'form-label']) }}<x-required></x-required>
-            <select name="sale_chartaccount_id" class="form-control" required="required">
-                @foreach ($incomeChartAccounts as $key => $chartAccount)
-                    <option value="{{ $key }}" class="subAccount" {{ ($productService->sale_chartaccount_id == $key) ? 'selected' : ''}}>{{ $chartAccount }}</option>
-                    @foreach ($incomeSubAccounts as $subAccount)
-                        @if ($key == $subAccount['account'])
-                            <option value="{{ $subAccount['id'] }}" class="ms-5" {{ ($productService->sale_chartaccount_id == $subAccount['id']) ? 'selected' : ''}}> &nbsp; &nbsp;&nbsp; {{ $subAccount['name'] }}</option>
-                        @endif
-                    @endforeach
-                @endforeach
-            </select>
-        </div>
-
-
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('purchase_price', __('Purchase Price'), ['class' => 'form-label']) }}<x-required></x-required>
@@ -63,20 +40,6 @@
                     {{ Form::number('purchase_price', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) }}
                 </div>
             </div>
-        </div>
-
-        <div class="form-group col-md-6">
-            {{ Form::label('expense_chartaccount_id', __('Expense Account'),['class'=>'form-label']) }}<x-required></x-required>
-            <select name="expense_chartaccount_id" class="form-control" required="required">
-                @foreach ($expenseChartAccounts as $key => $chartAccount)
-                    <option value="{{ $key }}" class="subAccount" {{ ($productService->expense_chartaccount_id == $key) ? 'selected' : ''}}>{{ $chartAccount }}</option>
-                    @foreach ($expenseSubAccounts as $subAccount)
-                        @if ($key == $subAccount['account'])
-                            <option value="{{ $subAccount['id'] }}" class="ms-5" {{ ($productService->expense_chartaccount_id == $subAccount['id']) ? 'selected' : ''}}> &nbsp; &nbsp;&nbsp; {{ $subAccount['name'] }}</option>
-                        @endif
-                    @endforeach
-                @endforeach
-            </select>
         </div>
 
         <div class="form-group  col-md-6">
@@ -88,66 +51,45 @@
             {{ Form::label('category_id', __('Category'), ['class' => 'form-label']) }}<x-required></x-required>
             {{ Form::select('category_id', $category, null, ['class' => 'form-control select', 'required' => 'required']) }}
         </div>
-        <div class="form-group  col-md-6">
+        <!-- <div class="form-group  col-md-6">
             {{ Form::label('unit_id', __('Unit'), ['class' => 'form-label']) }}<x-required></x-required>
             {{ Form::select('unit_id', $unit, null, ['class' => 'form-control select', 'required' => 'required']) }}
-        </div>
-        <!-- <div class="form-group col-md-6">
-            {{ Form::label('quantity', __('Quantity'), ['class' => 'form-label']) }}<x-required></x-required>
-            {{ Form::text('quantity', null, ['class' => 'form-control', 'required' => 'required']) }}
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="d-block form-label">{{ __('Type') }}</label>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-check form-check-inline">
-                            <input type="radio" class="form-check-input" id="customRadio5" name="type"
-                                value="Product" @if ($productService->type == 'Product') checked @endif
-                                onclick="hide_show(this)">
-                            <label class="custom-control-label form-label"
-                                for="customRadio5">{{ __('Product') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check form-check-inline">
-                            <input type="radio" class="form-check-input" id="customRadio6" name="type"
-                                value="Service" @if ($productService->type == 'Service') checked @endif
-                                onclick="hide_show(this)">
-                            <label class="custom-control-label form-label"
-                                for="customRadio6">{{ __('Service') }}</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div> -->
-        <div class="form-group col-md-6 quantity d-block  {{$productService->type=='service' ? 'd-none':''}}">
-    {{ Form::label('quantity', __('Quantity'), ['class' => 'form-label']) }}<x-required></x-required>
-    {{ Form::text('quantity', null, ['class' => 'form-control', 'required' => 'required']) }}
-</div>
-<div class="col-md-6">
-    <div class="form-group">
-        <div class="btn-box">
-            <label class="d-block form-label">{{ __('Type') }}</label>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input type" id="customRadio5" name="type"
-                        value="Product" @if ($productService->type == 'Product') checked @endif checked="checked">
-                        <label class="custom-control-label form-label" for="customRadio5">{{ __('Product') }}</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input type" id="customRadio6" name="type"
-                        value="Service" @if ($productService->type == 'Service') checked @endif>
-                        <label class="custom-control-label form-label" for="customRadio6">{{ __('Service') }}</label>
-                    </div>
-                </div>
-            </div>
+
+        <div class="form-group col-md-6">
+            <label for="unit_id" class="form-label">Primary Unit<span class="text-danger">*</span></label>
+            <select name="unit_id" id="unit_id" class="form-control select" required onchange="toggle()">
+                <option value="">Select Unit</option> {{-- Optional default --}}
+                @foreach($unit as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                @endforeach
+            </select>
         </div>
-    </div>
-</div>
+
+        <div id="sec_unit_wrapper" class="form-group col-md-6" style="display: none;">
+            <label for="sec_unit" class="form-label">Secondary Unit<span class="text-danger">*</span></label>
+            <select name="sec_unit" id="sec_unit" class="form-control select" required onchange="secToggle()">
+                @foreach($unit as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                @endforeach
+            </select>
+        </div>
+
+         <div id="first-unit" class="form-group col-md-2 unitconver d-none">
+            <label for="first-unit" class="form-label"><span class="text-danger">*</span></label>
+             <input type="text" name="first_unit" class="form-control" required /> <span class="fw-bold first-unit"></span>
+        </div>
+
+       <div class="form-group col-md-1 unitconver d-none mt-4 text-center">
+        <label for="second-unit" class="form-label"><span class="text-danger"></span></label>
+        =
+        </div> 
+
+         <div id="second-unit" class="form-group col-md-2 unitconver d-none">
+            <label for="second-unit" class="form-label"><span class="text-danger">*</span></label>
+            <input type="text" name="second_unit" class="form-control" required /> <span class="fw-bold second-unit"></span>
+        </div>
+        
         <div class="form-group  col-md-12">
             {{ Form::label('description', __('Description'), ['class' => 'form-label']) }}
             {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2']) !!}
@@ -180,4 +122,29 @@ $(document).on('click', 'input[name="type"]', function () {
         $('input[name="quantity"]').val('').prop('required', false);
     }
 });
+function toggle() {
+    const selected = document.getElementById('unit_id').value;
+    const secUnitWrapper = document.getElementById('sec_unit_wrapper');
+
+    if (selected) {
+        secUnitWrapper.style.display = 'block';
+
+        $(".first-unit").html($("#unit_id option:selected").text());
+    } else {
+        secUnitWrapper.style.display = 'none';
+    }
+}
+
+function secToggle() {
+    const selectedValue = document.getElementById('sec_unit').value;
+
+    $('.unitconver').addClass('d-none');
+
+    if (selectedValue) {
+        $('.unitconver').removeClass('d-none');
+
+        $(".second-unit").html($("#sec_unit option:selected").text())
+    }
+}
+
 </script>

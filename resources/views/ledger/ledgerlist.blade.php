@@ -83,10 +83,10 @@
                             <thead>
     <tr>
         <th>Ladger Id</th>
-        <th>Account Id</th>
+        <th>cutomer Id</th>
         <th>Relational Cust. Name</th>
         <th>Aadhar No.</th>
-        <th class="farmer-only">Farmer Owner Name</th>
+        <th class="farmer-only">Land Owner Name</th>
         <th>Village</th>
         <th class="farmer-only">Farmer Area Acre</th>
          <th class="farmer-only">Khasra No.</th>

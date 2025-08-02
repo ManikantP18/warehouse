@@ -76,14 +76,13 @@
                             <thead>
                             <tr>
                                 <th>{{__('Name')}}</th>
-                                <th>{{__('Sku')}}</th>
                                 <th>{{__('Sale Price')}}</th>
                                 <th>{{__('Purchase Price')}}</th>
                                 <th>{{__('Tax')}}</th>
                                 <th>{{__('Category')}}</th>
-                                <th>{{__('Unit')}}</th>
-                                <th>{{__('Quantity')}}</th>
-                                <th>{{__('Type')}}</th>
+                                <th>{{__('Primary Unit')}}</th>
+                                <th>{{__('Secondary Unit')}}</th>
+                                <th>{{__('Unit Conversion')}}</th>
                                 <th>{{__('Action')}}</th>
                             </tr>
                             </thead>
@@ -91,7 +90,6 @@
                             @foreach ($productServices as $productService)
                                 <tr class="font-style">
                                     <td> {{ $productService->name}}</td>
-                                    <td>{{ $productService->sku }}</td>
                                     <td>{{ $productService->sale_price }}</td>
                                     <td>{{  $productService->purchase_price }}</td>
                                     <td>
@@ -109,12 +107,8 @@
                                     </td>
                                     <td>{{ !empty($productService->category)?$productService->category->name:'' }}</td>
                                     <td>{{ !empty($productService->unit)?$productService->unit->name:'' }}</td>
-                                    @if($productService->type == 'Product')
-                                        <td>{{$productService->quantity}}</td>
-                                    @else
-                                        <td>-</td>
-                                    @endif
-                                    <td>{{ $productService->type }}</td>
+                                    <td>{{ !empty($newunitearr) && isset($newunitearr[$productService->sec_unit_id])? $newunitearr[$productService->sec_unit_id]:'' }}</td>
+                                    <td>{{ !empty($productService->first_unit_val)?$productService->first_unit_val.' '.$productService->unit->name . ' = '. $productService->second_unit_val.' '. $newunitearr[$productService->sec_unit_id]:'' }}</td>
                                     @if(Gate::check('edit product & service') || Gate::check('delete product & service'))
                                         <td class="Action">
                                             @can('edit product & service')

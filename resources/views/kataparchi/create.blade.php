@@ -1,4 +1,4 @@
-{{ Form::open(['url' => 'kataparchi/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
+{{ Form::open(['url' => 'kataparchi/add', 'method' => 'post', 'class'=>'needs-validation','novalidate', 'onsubmit' => 'return validForm()']) }}
 <div class="modal-body">
     <h6 class="sub-title">kataparchi</h6>
     
@@ -6,7 +6,7 @@
     <div class="row" >
         <div class="col-lg-12">
             <div class="row align-items-end">
-                <div class="col-lg-3">
+                <div class="col-lg-6">
                     <div class="form-group" >
                         <label for="search" class="form-label">Account/Mobile No</label>
                         <div class="form-icon-user">
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label for="search_name" class="form-label">Farmer Name</label>
                         <div class="form-icon-user">
@@ -22,7 +22,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="search_owner" class="form-label">Land Owner</label>
+                        <input class="form-control" name="search_owner" type="text" id="search_owner" placeholder="Owner Name">
+                    </div>
+                    </div>
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label for="search_village" class="form-label">Village Name</label>
                         <div class="form-icon-user">
@@ -30,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6 m-auto">
                     <div class="form-group">
                         <label class="form-label d-none d-sm-block">&nbsp;</label>
                         <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
@@ -54,7 +61,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kp_acc_no" class="form-label">Account No.</label>
+                        <label for="kp_acc_no" class="form-label">Customer-ID</label>
                         <div class="form-icon-user">
                             <input class="form-control alwaysvisible"  name="kp_acc_no" type="text" id="kp_acc_no" readonly>
                         </div>
@@ -127,7 +134,17 @@
                     <div class="form-group">
                         <label for="kp_varity" class="form-label">Variety</label>
                         <div class="form-icon-user">
-                            <select class="form-control alwaysvisible" required name="kp_varity" id="kp_varity">
+                            <select class="form-control alwaysvisible"  name="kp_varity" id="kp_varity">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="kp_other_varity" class="form-label">Other Variety</label>
+                        <div class="form-icon-user">
+                            <select class="form-control alwaysvisible"  name="kp_other_varity" id="kp_other_varity">
                             </select>
                         </div>
                     </div>
@@ -176,7 +193,7 @@
 </div>
 <div class="modal-footer">
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
-    <input type="submit" value="Create" class="btn btn-primary">
+    <input type="submit" value="Create" class="btn btn-primary" id="savebtn">
 </div>
 {{ Form::close() }}
 
@@ -185,11 +202,13 @@
         let searchVal = $('#search').val();
         let searchVillage = $('#search_village').val();
         let searchname = $('#search_name').val();
+        let searchowner = $('#search_owner').val();
+        let all = 'yes';
 
         $.ajax({
             url: '{{ route('sellto.search') }}',
             type: 'GET',
-            data: { searchVal, searchVillage, searchname },
+            data: { searchVal, searchVillage, searchname,searchowner, all },
             success: function (response) {
                 if (response.success && response.data.length > 0) {
                     let html = `
@@ -221,7 +240,7 @@
         $.ajax({
             url: '{{ route('sellto.search') }}',
             type: 'GET',
-            data: { searchVal: account_id },
+            data: { searchVal: account_id, all : 'no' },
             success: function (response) {
                 if (response.success && response.data.length > 0) {
                     const data = response.data[0];
@@ -242,9 +261,19 @@
 
                     response.products.forEach((variety) =>{
                         opt += `<option value="${variety.id}">${variety.name}</option>`;
-                    })
+                    });
 
                     $('#kp_varity').html(opt);
+
+
+                    let opt1 = `<option value=""> select Item </option>`;
+
+                    response.otherProducts.forEach((othervariety) =>{
+                        opt1 += `<option value="${othervariety.id}">${othervariety.name}</option>`;
+                    })
+
+                    $('#kp_other_varity').html(opt1);
+                    
 
                     $('#form-fields-wrapper').slideDown();
                 } else {
@@ -262,5 +291,33 @@
         //$('.allfarmers').hide();
     });
 
+function validForm() {
+    let mveriety = $("#kp_varity").val();
+    let overiety = $("#kp_other_varity").val();
 
+    if(mveriety == '' && overiety == '')
+    {
+        alert("Please Select At Least One Variety Or Other Variety!");
+
+        setTimeout(() => {
+
+        $("#savebtn").removeAttr("disabled");
+            
+        }, 500);
+        return false;
+    }
+
+    if(mveriety != '' && overiety != '')
+    {
+        alert("Only One Variety Or Other Variety Can Be Select!");
+        setTimeout(() => {
+
+        $("#savebtn").removeAttr("disabled");
+            
+        }, 500);
+        return false;
+    }
+
+    return true;
+}
 </script>

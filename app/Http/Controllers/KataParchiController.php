@@ -13,7 +13,7 @@ class KataParchiController extends Controller
 {
     public function index(){
 
-        $data['kataparchi'] = DB::select('select * from kata_parchi where is_deleted = 0 AND kp_pure_wigth = 0');
+        $data['kataparchi'] = DB::select('select kata_parchi.*,product_services.name as kp_verity  from kata_parchi join product_services ON kata_parchi.kp_verity = product_services.id where kata_parchi.is_deleted = 0 AND kp_pure_wigth = 0');
 
         return view('kataparchi/list',$data);
 
@@ -47,6 +47,12 @@ class KataParchiController extends Controller
 
         $kp_goween = $req->input('kp_godown_name');
 
+         
+
+         if(empty($kpvarity)) {
+            $kpvarity = $req->input('kp_other_varity');
+         }
+
         DB::insert("Insert into kata_parchi (kp_date,kp_acc_no,kp_rel_name,kp_acc_holdername,kp_bhoomiswami_name,kp_vilage,kp_rakaba_acre,kp_mo_no,kp_rogger_name,kp_verity,kp_rstno,kp_vehicle_wight,kp_godown_name) VALUES ('$kpdate','$kpacc','$kprel','$kpacc_hold_name','$kp_land_owner','$kpvilage','$kp_acre','$kpmn','$kp_rogger','$kpvarity','$kprst','$kp_vwihgt','$kp_goween')");
 
         return Redirect::to('kataparchi');
@@ -75,7 +81,7 @@ class KataParchiController extends Controller
     $kpvilage = $req->input('kp_vilage');
     $kp_acre = $req->input('kp_rakaba_acre');
 
-    $kp_acre = $req->input('kp_khasra_no');
+    $khasrano = $req->input('kp_khasra_no');
 
     $kpmn = $req->input('kp_mo_no');
     $kp_rogger = $req->input('kp_rogger_name');
@@ -101,12 +107,12 @@ class KataParchiController extends Controller
         kp_bhoomiswami_name = '$kp_land_owner',
         kp_vilage = '$kpvilage',
         kp_rakaba_acre = '$kp_acre',
-        kp_khasra_no = '$kp_acre',
+        kp_khasra_no = '$khasrano',
         kp_mo_no = '$kpmn',
         kp_rogger_name = '$kp_rogger',
         kp_verity = '$kpvarity',
         kp_rstno = '$kprst',
-        kp_vehicle_wight = '$kp_vwihgt',
+        kp_vehicle_wight = '$kp_vwihgt',  
         kp_only_vechicle_w = '$kp_only_vechicle_w',
         kp_pure_wigth = '$kp_pure_wigth',
         kp_godown_name = '$kp_goween',
@@ -125,17 +131,47 @@ class KataParchiController extends Controller
 
         $branch = $ladgerinfo[0]->branch;
 
-        $kpvarity = 1;
-
         $products = DB::select("select * from product_services where id = '$kpvarity'");
 
         $rate = $products[0]->purchase_price;
 
-        DB::insert("Insert into purchase (purchase_relation_cusm,purchase_accountant,purchase_owner,purchase_village,purchase_acre,purchase_phone,purchase_rst_no,purchase_lot_no,purchase_account_no,purchas_bank_name,purchase_ifsc,purchase_branch,purchase_gst_no,purchase_item,purchase_quantity,purchase_rate,purchase_total) VALUES ('$kprel' , '$kpacc_hold_name', '$kp_land_owner' ,'$kpvilage','$kp_acre', '$kpmn','$kprst','' ,'$acc', '$bank_name','$ifsc_code' ,'$branch', '$gst' ,'$kpvarity','1','$rate','$rate' )");
+        $kp_pure_wigth = $kp_pure_wigth/100;
+
+        $kp_pure_wigth = number_format((float)$kp_pure_wigth, 2, '.', '');
+
+        $pid = DB::table('purchase')->insertGetId([
+        'purchase_relation_cusm' => $kprel,
+        'purchase_accountant' => $kpacc_hold_name,
+        'purchase_owner' => $kp_land_owner,
+        'purchase_village' => $kpvilage,
+        'purchase_acre' => $kp_acre,
+        'purchase_phone' => $kpmn,
+        'purchase_rst_no' => $kprst,
+        'purchase_lot_no' => '', // or null
+        'purchase_account_no' => $acc,
+        'purchas_bank_name' => $bank_name,
+        'purchase_ifsc' => $ifsc_code,
+        'purchase_branch' => $branch,
+        'purchase_gst_no' => $gst,
+        'purchase_item' => $kpvarity,
+        'purchase_quantity' => 1,
+        'purchase_rate' => $rate,
+        'purchase_total' => $rate,
+        'pure_wigth' => $kp_pure_wigth,
+        'godown' => $kp_goween,
+    ]);
+
+    $unit = DB::select("select * from product_service_units where name ='kw'");
+
+    $punit = 2;
+    if (!empty($unit)){
+
+        $punit = $unit[0]->id;
+
+    }
+
+        DB::insert("Insert into purchase_item (purchase_id,purchased_item,purchased_rate,purchased_qty,purchased_unit,purchased_total) VALUES ('$pid','$kpvarity',0,'$kp_pure_wigth',$punit, 0)");
     
         return Redirect::to('kataparchi');
 }
-
-
-
 }

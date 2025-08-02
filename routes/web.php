@@ -150,6 +150,8 @@ Route::get('bankacc/delete/{id}', 'App\Http\Controllers\BankController@delete')-
 
 Route::get('/branches', 'App\Http\Controllers\BranchesController@index')->name('branches.list')->middleware('auth');
 
+Route::get('/branches/create', 'App\Http\Controllers\BranchesController@create')->name('branches.create')->middleware('auth');
+
 
 Route::post('/branches/add', 'App\Http\Controllers\BranchesController@add')->name('branches.add')->middleware('auth');
 
@@ -180,12 +182,25 @@ Route::post('/sellto/add', 'App\Http\Controllers\SelltoController@add')->name('s
 
 Route::get('/sellto/search', 'App\Http\Controllers\SelltoController@search')->name('sellto.search')->middleware('auth');
 
+Route::get('/sellto/lotno', 'App\Http\Controllers\SelltoController@lotno')->name('sellto.lotno')->middleware('auth');
+
 Route::get('/sellto/delete/{id}', 'App\Http\Controllers\SelltoController@delete')->name('sellto.delete')->middleware('auth');
 
 Route::get('/sellto/edit/{id}', 'App\Http\Controllers\SelltoController@edit')->name('sellto.edit')->middleware('auth');
 
 Route::put('/sellto/update', 'App\Http\Controllers\SelltoController@update')->name('sellto.update')->middleware('auth');
 
+Route::get('/company', 'App\Http\Controllers\CompanyController@index')->name('company.list')->middleware('auth');
+
+Route::get('/company/create', 'App\Http\Controllers\CompanyController@create')->name('company.create')->middleware('auth');
+
+Route::post('/company/add', 'App\Http\Controllers\CompanyController@add')->name('company.add')->middleware('auth');
+
+Route::get('/company/delete/{id}', 'App\Http\Controllers\CompanyController@delete')->name('company.delete')->middleware('auth');
+
+Route::get('/company/edit/{id}', 'App\Http\Controllers\CompanyController@edit')->name('company.edit')->middleware('auth');
+
+Route::post('/company/update', 'App\Http\Controllers\CompanyController@update')->name('company.update')->middleware('auth');
 
 
 Route::get('/kataparchi', 'App\Http\Controllers\KataParchiController@index')->name('kataparchi.list')->middleware('auth');
@@ -213,6 +228,7 @@ Route::get('/SalesReturn/delete/{id}', 'App\Http\Controllers\CNController@delete
 Route::get('/SalesReturn/edit/{id}', 'App\Http\Controllers\CNController@edit')->name('Sales-Return.edit')->middleware('auth');
 
 Route::put('/SalesReturn/update', 'App\Http\Controllers\CNController@update')->name('Sales-Return.update')->middleware('auth');
+
 
 // --------------End selse return ------------
 
@@ -259,8 +275,12 @@ Route::get('/purchase/getrst', 'App\Http\Controllers\PurchaseController@getrst')
 
 Route::post('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
 
+Route::get('/otherspurchase', 'App\Http\Controllers\PurchaseController@others')->name('purchase.other')->middleware('auth');
+
 
 Route::get('/purchase/delete/{id}', 'App\Http\Controllers\PurchaseController@delete')->name('purchase.delete')->middleware('auth');
+
+Route::get('/purchase/filter', 'App\Http\Controllers\PurchaseController@filter')->name('purchase.filter')->middleware('auth');
 
 
 

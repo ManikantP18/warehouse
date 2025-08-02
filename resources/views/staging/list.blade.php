@@ -35,11 +35,6 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-        <a href="#" data-size="xl" data-url="{{ route('staging.create') }}" data-ajax-popup="true"
-            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Staging') }}"
-            class="btn btn-sm btn-primary">
-            <i class="ti ti-plus"></i>
-        </a>
     </div>
 @endsection
 
@@ -48,20 +43,50 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body table-border-style table-border-style">
+                     <div class="mb-3">
+                        <label><strong>Show/Hide Columns:</strong></label><br>
+                       @php
+                        $columns = [
+                            ['label' => 'Staging Id', 'index' => 0],
+                            ['label' => 'Select Lot No.', 'index' => 1],
+                            ['label' => 'Farmer Name', 'index' => 2],
+                            ['label' => 'Staging Varity', 'index' => 3],
+                            ['label' => 'Rst number', 'index' => 4],
+                            ['label' => 'Godown', 'index' => 5],
+                            ['label' => 'Stage No.', 'index' => 6],
+                            ['label' => 'No of Begs', 'index' => 7],
+                            ['label' => 'Final Weight', 'index' => 8],
+                            ['label' => 'Pay for staging', 'index' => 9],
+                            ['label' => 'Date', 'index' => 10],
+                            ['label' => 'Status', 'index' => 11],
+                            ['label' => 'Action', 'index' => 12],
+                        ];
+                    @endphp
+
+                    @foreach($columns as $col)
+                        <label class="form-check-label me-3">
+                            <input type="checkbox" class="form-check-input checkbox-rem toggle-col" data-col="{{ $col['index'] }}" onchange="handleCheckbox()"> {{ $col['label'] }}
+                        </label>
+                    @endforeach
+
+                    </div>
                     <div class="table-responsive">
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>Staging Id</th>
-                                    <th>Select Lot No.</th>
-                                    <th> Staging Varity </th>
+                                    <th >Staging Id</th>
+                                    <th style="display:none">Select Lot No.</th>
+                                    <th>Farmer Name</th>
+                                    <th style="display:none"> Staging Varity </th>
+                                    <th style="display:none">Rst number</th>
                                     <th> Godown </th>
-                                    <th>Stage No. </th>
-                                    <th> No of Begs </th>
-                                    <th>Pay for staging </th>
+                                    <th style="display:none">Stage No. </th>
+                                    <th style="display:none"> No of Begs </th>
+                                    <th style="display:none">Final Weight</th>
+                                    <th style="display:none">Pay for staging </th>
                                     <th>Date </th>
-                                    <th> Status </th>
-                                    <th> Action </th>
+                                    <th style="display:none"> Status </th>
+                                    <th > Action </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,31 +95,30 @@
 
                                 <tr>
                                     <td> {{ $value->staging_id}} </td>
-                                    <td> {{ $value->select_lot_no}} </td>
-                                    <td> {{ $value->staging_varity}} </td>
-                                    <td> {{ $value->godown}} </td>
-                                     <td> {{ $value->stage_no}} </td>
-                                    <td> {{ $value->no_of_begs}} </td>
-                                     <td> {{ $value->pay_for_staging}} </td>
+                                    <td style="display:none"> {{ $value->select_lot_no}} </td>
+                                    <td >{{ $value->farmer_name}}</td>
+                                    <td style="display:none"> {{ $value->name}} </td>
+                                    <td style="display:none">{{ $value->rst_no}}</td>
+                                    <td> {{ $value->branch_name}} </td>
+                                     <td style="display:none"> {{ $value->stage_no}} </td>
+                                    <td style="display:none"> {{ $value->no_of_begs}} </td>
+                                    <td style="display:none">{{ $value->final_weight}}</td>
+                                     <td style="display:none"> {{ $value->pay_for_staging}} </td>
                                       <td> {{ $value->staging_date}} </td>
-                                    <td> {{ $value->staging_status == 1 ? 'Active' : 'Inactive' }} </td>
-                            <td>
-                                       <div class="flex gap-4">
-  
-   <a href="#" data-url="{{ route('staging.edit', $value->staging_id) }}"  data-size="xl"data-ajax-popup="true" data-bs-toggle="tooltip" 
-            class="btn btn-sm btn-success">
-           <i class="ti ti-pencil"></i>
-        </a>
- 
-   {{-- ✅ Delete Button: Calls JS confirm & deletes --}}
-    <button class="btn btn-sm btn-danger" onclick="deleteit('{{ route('staging.delete', $value->staging_id) }}')" title="Delete">
-        <i class="ti ti-trash"></i>
-    </button>
-  
+                                    <td style="display:none"> {{ $value->staging_status == 1 ? 'Active' : 'Inactive' }} </td>
+                                    <td>
+                                            <div class="flex gap-4">
+        
+                                        <a href="#" data-url="{{ route('staging.edit', $value->staging_id) }}"  data-size="xl"data-ajax-popup="true" data-bs-toggle="tooltip" 
+                                            class="btn btn-sm btn-success">
+                                        <i class="ti ti-pencil"></i>
+                                        </a>
+                                
+                                        
 
-</div>
-                                         </td>
-                               </tr>
+                                        </div>
+                                    </td>
+                                </tr>
 
                             @endforeach
                                
@@ -108,8 +132,7 @@
 @endsection
 
 @push('script-page')
-    <script>
-        $(document).on('change', '#password_switch', function() {
+<script> $(document).on('change', '#password_switch', function() {
             if ($(this).is(':checked')) {
                 $('.ps_div').removeClass('d-none');
                 $('#password').attr("required", true);
@@ -129,13 +152,46 @@
                 }));
             }, 2000);
         });
+     $(document).ready(function () {
+    $('.toggle-col').on('change', function () {
+        const colIndex = $(this).data('col');
+        const isVisible = $(this).is(':checked');
+        const display = isVisible ? '' : 'none';
+        $('table tr').each(function () {
+            $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', display);
+        });
+    });
+});
 
-        function deleteit(url){
-            let cnt = confirm("Are you sure you want to delete this Ledger?")
 
-            if(cnt == true){
-                window.location.href = url;
-            }
+function handleCheckbox() {
+            let arr = [];
+
+            $(".checkbox-rem").each(function () {
+                if ($(this).is(":checked")) {
+                    arr.push($(this).attr('data-col'));
+                }
+            });
+
+            localStorage.setItem('staging', JSON.stringify(arr));
         }
-    </script>
+
+        $(document).ready(function () {
+            let items = JSON.parse(localStorage.getItem('staging')) || [];
+
+            $(".checkbox-rem").each(function () {
+                if (items.includes($(this).attr('data-col'))) {
+                    $(this).prop("checked", true); 
+
+                    const colIndex = $(this).data('col');
+                        const isVisible = $(this).is(':checked');
+                        const display = isVisible ? '' : 'none';
+                        $(`table tr`).each(function () {
+                            $(this).find(`td:eq(${colIndex}), th:eq(${colIndex})`).css('display', display);
+                        });
+                }
+            });
+        });
+</script>
 @endpush
+

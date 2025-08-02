@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="staging_varity" class="form-label">Staging Variety</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="staging_varity" type="text" id="staging_varity" pattern="^[A-Za-z0-9\s\-]+$" placeholder="Enter Variety Name">
+                    <input class="form-control alwaysvisible" required name="staging_varity" type="text" id="staging_varity" pattern="^[A-Za-z0-9\s\-]+$" placeholder="Enter Variety Name" readonly>
                     <div class="invalid-feedback">Please enter a valid variety (letters, numbers, hyphen).</div>
                 </div>
             </div>
@@ -34,8 +34,12 @@
             <div class="form-group">
                 <label for="godown" class="form-label">Godown</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="godown" type="text" id="godown" placeholder="Enter Godown Name">
-                    <div class="invalid-feedback">Please enter the godown name.</div>
+                    <select name="select_lot_no" required id="select_lot_no" class="form-control" readonly>
+                        <option value="" hidden>Select Godown</option>
+                        @foreach($branch as $val)
+                            <option value="{{ $val->branch_name }}">{{ $val->branch_name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>
@@ -45,8 +49,37 @@
             <div class="form-group">
                 <label for="stage_no" class="form-label">Stage No</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="stage_no" type="number" id="stage_no" min="1" placeholder="Enter Stage No">
+                    <input class="form-control alwaysvisible" required name="stage_no" type="text" id="stage_no" placeholder="Enter Stage No">
                     <div class="invalid-feedback">Please enter a valid stage number.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Farmer Name</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="farmer_name" type="text" id="farmer_name"  placeholder="Enter farmer Name" readonly>
+                    <div class="invalid-feedback">Please enter a valid Name.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Rst No.</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="rst" type="nmuber" id="rst"  placeholder="Enter rst no." readonly>
+                    <div class="invalid-feedback">Please enter a valid rst.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="stage_no" class="form-label">Net Weight</label>
+                <div class="form-icon-user">
+                    <input class="form-control alwaysvisible" required name="final_weight" type="number" id="final_weight"  placeholder="Enter rst no." step="0.01" readonly>
+                    <div class="invalid-feedback">Please enter a final Weight</div>
                 </div>
             </div>
         </div>
@@ -56,7 +89,7 @@
             <div class="form-group">
                 <label for="no_of_begs" class="form-label">No of Bags</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="no_of_begs" type="number" id="no_of_begs" min="1" placeholder="Enter number of bags">
+                    <input class="form-control alwaysvisible" required name="no_of_begs" type="number" id="no_of_begs" min="1" placeholder="Enter number of bags" step="0.01">
                     <div class="invalid-feedback">Please enter number of bags.</div>
                 </div>
             </div>
@@ -74,11 +107,11 @@
         </div>
 
         <!-- Pay for Staging -->
-        <div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs">
+        <div class="col-lg-6 col-md-6 col-sm-6 onlyforformesrs">
             <div class="form-group">
                 <label for="pay_for_staging" class="form-label">Pay for Staging</label>
                 <div class="form-icon-user">
-                    <input class="form-control onlyforformesrs" required name="pay_for_staging" type="number" id="pay_for_staging" min="0" step="0.01" placeholder="Enter amount">
+                    <input class="form-control onlyforformesrs" required name="pay_for_staging" type="number" id="pay_for_staging" min="1" step="0.01" placeholder="Enter amount">
                     <div class="invalid-feedback">Please enter valid amount for staging.</div>
                 </div>
             </div>

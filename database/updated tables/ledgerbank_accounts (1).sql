@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 11, 2025 at 08:08 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: sdb-r.hosting.stackcp.net
+-- Generation Time: Jul 28, 2025 at 08:48 AM
+-- Server version: 10.6.18-MariaDB-log
+-- PHP Version: 8.3.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,24 +32,26 @@ CREATE TABLE `ledgerbank_accounts` (
   `ledger_id` int(11) NOT NULL,
   `account_name` varchar(50) NOT NULL,
   `account_num` int(20) NOT NULL,
-  `account_type` int(11) NOT NULL,
-  `cheque_book` tinyint(2) NOT NULL,
-  `chequerange_from` int(11) NOT NULL,
-  `chequerange_to` int(11) NOT NULL,
-  `account_status` int(2) NOT NULL DEFAULT 1
+  `account_type` varchar(50) NOT NULL,
+  `cheque_book` varchar(10) NOT NULL,
+  `chequerange_from` varchar(5) DEFAULT NULL,
+  `chequerange_to` varchar(5) DEFAULT NULL,
+  `account_status` int(2) NOT NULL DEFAULT 1,
+  `bank_name` varchar(255) NOT NULL,
+  `is_deleted` int(11) NOT NULL DEFAULT 0,
+  `opening_bal` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ledgerbank_accounts`
 --
 
-INSERT INTO `ledgerbank_accounts` (`account_id`, `ledger_id`, `account_name`, `account_num`, `account_type`, `cheque_book`, `chequerange_from`, `chequerange_to`, `account_status`) VALUES
-(1, 0, 'nikita', 223, 57373, 1, 3, 4, 1),
-(2, 0, 'sumit', 2147483647, 0, 0, 32, 2222, 1),
-(3, 0, 'sumit', 2147483647, 786, 0, 3433, 432, 1),
-(4, 0, 'sumit', 2147483647, 0, 0, 3433, 2222, 1),
-(5, 0, 'nikita', 2147483647, 0, 0, 3433, 43289, 1),
-(6, 0, 'sumit', 2147483647, 0, 0, 3433, 2222, 1);
+INSERT INTO `ledgerbank_accounts` (`account_id`, `ledger_id`, `account_name`, `account_num`, `account_type`, `cheque_book`, `chequerange_from`, `chequerange_to`, `account_status`, `bank_name`, `is_deleted`, `opening_bal`) VALUES
+(10, 0, 'nikita', 2147483647, 'basic', 'no', '3433', '432', 1, 'Bank Of India', 0, 0),
+(11, 0, 'sumit', 2147483647, 'trial', 'yes', '3433', '2222', 1, 'Bank Of Maharashtra', 0, 50),
+(15, 0, 'sukhraj', 2147483647, 'basic', 'yes', '9', '432', 1, 'bank baroda', 0, 12),
+(16, 0, 'sukhraj', 2147483647, 'LOAN', 'yes', '98', '87', 1, 'bank baroda', 0, 50),
+(17, 0, 'sukhraj bhaiiii', 2147483647, 'enterprise', 'no', NULL, NULL, 1, 'sbi', 0, 12);
 
 --
 -- Indexes for dumped tables
@@ -69,7 +71,7 @@ ALTER TABLE `ledgerbank_accounts`
 -- AUTO_INCREMENT for table `ledgerbank_accounts`
 --
 ALTER TABLE `ledgerbank_accounts`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -12,7 +12,16 @@
             <div class="form-group">
                 <label for="Rogring_name" class="form-label">Rogrowing Responsible</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible"required minlength="2" pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed" name="Rogring_name" type="text" id="Rogring_name "placeholder ="Rogring Name">
+                    <select class="form-control alwaysvisible" name="Rogring_name" id="Rogring_name">
+                      <option value=''> Select Rogrowing Responsible </option>
+
+                      @foreach($persons as $p)
+
+                        <option value="{{$p->id}}">{{$p->name}}</option>
+
+                      @endforeach
+
+                    </select>
                 </div>
             </div>
         </div>
@@ -37,7 +46,12 @@
         </div>
       </div>
     </div>
-
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="search_owner" class="form-label">Land Owner Name</label>
+                        <input class="form-control" name="search_owner" type="text" id="search_owner" placeholder="Owner Name">
+                    </div>
+                    </div>
     <div class="col-lg-3 col-md-3 col-sm-12">
       <div class="form-group">
         <label for="search_village" class="form-label">Village Name</label>
@@ -47,16 +61,13 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="col-lg-6 col-md-6 col-sm-12 m-auto">
       <div class="form-group">
         <label class="form-label d-none d-sm-block">&nbsp;</label>
         <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
       </div>
     </div>
-                   
-
-  
-
+       
 
   </div>
 </div>
@@ -84,7 +95,7 @@ function searchLadger() {
   let searchVal = $("#search").val();
   let searchVillage = $("#search_village").val();
   let searchname = $("#search_name").val();
-
+   let searchowner = $('#search_owner').val();
   $.ajax({
     url: '{{ route("Rogring.search") }}',
     type: 'GET',
