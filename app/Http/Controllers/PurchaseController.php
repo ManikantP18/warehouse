@@ -221,12 +221,8 @@ class PurchaseController extends Controller
                         ->where('staging_varity', $purchase_item[$i])
                         ->first();
 
-
-                        if($existing) {
-                             DB::update("update staging set select_lot_no = '$purchase_lot_no',staging_varity='$purchase_item[$i]',staging_date='$today',rst_no = '$purchase_rst_no' , farmer_name = '$purchase_relation_cusm' where staging_id = '$staging_id'");
-                        } else {
-                            DB::insert("Insert into staging (select_lot_no,staging_varity,staging_date,rst_no,farmer_name,final_weight,land_owner,godown) VALUES ('$purchase_lot_no', '$purchase_item[$i]','$today','$purchase_rst_no','$purchase_relation_cusm',$purchase_quantity[$i],'$purchase_owner','$godown')");
-                        }
+                            DB::insert("Insert into staging (purchase_id,select_lot_no,staging_varity,staging_date,rst_no,farmer_name,final_weight,land_owner,godown) VALUES ($id,'$purchase_lot_no', '$purchase_item[$i]','$today','$purchase_rst_no','$purchase_relation_cusm',$purchase_quantity[$i],'$purchase_owner','$godown')");
+                        
                     }
                  }
        

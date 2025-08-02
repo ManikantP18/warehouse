@@ -70,10 +70,18 @@ class StagingController extends Controller
            $rst = $req->input('rst');
         $farmer_name = $req->input('farmer_name');
         $final_weight = $req->input('final_weight');
+
+        $land_owner = $req->input('land_owner');
+
+        $today = date('Y-m-d H:i:s');
                 
 
 
        DB::update("update staging set select_lot_no = '$select_lot_no' ,staging_varity = '$staging_varity',godown = '$godown',stage_no = '$stage_no',no_of_begs = '$no_of_begs',pay_for_staging = '$pay_for_staging',staging_date = '$staging_date' ,rst_no = '$rst' ,farmer_name = '$farmer_name' ,final_weight = '$final_weight'  where staging_id = '$staging_id'");
+
+
+
+       DB::insert("Insert into gredding (staging_id,gredding_lot_no,gredding_verity,gredding_godown,rst_no,farmar_name,final_waigth,land_owner,gred_stage_no,gredding_date) VALUES ($staging_id,'$select_lot_no', '$staging_varity','$godown','$rst','$farmer_name','$final_weight','$land_owner','$stage_no','$today')");
 
 
         return Redirect::to('/staging')->with('success', 'Staging edit Successfully');
