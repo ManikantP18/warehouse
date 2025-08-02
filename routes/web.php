@@ -91,6 +91,9 @@ use App\Http\Controllers\BranchesController;
 use App\Http\Controllers\RogringController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\StagingController;
+use App\Http\Controllers\GreddingController;
+
+
 
 
 
@@ -116,6 +119,12 @@ use App\Http\Controllers\CNController;
 
 
 require __DIR__ . '/auth.php';
+Route::get('/gredding', 'App\Http\Controllers\GreddingController@index')->name('gredding.list')->middleware('auth');
+Route::get('/gredding/create', 'App\Http\Controllers\GreddingController@create')->name('gredding.create')->middleware('auth');
+Route::post('/gredding/add', 'App\Http\Controllers\GreddingController@add')->name('gredding.add')->middleware('auth');
+
+
+
 Route::get('/staging', 'App\Http\Controllers\StagingController@index')->name('staging.list')->middleware('auth');
 Route::get('/staging/create', 'App\Http\Controllers\StagingController@create')->name('staging.create')->middleware('auth');
 Route::post('/staging/add', 'App\Http\Controllers\StagingController@add')->name('staging.add')->middleware('auth');

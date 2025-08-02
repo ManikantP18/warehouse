@@ -217,6 +217,45 @@
                     </li>
                 @endif
 
+                {{-- -------  Processing ---------- --}}
+                @if (\Auth::user()->type == 'super admin')
+                    @can('manage user')
+                        <li class="dash-item">
+                            <a href="{{ route('users.index') }}"
+                                class="dash-link {{ Request::route()->getName() == 'users.index' || Request::route()->getName() == 'users.create' || Request::route()->getName() == 'users.edit' ? ' active' : '' }}">
+                                <span class="dash-micon"><i class="ti ti-users"></i></span>
+                                <span class="dash-mtext">{{ __('Companies') }}</span>
+                            </a>
+                        </li>
+                    @endcan
+                @else
+                    @if (Gate::check('manage user') || Gate::check('manage role'))
+                        <li
+                            class="dash-item dash-hasmenu {{ Request::segment(1) == 'users' || Request::segment(1) == 'roles' || Request::segment(1) == 'permissions' ? ' active dash-trigger' : '' }}">
+                            <a href="#!" class="dash-link "><span class="dash-micon"><i
+                                        class="ti ti-users"></i></span><span
+                                    class="dash-mtext">{{ __('Processing') }}</span>
+                                <span class="dash-arrow"><i data-feather="chevron-right"></i></span>
+                            </a>
+                            <ul
+                                class="dash-submenu {{ Request::segment(1) == 'users' || Request::segment(1) == 'roles' || Request::segment(1) == 'permissions' ? 'show' : '' }}">
+                                @can('manage user')
+                                    <li
+                                        class="dash-item {{ Request::route()->getName() == 'users.index' || Request::route()->getName() == 'users.create' || Request::route()->getName() == 'users.edit' ? ' active' : '' }}">
+                                        <a class="dash-link" href="{{ route('users.index') }}">{{ __('User') }}</a>
+                                    </li>
+                                @endcan
+                                @can('manage role')
+                                    <li
+                                        class="dash-item {{ Request::route()->getName() == 'roles.index' || Request::route()->getName() == 'roles.create' || Request::route()->getName() == 'roles.edit' ? ' active' : '' }}">
+                                        <a class="dash-link" href="{{ route('gredding.list') }}">{{ __('Gredding') }}</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endif
+                @endif
+
                 {{-- -------  Product & Stock ---------- --}}
                 @if (Gate::check('manage product & service'))
                     <li class="dash-item {{ Request::segment(1) == 'productstock' ? 'active' : '' }}">
