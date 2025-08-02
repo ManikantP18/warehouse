@@ -49,10 +49,13 @@
                             <thead>
                                 <tr>
                                     <th>Gredding Id</th>
+                                    <th>Farmar Name</th>
+                                    <th>Land Owner name</th>
                                     <th>Select Lot No.</th>
                                     <th> Gredding Varity </th>
                                     <th> Godown </th>
                                     <th>Stage No. </th>
+                                    <th>Final Waigth</th>
                                     <th> No of Begs </th>
                                     <th> Gredded  Quantity </th>
                                     <th> Undersize Quantity </th>
@@ -68,23 +71,35 @@
 
                                 <tr>
                                     <td> {{ $value->gredding_id}} </td>
+                                    <td> {{ $value->farmar_name}} </td>
+                                    <td> {{ $value->land_owner}} </td>
+
                                     <td> {{ $value->gredding_lot_no}} </td>
                                     <td> {{ $value->gredding_verity}} </td>
                                     <td> {{ $value->gredding_godown}} </td>
-                                     <td> {{ $value->gred_stage_no}} </td>
+                                    <td> {{ $value->gred_stage_no}} </td>
+                                    <td> {{ $value->final_waigth}} </td>
+
                                     <td> {{ $value->gred_no_begs}} </td>
                                     <td> {{ $value->gredded_quantity}} </td>
                                     <td> {{ $value->undersize_quantity}} </td>
                                      <td> {{ $value->pay_gredding}} </td>
                                       <td> {{ $value->gredding_date}} </td>
                                     <td> {{ $value->gredding_status == 1 ? 'Active' : 'Inactive' }} </td>
-                            <td>
-                                       <div class="flex gap-4">
-  
-  
-
-</div>
-                                         </td>
+                                <td>
+                                    <div class="d-flex">
+                                            
+                                        <a href="#" data-size="xl"
+                                                data-url="{{ route('gredding.edit', $value->gredding_id) }}"
+                                                data-ajax-popup="true"
+                                                 data-title="{{ __('Edit gredding') }}"
+                                                 
+                                                 class="btn btn-sm btn-primary me-2"
+                                                data-bs-toggle="tooltip" title="{{ __('Edit')}}">
+                                                <i class="ti ti-pencil"></i>
+                                            </a> 
+                                    </div>
+                                </td>
                                </tr>
 
                             @endforeach

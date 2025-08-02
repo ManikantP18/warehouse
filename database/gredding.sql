@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2025 at 09:55 AM
+-- Generation Time: Aug 02, 2025 at 10:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,15 +38,18 @@ CREATE TABLE `gredding` (
   `undersize_quantity` varchar(50) NOT NULL,
   `pay_gredding` varchar(50) NOT NULL,
   `gredding_date` date NOT NULL DEFAULT current_timestamp(),
-  `gredding_status` int(2) NOT NULL DEFAULT 1
+  `gredding_status` int(2) NOT NULL DEFAULT 1,
+  `farmar_name` varchar(50) NOT NULL,
+  `land_owner` varchar(50) NOT NULL,
+  `final_waigth` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `gredding`
 --
 
-INSERT INTO `gredding` (`gredding_id`, `gredding_lot_no`, `gredding_verity`, `gredding_godown`, `gred_stage_no`, `gred_no_begs`, `gredded_quantity`, `undersize_quantity`, `pay_gredding`, `gredding_date`, `gredding_status`) VALUES
-(1, 11, 'soyabin', 'thikri', 77, 20, '100', '50', '2000', '2025-07-19', 1);
+INSERT INTO `gredding` (`gredding_id`, `gredding_lot_no`, `gredding_verity`, `gredding_godown`, `gred_stage_no`, `gred_no_begs`, `gredded_quantity`, `undersize_quantity`, `pay_gredding`, `gredding_date`, `gredding_status`, `farmar_name`, `land_owner`, `final_waigth`) VALUES
+(1, 11, 'soyabin', 'thikri', 77, 20, '100', '50', '2000', '2025-07-19', 1, '', '', 0);
 
 --
 -- Indexes for dumped tables
