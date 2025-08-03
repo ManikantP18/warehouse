@@ -49,7 +49,7 @@
             <div class="form-group">
                 <label for="total_bag" class="form-label">Total Bag</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="total_bag" type="text" id="total_bag" value="{{$packing[0]->packing_no_of_begs}}" readonly>
+                    <input class="form-control alwaysvisible" required name="total_bag" type="text" id="total_bag" value="{{$packing[0]->packing_no_of_begs}}">
                 </div>
             </div>
         </div>
