@@ -14,7 +14,7 @@ class StagingController extends Controller
 {
     public function index(){
 
-        $data['staging'] = DB::select("select * from staging join branches on branches.branch_id  = staging.godown join product_services on product_services.id = staging.staging_varity order by staging_id desc");
+        $data['staging'] = DB::select("select * from staging join branches on branches.branch_id  = staging.godown join product_services on product_services.id = staging.staging_varity where staging.is_hide = 0 order by staging_id desc");
 
         return view('staging/list',$data);
 
@@ -77,7 +77,7 @@ class StagingController extends Controller
                 
 
 
-       DB::update("update staging set select_lot_no = '$select_lot_no' ,staging_varity = '$staging_varity',godown = '$godown',stage_no = '$stage_no',no_of_begs = '$no_of_begs',pay_for_staging = '$pay_for_staging',staging_date = '$staging_date' ,rst_no = '$rst' ,farmer_name = '$farmer_name' ,final_weight = '$final_weight'  where staging_id = '$staging_id'");
+       DB::update("update staging set select_lot_no = '$select_lot_no' ,staging_varity = '$staging_varity',godown = '$godown',stage_no = '$stage_no',no_of_begs = '$no_of_begs',pay_for_staging = '$pay_for_staging',staging_date = '$staging_date' ,rst_no = '$rst' ,farmer_name = '$farmer_name' ,final_weight = '$final_weight' , is_hide = 1 where staging_id = '$staging_id'");
 
 
 

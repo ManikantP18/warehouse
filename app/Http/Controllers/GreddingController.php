@@ -14,18 +14,12 @@ class GreddingController extends Controller
 {
     public function index(){
 
-        $data['gredding'] = DB::select('select * from gredding');
+        $data['gredding'] = DB::select('select * from gredding join branches on branches.branch_id  = gredding.gredding_godown join product_services on product_services.id = gredding.gredding_verity where gredding.is_hide = 0');
 
         return view('gredding/list',$data);
 
     }
 
-//     function create(){
-
-//         $data['lotnumbers'] = DB::select("select purchase_lot_no from purchase where purchase_status = 1 AND is_deleted = 0");
-        
-//         return view('staging/create',$data);
-//     }
 
    function add(Request $req){
         $gredding_lot_no = $req->input('gredding_lot_no');
@@ -43,37 +37,38 @@ class GreddingController extends Controller
          return Redirect::to('gredding')->with('success', 'Gredding Create Successfully');
      }
 
-//       function delete($id){
-//        DB::table('staging')->where('staging_id', $id)->delete();
-//        return Redirect::to('/staging')->with('success', 'Staging Delete Successfully');
-   
-//     }
 
-//     function edit($id){
-//          $data['staging'] = DB::select("select * from staging where staging_id = '$id'");
-//       ///   print_r($data);
-//         return view('staging/edit',$data);
-//     }
+    function edit($id){
+         $data['gredding'] = DB::select("select * from gredding join product_services on product_services.id = gredding.gredding_verity where gredding_id = '$id'");
+         $data['branch'] = DB::select("select * from branches where branch_status = 1");
+
+        return view('gredding/edit',$data);
+    }
 
     
-//     function update(Request $req) {
-//          $staging_id  = $req->input('staging_id');
-//         $select_lot_no = $req->input('select_lot_no');
-//         $staging_varity	 = $req->input('staging_varity');
-//         $godown	 = $req->input('godown');
-//         $stage_no = $req->input('stage_no');
-//         $no_of_begs = $req->input('no_of_begs');
-//          $pay_for_staging = $req->input('pay_for_staging');
-//           $staging_date	 = $req->input('staging_date');
-           
-                
+    function update(Request $req) {
+        $gredding_verity = $req->input('gredding_verity');
+        $gredding_godown = $req->input('gredding_godown');
+        $gred_stage_no = $req->input('gred_stage_no');
+        $gred_no_begs = $req->input('gred_no_begs');
+        $gredded_quantity = $req->input('gredded_quantity');
+        $undersize_quantity = $req->input('undersize_quantity');
+         $pay_gredding = $req->input('pay_gredding');
+          $gredding_id = $req->input('gredding_id');
+          $gredding_lot_no = $req->input('gredding_lot_no');
+         $farmar_name = $req->input('farmar_name');
+          $land_owner = $req->input('land_owner');
+           $final_waigth = $req->input('final_waigth');
+           $rst_no = $req->input('rst_no');
+          
+            DB::update("update gredding set gredding_verity = '$gredding_verity' ,gredding_godown = '$gredding_godown',gred_stage_no = '$gred_stage_no',gred_no_begs = '$gred_no_begs',gredded_quantity = '$gredded_quantity',undersize_quantity = '$undersize_quantity' ,pay_gredding = '$pay_gredding' ,gredding_lot_no = '$gredding_lot_no' ,farmar_name = '$farmar_name' ,land_owner = '$land_owner',final_waigth = '$final_waigth',rst_no = '$rst_no' , is_hide = 1 where gredding_id = '$gredding_id'");
+
+           DB::insert("Insert into packing (rst_no,farmer_name,land_owner,packing_stage_no,packing_no_of_begs,packing_pay,packing_gredded_quantity,packing_verity,final_weight,packing_godown) VALUES ('$rst_no', '$farmar_name', '$land_owner', '$gred_stage_no', '$gred_no_begs', '$pay_gredding','$gredded_quantity','$gredding_verity','$final_waigth','$gredding_godown')");
 
 
-//        DB::update("update staging set select_lot_no = '$select_lot_no' ,staging_varity = '$staging_varity',godown = '$godown',stage_no = '$stage_no',no_of_begs = '$no_of_begs',pay_for_staging = '$pay_for_staging',staging_date = '$staging_date' where staging_id = '$staging_id'");
+         return Redirect::to('gredding')->with('success', 'Gredding Create Successfully');
 
-
-//         return Redirect::to('/staging')->with('success', 'Staging edit Successfully');
-//     }
+    }
 
 
 }

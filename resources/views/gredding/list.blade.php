@@ -75,8 +75,8 @@
                                     <td> {{ $value->land_owner}} </td>
 
                                     <td> {{ $value->gredding_lot_no}} </td>
-                                    <td> {{ $value->gredding_verity}} </td>
-                                    <td> {{ $value->gredding_godown}} </td>
+                                    <td> {{ $value->name}} </td>
+                                    <td> {{ $value->branch_name}} </td>
                                     <td> {{ $value->gred_stage_no}} </td>
                                     <td> {{ $value->final_waigth}} </td>
 

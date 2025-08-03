@@ -1,6 +1,6 @@
-{{ Form::open(['url' => 'kataparchi/update', 'method' => 'put', 'class'=>'needs-validation','novalidate']) }}
+{{ Form::open(['url' => 'gredding/update', 'method' => 'put', 'class'=>'needs-validation','novalidate']) }}
 <div class="modal-body">
-    <h6 class="sub-title">Kataparchi</h6>
+    <h6 class="sub-title">gredding</h6>
 
     <div class="row">
             
@@ -27,30 +27,46 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="gredding_lot_no" class="form-label"> Select LOT no. </label>
+                    <label for="gredding_lot_no" class="form-label"> LOT No. </label>
                     <div class="form-icon-user">
-                        <input class="form-control " required pattern="[A-Za-z ]+" title="Only letters allowed" name="gredding_lot_no" type="text" id="gredding_lot_no" value="{{$gredding[0]->gredding_lot_no	}}">
+                        <input class="form-control "  name="gredding_lot_no" type="text" id="gredding_lot_no" value="{{$gredding[0]->gredding_lot_no	}}">
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="gredding_verity" class="form-label">Verity</label>
+                    <label for="rst_no" class="form-label"> RST No. </label>
                     <div class="form-icon-user">
-                        <input class="form-control " required="required" name="gredding_verity" type="text" id="gredding_verity" value="{{$gredding[0]->gredding_verity}}">
+                        <input class="form-control "  name="rst_no" type="text" id="rst_no" value="{{$gredding[0]->rst_no	}}">
                     </div>
                 </div>
             </div>
 
+
             <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="gredding_godown" class="form-label">Godown</label>
-                    <div class="form-icon-user">
-                        <input class="form-control " required="required" name="gredding_godown" type="text" id="gredding_godown" value="{{$gredding[0]->gredding_godown}}">
-                    </div>
+            <div class="form-group">
+                <label for="gredding_verity" class="form-label">Verity</label>
+                <div class="form-icon-user">
+                    <select class="form-control alwaysvisible" required name="gredding_verity" type="text" id="gredding_verity" readonly>
+                        <option value="{{ $gredding[0]->id }}">{{ $gredding[0]->name }}</option>
+                    </select>
                 </div>
             </div>
+        </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="gredding_godown" class="form-label">Godown Name</label>
+                <div class="form-icon-user">
+                    <select class="form-control alwaysvisible" required name="gredding_godown" type="text" id="gredding_godown" readonly>
+                       @foreach($branch as $val)
+                            <option value="{{ $val->branch_id }}"  {{$gredding[0]->gredding_godown == $val->branch_id ? 'selected' : 'hidden'}}>{{ $val->branch_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
@@ -75,7 +91,7 @@
                     <label for="gred_no_begs" class="form-label">No Of Begs </label>
                     <div class="form-icon-user">
                         <select name="gred_no_begs" class="form-control " id="gred_no_begs">
-                            <option value="{{$gredding[0]->gred_no_begs}}"> {{$kataparchi[0]->veriety}} </option>
+                            <option value="{{$gredding[0]->gred_no_begs}}"> {{$gredding[0]->gredding_verity}} </option>
                         </select>
                     </div>
                 </div>

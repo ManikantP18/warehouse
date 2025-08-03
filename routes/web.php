@@ -123,8 +123,8 @@ require __DIR__ . '/auth.php';
 Route::get('/gredding', 'App\Http\Controllers\GreddingController@index')->name('gredding.list')->middleware('auth');
 Route::get('/gredding/create', 'App\Http\Controllers\GreddingController@create')->name('gredding.create')->middleware('auth');
 Route::post('/gredding/add', 'App\Http\Controllers\GreddingController@add')->name('gredding.add')->middleware('auth');
-Route::get('/gredding/edit', 'App\Http\Controllers\GreddingController@add')->name('gredding.edit')->middleware('auth');
-
+Route::get('/gredding/edit/{id}', 'App\Http\Controllers\GreddingController@edit')->name('gredding.edit')->middleware('auth');
+Route::put('/gredding/update/', 'App\Http\Controllers\GreddingController@update')->name('gredding.update')->middleware('auth');
 
 
 
