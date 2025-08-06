@@ -5,14 +5,56 @@
 @push('script-page')
     <script>
         $(document).on('click', '#billing_data', function() {
-            $("[name='shipping_name']").val($("[name='billing_name']").val());
-            $("[name='shipping_country']").val($("[name='billing_country']").val());
-            $("[name='shipping_state']").val($("[name='billing_state']").val());
-            $("[name='shipping_city']").val($("[name='billing_city']").val());
-            $("[name='shipping_phone']").val($("[name='billing_phone']").val());
-            $("[name='shipping_zip']").val($("[name='billing_zip']").val());
-            $("[name='shipping_address']").val($("[name='billing_address']").val());
-        })
+            $(`[name^='shipping_']`).each(function() {
+                const field = this.name.replace('shipping_', 'billing_');
+                this.value = $(`[name='${field}']`).val();
+            });
+        });
+
+        // Column toggle logic
+        $(document).ready(function () {
+            const columnHeaders = [
+                "Packing Date", "Farmer Name", "Land Owner", "Packing Godown",
+                "Gredded quantity", "Packing total bag", "Pay for packing",
+                "rst no.", "packing verity", "stage no.", "final weight", "Action"
+            ];
+            const table = $('.datatable');
+            const container = $('<div class="row mb-3"><label class="form-label fw-bold">Show/Hide Columns:</label><div class="d-flex flex-wrap column-checkboxes"></div></div>');
+            const checkboxContainer = container.find('.column-checkboxes');
+
+            table.before(container);
+
+            columnHeaders.forEach((header, index) => {
+                const id = 'col-toggle-' + index;
+                const wrapper = $('<div>', { class: 'form-check form-check-inline' });
+                const checkbox = $('<input>', {
+                    type: 'checkbox',
+                    id,
+                    class: 'form-check-input',
+                    checked: localStorage.getItem('col_' + index) !== 'false'
+                });
+                const label = $('<label>', {
+                    for: id,
+                    class: 'form-check-label'
+                }).text(header);
+
+                wrapper.append(checkbox).append(label);
+                checkboxContainer.append(wrapper);
+
+                checkbox.on('change', function () {
+                    const colIndex = index + 1;
+                    const visible = $(this).is(':checked');
+                    localStorage.setItem('col_' + index, visible);
+                    table.find('tr').each(function () {
+                        $(this).find('td:nth-child(' + colIndex + '), th:nth-child(' + colIndex + ')').toggle(visible);
+                    });
+                });
+            });
+
+            checkboxContainer.find('input[type="checkbox"]').each(function () {
+                $(this).trigger('change');
+            });
+        });
     </script>
 @endpush
 @section('page-title')
@@ -34,8 +76,6 @@
             class="btn btn-sm btn-primary me-2">
             <i class="ti ti-file-export"></i>
         </a>
-
-        
     </div>
 @endsection
 
@@ -63,11 +103,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                            
-
                                 @foreach($packing AS $value):
-
                                 <tr>
                                     <td> {{ $value->packing_date }} </td>
                                     <td> {{ $value->farmer_name }} </td>
@@ -78,21 +114,17 @@
                                     <td> {{ $value->packing_pay }} </td>
                                     <td> {{ $value->rst_no }} </td>
                                     <td> {{ $value->name }} </td>
-                                     <td> {{ $value->packing_stage_no }} </td>
+                                    <td> {{ $value->packing_stage_no }} </td>
                                     <td> {{ $value->final_weight }} </td>
-                                    <td>  
+                                    <td>
                                         <a href="#" data-size="xl" data-url="{{ route('packing.edit', $value->packing_id) }}" data-ajax-popup="true"
                                             data-bs-toggle="tooltip" title="{{ __('Edit') }}" data-title="{{ __('Edit Packing') }}"
                                             class="btn btn-sm btn-primary">
                                             <i class="ti ti-pencil"></i>
                                         </a>
                                     </td>
-                               </tr>
-
-                            @endforeach
-
-                            
-                               
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -108,7 +140,6 @@
             if ($(this).is(':checked')) {
                 $('.ps_div').removeClass('d-none');
                 $('#password').attr("required", true);
-
             } else {
                 $('.ps_div').addClass('d-none');
                 $('#password').val(null);

@@ -2,40 +2,7 @@
 <div class="modal-body">
   <div class="row">
 
-    <!-- Search Fields -->
-    <!-- <div class="col-12">
-      <div class="row align-items-end">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="search" class="form-label">Account/Mobile No</label>
-            <input class="form-control" name="search" type="text" id="search" placeholder="Acc No / Mobile No">
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="search_name" class="form-label">Farmer Name</label>
-            <input class="form-control" name="search_name" type="text" id="search_name" placeholder="Farmer Name">
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="search_village" class="form-label">Village Name</label>
-            <input class="form-control" name="search_village" type="text" id="search_village" placeholder="Village Name">
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label class="form-label d-none d-sm-block">&nbsp;</label>
-            <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- Dynamic Farmer Selection -->
+  
     <div class="col-12">
       <div class="form-group">
         <div class="form-icon-user allfarmers"></div>
@@ -178,81 +145,76 @@
           </div>
         </div>
 
-        <!-- <div class="col-md-6 changehide">
+          <!-- Existing Purchased Items -->
+    @for($i = 0; $i < count($items); $i++)
+      <div class="row mb-3">
+
+        <div class="col-md-4">
           <div class="form-group">
-            <label>GST No.</label>
-            <input type="text" class="form-control" name="purchase_gst_no" id="purchase_gst_no" required>
+            <label>Purchase Item</label>
+            <select name="purchase_item[]" id="purchase_item_{{ $i }}" class="form-control allitems" onchange="handleChage({{ $i }})">
+              <option value="" hidden>Select Item</option>
+              @foreach($allproducts as $value)
+                <option value="{{ $value->id }}" {{ $value->id == $items[$i]->purchased_item ? 'selected' : ''}}>{{ $value->name }}</option>
+              @endforeach
+            </select>
           </div>
-        </div> -->
-
-        <!-- Multy items purchasing -->
-
-         @for($i = 0; $i < count($items); $i++)
-  <div class="row mb-3">
-
-    <div class="col-md-4">
-      <div class="form-group">
-        <label>Purchase Item</label>
-        <select name="purchase_item[]" id="purchase_item_{{ $i }}" class="form-control allitems" onchange="handleChage({{ $i }})">
-          <option value="" hidden>Select Item</option>
-          @foreach($allproducts as $value)
-            <option value="{{ $value->id }}" {{ $value->id == $items[$i]->purchased_item ? 'selected' : ''}}>
-                {{ $value->name }}
-            </option>
-          @endforeach
-        </select>
-      </div>
-    </div>
-
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>Quantity</label>
-        <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_{{ $i }}" value="{{$items[$i]->purchased_qty}}" required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})" step="0.01">
-        <span id="other_qty_val"></span>
-      </div>
-    </div>
-
-      <div class="col-md-2">
-        <div class="form-group">
-          <label>Unit</label>
-          <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $i }}" onchange="handleChage({{ $i }})">
-            <option value="" hidden>Select Unit</option>
-            @foreach($units as $value)
-            <option value="{{ $value->id }}" {{ $value->id == $items[$i]->purchased_unit ? 'selected' : ''}} >{{ $value->name }}</option>
-            @endforeach
-          </select>
-
-          @foreach($units as $value)
-
-              @if($value->id == $items[$i]->purchased_unit)
-                  <input type="hidden" value="{{$value->short_unit}}" id="prev_unit_{{ $i }}">
-              @endif
-
-          @endforeach
-
-          
         </div>
-      </div>
 
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_{{ $i }}" value="{{$items[$i]->purchased_qty}}" required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})" step="0.01">
+            <span id="other_qty_val"></span>
+          </div>
+        </div>
 
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>Rate</label>
-        <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_{{ $i }}" value="{{$items[$i]->purchased_rate}}" onkeyup="autofill({{ $i }})">
-      </div>
-    </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Unit</label>
+            <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $i }}" onchange="handleChage({{ $i }})">
+              <option value="" hidden>Select Unit</option>
+              @foreach($units as $value)
+                <option value="{{ $value->id }}" {{ $value->id == $items[$i]->purchased_unit ? 'selected' : ''}}>{{ $value->name }}</option>
+              @endforeach
+            </select>
 
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>Total Amount</label>
-        <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_{{ $i }}" required value="{{$items[$i]->purchased_total}}">
+            @foreach($units as $value)
+              @if($value->id == $items[$i]->purchased_unit)
+                <input type="hidden" value="{{$value->short_unit}}" id="prev_unit_{{ $i }}">
+              @endif
+            @endforeach
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Rate</label>
+            <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_{{ $i }}" value="{{$items[$i]->purchased_rate}}" onkeyup="autofill({{ $i }})">
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Total Amount</label>
+            <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_{{ $i }}" required value="{{$items[$i]->purchased_total}}">
+          </div>
+        </div>
+
       </div>
+    @endfor
+
+    <!-- Container for Extra Items -->
+    <div id="extra-item-container"></div>
+
+    <div class="col-12">
+      <button type="button" class="btn btn-success" onclick="addMoreRow()">Add More</button>
     </div>
 
   </div>
-@endfor
+</div>
 
-<!-- Newitem for create Niku -->
+<!-- Newitem for create Niku
   @for($i = 0; $i < count($products); $i++)
  @php
     $j = $i + 1000;
@@ -308,7 +270,7 @@
     </div>
 
   </div>
-@endfor
+@endfor -->
 
         
 
@@ -588,3 +550,84 @@ function autofill(id) {
 
 
 </script>
+<script>
+let extraRowCounter = 0;
+
+function addMoreRow() {
+  const j = 1000 + extraRowCounter;
+
+  const allproducts = JSON.parse(document.getElementById('allproductsinfo').value);
+  const allunits = JSON.parse(document.getElementById('allunitsinfo').value);
+
+  let productOptions = '<option value="" hidden>Select Item</option>';
+  allproducts.forEach(p => {
+    productOptions += `<option value="${p.id}">${p.name}</option>`;
+  });
+
+  let unitOptions = '<option value="" hidden>Select Unit</option>';
+  allunits.forEach(u => {
+    unitOptions += `<option value="${u.id}">${u.name}</option>`;
+  });
+
+  const newRow = `
+    <div class="row mb-3 bg-gray-400" id="extra_item_${j}">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Purchase Item</label>
+          <select name="purchase_item[]" id="purchase_item_${j}" class="form-control allitems" required>
+            ${productOptions}
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Quantity</label>
+          <input type="number" class="form-control" required name="purchase_quantity[]" id="purchase_quantity_${j}" value="1" required onkeyup="autofill(${j})" onchange="autofill(${j})">
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Unit</label>
+          <select class="form-control" name="purchase_unit[]" required id="purchase_unit_${j}" onchange="handleChage(${j})">
+            ${unitOptions}
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Rate</label>
+          <input type="number" class="form-control" required name="purchase_rate[]" id="purchase_rate_${j}" value="0" onkeyup="autofill(${j})">
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Total</label>
+          <input type="number" class="form-control" required name="purchase_total[]" id="purchase_total_${j}" value="0">
+        </div>
+      </div>
+
+      <div class="col-md-2 d-flex align-items-end m-auto">
+        <button type="button" class="btn btn-danger" onclick="removeRow(${j})">Remove</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('extra-item-container').insertAdjacentHTML('beforeend', newRow);
+  extraRowCounter++;
+}
+
+function removeRow(id) {
+  const el = document.getElementById('extra_item_' + id);
+  if (el) el.remove();
+  extraRowCounter--;
+}
+</script>
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Then Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
