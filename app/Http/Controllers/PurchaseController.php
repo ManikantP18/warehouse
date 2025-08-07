@@ -190,7 +190,7 @@ class PurchaseController extends Controller
         $purchase_item = $req->input('purchase_item');
         $sum_total = array_sum($purchase_total);
         $cid = $req->input('company_id');
-
+        $ladgerid = $req->input('cust_id');
         
         
         DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to',company_id = '$cid' , purchase_total = '$sum_total',godown = '$godown', is_hide = '1' WHERE purchase_id = '$id'");
@@ -215,7 +215,11 @@ class PurchaseController extends Controller
                         
                     }
                  }
-       
+                 
+                 DB::insert("Insert into payment (pay_ladger_id,tr_type,amount,purchase_id) VALUES ('$ladgerid','2', '$sum_total','$id')"); 
+
+                 DB::update("update ladgers set opening_balance = opening_balance + '$sum_total' WHERE account_id = '$ladgerid'");
+
         return Redirect::to('purchase');
        
     }

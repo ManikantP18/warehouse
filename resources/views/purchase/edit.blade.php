@@ -34,6 +34,14 @@
 
         <div class="col-md-6">
           <div class="form-group">
+            <label>Customer ID</label>
+            <input type="text" class="form-control" name="cust_id" id="cust_id" required value="{{$purchase[0]->cust_id}}" readonly>
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+          <div class="form-group">
             <label>Accountant name</label>
             <input type="text" class="form-control" name="purchase_accountant" id="spurchase_accountant" required value="{{$purchase[0]->purchase_accountant}}" readonly>
           </div>
@@ -214,92 +222,10 @@
   </div>
 </div>
 
-<!-- Newitem for create Niku
-  @for($i = 0; $i < count($products); $i++)
- @php
-    $j = $i + 1000;
-@endphp
-  <div class="row mb-3">
-
-    <div class="col-md-4">
-      <div class="form-group">
-        <label>Purchase Item</label>
-        <select name="purchase_item[]" id="purchase_item_{{ 1000+$i }}" class="form-control allitems">
-          <option value="" hidden>Select Item</option>
-          @foreach($allproducts as $value)
-            <option value="{{ $value->id }}">
-                {{ $value->name }}
-            </option>
-          @endforeach
-        </select>
-      </div>
-    </div>
-
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>Quantity</label>
-        <input type="number" class="form-control" name="purchase_quantity[]" id="purchase_quantity_{{ $j }}" value="1" required onkeyup="autofill({{ $j }})" onchange="autofill({{ $j }})">
-      </div>
-    </div>
-
-      <div class="col-md-2">
-        <div class="form-group">
-          <label>Unit</label>
-          <select class="form-control" name="purchase_unit[]" id="purchase_unit_{{ $j }}">
-            <option value="" hidden>Select Unit</option>
-            @foreach($units as $value)
-            <option value="{{ $value->id }}">{{ $value->name }}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-
-
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>Rate</label>
-        <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_{{ $j }}" value="0" onkeyup="autofill({{ $j }})">
-      </div>
-    </div>
-
-    <div class="col-md-2">
-      <div class="form-group">
-        <label>Total Amount</label>
-        <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_{{ $j }}" required value="0">
-      </div>
-    </div>
-
-  </div>
-@endfor -->
-
-        
 
         <input class="form-control" required name="purchase_id" type="hidden" id="sellto_account_number" value="{{$purchase[0]->purchase_id}}">
 
-        <!--
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Cash Amount</label>
-            <input type="number" class="form-control" name="sellto_cash_amount" id="sellto_cash_amount" required value='0' onkeyup="autofill()">
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Credit Amount</label>
-            <input type="number" class="form-control" name="sellto_Credit_amount" id="sellto_Credit_amount" required value='0' onkeyup="autofill()">
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Remaining Amount</label>
-            <input type="number" class="form-control" name="sellto_Remaining_amount" id="sellto_Remaining_amount" required value='0'>
-          </div>
-        </div>
-
-        -->
-
+      
       </div>
     </div>
   </div>

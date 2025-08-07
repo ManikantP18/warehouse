@@ -159,6 +159,7 @@ class KataParchiController extends Controller
         'purchase_total' => $rate,
         'pure_wigth' => $kp_pure_wigth,
         'godown' => $kp_goween,
+        'cust_id'  => $kpacc,
     ]);
 
     $unit = DB::select("select * from product_service_units where short_unit ='kw'");
