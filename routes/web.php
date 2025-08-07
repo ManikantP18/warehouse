@@ -141,8 +141,8 @@ Route::put('/staging/edit/', 'App\Http\Controllers\StagingController@update')->n
 Route::get('/payment', 'App\Http\Controllers\PaymentsController@index')->name('payment.list')->middleware('auth');
 Route::get('/payment/search', 'App\Http\Controllers\PaymentsController@search')->name('payment.search')->middleware('auth');
 Route::get('/payment/history', 'App\Http\Controllers\PaymentsController@history')->name('payment.history')->middleware('auth');
-Route::get('/payment/edit/{id}', 'App\Http\Controllers\PaymentsController@edit')->name('payment.edit')->middleware('auth');
-Route::put('/payment/update/', 'App\Http\Controllers\PaymentsController@update')->name('payment.update')->middleware('auth');
+Route::get('/payment/pay', 'App\Http\Controllers\PaymentsController@pay')->name('payment.pay')->middleware('auth');
+Route::post('/payment/create', 'App\Http\Controllers\PaymentsController@create')->name('payment.create')->middleware('auth');
 
 
 Route::get('/packing', 'App\Http\Controllers\PackingController@index')->name('packing.list')->middleware('auth');

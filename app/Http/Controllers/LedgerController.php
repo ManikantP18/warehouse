@@ -48,6 +48,9 @@ class LedgerController extends Controller
 
        DB::insert("Insert into ladgers ( account_id,ladger_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num,khasra_no,opening_balance,bhumi_gram) VALUES ('$account_id',$ladger_type,'$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num','$khasra_no','$opening_balance','$bhumi_gram')");
 
+       DB::insert("Insert into payment (is_opening_bal,amount,pay_ladger_id,pay_status ) VALUES ('1','$opening_balance','$account_id','done')");
+
+
         if($ladger_type == 1){
             return Redirect::to('ledger')->with('success', 'Ledger Create Successfully');
         } else{

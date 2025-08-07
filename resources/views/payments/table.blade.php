@@ -6,8 +6,9 @@
             <th>Land Owner</th>
             <th> Amount </th>
             <th> Transition Type </th>
-            <th> Paid Type </th>
+            <th> Pay Type </th>
             <th> payment status </th>
+            <th> Record Type </th>
             <th>action</th>
         </tr>
     </thead>
@@ -19,11 +20,34 @@
                 <td>{{ $value->farm_owner_name }}</td>
                 <td>{{ $value->amount }}</td>
                 <td>{{ $value->tr_type == 1 ? 'IN' : 'OUT'}}</td>
-                <td>{{ $value->pay_type == 0 ? ' ' : $value->pay_type}}</td>
+                @php
+                    $payTypeText = match($value->pay_type) {
+                        1 => 'Cash',
+                        2 => 'Bank',
+                        3 => 'Both',
+                        default => '',
+                    };
+                @endphp
+
+                <td>{{ $payTypeText }}</td>
                 <td>{{ $value->pay_status }}</td>
+                @php
+                    if ($value->sell_id > 0) {
+                        $type = 'Sells';
+                    } elseif ($value->purchase_id > 0) {
+                        $type = 'Purchase';
+                    } else {
+                        $type = 'Opening Balance';
+                    }
+                @endphp
+
+                <td>{{ $type }}</td>
+
+
+                
                 <td> 
-                                        <a href="#" data-size="xl" data-url="#" data-ajax-popup="true"
-                                            data-bs-toggle="tooltip" title="{{ __('Pending') }}" data-title="{{ __('Pending') }}"
+                                        <a href="#" data-size="xl" data-url="{{ route('payment.pay', $value->pay_id) }}" data-ajax-popup="true"
+                                            data-bs-toggle="tooltip" title="{{ __('Payment') }}" data-title="{{ __('Pending') }}"
                                             class="btn btn-sm btn-primary">
                                            Pay
                                         </a>
