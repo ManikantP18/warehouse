@@ -61,9 +61,9 @@ class PaymentsController extends Controller
         
     }
 
-        function pay() {
+        function pay($id) {
             $data['bank'] = DB::select("select * from ledgerbank_accounts where account_status = 1 and is_deleted = 0");
-            $data['total'] = DB::select("select * from payment where status = 1");
+            $data['total'] = DB::select("select * from payment where pay_id = '$id'");
             return view('payments/pay',$data);
         }
 
@@ -76,9 +76,19 @@ class PaymentsController extends Controller
         $remaining_amount = $req->input('remaining_amount'); 
         $remark = $req->input('remark');
         $pay_ladger_id = $req->input('pay_ladger_id');
+        $purchase_id = $req->input('purchase_id');
+        $sell_id = $req->input('sell_id');
         $total = $cash_amount + $bank_amount;
 
-        DB::insert("insert into payment(tr_type,amount,cash_amount,from_bank,bank_amount,remaining_amount,remark) values ('$tr_type','$total_amount','$cash_amount','$bank_name','$bank_amount','$remaining_amount','$remark')");
+        DB::insert("insert into payment(tr_type,amount,cash_amount,from_bank,bank_amount,remaining_amount,remark,pay_ladger_id) values ('$tr_type','$total_amount','$cash_amount','$bank_name','$bank_amount','$remaining_amount','$remark','$pay_ladger_id')");
+
+        if(!empty($purchase_id) && $purchase_id > 0) {
+           DB::insert("Insert into payment (pay_ladger_id,tr_type,amount,purchase_id) VALUES ('$pay_ladger_id','2', '$remaining_amount','$purchase_id')");
+        } 
+
+        if(!empty($sell_id) && $sell_id > 0) {
+            DB::insert("Insert into payment (pay_ladger_id,tr_type,amount,sell_id) VALUES ('$pay_ladger_id','1', '$remaining_amount','$sell_id')");
+        }
 
         DB::update("update ladgers set opening_balance = opening_balance - '$total' WHERE account_id = '$pay_ladger_id'");
 

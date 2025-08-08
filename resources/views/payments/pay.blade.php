@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label for="cash_amount" class="form-label">Cash Amount</label>
                 <div class="form-icon-user">
-                    <input class="form-control"  name="cash_amount" type="number" id="cash_amount" step="0.01">
+                    <input class="form-control"  name="cash_amount" type="number" id="cash_amount" step="0.01" onkeyup="remAmount()">
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
             <div class="form-group" style="display:none">
                 <label for="bank_amount" class="form-label">Bank Amount</label>
                 <div class="form-icon-user">
-                    <input class="form-control"  name="bank_amount" type="number" id="bank_amount" step="0.01">
+                    <input class="form-control"  name="bank_amount" type="number" value="0" id="bank_amount" step="0.01" onkeyup="remAmount()">
                 </div>
             </div>
         </div>
@@ -79,6 +79,8 @@
             </div>
         </div>
         <input type="hidden" name="pay_ladger_id" id="pay_ladger_id"  value="{{$total[0]->pay_ladger_id}}">
+         <input type="hidden" name="sell_id" id="sell_id"  value="{{$total[0]->sell_id}}">
+         <input type="hidden" name="purchase_id" id="purchase_id"  value="{{$total[0]->purchase_id}}">
     </div>
 </div>
 <div class="modal-footer">
@@ -109,8 +111,20 @@
         }
     }
 
-    // Call once on page load to initialize fields based on default selection
     document.addEventListener("DOMContentLoaded", function() {
         showHideFields();
     });
+
+    function remAmount() {
+
+        let bank_amount = parseInt($("#bank_amount").val());
+        let cash_amount = parseInt($("#cash_amount").val());
+        let total_amount = parseInt($("#total_amount").val());
+
+        let remainAmt = total_amount - cash_amount - bank_amount;
+
+        $("#remaining_amount").val(remainAmt)
+
+    }
+
 </script>
