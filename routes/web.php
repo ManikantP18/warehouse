@@ -120,6 +120,7 @@ use App\Http\Controllers\CNController;
 
 require __DIR__ . '/auth.php';
 
+
 Route::get('/gredding', 'App\Http\Controllers\GreddingController@index')->name('gredding.list')->middleware('auth');
 Route::get('/gredding/create', 'App\Http\Controllers\GreddingController@create')->name('gredding.create')->middleware('auth');
 Route::post('/gredding/add', 'App\Http\Controllers\GreddingController@add')->name('gredding.add')->middleware('auth');
@@ -142,6 +143,10 @@ Route::get('/payment', 'App\Http\Controllers\PaymentsController@index')->name('p
 Route::get('/payment/search', 'App\Http\Controllers\PaymentsController@search')->name('payment.search')->middleware('auth');
 Route::get('/payment/history', 'App\Http\Controllers\PaymentsController@history')->name('payment.history')->middleware('auth');
 Route::get('/payment/pay/{id}', 'App\Http\Controllers\PaymentsController@pay')->name('payment.pay')->middleware('auth');
+
+Route::get('/payment/view/{id}', 'App\Http\Controllers\PaymentsController@view')->name('payment.view')->middleware('auth');
+Route::put('/payment/update/', 'App\Http\Controllers\PaymentsController@update')->name('payment.update')->middleware('auth');
+Route::get('/payment/pay', 'App\Http\Controllers\PaymentsController@pay')->name('payment.pay')->middleware('auth');
 Route::post('/payment/create', 'App\Http\Controllers\PaymentsController@create')->name('payment.create')->middleware('auth');
 
 

@@ -51,10 +51,12 @@
                                             class="btn btn-sm btn-primary">
                                            Pay
                                         </a>
-                                        <a href="javascript:void(0)" class="btn btn-sm bg-danger text-white shadow-sm" title="View"
-                                            >
+                                       
+                                        <a href="#" data-size="xl" data-url=" {{ route('payment.view', $value->pay_id) }}"               data-ajax-popup="true"
+                                            data-bs-toggle="tooltip" title="{{ __('Pending') }}" data-title="{{ __('Pending') }}"
+                                            class="btn btn-sm btn-primary">
                                             View
-                                        </a>                   
+                                        </a>             
                 </td>
             </tr>
         @endforeach

@@ -34,17 +34,20 @@ class LedgerController extends Controller
          $farm_area_acre = $req->input('farm_area_acre');
          $khasra_no = $req->input('khasra_no');
          $bhumi_gram = $req->input('bhumi_gram');
+
          $opening_balance = $req->input('opening_balance');
+         
           $phone_number	 = $req->input('phone_number');
            $bank_account_name	 = $req->input('bank_account_name');
             $account_number	 = $req->input('account_number');
              $bank_name	 = $req->input('bank_name');
               $ifsc_code = $req->input('ifsc_code');
-               $branch	 = $req->input('branch');
-                $gst_num = $req->input('gst_num');
-                $account_id = $this->customerNumber() > 0 ? 'cust-'.$this->customerNumber() : 'cust-1';
+            $branch	 = $req->input('branch');
+            $gst_num = $req->input('gst_num');
+            $account_id = $this->customerNumber() > 0 ? 'cust-'.$this->customerNumber() : 'cust-1';
                 
 
+            
 
        DB::insert("Insert into ladgers ( account_id,ladger_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num,khasra_no,opening_balance,bhumi_gram) VALUES ('$account_id',$ladger_type,'$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num','$khasra_no','$opening_balance','$bhumi_gram')");
 

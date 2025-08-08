@@ -22,12 +22,12 @@ class SelltoController extends Controller
         
         $data['items'] = DB::select("select *,product_services.id AS pid, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
 
-
         $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
 
         $data['units'] = DB::select("select * from product_service_units");
 
         $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
        
         return view('sellto/create',$data);
     }
@@ -71,6 +71,7 @@ class SelltoController extends Controller
 
 
         $total = $req->input('sellto_total_amount');
+        $s_id = $req-> input ('sell_id');
 
         $lastId = DB::table('sell_to')->insertGetId([
             'sell_way'            => $cashcredit,
@@ -98,8 +99,6 @@ class SelltoController extends Controller
          $lotno = $req->input('purchase_lot_no');
 
 
-
-
          for($i=0; $i<count($itemselled); $i++){
 
             if(!empty($itemselled[$i]) && !empty($rate[$i])){
@@ -108,11 +107,10 @@ class SelltoController extends Controller
 
             }
 
-             
-
          }
         
-        
+         DB::insert("Insert into payment (sell_id,amount,pay_ladger_id) VALUES ('$lastId','$total','$accno')");
+
         
         
         if($farmerother == 'farmer') {
@@ -148,17 +146,11 @@ class SelltoController extends Controller
                 ");
                 
             }
-           
-
-            
-
+     
             $variety = DB::select("SELECT * FROM product_services join selled_item ON selled_item.selled_item = product_services.id join sell_to on sell_to.sell_id =  selled_item.sell_id
             WHERE sell_to.sell_account_number = '$searchVal' group by product_services.id");
 
              $Othervariety = DB::select("SELECT * FROM product_services group by product_services.id");
-
-            
-
 
 
             if ($searchData) {
@@ -235,6 +227,8 @@ class SelltoController extends Controller
         $total = $req->input('sellto_total_amount');
          $gst = $req->input('sellto_gst_amount');
          $units = $req->input('purchase_unit');
+
+         DB::update("update payment set sell_id ='$id',amount = '$total',pay_ladger_id ='$accno' ");
 
         DB::delete("delete from selled_item where sell_id = '$id'");
 
