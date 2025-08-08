@@ -171,7 +171,7 @@
       </div>
     @endfor
 
-    <!-- Newitem for create Niku -->
+    <!-- Newitem for create Nikuu  -->
       @for($i = 0; $i < count($products); $i++)
       @php $j = $i + 1000; @endphp
       <div class="row mb-3">

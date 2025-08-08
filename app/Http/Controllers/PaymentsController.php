@@ -65,7 +65,23 @@ class PaymentsController extends Controller
         
     }
 
-     function update() {
+     function view($id) {
+
+        $data['CNdata'] = DB::select("select * from sales_return where cn_id = '$id' ");
+
+         $data['units'] = DB::select("select * from product_service_units");
+
+         $data['selleditems'] = DB::select("select * from selled_item where sell_id = '$id' and selled_status = 1");
+
+        $data['items'] = DB::select("select * from product_services where type = 'Product'");
+
+         $data['item'] = DB::select("select * from product_services where type = 'Product' ");
+
+         $data['Ldata'] = DB::select("select * from ladgers where account_id IN(select pay_ladger_id FROM payment WHERE pay_id = '$id') ");
+
+         $data['pt'] =  DB::select("select tr_type from payment where pay_id = '$id' ");
+        
+        return view('payments/view',$data);
         
     }
 }
