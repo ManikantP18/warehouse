@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
 use DB;
@@ -61,9 +61,11 @@ class PaymentsController extends Controller
         
     }
 
-     function edit() {
-        
-    }
+        function pay() {
+            $data['bank'] = DB::select("select * from ledgerbank_accounts where account_status = 1 and is_deleted = 0");
+            $data['total'] = DB::select("select * from payment where status = 1");
+            return view('payments/pay',$data);
+        }
 
      function view($id) {
 
@@ -83,5 +85,21 @@ class PaymentsController extends Controller
         
         return view('payments/view',$data);
         
+     function create(Request $req) {
+        $tr_type = $req->input('tr_type'); 
+        $total_amount = $req->input('total_amount');
+        $cash_amount = $req->input('cash_amount');
+        $bank_name = $req->input('bank_name');
+        $bank_amount = $req->input('bank_amount');
+        $remaining_amount = $req->input('remaining_amount'); 
+        $remark = $req->input('remark');
+        $pay_ladger_id = $req->input('pay_ladger_id');
+        $total = $cash_amount + $bank_amount;
+
+        DB::insert("insert into payment(tr_type,amount,cash_amount,from_bank,bank_amount,remaining_amount,remark) values ('$tr_type','$total_amount','$cash_amount','$bank_name','$bank_amount','$remaining_amount','$remark')");
+
+        DB::update("update ladgers set opening_balance = opening_balance - '$total' WHERE account_id = '$pay_ladger_id'");
+
+        return Redirect::to('payment');
     }
 }

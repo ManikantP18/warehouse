@@ -145,6 +145,8 @@ Route::get('/payment/history', 'App\Http\Controllers\PaymentsController@history'
 
 Route::get('/payment/view/{id}', 'App\Http\Controllers\PaymentsController@view')->name('payment.view')->middleware('auth');
 Route::put('/payment/update/', 'App\Http\Controllers\PaymentsController@update')->name('payment.update')->middleware('auth');
+Route::get('/payment/pay', 'App\Http\Controllers\PaymentsController@pay')->name('payment.pay')->middleware('auth');
+Route::post('/payment/create', 'App\Http\Controllers\PaymentsController@create')->name('payment.create')->middleware('auth');
 
 
 Route::get('/packing', 'App\Http\Controllers\PackingController@index')->name('packing.list')->middleware('auth');

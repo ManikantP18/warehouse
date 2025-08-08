@@ -278,7 +278,7 @@
 
                     <li class="dash-item {{ Request::route()->getName() == 'payment.list' ? ' active' : '' }} ">
                         <a href="{{ route('payment.list') }}" class="dash-link ">
-                            <span class="dash-micon"><i class="ti ti-scissors"></i></span>
+                            <span class="dash-micon"><i class="ti ti-report-money"></i></span>
                             <span class="dash-mtext">Payments</span>
                         </a>
                     </li>
