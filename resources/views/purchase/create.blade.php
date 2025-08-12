@@ -343,7 +343,7 @@ function selectLadger(id) {
 }
 
 function autofill(id) {
- $("#purchase_total_"+id).val(parseInt($("#purchase_quantity_"+id).val()) * parseInt($("#purchase_rate_"+id).val()));
+ $("#purchase_total_"+id).val(parseFloat($("#purchase_quantity_"+id).val()) * parseFloat($("#purchase_rate_"+id).val()));
 }
 
 // ✅ Initial setup to hide form

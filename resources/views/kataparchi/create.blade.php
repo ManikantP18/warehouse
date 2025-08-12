@@ -255,7 +255,7 @@
                     $('#kp_khasra_no').val(data.khasra_no);
 
                     $('#kp_mo_no').val(data.phone_number);
-                    $('#kp_rogger_name').val(data.Rogring_name || '');
+                    $('#kp_rogger_name').val(data.name || '');
 
                     let opt = `<option value=""> select Item </option>`;
 

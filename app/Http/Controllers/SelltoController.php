@@ -132,7 +132,7 @@ class SelltoController extends Controller
             if($all == 'no'){
 
                 $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
-                WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
+                left join users on rogring.Rogring_name = users.id WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
                 AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
                 ");

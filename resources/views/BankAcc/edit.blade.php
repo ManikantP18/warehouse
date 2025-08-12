@@ -117,7 +117,19 @@
         </div>
     </div>
 </div>
-
+<div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="form-group">
+        <label for="company_id" class="form-label">Company Name</label>
+        <div class="form-icon-user">
+            <select class="form-control alwaysvisible" name="company_id"  id="company_id"  required >
+                @foreach($company as $val)
+                <option value="{{$val->company_id}}">{{$val->company_name}}</option>
+                @endforeach
+            </select>
+              
+        </div>
+    </div>
+</div>
 
 <!-- Account Type -->
 <div class="col-lg-12 col-md-12 col-sm-12 onlyforformesrs">
@@ -230,7 +242,7 @@ function totalCheck() {
     let from =  $("#chequerange_from").val();
     let to =    $("#chequerange_to").val();
     let totalCheck = to - from ;
-    $('#total_check').val(totalCheck);
+    $('#total_check').val(totalCheck+1);
 }
 
 </script>

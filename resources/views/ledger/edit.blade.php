@@ -57,14 +57,23 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 hideshow">
-            <div class="form-group">
-                <label for="ladger_type	" class="form-label">Opening Balance</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="opening_balance" type="number" id="opening_balance" value="{{$ledger[0]->opening_balance}}">
+
+            @foreach($open_bal as $val)
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Opening Balance ({{ $val->company_name }})
+                        </label>
+                        <div class="form-icon-user">
+                            <input class="form-control" required name="opening_balance[]" type="number" value="{{ $val->opening_amount }}">
+                            
+                            <input type="hidden" name="opening_bal_id[]" value="{{ $val->opening_bal_id }}">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            @endforeach
+            
+
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="ladger_type	" class="form-label">Village</label>

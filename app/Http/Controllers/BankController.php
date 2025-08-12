@@ -10,14 +10,16 @@ class BankController extends Controller
 {
     public function index()
     {
-        $data['bankacc'] = DB::select("SELECT * FROM ledgerbank_accounts join chequebookrange on chequebookrange.bank_id = ledgerbank_accounts.account_id   WHERE account_status = 1 and is_deleted=0  group by account_id order by chequebookrange.check_id ");
+        $data['bankacc'] = DB::select("SELECT * FROM ledgerbank_accounts join chequebookrange on chequebookrange.bank_id = ledgerbank_accounts.account_id  join company on company.company_id = ledgerbank_accounts.company_id WHERE account_status = 1 and ledgerbank_accounts.is_deleted=0  group by account_id order by chequebookrange.check_id ");
         
-        return view('bankacc.list', $data);
+        return view('bankacc/list', $data);
     }
 
     public function create()
     {
-        return view('bankacc.create');
+         $data['range'] = DB::select("select * from chequebookrange ");
+        $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+        return view('bankacc/create',$data);
     }
 
     public function add(Request $req)
@@ -30,14 +32,20 @@ class BankController extends Controller
             
             'Bank_name'         => $req->input('Bank_name'),
             'opening_bal'       => $req->input('opening_bal'),
+            'company_id'       => $req->input('company_id'),
         ]);
 
-        $from = $req->input('chequerange_from');
+       $from = $req->input('chequerange_from'); // array
+        $to   = $req->input('chequerange_to');   // array
+        $tc   = $req->input('total_check');      // array
 
-        $to = $req->input('chequerange_to');
-        $tc = $req->input('total_check');
+        for ($i = 0; $i < count($from); $i++) {
+            DB::insert("
+                INSERT INTO chequebookrange (bank_id, check_from, check_to, check_total) 
+                VALUES (?, ?, ?, ?)
+            ", [$lastId, $from[$i], $to[$i], $tc[$i]]);
+        }
 
-        DB::insert("Insert into chequebookrange (bank_id,check_from,check_to,check_total) values ('$lastId','$from','$to','$tc')" );
 
         return Redirect::to('bankacc')->with('success', 'Bank account added successfully.');
     }
@@ -45,6 +53,7 @@ class BankController extends Controller
     function edit($id){
          $data['bankacc'] = DB::select("select * from ledgerbank_accounts where account_id = '$id'");
          $data['range'] = DB::select("select * from chequebookrange where bank_id = '$id'");
+         $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
         return view('bankacc/edit',$data);
     }
 

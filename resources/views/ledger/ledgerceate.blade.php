@@ -48,11 +48,15 @@
         <label>Khasra No.</label>
         <input class="form-control" name="khasra_no" type="text" required>
     </div>
-    <div class="col-md-6">
-        <label>Opening Balance</label>
-        <input class="form-control" name="opening_balance" type="number" required>
-    </div>
 
+   
+    @foreach($company as $val)
+    <div class="col-md-6">
+        <label>Opening Balance ({{$val->company_name}})</label>
+        <input class="form-control" name="opening_balance[]" type="number" required>
+        <input type="hidden" name="company_id[]" value="{{$val->company_id}}">
+    </div>
+    @endforeach
    <div class="col-md-6">
     <label>Phone No.</label>
     <input 
@@ -80,7 +84,7 @@
 
     <div class="col-md-6">
         <label>Account No.</label>
-        <input class="form-control" name="account_number" type="text" required pattern="\d{9,18}" title="Enter 9 to 18 digit account number">
+        <input class="form-control" name="account_number" type="number" required>
     </div>
 
     <div class="col-md-6">

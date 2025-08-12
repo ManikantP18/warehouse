@@ -21,7 +21,8 @@ class LedgerController extends Controller
     }
 
     function create(){
-     return view('ledger/ledgerceate');
+    $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+     return view('ledger/ledgerceate',$data);
     }
 
     function add(Request $req){
@@ -44,15 +45,22 @@ class LedgerController extends Controller
               $ifsc_code = $req->input('ifsc_code');
             $branch	 = $req->input('branch');
             $gst_num = $req->input('gst_num');
+            $companies = $req->input('company_id');
             $account_id = $this->customerNumber() > 0 ? 'cust-'.$this->customerNumber() : 'cust-1';
                 
 
             
 
-       DB::insert("Insert into ladgers ( account_id,ladger_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num,khasra_no,opening_balance,bhumi_gram) VALUES ('$account_id',$ladger_type,'$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num','$khasra_no','$opening_balance','$bhumi_gram')");
+       DB::insert("Insert into ladgers ( account_id,ladger_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num,khasra_no,bhumi_gram) VALUES ('$account_id',$ladger_type,'$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num','$khasra_no','$bhumi_gram')");
 
-       DB::insert("Insert into payment (is_opening_bal,amount,pay_ladger_id,pay_status ) VALUES ('1','$opening_balance','$account_id','done')");
+       
 
+        for ($i = 0; $i < count($companies); $i++) {
+            
+            DB::insert("INSERT INTO ladger_opening_bal (ladger_id, company_id, opening_amount)VALUES ('$account_id','$companies[$i]','$opening_balance[$i]')");
+
+            DB::insert("Insert into payment (is_opening_bal,amount,pay_ladger_id,pay_status,company_id ) VALUES ('1','$opening_balance[$i]','$account_id','done','$companies[$i]')");
+        }
 
         if($ladger_type == 1){
             return Redirect::to('ledger')->with('success', 'Ledger Create Successfully');
@@ -96,7 +104,7 @@ class LedgerController extends Controller
 
     function edit($id){
          $data['ledger'] = DB::select("select * from ladgers where ladger_id = '$id'");
-      ///   print_r($data);
+          $data['open_bal'] = DB::select("select * from ladger_opening_bal join company on company.company_id = ladger_opening_bal.company_id  where ladger_id = 'cust-$id'");
         return view('ledger/edit',$data);
     }
 
@@ -118,14 +126,17 @@ class LedgerController extends Controller
               $ifsc_code = $req->input('ifsc_code');
                $branch	 = $req->input('branch');
                 $gst_num = $req->input('gst_num');
-                
+                $opening_bal_id = $req->input('opening_bal_id');
 
 
-       DB::update("update ladgers set relational_cust_name = '$relational_cust_name' ,account_holder = '$account_holder',farm_owner_name = '$farm_owner_name',village = '$village',farm_area_acre = '$farm_area_acre',phone_number = '$phone_number',bank_account_name = '$bank_account_name',account_number = '$account_number',bank_name = '$bank_name',ifsc_code = '$ifsc_code',branch = '$branch',gst_num = '$gst_num',khasra_no = '$khasra_no',opening_balance = '$opening_balance',bhumi_gram = '$bhumi_gram'  where ladger_id = '$ladger_id'");
+       DB::update("update ladgers set relational_cust_name = '$relational_cust_name' ,account_holder = '$account_holder',farm_owner_name = '$farm_owner_name',village = '$village',farm_area_acre = '$farm_area_acre',phone_number = '$phone_number',bank_account_name = '$bank_account_name',account_number = '$account_number',bank_name = '$bank_name',ifsc_code = '$ifsc_code',branch = '$branch',gst_num = '$gst_num',khasra_no = '$khasra_no',bhumi_gram = '$bhumi_gram'  where ladger_id = '$ladger_id'");
 
-       /*echo "update ladgers set relational_cust_name = '$relational_cust_name' ,account_holder = '$account_holder',farm_owner_name = '$farm_owner_name',village = '$village',farm_area_acre = '$farm_area_acre',phone_number = '$phone_number',bank_account_name = '$bank_account_name',account_number = '$account_number',bank_name = '$bank_name',ifsc_code = '$ifsc_code',branch = '$branch',gst_num = '$gst_num',khasra_no = '$khasra_no',opening_balance = '$opening_balance'  where ladger_id = '$ladger_id'"; exit;*/
+       for($i=0;$i<count($opening_balance);$i++) {
+        DB::update("update ladger_opening_bal set opening_amount = '$opening_balance[$i]' where opening_bal_id = '$opening_bal_id[$i]'");
 
-
+       }
+       
+      
         return Redirect::to('/ledger')->with('success', 'Ledger edit Successfully');
     }
 

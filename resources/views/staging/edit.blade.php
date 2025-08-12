@@ -70,15 +70,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="stage_no" class="form-label">Rst No.</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="rst" type="number" id="rst"  placeholder="Enter rst no." value="{{ $staging[0]->rst_no }}" readonly>
-                    <div class="invalid-feedback">Please enter a valid rst.</div>
-                </div>
-            </div>
-        </div>
+       
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="stage_no" class="form-label">Final Weight</label>

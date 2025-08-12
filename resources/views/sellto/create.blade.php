@@ -132,7 +132,7 @@
     <div class="row">
       <div class="col-md-3">
         <label>Sell Item</label>
-        <select name="sellto_item_selled[]" class="form-control sellto_item_selled" dataid="0" onchange="selectItem(0, this)" >
+        <select name="sellto_item_selled[]" class="form-control sellto_item_selled" dataid="0" onchange="selectItem(0, this)" required>
           <option value="">Select Item</option>
           @foreach($items as $val)
             <option value="{{ $val->pid }}">{{ $val->item_name }}</option>
@@ -154,7 +154,7 @@
 
       <div class="col-md-3">
         <label>Unit</label>
-        <select class="form-control" name="purchase_unit[]" id="purchase_unit_0">
+        <select class="form-control" name="purchase_unit[]" id="purchase_unit_0" required>
           <option value="" hidden>Select Unit</option>
           @foreach($units as $value)
             <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -435,6 +435,7 @@ console.log(item)
         });
 
         $("#sellto_total_amount").val(total);
+        calculateAmt();
     }
 
   function checkmode() {

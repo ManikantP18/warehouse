@@ -59,11 +59,14 @@ class GreddingController extends Controller
          $farmar_name = $req->input('farmar_name');
           $land_owner = $req->input('land_owner');
            $final_waigth = $req->input('final_waigth');
-           $rst_no = $req->input('rst_no');
-          
-            DB::update("update gredding set gredding_verity = '$gredding_verity' ,gredding_godown = '$gredding_godown',gred_stage_no = '$gred_stage_no',gred_no_begs = '$gred_no_begs',gredded_quantity = '$gredded_quantity',undersize_quantity = '$undersize_quantity' ,pay_gredding = '$pay_gredding' ,gredding_lot_no = '$gredding_lot_no' ,farmar_name = '$farmar_name' ,land_owner = '$land_owner',final_waigth = '$final_waigth',rst_no = '$rst_no' , is_hide = 1 where gredding_id = '$gredding_id'");
+           $gredding_lot_no = $req->input('gredding_lot_no');
+           $staging_stage_no = $req->input('staging_stage_no');
 
-           DB::insert("Insert into packing (rst_no,farmer_name,land_owner,packing_stage_no,packing_no_of_begs,packing_pay,packing_gredded_quantity,packing_verity,final_weight,packing_godown) VALUES ('$rst_no', '$farmar_name', '$land_owner', '$gred_stage_no', '$gred_no_begs', '$pay_gredding','$gredded_quantity','$gredding_verity','$final_waigth','$gredding_godown')");
+        $staging_no_begs = $req->input('staging_no_begs');
+          
+            DB::update("update gredding set gredding_verity = '$gredding_verity' ,gredding_godown = '$gredding_godown',gred_stage_no = '$gred_stage_no',gred_no_begs = '$gred_no_begs',gredded_quantity = '$gredded_quantity',undersize_quantity = '$undersize_quantity' ,pay_gredding = '$pay_gredding' ,gredding_lot_no = '$gredding_lot_no' ,farmar_name = '$farmar_name' ,land_owner = '$land_owner',final_waigth = '$final_waigth' , is_hide = 1 , staging_stage_no = '$staging_stage_no',staging_no_bags = ' $staging_no_begs' where gredding_id = '$gredding_id'");
+
+           DB::insert("Insert into packing (lot_no,farmer_name,land_owner,packing_stage_no,packing_no_of_begs,packing_pay,packing_gredded_quantity,packing_verity,final_weight,packing_godown,gred_no_bag,gred_stage_no) VALUES ('$gredding_lot_no', '$farmar_name', '$land_owner', '$gred_stage_no', '$gred_no_begs', '$pay_gredding','$gredded_quantity','$gredding_verity','$final_waigth','$gredding_godown','$staging_no_begs','$staging_stage_no')");
 
 
          return Redirect::to('gredding')->with('success', 'Gredding Create Successfully');

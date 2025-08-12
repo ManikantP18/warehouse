@@ -34,15 +34,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="rst_no" class="form-label"> RST No. </label>
-                    <div class="form-icon-user">
-                        <input class="form-control "  name="rst_no" type="text" id="rst_no" value="{{$gredding[0]->rst_no	}}">
-                    </div>
-                </div>
-            </div>
-
+           
 
             <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
@@ -70,38 +62,58 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="gred_stage_no" class="form-label"> Stage NO.</label>
+                    <label for="gred_stage_no" class="form-label">Staging Stage No.</label>
                     <div class="form-icon-user">
-                        <input class="form-control " required="required" name="gred_stage_no" type="text" id="gred_stage_no" value="{{$gredding[0]->gred_stage_no}}">
+                        <input class="form-control " required="required" name="staging_stage_no" type="text" id="staging_stage_no" value="{{$gredding[0]->gred_stage_no}}">
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
-                    <label for="final_waigth" class="form-label"> Final Waigth </label>
+                    <label for="gred_stage_no" class="form-label">Gredding Stage No.</label>
+                    <div class="form-icon-user">
+                        <input class="form-control " required="required" name="gred_stage_no" type="text" id="gred_stage_no" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="gred_no_begs" class="form-label">Staging No Of Begs </label>
+                    <div class="form-icon-user">
+                        <input class="form-control " title="Only letters allowed" name="staging_no_begs" type="text" id="staging_no_begs" value="{{$gredding[0]->gred_no_begs}}" >
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="gred_no_begs" class="form-label">Gredding No Of Begs </label>
+                    <div class="form-icon-user">
+                        
+                        <input class="form-control " title="Only letters allowed" name="gred_no_begs" type="text" id="gred_no_begs" value="" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="final_waigth" class="form-label">Staging Final Weight </label>
                     <div class="form-icon-user">
                         <input class="form-control " title="Only letters allowed" name="final_waigth" type="text" id="final_waigth" value="{{$gredding[0]->final_waigth	}}" >
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="gred_no_begs" class="form-label">No Of Begs </label>
-                    <div class="form-icon-user">
-                        <select name="gred_no_begs" class="form-control " id="gred_no_begs">
-                            <option value="{{$gredding[0]->gred_no_begs}}"> {{$gredding[0]->gredding_verity}} </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+
+            
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="gredded_quantity" class="form-label">Gredded Quantity </label>
                     <div class="form-icon-user">
-                        <input class="form-control "  title="Only letters allowed" name="gredded_quantity" type="text" id="gredded_quantity" value="{{$gredding[0]->gredded_quantity}}">
+                        <input class="form-control "  title="Only letters allowed" name="gredded_quantity" type="text" id="gredded_quantity" value="{{$gredding[0]->gredded_quantity}}" onkeyup="calcRemain()" onchange="calcRemain()">
                     </div>
                 </div>
             </div>
@@ -137,6 +149,19 @@
 </form>
 
 <script>
+
+    function calcRemain(){
+
+        let final_waigth = parseFloat($("#final_waigth").val());
+
+        let gredded_quantity = parseFloat($("#gredded_quantity").val());
+
+        let rem = (final_waigth-gredded_quantity).toFixed(2);
+
+        $("#undersize_quantity").val(rem);
+
+
+    }
     
 </script>
 
