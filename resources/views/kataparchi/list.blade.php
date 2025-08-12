@@ -119,7 +119,7 @@
                                     <td style="display:none"> {{ $value->kp_bhoomiswami_name }} </td>
                                     <td> {{ $value->kp_vilage }} </td>
 
-                                    <td style="display:none"> {{ $value->kp_rakaba_acre }} </td>
+                                    <td style="display:none"> {{ $value->kp_rakaba_acre}} </td>
                                     <td style="display:none"> {{ $value->kp_khasra_no }} </td>
                                     <td style="display:none"> {{ $value->kp_mo_no  }} </td>
                                     <td style="display:none"> {{ $value->kp_rogger_name }} </td>
@@ -132,8 +132,8 @@
                                     <td style="display:none"> {{ $value->kp_pure_wigth }} </td>
 
                                     <td style="display:none"> {{ $value->kp_godown_name  }} </td>
-                                    <td style="display:none"> {{ $value->creat_at }} </td>
-                                    <td style="display:none"> {{ $value->update_at}} </td>
+                                    <td style="display:none">{{ date('d/m/Y', strtotime( $value->creat_at)) }}  </td>
+                                    <td style="display:none">{{ date('d/m/Y', strtotime($value->update_at)) }}  </td>
                                     <td style="display:none"> {{ $value->status }} </td>
 
                                     <td> 

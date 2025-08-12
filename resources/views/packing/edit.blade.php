@@ -62,29 +62,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="rst_no" class="form-label">Rst No.</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="rst_no" type="text" id="rst_no" value="{{$packing[0]->rst_no}}" readonly>
-                </div>
-            </div>
-        </div>
+        
 
          <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="stage_no" class="form-label">Stage No.</label>
                 <div class="form-icon-user">
                     <input class="form-control alwaysvisible" required name="stage_no" type="text" id="stage_no" value="{{$packing[0]->packing_stage_no}}" readonly>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="final_weight" class="form-label">Final Weight</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="final_weight" type="text" id="final_weight" value="{{$packing[0]->final_weight}}" readonly>
                 </div>
             </div>
         </div>

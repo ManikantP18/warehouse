@@ -27,7 +27,7 @@ class KataParchiController extends Controller
 
     function add(Request $req){
 
-        //print_r($req->input()); exit;
+       // print_r($req->input()); exit;
 
         $kpdate = date('d-m-y', strtotime($req->input('kp_date')));
         $kpacc = $req->input('kp_acc_no');
@@ -35,9 +35,10 @@ class KataParchiController extends Controller
         $kpacc_hold_name = $req->input('kp_acc_holdername');
         $kp_land_owner = $req->input('kp_bhoomiswami_name');
         $kpvilage = $req->input('kp_vilage');
+
         $kp_acre = $req->input('kp_rakaba_acre');
 
-        $kp_acre = $req->input('kp_khasra_no');
+        $kp_khashra = $req->input('kp_khasra_no');
 
         $kpmn = $req->input('kp_mo_no');
         $kp_rogger = $req->input('kp_rogger_name');
@@ -53,7 +54,9 @@ class KataParchiController extends Controller
             $kpvarity = $req->input('kp_other_varity');
          }
 
-        DB::insert("Insert into kata_parchi (kp_date,kp_acc_no,kp_rel_name,kp_acc_holdername,kp_bhoomiswami_name,kp_vilage,kp_rakaba_acre,kp_mo_no,kp_rogger_name,kp_verity,kp_rstno,kp_vehicle_wight,kp_godown_name) VALUES ('$kpdate','$kpacc','$kprel','$kpacc_hold_name','$kp_land_owner','$kpvilage','$kp_acre','$kpmn','$kp_rogger','$kpvarity','$kprst','$kp_vwihgt','$kp_goween')");
+        
+
+        DB::insert("Insert into kata_parchi (kp_date,kp_acc_no,kp_rel_name,kp_acc_holdername,kp_bhoomiswami_name,kp_vilage,kp_rakaba_acre,kp_khasra_no,kp_mo_no,kp_rogger_name,kp_verity,kp_rstno,kp_vehicle_wight,kp_godown_name) VALUES ('$kpdate','$kpacc','$kprel','$kpacc_hold_name','$kp_land_owner','$kpvilage','$kp_acre','$kp_khashra','$kpmn','$kp_rogger','$kpvarity','$kprst','$kp_vwihgt','$kp_goween')");
 
         return Redirect::to('kataparchi');
     }

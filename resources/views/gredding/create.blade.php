@@ -29,6 +29,16 @@
             </div>
         </div>
 
+        <div class="form-group col-md-6">
+            <label for="company_id" class="form-label">Company Name</label>
+            <select name="company_id" id="company_id" class="form-control select" required>
+                <option value="">Select Company Name</option> 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- Godown -->
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
@@ -67,7 +77,7 @@
             <div class="form-group">
                 <label for="staging_date" class="form-label">Gredded  Quantity</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="staging_date" type="date" id="staging_date">
+                    <input class="form-control alwaysvisible" required name="staging_date" type="date" id="staging_date" step="0.01">
                     <div class="invalid-feedback">Please select a valid staging date.</div>
                 </div>
             </div>

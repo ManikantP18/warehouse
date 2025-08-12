@@ -14,7 +14,7 @@
                             name="kp_date"
                             type="text"
                             id="kp_date"
-                            value="{{$kataparchi[0]->kp_date}}"
+                            value="{{ date('d-m-Y', strtotime($kataparchi[0]->kp_date)) }}"
                             >
 
                         </div>

@@ -42,6 +42,9 @@ class GreddingController extends Controller
          $data['gredding'] = DB::select("select * from gredding join product_services on product_services.id = gredding.gredding_verity where gredding_id = '$id'");
          $data['branch'] = DB::select("select * from branches where branch_status = 1");
 
+         $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
+
         return view('gredding/edit',$data);
     }
 
