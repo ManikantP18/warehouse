@@ -29,6 +29,16 @@
             </div>
         </div>
 
+        <div class="form-group col-md-6">
+            <label for="company_id" class="form-label">Company Name</label>
+            <select name="company_id" id="company_id" class="form-control select" required>
+                <option value="">Select Company Name</option> 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- Godown -->
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
@@ -49,7 +59,7 @@
             <div class="form-group">
                 <label for="stage_no" class="form-label">Stage No</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="stage_no" type="text" id="stage_no" placeholder="Enter Stage No">
+                    <input class="form-control alwaysvisible" required name="stage_no" type="nmuber" id="stage_no" placeholder="Enter Stage No">
                     <div class="invalid-feedback">Please enter a valid stage number.</div>
                 </div>
             </div>

@@ -14,7 +14,7 @@ class StagingController extends Controller
 {
     public function index(){
 
-        $data['staging'] = DB::select("select * from staging join branches on branches.branch_id  = staging.godown join product_services on product_services.id = staging.staging_varity where staging.is_hide = 0 order by staging_id desc");
+        $data['staging'] = DB::select("select * from staging join branches on branches.branch_id  = staging.godown join product_services on product_services.id = staging.staging_varity join company on company.company_id = staging.company_id where staging.is_hide = 0 order by staging_id desc ");
 
         return view('staging/list',$data);
 
@@ -24,6 +24,9 @@ class StagingController extends Controller
 
         $data['lotnumbers'] = DB::select("select purchase_lot_no,purchase_rst_no,purchase_relation_cusm from purchase where purchase_status = 1 AND is_deleted = 0");
         $data['branch'] = DB::select("select * from branches where branch_status = 1");
+
+        $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
         return view('staging/create',$data);
     }
 
@@ -53,6 +56,7 @@ class StagingController extends Controller
     function edit($id){
          $data['staging'] = DB::select("select * from staging join product_services on product_services.id = staging.staging_varity where staging_id = '$id'");
           $data['branch'] = DB::select("select * from branches where branch_status = 1");
+         $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
      
         return view('staging/edit',$data);
     }

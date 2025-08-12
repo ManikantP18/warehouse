@@ -17,6 +17,7 @@
                 "Packing Date", "Farmer Name", "Land Owner", "Packing Godown",
                 "Gredded quantity", "Packing total bag", "Pay for packing",
                 "lot no.", "packing verity", "stage no.", "final weight", "Action"
+               "packing verity", "stage no.","Action"
             ];
             const table = $('.datatable');
             const container = $('<div class="row mb-3"><label class="form-label fw-bold">Show/Hide Columns:</label><div class="d-flex flex-wrap column-checkboxes"></div></div>');
@@ -95,27 +96,35 @@
                                     <th> Gredded quantity </th>
                                     <th> Packing total bag </th>
                                     <th> Pay for packing </th>
+<<<<<<< HEAD
                                     <th>lot no.</th>
+=======
+                                  
+>>>>>>> 69a2edbe3c5d119c8c6cfc05a4e39d568b41cf67
                                     <th>packing verity</th>
                                     <th>stage no.</th>
-                                    <th>final weight</th>
+                                  
                                     <th> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($packing AS $value):
                                 <tr>
-                                    <td> {{ $value->packing_date }} </td>
+                                    <td> {{ date('d/m/Y', strtotime($value->packing_date)) }} </td>
                                     <td> {{ $value->farmer_name }} </td>
                                     <td> {{ $value->land_owner }} </td>
                                     <td> {{ $value->branch_name }} </td>
                                     <td> {{ $value->packing_gredded_quantity }} </td>
                                     <td> {{ $value->packing_no_of_begs }} </td>
                                     <td> {{ $value->packing_pay }} </td>
+<<<<<<< HEAD
                                     <td> {{ $value->lot_no }} </td>
+=======
+                                    
+>>>>>>> 69a2edbe3c5d119c8c6cfc05a4e39d568b41cf67
                                     <td> {{ $value->name }} </td>
                                     <td> {{ $value->packing_stage_no }} </td>
-                                    <td> {{ $value->final_weight }} </td>
+                                  
                                     <td>
                                         <a href="#" data-size="xl" data-url="{{ route('packing.edit', $value->packing_id) }}" data-ajax-popup="true"
                                             data-bs-toggle="tooltip" title="{{ __('Edit') }}" data-title="{{ __('Edit Packing') }}"

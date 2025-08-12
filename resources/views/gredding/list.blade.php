@@ -113,7 +113,7 @@
                                     <td> {{ $value->gredded_quantity}} </td>
                                     <td> {{ $value->undersize_quantity}} </td>
                                      <td> {{ $value->pay_gredding}} </td>
-                                      <td> {{ $value->gredding_date}} </td>
+                                      <td>{{ date('d/m/Y', strtotime($value->gredding_date)) }}</td>
                                     <td> {{ $value->gredding_status == 1 ? 'Active' : 'Inactive' }} </td>
                                 <td>
                                     <div class="d-flex">
