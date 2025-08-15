@@ -68,60 +68,73 @@
                     </div>
                 </div>
 
-            <div class="row mb-6">
+           <!-- Default rows for already selled items -->
+        @for($i = 0; $i < count($selleditems); $i++)
+          <div class="row mb-3 sell-row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Sell Item</label>
+                <select name="sellto_item_selled[]" class="form-control sell-item" onchange="selectItem({{ $i }}, this)" required>
+                  <option value="" hidden>Select Item</option>
+                  @foreach($items as $value)
+                    <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->selled_item ? 'selected' : '' }}>
+                      {{ $value->name }}
+                    </option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
 
-                
-                 <!-- Product Items Wrapper -->
-                <div id="item-wrapper">
+            <div class="col-md-2">
+              <label>Quantity</label>
+              <input type="number" class="form-control" name="sellto_quantity[]" id="sellto_quantity_{{ $i }}" 
+                    value="{{ $selleditems[$i]->selled_quantity }}" 
+                    required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})">
+            </div>
 
-                <!-- Initial Product Row -->
-                <div class="row mb-3 item-group" style="background-color: #f2f2f2; padding:10px; border-radius:5px;">
-                    <div class="col-md-2">
-                    <label>Sell Item</label>
-                    <select name="item_sale[]" class="form-control item_sale" dataid="0" onchange="selectItem(0, this)">
-                        <option value="">Select Item</option>
-                        @foreach($item as $value)
-                        <option value="{{ $value->id }}">{{ $value->name }}</option>
-                        @endforeach
-                    </select>
-                    </div>
+            <div class="col-md-2">
+              <label>Unit</label>
+              <select class="form-control" name="purchase_unit[]" required>
+                @foreach($units as $value)
+                  <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->sell_unit ? 'selected' : '' }}>
+                    {{ $value->name }}
+                  </option>
+                @endforeach
+              </select>
+            </div>
 
-                    <div class="col-md-1">
-                        <label>Quantity</label>
-                        <input type="number" class="form-control quantity" name="quantity" id="quantity" value="1" required onkeyup="autofill(0)" onchange="autofill(0)">
-                    </div>
+            <div class="col-md-2">
+              <label>Rate</label>
+              <input type="number" class="form-control" name="sellto_rate[]" id="sellto_rate_{{ $i }}"
+                    value="{{ $selleditems[$i]->selled_rate }}" onkeyup="autofill({{ $i }})">
+            </div>
 
-                    <div class="col-md-2">
-                    <label>Unit</label>
-                    <select class="form-control" name="unit[]" id="unit">
-                        <option value="" hidden>Select Unit</option>
-                        @foreach($units as $value)
-                        <option value="{{$value->id}}">{{ $value->name }}</option>
-                        @endforeach
-                    </select>
-                    </div>
+            <div class="col-md-2">
+              <label>GST</label>
+              <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_{{ $i }}" 
+                    onkeyup="autofill({{ $i }})" value="{{ $selleditems[$i]->sell_gst ?? 0 }}">
+            </div>
 
-                    <div class="col-md-2">
-                    <label>Rate</label>
-                    <input type="number" class="form-control rate" name="rate[]" id="rate" value="0" onchange="autofill(0)">
-                    </div>
+            <div class="col-md-2">
+              <label>Total Amount</label>
+              <input type="number" class="form-control purchase_total" name="purchase_total[]" id="purchase_total_{{ $i }}" 
+                    value="{{ $selleditems[$i]->selled_rate * $selleditems[$i]->selled_quantity }}">
+            </div>
+          </div>
+        @endfor
+      <div id="newRowsContainer"></div>
+        <!-- Add More Button -->
+        <div class="mb-3">
+          <button type="button" class="btn btn-success" id="addMoreRow">+ Add More</button>
+        </div>
 
-                    <div class="col-md-2">
-                    <label>GST</label>
-                    <input type="number" class="form-control GST_amount" name="GST_amount[]" id="GST_amount" value="0" onchange="autofill(0)">
-                    </div>
+        <!-- Container for dynamically added rows -->
+        
 
-                    <div class="col-md-3">
-                    <label>Total</label>
-                    <input type="number" class="form-control total_amount" name="total_amount[]" id="total_amount" value="0" required>
-                    </div>
 
-                    <div class="col-md-1">
-                    <label>&nbsp;</label>
-                    <button type="button" class="btn btn-danger form-control" onclick="removeRow(this)">🗑</button>
-                    </div>
-                </div>
-                </div>
+    
+
+<!-- End Of multy products Sells -->
 
                 <!-- Add More Button -->
                 <div class="mt-2">

@@ -12,9 +12,31 @@ class CNController extends Controller
 {
 
  public function index() {
-    $data['SalesReturn'] = DB::select('SELECT * FROM sales_return where is_deleted = 0');
+
+     $data['items'] = DB::select("select *,product_services.id AS pid, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product'"); 
+
+     $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
+
+    $data['units'] = DB::select("select * from product_service_units");
+
+    $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
+
+    $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to = 'farmer' and sell_to.is_deleted = 0 order by sell_id DESC ");
+
     return view('sales-return.list', $data);
  }
+
+ function history(Request $req) {
+        $acc_id = $req->input('searchVal'); 
+        
+
+        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to = 'farmer' and sell_to.is_deleted = 0 and sell_account_number = '$acc_id' order by sell_id DESC ");
+
+
+        return view('sales-return/table',$data);
+        
+    }
 
 function create(){
 
@@ -22,67 +44,29 @@ function create(){
 
          $data['units'] = DB::select("select * from product_service_units");
 
-         $data['item'] = DB::select("select * from product_services where type = 'Product' ");
+         $data['item'] = DB::select("select * from product_services where type = 'Product' ");  
+
         return view('sales-return/creat',$data);
     }
 
-    function add(Request $req){
-
-        $item_sales = $req->input('item_sale');
-
-if (is_array($item_sales) && count($item_sales) > 0) {
-    // get other arrays also
-    $quantities = $req->input('quantity');
-    $units = $req->input('unit');
-    $rates = $req->input('rate');
-    $total_amounts = $req->input('total_amount');
-    $GST_amounts = $req->input('GST_amount');
-
-    // common fields
-    $cash_credit = $req->input('cash_credit');
-    $aadhar_no = $req->input('aadhar_no');
-    $r_cust = $req->input('r_cust');
-    $village = $req->input('village');
-    $mo_no = $req->input('mo_no');
-
-    // loop and insert
-    for ($i = 0; $i < count($item_sales); $i++) {
-        DB::insert("INSERT INTO sales_return 
-            (cash_credit, aadhar_no, r_cust, village, mo_no, item_sale, quantity, unit, rate, total_amount, GST_amount)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
-            $cash_credit,
-            $aadhar_no,
-            $r_cust,
-            $village,
-            $mo_no,
-            $item_sales[$i],
-            $quantities[$i],
-            $units[$i],
-            $rates[$i],
-            $total_amounts[$i],
-            $GST_amounts[$i],
-        ]);
-    }
-} else {
-    // error or fallback
-    return back()->with('error', 'No sale items found.');
-}
-
-        return Redirect::to('Sales-Return');
-    }
-
-    public function delete($id){
-
-        DB::update("UPDATE sales_return SET is_deleted = 1 where cn_id = $id");
-        return redirect::to ('Sales-Return')->with('success','credit note deleted successfully.');
-    }
+    
     
     function edit($id) {
-        $data['CNdata'] = DB::select("select * from sales_return where cn_id = '$id' ");
+       $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
 
-         $data['units'] = DB::select("select * from product_service_units");
+        $data['units'] = DB::select("select * from product_service_units");
 
-         $data['item'] = DB::select("select * from product_services where type = 'Product' ");
+        $data['selleditems'] = DB::select("select * from selled_item where sell_id = '$id' and selled_status = 1");
+
+        $data['items'] = DB::select("select * from product_services where type = 'Product'");
+
+        $data['products'] = DB::select("select id, name, quantity from product_services where type = 'Product' AND product_services.id NOT IN(select selled_item from selled_item where sell_id = '$id' and selled_status = 1)");
+
+        $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
+
+         $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+         
+       
         
         return view('Sales-Return/edit',$data);
         

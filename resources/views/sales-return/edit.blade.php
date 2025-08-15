@@ -1,113 +1,450 @@
-
 {{ Form::open(['url' => 'SalesReturn/update', 'method' => 'put', 'class'=>'needs-validation','novalidate']) }}
-
-
-
 <div class="modal-body">
-    <h6 class="sub-title">SalesReturn</h6>
+  <div class="row">
+
+    <div class="col-12">
     
-    <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="cash_credit" class="form-label">Cash Credit</label>
-                    <div class="form-icon-user">
-                        <input class="form-control " required="required" name="cash_credit" type="text" id="cash_credit" value="{{$CNdata[0]->cash_credit}}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="aadhar_no" class="form-label">Aadhar number</label>
-                    <div class="form-icon-user">
-                        <input class="form-control alwaysvisible" required="required" name="aadhar_no" type="text" id="aadhar_no" value="{{$CNdata[0]->aadhar_no}}">
-                    </div>
-                </div>
-            </div>
-
-            
-            <div class="row mb-3">
-                
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>ITEM</label>
-                        <select class="form-control" name="item[]" id="item">
-                            <option value="" hidden>Select ITEM</option>
-                            @foreach($item as $value)
-                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>          
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="quantity" class="form-label">QUANTITY</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="quantity" type="text" id="quantity" value="{{$CNdata[0]->quantity}}" >
-                        </div>
-                    </div>
-                </div>
-
-                 <div class="col-lg-4">
-                    <div class="form-group">
-                        <label>UNIT</label>
-                        <select class="form-control" name="unit[]" id="unit">
-                            <option value="" hidden>Select Unit</option>
-                            @foreach($units as $value)
-                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="rate" class="form-label">RATE</label>
-                        <div class="form-icon-user">
-                            <input class="form-control onlyforformesrs"  name="rate" type="number" id="rate" value="{{$CNdata[0]->rate}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="total_amount" class="form-label">TOTAL AMOUNT</label>
-                        <input class="form-control onlyforformesrs"  name="total_amount" id="total_amount" value="{{$CNdata[0]->total_amount}}">
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="GST_amount" class="form-label">GST AMOUNT</label>
-                        <div class="form-icon-user">
-                            <input class="form-control alwaysvisible"  name="GST_amount" type="text" id="GST_amount" value="{{$CNdata[0]->GST_amount}}" >
-                        </div>
-                    </div>
-                </div>
-               </div> 
-            </div>
-        <input type="hidden" name="cn_id" value="{{$CNdata[0]->cn_id}}">
-
-      <input type="hidden" name="cn_id" value="{{$CNdata[0]->cn_id}}">
-        
     </div>
-</div>
 
-<div class="modal-footer">
-    <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
-    <input type="submit" value="Update" class="btn btn-primary">
-</div>
-</form>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="sellto_farmer/other" class="form-label">Sell To</label>
+        <select name="sellto_farmer/other" id="sellto_farmer/other" class="form-control alwaysvisible" required onchange="toggleFields()">
+          <option value="farmer">Farmer</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
 
-<script>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="sellto_cash/credit" class="form-label">Payment</label>
+        <select name="sellto_cash/credit" id="sellto_cash/credit" class="form-control alwaysvisible" required>
+          <option value="cash">Cash</option>
+          <option value="credit">Credit</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="sellto_account_number" class="form-label">Customer-ID</label>
+        <input class="form-control alwaysvisible" required name="sellto_account_number" type="text" id="sellto_account_number" value="{{$sellto[0]->sell_account_number}}">
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="sellto_phone" class="form-label">Mobile Number</label>
+        <input class="form-control onlyforformesrs" required name="sellto_phone" type="tel" pattern="[0-9]{10}" maxlength="10" title="Enter 10-digit mobile number" id="sellto_phone" value="{{$sellto[0]->sell_phone}}">
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="sellto_customer_name" class="form-label">Customer Name</label>
+        <input class="form-control alwaysvisible" required pattern="[A-Za-z ]+" title="Only alphabets are allowed" name="sellto_customer_name" type="text" id="sellto_customer_name" value="{{$sellto[0]->sell_relation_customer}}">
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="sellto_acc_holder" class="form-label">Aadhar Number</label>
+        <input class="form-control alwaysvisible" required name="sellto_acc_holder" type="text" id="sellto_acc_holder" value="{{$sellto[0]->sell_account_name}}" readonly>
+      </div>
+    </div>
+
+    <div class="col-md-6 changehide">
+      <div class="form-group">
+        <label for="sellto_owner_name" class="form-label">Land Owner Name</label>
+        <input class="form-control onlyforformesrs" required name="sellto_owner_name" type="text" id="sellto_owner_name" value="{{$sellto[0]->sell_property_owner}}" readonly>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="sellto_village" class="form-label">Village</label>
+        <input class="form-control onlyforformesrs" required pattern="[A-Za-z ]+" title="Only letters allowed" name="sellto_village" type="text" id="sellto_village" value="{{$sellto[0]->sell_village}}" readonly>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6">
+            <label for="company_id" class="form-label">Company Name</label>
+            <select name="company_id" id="company_id" class="form-control select" required>
+                 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}" {{ $value->company_id == $sellto[0]->company_id ? 'selected' : ''}}>{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+    <!-- Default rows for already selled items -->
+        @for($i = 0; $i < count($selleditems); $i++)
+          <div class="row mb-3 sell-row">
+
+           
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Sell Item</label>
+                <select name="sellto_item_selled[]" class="form-control sell-item" onchange="selectItem({{ $i }}, this)" required>
+                  <option value="" hidden>Select Item</option>
+                  @foreach($items as $value)
+                    <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->selled_item ? 'selected' : '' }}>
+                      {{ $value->name }}
+                    </option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <label>Quantity</label>
+              <input type="number" class="form-control" name="sellto_quantity[]" id="sellto_quantity_{{ $i }}" 
+                    value="{{ $selleditems[$i]->selled_quantity }}" 
+                    required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})">
+            </div>
+
+            <div class="col-md-2">
+              <label>Unit</label>
+              <select class="form-control" name="purchase_unit[]" required>
+                @foreach($units as $value)
+                  <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->sell_unit ? 'selected' : '' }}>
+                    {{ $value->name }}
+                  </option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="col-md-2">
+              <label>Rate</label>
+              <input type="number" class="form-control" name="sellto_rate[]" id="sellto_rate_{{ $i }}"
+                    value="{{ $selleditems[$i]->selled_rate }}" onkeyup="autofill({{ $i }})">
+            </div>
+
+            <div class="col-md-2">
+              <label>GST</label>
+              <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_{{ $i }}" 
+                    onkeyup="autofill({{ $i }})" value="{{ $selleditems[$i]->sell_gst ?? 0 }}">
+            </div>
+
+            <div class="col-md-2">
+              <label>Total Amount</label>
+              <input type="number" class="form-control purchase_total" name="purchase_total[]" id="purchase_total_{{ $i }}" 
+                    value="{{ $selleditems[$i]->selled_rate * $selleditems[$i]->selled_quantity }}">
+            </div>
+          </div>
+        @endfor
+      <div id="newRowsContainer"></div>
+        <!-- Add More Button -->
+        <div class="mb-3">
+          <button type="button" class="btn btn-success" id="addMoreRow">+ Add More</button>
+        </div>
+
+        <!-- Container for dynamically added rows -->
+        
+
+
     
 
-    // Attach events to update the pure weight on input
-   // document.getElementById('kp_vehicle_wight').addEventListener('input', calculatePureWeight);
-   // document.getElementById('kp_only_vechicle_w').addEventListener('input', calculatePureWeight);
+<!-- End Of multy products Sells -->
+    
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Cash Amount</label>
+        <input type="number" class="form-control" name="sellto_cash_amount" id="sellto_cash_amount" required value="{{$sellto[0]->cash_amount}}" onkeyup="calculateAmt()">
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Credit Amount</label>
+        <input type="number" class="form-control" name="sellto_Credit_amount" id="sellto_Credit_amount" required value="{{$sellto[0]->credit_amount}}"  onkeyup="calculateAmt()">
+      </div>
+    </div>
+
+    <div class="col-md-6">
+          <div class="form-group">
+            <label>Bank Name</label>
+            <select name="bank_name" id="bank_name" class="form-control">
+             @foreach($banks as $val)
+                <option value="{{ $val->account_id }}" {{ $val->account_id == $sellto[0]->bank_name ?  'selected' : ''}}>{{ $val->bank_name }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Remaining Amount</label>
+        <input type="number" class="form-control" name="sellto_Remaining_amount" id="sellto_Remaining_amount" required value="{{$sellto[0]->remaining_amount}}" >
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Total Amount</label>
+        <input type="number" class="form-control sellto_total_amount" name="sellto_total_amount" id="sellto_total_amount" required value='{{$sellto[0]->sell_total_ammount}}'>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer">
+
+<input type="hidden" name="sell_id" value="{{$sellto[0]->sell_id}}">
+  <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
+  <input type="submit" value="Update" class="btn btn-primary">
+</div>
+{{ Form::close() }}
+<input type="hidden" id="itemsdata" value="{{json_encode($items)}}">
+
+
+
+<>
+  <script>
+    (() => {
+      
+      const forms = document.querySelectorAll('.needs-validation')
+
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+        function toggleFields() {
+
+            let val = document.getElementById('sellto_farmer/other').value;
+
+            $('.changehide').show();
+           
+            if(val == 'other') {
+                $('.changehide').hide();
+            }
+        }
+
+function searchLadger() {
+  let searchVal = $("#search").val();
+
+  $.ajax({
+    url: '{{ route("sellto.search") }}',
+    type: 'GET',
+    data: {
+      searchVal: searchVal
+    },
+    success: function(response) {
+      if (response.success && response.data) {
+        let data = response.data;
+
+        $('#sellto_account_number').val(data.account_id);
+        $('#sellto_phone').val(data.phone_number);
+        $('#sellto_customer_name').val(data.relational_cust_name);
+        $('#sellto_acc_holder').val(data.account_holder);
+        $('#sellto_owner_name').val(data.farm_owner_name);
+        $('#sellto_village').val(data.village);
+        $('#sellto_gst_amount').val(data.gst_num);
+        $('#sellto_cash_amount').val(data.cash_amount);
+        $('#sellto_Credit_amount').val(data.credit_amount);
+        $('#sellto_Remaining_amount').val(data.remaining_amount);
+
+        $('#form-fields-wrapper').slideDown(); // optional if using wrapper
+      } else {
+        alert("No matching record found.");
+      }
+    },
+    error: function(err) {
+      console.log("AJAX error:", err);
+    }
+  });
+}
+
 </script>
 
+<script>
+
+function calculateAmt(){
+  let sellto_cash_amount = parseFloat($("#sellto_cash_amount").val());
+  let sellto_Credit_amount = parseFloat($("#sellto_Credit_amount").val());
+  let sellto_total_amount = parseFloat($("#sellto_total_amount").val());
+
+  let remainAmt = sellto_total_amount - sellto_cash_amount - sellto_Credit_amount;
+
+  $("#sellto_Remaining_amount").val(remainAmt)
+
+
+}
 
 
 
+function selectItem(did, el) {
+  const item = String($(el).val()); // convert to string to avoid type mismatch
+console.log(item)
+  // 🔄 Reset if empty
+  if (!item) {
+    $('#sellto_rate_' + did).val('');
+    $('#sellto_gst_amount_' + did).val('');
+    $('#purchase_total_' + did).val('');
+    autofill();
+    return;
+  }
+
+  let isDuplicate = false;
+
+  $(".sellto_item_selled").each(function () {
+    const currentVal = String($(this).val());
+    const currentDid = String($(this).attr("dataid"));
+
+    // ✅ Skip current select box
+    if (currentDid != String(did)) { console.log(currentVal, item)
+      if (currentVal === item) {
+        isDuplicate = true;
+        return false; // break loop
+      }
+    }
+  });
+
+  if (isDuplicate) {
+    alert("Same item already selected.");
+    $(el).val(''); // Reset value
+    $('#sellto_rate_' + did).val('');
+    $('#sellto_gst_amount_' + did).val('');
+    $('#purchase_total_' + did).val('');
+    autofill();
+    return;
+  }
+
+  // ✅ Proceed with calculations
+  const qty = parseFloat($('#sellto_quantity_' + did).val()) || 0;
+  const data = JSON.parse($('#itemsdata').val());
+  const product = data.find(d => String(d.id) === item);
+
+  if (product) {
+    const salePrice = parseFloat(product.sale_price) || 0;
+    const taxRate = parseFloat(product.rate) || 0;
+
+    $('#sellto_rate_' + did).val(salePrice);
+
+    const ratetotal = salePrice * qty;
+    const gst = (ratetotal / 100) * taxRate;
+
+    $('#purchase_total_' + did).val((ratetotal + gst).toFixed(2));
+    $('#sellto_gst_amount_' + did).val(gst.toFixed(2));
+
+    autofill();
+
+   /* const cash = parseFloat($('#sellto_cash_amount').val()) || 0;
+    const credit = parseFloat($('#sellto_Credit_amount').val()) || 0;
+    const remaining = (ratetotal + gst) - (cash + credit);
+
+    $('#sellto_Remaining_amount').val(remaining.toFixed(2));*/
+  }
+}
+
+
+
+    function autofill(id) {
+      
+        $("#purchase_total_" + id).val((parseFloat($("#sellto_quantity_" + id).val()) * parseFloat($("#sellto_rate_" + id).val())) + parseFloat($("#sellto_gst_amount_" + id).val()));
+
+      let total = 0;
+
+       $(".purchase_total").each(function() {
+          let val = parseFloat($(this).val()) || 0;
+          total += val;
+        });
+
+        $("#sellto_total_amount").val(total);
+        calculateAmt();
+    }
+
+  function checkmode() {
+    let mode = $('#sellto_cash').val(); // Use correct ID of your select box
+    let remaining = parseFloat($('#sellto_Remaining_amount').val()) || 0;
+
+    if (mode.toLowerCase() === 'cash' && remaining > 0) {
+      alert('For cash invoices, the remaining amount must be zero.');
+      
+      
+
+      setTimeout(() => {
+
+      $("#savebtn").removeAttr("disabled");
+        
+      }, 500);
+
+      return false;
+    }
+
+    return true;
+}
+
+</script>
+
+<script>
+let rowIndex = {{ count($selleditems) }};
+const itemsData = @json($items);
+const unitsData = @json($units);
+
+$(document).on("click", "#addMoreRow", function() {
+  let newRow = `
+    <div class="row mb-3 sell-row">
+      <div class="col-md-2">
+        <label>Sell Item</label>
+        <select name="sellto_item_selled[]" class="form-control" onchange="selectItem(${rowIndex}, this)">
+          <option value="" hidden>Select Item</option>
+          ${itemsData.map(item => `<option value="${item.id}">${item.name}</option>`).join('')}
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <label>Quantity</label>
+        <input type="number" class="form-control" name="sellto_quantity[]" id="sellto_quantity_${rowIndex}" 
+               value="1" onkeyup="autofill(${rowIndex})" onchange="autofill(${rowIndex})">
+      </div>
+
+      <div class="col-md-2">
+        <label>Unit</label>
+        <select class="form-control" name="purchase_unit[]">
+          ${unitsData.map(unit => `<option value="${unit.id}">${unit.name}</option>`).join('')}
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <label>Rate</label>
+        <input type="number" class="form-control" name="sellto_rate[]" id="sellto_rate_${rowIndex}" onchange="autofill(${rowIndex})">
+      </div>
+
+      <div class="col-md-2">
+        <label>GST</label>
+        <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_${rowIndex}" value="0" onchange="autofill(${rowIndex})">
+      </div>
+
+      <div class="col-md-1">
+        <label>Total</label>
+        <input type="number" class="form-control purchase_total" name="purchase_total[]" id="purchase_total_${rowIndex}" value="0">
+      </div>
+
+      <div class="col-md-1 d-flex align-items-end">
+        <button type="button" class="btn btn-danger removeRow">X</button>
+      </div>
+    </div>
+  `;
+  
+  $("#newRowsContainer").append(newRow);
+  rowIndex++;
+});
+
+// Remove dynamic rows
+$(document).on("click", ".removeRow", function() {
+  $(this).closest(".sell-row").remove();
+  autofill();
+});
+
+</script>

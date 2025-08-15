@@ -45,109 +45,57 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body table-border-style table-border-style">
-
-                 <div class="mb-3">
-                        <label><strong>Show/Hide Columns:</strong></label><br>
-                        @php
-                            $columns = [
-                                ['label' => 'cn_id', 'index' => 0],
-                                ['label' => 'Aadhar Number ', 'index' => 2],
-                                ['label' => 'Mobile no.', 'index' => 5],
-                                ['label' => 'Item to sale', 'index' => 6],
-                                ['label' => 'Quantity', 'index' => 7],
-                                ['label' => 'UNIT', 'index' => 8],
-                                ['label' => 'Rate', 'index' => 9],
-                                ['label' => 'total amount ', 'index' => 10],
-                                ['label' => 'GSt amount', 'index' => 11],
-                                ['label' => 'creat date', 'index' => 12],
-                                ['label' => 'update date', 'index' => 13],
-                                ['label' => 'status', 'index' => 14],
-                               
-                            ];
-                        @endphp
-
-                        @foreach($columns as $col)
-                            <label class="form-check-label me-3">
-                                <input type="checkbox" class="form-check-input toggle-col" data-col="{{ $col['index'] }}"> {{ $col['label'] }}
-                            </label>
-                        @endforeach
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table datatable">
-                            <thead>
-                                <tr>
-                                    <th style="display:none">cn_id</th>
-                                    <th> Cash / Credit</th>
-                                    <th style="display:none"> Aadhar Number </th>
-                                    <th> Relational customer name </th>
-                                    <th>village</th>
-                                    <th style="display:none"> Mobile no. </th>
-                                    <th style="display:none"> Item to sale</th>
-                                    <th style="display:none"> Quantity </th>
-                                    <th style="display:none"> UNIT </th>
-                                    <th style="display:none"> Rate </th>
-                                    <th style="display:none"> total amount  </th>
-                                    <th style="display:none"> GSt amount </th> 
-                                    <th style="display:none"> creat date </th>
-                                    <th style="display:none"> update date </th>
-                                    <th style="display:none"> status </th>
-                                    <th> Action </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                          @foreach($SalesReturn as $value)
-                                <tr>
-                                    <td style="display:none">{{ $value->cn_id }}</td>
-                                    <td>{{ $value->cash_credit }}</td>
-                                    <td style="display:none">{{ $value->aadhar_no }}</td>
-                                    <td>{{ $value->r_cust }}</td>
-                                    <td>{{ $value->village }}</td>
-                                    <td style="display:none">{{ $value->mo_no }}</td>
-                                    <td style="display:none">{{ $value->item_sale }}</td>
-                                    <td style="display:none">{{ $value->quantity }}</td>
-                                    <td style="display:none">{{ $value->unit }}</td>
-                                    <td style="display:none">{{ $value->rate }}</td>
-                                    <td style="display:none">{{ $value->total_amount }}</td>
-                                    <td style="display:none">{{ $value->GST_amount }}</td>
-                                    <td style="display:none">{{ $value->creat_at }}</td>
-                                    <td style="display:none">{{ $value->UPdate_at }}</td>
-                                    <td style="display:none">{{ $value->status }}</td>
-
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="#"
-                                            data-url="{{ route('Sales-Return.edit', $value->cn_id) }}"
-                                            data-ajax-popup="true"
-                                            data-title="{{ __('EDit Sales-Return') }}"
-                                            class="btn btn-sm btn-primary me-2"
-                                            data-bs-toggle="tooltip" title="{{ __('Edite') }}">
-                                                <i class="ti ti-pencil"></i>
-                                            </a>
-
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip"
-                                                    title="{{ __('DELETE') }}"
-                                                    onclick="removeParch('{{ route('Sales-Return.delete', $value->cn_id) }}')">
-                                                <i class="ti ti-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                               
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        
+        <div class="col-12">
+      <div class="row align-items-end">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="search" class="form-label">Account/Mobile No</label>
+            <input class="form-control" name="search" type="text" id="search" placeholder="Acc No / Mobile No">
+          </div>
         </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="search_name" class="form-label">Farmer Name</label>
+            <input class="form-control" name="search_name" type="text" id="search_name" placeholder="Farmer Name">
+          </div>
+        </div>
+
+         <div class="col-md-6">
+          <div class="form-group">
+            <label for="search_owner" class="form-label">Land Owner</label>
+            <input class="form-control" name="search_owner" type="text" id="search_owner" placeholder="Owner Name">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="search_village" class="form-label">Village Name</label>
+            <input class="form-control" name="search_village" type="text" id="search_village" placeholder="Village Name">
+          </div>
+        </div>
+
+        <div class="col-md-6 m-auto">
+          <div class="form-group">
+            <label class="form-label d-none d-sm-block">&nbsp;</label>
+            <button type="button" class="btn btn-primary w-100" onclick="searchLadger()">Search</button>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Dynamic Farmer Selection -->
+    <div class="col-12">
+      <div class="form-group">
+        <div class="form-icon-user allfarmers"></div>
+      </div>
+    </div>
+    
+  <div id = "table"></div>
+
+    
+</div>
 @endsection
 
 @push('script-page')
@@ -201,6 +149,49 @@
         }
     });
 });
+
+// ------------------ start --------------------
+
+function searchLadger() {
+  let searchVal = $('#search').val();
+  let searchVillage = $('#search_village').val();
+  let searchname = $('#search_name').val();
+  let searchowner = $('#search_owner').val();
+  let all = 'yes';
+  $.ajax({
+    url: '{{ route('sellto.search') }}',
+    type: 'GET',
+    data: { searchVal, searchVillage, searchname,searchowner, all },
+    success: function(response) {
+      if (response.success && response.data) {
+        let html = '<select class="form-control" onchange="selectLadger(this.value)"><option value="">Select Farmer</option>';
+        response.data.forEach(d => {
+
+          html += `<option value="${d.account_id}">${d.relational_cust_name} - ${d.farm_owner_name}</option>`;
+
+        });
+        html += '</select>';
+        $('.allfarmers').html(html).show();
+        $('#form-fields-wrapper').hide();
+      } else {
+        alert("No matching record found.");
+      }
+    }
+  });
+}
+
+     function selectLadger(id) {
+         $.get('{{ route('Sales-Return.history') }}', { searchVal: id }, function(response) {
+          if (response && response.length > 0) {
+                 $("#table").html(response)
+                            }
+           });
+             }
+        $(document).ready(function () {
+            $('#form-fields-wrapper').hide();
+         $('.allfarmers').hide();
+            });
+
 
     </script>
 @endpush
