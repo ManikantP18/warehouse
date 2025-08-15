@@ -3,140 +3,234 @@
     <h6 class="sub-title"> Edit Packing</h6>
 
     <div class="row">
+        <input type="hidden" value="{{ $packing[0]->packing_id }}" name="packing_id">
 
-        
-            
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
+        <!-- Farmer Name -->
+        <div class="col-lg-6">
             <div class="form-group">
-                <label for="farmer_name" class="form-label">Farmer Name</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required="required" name="farmer_name" type="text" id="farmer_name" value="{{$packing[0]->farmer_name}}" readonly>
-                </div>
-            </div>
-        </div>
-<input type="hidden" value="{{$packing[0]->packing_id}}" name="packing_id" id="packing_id">
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="land_owner" class="form-label">Land Owner</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="land_owner" type="text" id="land_owner" value="{{$packing[0]->land_owner}}" readonly>
-                </div>
+                <label class="form-label">Farmer Name</label>
+                <input class="form-control" required name="farmer_name" type="text" value="{{ $packing[0]->farmer_name }}" readonly>
             </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-6">
+        <!-- Land Owner -->
+        <div class="col-lg-6">
             <div class="form-group">
-                <label for="verity" class="form-label">Verity</label>
-                <div class="form-icon-user">
-                    <select class="form-control alwaysvisible" required name="verity" type="text" id="verity" readonly>
-                        <option value="{{ $packing[0]->id }}">{{ $packing[0]->name }}</option>
+                <label class="form-label">Land Owner</label>
+                <input class="form-control" required name="land_owner" type="text" value="{{ $packing[0]->land_owner }}" readonly>
+            </div>
+        </div>
+
+        <!-- Verity -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Verity</label>
+                <select class="form-control" required name="verity" readonly>
+                    <option value="{{ $packing[0]->id }}">{{ $packing[0]->name }}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Gredded Quantity -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Gredded Quantity (Quintal)</label>
+                <input class="form-control" required name="Gredded_qty" type="text" value="{{ $packing[0]->packing_gredded_quantity }}" readonly>
+            </div>
+        </div>
+
+        <!-- Pay for Packing -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Pay for Packing</label>
+                <input class="form-control" required name="packing_pay" type="text" value="{{ $packing[0]->packing_pay }}" readonly>
+            </div>
+        </div>
+
+        <!-- Lot No -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Lot No.</label>
+                <input class="form-control" required name="lot_no" type="text" value="{{ $packing[0]->lot_no }}" readonly>
+            </div>
+        </div>
+
+        <!-- Gredding Stage No -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Gredding Stage No.</label>
+                <input class="form-control" required name="staging_stage_no" type="text" value="{{ $packing[0]->packing_stage_no }}" readonly>
+            </div>
+        </div>
+
+        <!-- Packing Stage No -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Packing Stage No.</label>
+                <input class="form-control" required name="stage_no" type="text" value="{{ $packing[0]->packing_stage_no }}">
+            </div>
+        </div>
+
+        <!-- Final Weight -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Final Weight</label>
+                <input class="form-control" required name="final_weight" type="text" value="{{ $packing[0]->final_weight }}" readonly>
+            </div>
+        </div>
+
+        <!-- Company Name -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Company Name</label>
+                <select name="company_id" class="form-control" required>
+                    <option value="" hidden>Select Company Name</option> 
+                    @foreach($company as $value)
+                        <option value="{{ $value->company_id }}" {{ $value->company_id == $packing[0]->cmp ? 'selected' : '' }}>
+                            {{ $value->company_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <!-- Godown -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Godown Name</label>
+                <select class="form-control" required name="godown" readonly>
+                   @foreach($branch as $val)
+                        <option value="{{ $val->branch_id }}" {{ $packing[0]->packing_godown == $val->branch_id ? 'selected' : '' }}>
+                            {{ $val->branch_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <!-- Gredding No. of Bag -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Gredding No. of Bag</label>
+                <input class="form-control" required name="staging_total_bag" type="text" value="{{ $packing[0]->gred_no_bag }}" readonly>
+            </div>
+        </div>
+
+        <!-- Dynamic Bag Rows -->
+        @php
+            $rows = [];
+            if($packing[0]->packing_40 > 0) $rows[] = ['kg'=>40, 'bags'=>$packing[0]->packing_40];
+            if($packing[0]->packing_30 > 0) $rows[] = ['kg'=>30, 'bags'=>$packing[0]->packing_30];
+            if($packing[0]->packing_20 > 0) $rows[] = ['kg'=>20, 'bags'=>$packing[0]->packing_20];
+            if($packing[0]->packing_5  > 0) $rows[] = ['kg'=>5,  'bags'=>$packing[0]->packing_5];
+            if(empty($rows)) $rows[] = ['kg'=>'', 'bags'=>'']; // First edit case
+        @endphp
+
+        <div id="bagRows" class="mt-3">
+        @foreach($rows as $row)
+            <div class="row bag-row mb-2">
+                <div class="col-lg-3">
+                    <select class="form-control bag-select" name="bags_kg[]">
+                        <option value="">Select KG</option>
+                        <option value="40" {{ $row['kg']==40 ? 'selected' : '' }}>40 KG</option>
+                        <option value="30" {{ $row['kg']==30 ? 'selected' : '' }}>30 KG</option>
+                        <option value="20" {{ $row['kg']==20 ? 'selected' : '' }}>20 KG</option>
+                        <option value="5"  {{ $row['kg']==5  ? 'selected' : '' }}>5 KG</option>
                     </select>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="Gredded_qty" class="form-label">Gredded Quantity</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="Gredded_qty" type="text" id="Gredded_qty" value="{{$packing[0]->packing_gredded_quantity}}" readonly>
+                <div class="col-lg-3">
+                    <input type="number" class="form-control bag-count" name="bags_count[]" min="0" value="{{ $row['bags'] }}">
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control total-kg" name="total_kg[]" readonly>
+                </div>
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-danger remove-row">- Remove</button>
                 </div>
             </div>
+        @endforeach
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="total_bag" class="form-label">Gredding No. of Bag</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="staging_total_bag" type="text" id="staging_total_bag" value="{{$packing[0]->gred_no_bag}}" readonly>
-                </div>
-            </div>
+        <div class="mt-2">
+            <button type="button" id="addRow" class="btn btn-primary">+ Add More</button>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="total_bag" class="form-label">Packing No. of Bag</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="total_bag" type="text" id="total_bag" value="{{$packing[0]->packing_no_of_begs}}">
-                </div>
-            </div>
+        <div class="mt-3">
+            <label>Remaining Quantity (KG)</label>
+            <input type="text" name="remaing_qty" id="remainingQty" class="form-control" readonly>
         </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="packing_pay" class="form-label">Pay for Packing</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="packing_pay" type="text" id="packing_pay" value="{{$packing[0]->packing_pay}}" readonly>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="lot_no" class="form-label">Lot No.</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="lot_no" type="text" id="lot_no" value="{{$packing[0]->lot_no}}" readonly>
-                </div>
-            </div>
-        </div>
-        
-
-         <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="stage_no" class="form-label">Gredding Stage No.</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="staging_stage_no" type="text" id="staging_stage_no" value="{{$packing[0]->packing_stage_no}}" readonly>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="stage_no" class="form-label">Packing Stage No.</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="stage_no" type="text" id="stage_no" value="{{$packing[0]->packing_stage_no}}">
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="final_weight" class="form-label">Final Weight</label>
-                <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="final_weight" type="text" id="final_weight" value="{{$packing[0]->final_weight}}" readonly>
-                </div>
-            </div>
-        </div>
-
-         <div class="form-group col-md-6">
-            <label for="company_id" class="form-label">Company Name</label>
-            <select name="company_id" id="company_id" class="form-control select" required>
-                <option value="" hidden>Select Company Name</option> 
-                @foreach($company as $key => $value)
-                    <option value="{{ $value->company_id }}" {{ $value->company_id == $packing[0]->cmp ? 'selected' : 'hidden'}}>{{ $value->company_name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="form-group">
-                <label for="godown" class="form-label">Godown Name</label>
-                <div class="form-icon-user">
-                    <select class="form-control alwaysvisible" required name="godown" type="text" id="godown" readonly>
-                       @foreach($branch as $val)
-                            <option value="{{ $val->branch_id }}"  {{$packing[0]->packing_godown == $val->branch_id ? 'selected' : 'hidden'}}>{{ $val->branch_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
-
-       
     </div>
 </div>
+
 <div class="modal-footer">
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
     <input type="submit" value="Update" class="btn btn-primary">
 </div>
 </form>
+
+<script>
+$(function() {
+    const greddedQtyKG = (parseFloat("{{ $packing[0]->packing_gredded_quantity }}") || 0) * 100;
+
+    function calculateTotals() {
+        let totalUsed = 0;
+        $('.bag-row').each(function() {
+            const kg = parseFloat($(this).find('.bag-select').val()) || 0;
+            const bags = parseFloat($(this).find('.bag-count').val()) || 0;
+            const total = kg * bags;
+            $(this).find('.total-kg').val(total > 0 ? total + ' KG' : '');
+            totalUsed += total;
+        });
+
+        const remaining = greddedQtyKG - totalUsed;
+        if (remaining < 0) {
+            alert("Quantity exceeded available stock!");
+            $(':focus').val('');
+            calculateTotals();
+            return;
+        }
+        if (remaining === 0) {
+            alert("No remaining quantity left!");
+        }
+        $('#remainingQty').val(remaining + ' KG');
+    }
+
+    $(document).on('change', '.bag-select', function() {
+        const selectedVal = $(this).val();
+        if (selectedVal) {
+            let duplicate = false;
+            $('.bag-select').not(this).each(function() {
+                if ($(this).val() === selectedVal) {
+                    duplicate = true;
+                    return false;
+                }
+            });
+            if (duplicate) {
+                alert("This KG value is already selected!");
+                $(this).val('');
+                return;
+            }
+        }
+        calculateTotals();
+    });
+
+    $(document).on('keyup change', '.bag-count', calculateTotals);
+
+    $(document).on('click', '#addRow', function() {
+        let newRow = $('.bag-row:first').clone();
+        newRow.find('select').val('');
+        newRow.find('.bag-count').val('');
+        newRow.find('.total-kg').val('');
+        $('#bagRows').append(newRow);
+    });
+
+    $(document).on('click', '.remove-row', function() {
+        if ($('.bag-row').length > 1) {
+            $(this).closest('.bag-row').remove();
+            calculateTotals();
+        }
+    });
+
+    calculateTotals();
+});
+</script>
