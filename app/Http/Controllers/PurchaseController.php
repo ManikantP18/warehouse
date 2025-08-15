@@ -211,7 +211,7 @@ class PurchaseController extends Controller
 
 
 
-                            DB::insert("Insert into staging (purchase_id,select_lot_no,staging_varity,staging_date,rst_no,farmer_name,final_weight,land_owner,godown) VALUES ($id,'$purchase_lot_no', '$purchase_item[$i]','$today','$purchase_rst_no','$purchase_relation_cusm','$purchase_quantity[$i]','$purchase_owner','$godown')");
+                            DB::insert("Insert into staging (purchase_id,select_lot_no,staging_varity,staging_date,rst_no,farmer_name,final_weight,land_owner,godown,company_id) VALUES ($id,'$purchase_lot_no', '$purchase_item[$i]','$today','$purchase_rst_no','$purchase_relation_cusm','$purchase_quantity[$i]','$purchase_owner','$godown','$cid')");
                         
                     }
                  }

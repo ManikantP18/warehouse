@@ -5,7 +5,7 @@
     <div class="col-12">
     
     </div>
-
+  
     <div class="col-md-6">
       <div class="form-group">
         <label for="sellto_farmer/other" class="form-label">Sell To</label>
@@ -39,7 +39,7 @@
         <input class="form-control onlyforformesrs" required name="sellto_phone" type="tel" pattern="[0-9]{10}" maxlength="10" title="Enter 10-digit mobile number" id="sellto_phone" value="{{$sellto[0]->sell_phone}}">
       </div>
     </div>
-
+    <input type="hidden" value="{{$sellto[0]->sell_id}}" name="cn_id">
     <div class="col-md-6">
       <div class="form-group">
         <label for="sellto_customer_name" class="form-label">Customer Name</label>
@@ -80,118 +80,78 @@
 
     <!-- Default rows for already selled items -->
         @for($i = 0; $i < count($selleditems); $i++)
-          <div class="row mb-3 sell-row">
+<div class="row mb-3 sell-row">
 
-           
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Sell Item</label>
-                <select name="sellto_item_selled[]" class="form-control sell-item" onchange="selectItem({{ $i }}, this)" required>
-                  <option value="" hidden>Select Item</option>
-                  @foreach($items as $value)
+    {{-- Checkbox for return --}}
+    <div class="col-md-1 d-flex align-items-center">
+        <input type="checkbox" class="form-check-input return-checkbox"
+               data-index="{{ $i }}">
+    </div>
+
+    {{-- Sell Item --}}
+    <div class="col-md-2">
+        <div class="form-group">
+            <label> Item</label>
+            <select name="sellto_item_selled[]" class="form-control sell-item" 
+                    onchange="selectItem({{ $i }}, this)" required disabled>
+                <option value="" hidden>Select Item</option>
+                @foreach($items as $value)
                     <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->selled_item ? 'selected' : '' }}>
-                      {{ $value->name }}
+                        {{ $value->name }}
                     </option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <label>Quantity</label>
-              <input type="number" class="form-control" name="sellto_quantity[]" id="sellto_quantity_{{ $i }}" 
-                    value="{{ $selleditems[$i]->selled_quantity }}" 
-                    required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})">
-            </div>
-
-            <div class="col-md-2">
-              <label>Unit</label>
-              <select class="form-control" name="purchase_unit[]" required>
-                @foreach($units as $value)
-                  <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->sell_unit ? 'selected' : '' }}>
-                    {{ $value->name }}
-                  </option>
                 @endforeach
-              </select>
-            </div>
-
-            <div class="col-md-2">
-              <label>Rate</label>
-              <input type="number" class="form-control" name="sellto_rate[]" id="sellto_rate_{{ $i }}"
-                    value="{{ $selleditems[$i]->selled_rate }}" onkeyup="autofill({{ $i }})">
-            </div>
-
-            <div class="col-md-2">
-              <label>GST</label>
-              <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_{{ $i }}" 
-                    onkeyup="autofill({{ $i }})" value="{{ $selleditems[$i]->sell_gst ?? 0 }}">
-            </div>
-
-            <div class="col-md-2">
-              <label>Total Amount</label>
-              <input type="number" class="form-control purchase_total" name="purchase_total[]" id="purchase_total_{{ $i }}" 
-                    value="{{ $selleditems[$i]->selled_rate * $selleditems[$i]->selled_quantity }}">
-            </div>
-          </div>
-        @endfor
-      <div id="newRowsContainer"></div>
-        <!-- Add More Button -->
-        <div class="mb-3">
-          <button type="button" class="btn btn-success" id="addMoreRow">+ Add More</button>
-        </div>
-
-        <!-- Container for dynamically added rows -->
-        
-
-
-    
-
-<!-- End Of multy products Sells -->
-    
-
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Cash Amount</label>
-        <input type="number" class="form-control" name="sellto_cash_amount" id="sellto_cash_amount" required value="{{$sellto[0]->cash_amount}}" onkeyup="calculateAmt()">
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Credit Amount</label>
-        <input type="number" class="form-control" name="sellto_Credit_amount" id="sellto_Credit_amount" required value="{{$sellto[0]->credit_amount}}"  onkeyup="calculateAmt()">
-      </div>
-    </div>
-
-    <div class="col-md-6">
-          <div class="form-group">
-            <label>Bank Name</label>
-            <select name="bank_name" id="bank_name" class="form-control">
-             @foreach($banks as $val)
-                <option value="{{ $val->account_id }}" {{ $val->account_id == $sellto[0]->bank_name ?  'selected' : ''}}>{{ $val->bank_name }}</option>
-              @endforeach
             </select>
-          </div>
         </div>
-
-
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Remaining Amount</label>
-        <input type="number" class="form-control" name="sellto_Remaining_amount" id="sellto_Remaining_amount" required value="{{$sellto[0]->remaining_amount}}" >
-      </div>
     </div>
 
+    {{-- Quantity --}}
+    <div class="col-md-1">
+        <label>Quantity</label>
+        <input type="number" class="form-control" name="sellto_quantity[]" id="sellto_quantity_{{ $i }}"
+               value="{{ $selleditems[$i]->selled_quantity }}" 
+               required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})" disabled>
+               <input type="hidden" value="{{ $selleditems[$i]->selled_quantity }}" id="sellto_prev_quantity_{{ $i }}">
+    </div>
 
-    <div class="col-md-6">
-      <div class="form-group">
+    {{-- Unit --}}
+    <div class="col-md-2">
+        <label>Unit</label>
+        <select class="form-control" name="purchase_unit[]" required disabled>
+            @foreach($units as $value)
+                <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->sell_unit ? 'selected' : '' }}>
+                    {{ $value->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    {{-- Rate --}}
+    <div class="col-md-2">
+        <label>Rate</label>
+        <input type="number" class="form-control" name="sellto_rate[]" id="sellto_rate_{{ $i }}"
+               value="{{ $selleditems[$i]->selled_rate }}" onkeyup="autofill({{ $i }})" disabled>
+    </div>
+
+    {{-- GST --}}
+    <div class="col-md-2">
+        <label>GST</label>
+        <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_{{ $i }}"
+               onkeyup="autofill({{ $i }})" value="{{ $selleditems[$i]->sell_gst ?? 0 }}" disabled>
+    </div>
+
+    {{-- Total --}}
+    <div class="col-md-2">
         <label>Total Amount</label>
-        <input type="number" class="form-control sellto_total_amount" name="sellto_total_amount" id="sellto_total_amount" required value='{{$sellto[0]->sell_total_ammount}}'>
-      </div>
+        <input type="number" class="form-control purchase_total" name="purchase_total[]" id="purchase_total_{{ $i }}"
+               value="{{ $selleditems[$i]->selled_rate * $selleditems[$i]->selled_quantity }}" disabled>
     </div>
 
-  </div>
 </div>
+@endfor
+
+    
+
+    
 <div class="modal-footer">
 
 <input type="hidden" name="sell_id" value="{{$sellto[0]->sell_id}}">
@@ -203,7 +163,7 @@
 
 
 
-<>
+
   <script>
     (() => {
       
@@ -351,17 +311,13 @@ console.log(item)
 
     function autofill(id) {
       
-        $("#purchase_total_" + id).val((parseFloat($("#sellto_quantity_" + id).val()) * parseFloat($("#sellto_rate_" + id).val())) + parseFloat($("#sellto_gst_amount_" + id).val()));
-
-      let total = 0;
-
-       $(".purchase_total").each(function() {
-          let val = parseFloat($(this).val()) || 0;
-          total += val;
-        });
-
-        $("#sellto_total_amount").val(total);
-        calculateAmt();
+      let cqty =  parseFloat($("#sellto_quantity_"+id).val());
+      let prevqty =  parseFloat($("#sellto_prev_quantity_"+id).val());
+        if(cqty <= 0 || cqty > prevqty) {
+          alert('You Can not Return Quantity 0 or Higher than Salled Quantity');
+          
+        $("#sellto_quantity_"+id).val('1')
+        }
     }
 
   function checkmode() {
@@ -445,6 +401,20 @@ $(document).on("click", "#addMoreRow", function() {
 $(document).on("click", ".removeRow", function() {
   $(this).closest(".sell-row").remove();
   autofill();
+});
+
+$(document).on('change', '.return-checkbox', function () {
+    let index = $(this).data('index');
+    let row = $(this).closest('.sell-row');
+
+    if ($(this).is(':checked')) {
+        // Enable all inputs in this row
+        row.find('input, select').prop('disabled', false);
+    } else {
+        // Disable all inputs except the checkbox itself
+        row.find('input, select').prop('disabled', true);
+        $(this).prop('disabled', false); // keep checkbox active
+    }
 });
 
 </script>

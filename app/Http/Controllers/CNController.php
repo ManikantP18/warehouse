@@ -79,26 +79,27 @@ function create(){
     $aadhar_no = $req->input('aadhar_no');
     $quantity = $req->input('quantity');
     $rate = $req->input('rate');
+    $purchase_unit = $req->input('purchase_unit');
     $total_amount = $req->input('total_amount');
     $GST_amount = $req->input('GST_amount');
 
-    // ✅ Use parameterized query to avoid SQL injection
-    DB::update("UPDATE sales_return SET 
-        cash_credit = ?, 
-        aadhar_no = ?, 
-        quantity = ?, 
-        rate = ?, 
-        total_amount = ?, 
-        GST_amount = ? 
-        WHERE cn_id = ?", [
-        $cash_credit,
-        $aadhar_no,
-        $quantity,
-        $rate,
-        $total_amount,
-        $GST_amount,
-        $id
-    ]);
+     $sellto_farmer = $req->input('sellto_farmer/other');
+
+      $sellto_account_number = $req->input('sellto_account_number');
+
+     $sellto_phone = $req->input('sellto_phone');
+
+     $sellto_customer_name = $req->input('sellto_customer_name');
+
+      $sellto_account_number = $req->input('sellto_acc_holder');
+
+     $sellto_owner_name = $req->input('sellto_owner_name');
+
+     $village = $req->input('village');
+
+      $company_id = $req->input('company_id');
+
+    //   DB::insert("insert into sales_return (cash_credit,aadhar_no,r_cust,village,mo_no,item_sale,sell_id,land_owner,acc_holder,quantity,unit,rate,total_amount,GST_amount,) values ('$cash_credit','$aadhar_no','$sellto_customer_name','$village','$sellto_phone','$aadhar_no','$sellto_customer_name','$village',)")
 
     return redirect()->route('Sales-Return.list')->with('success', 'Updated successfully');
 }
