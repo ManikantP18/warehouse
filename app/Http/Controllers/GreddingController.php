@@ -14,7 +14,7 @@ class GreddingController extends Controller
 {
     public function index(){
 
-        $data['gredding'] = DB::select('select * from gredding join branches on branches.branch_id  = gredding.gredding_godown join product_services on product_services.id = gredding.gredding_verity where gredding.is_hide = 0');
+        $data['gredding'] = DB::select('select * from gredding join branches on branches.branch_id  = gredding.gredding_godown join product_services on product_services.id = gredding.gredding_verity join company on company.company_id = gredding.company_id where gredding.is_hide = 0 order by gredding_id desc');
 
         return view('gredding/list',$data);
 
@@ -39,7 +39,7 @@ class GreddingController extends Controller
 
 
     function edit($id){
-         $data['gredding'] = DB::select("select * from gredding join product_services on product_services.id = gredding.gredding_verity where gredding_id = '$id'");
+         $data['gredding'] = DB::select("select *, gredding.company_id AS cmp from gredding join product_services on product_services.id = gredding.gredding_verity where gredding_id = '$id'");
          $data['branch'] = DB::select("select * from branches where branch_status = 1");
 
          $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
@@ -64,12 +64,12 @@ class GreddingController extends Controller
            $final_waigth = $req->input('final_waigth');
            $gredding_lot_no = $req->input('gredding_lot_no');
            $staging_stage_no = $req->input('staging_stage_no');
-
+            $company_id = $req->input('company_id');
         $staging_no_begs = $req->input('staging_no_begs');
           
-            DB::update("update gredding set gredding_verity = '$gredding_verity' ,gredding_godown = '$gredding_godown',gred_stage_no = '$gred_stage_no',gred_no_begs = '$gred_no_begs',gredded_quantity = '$gredded_quantity',undersize_quantity = '$undersize_quantity' ,pay_gredding = '$pay_gredding' ,gredding_lot_no = '$gredding_lot_no' ,farmar_name = '$farmar_name' ,land_owner = '$land_owner',final_waigth = '$final_waigth' , is_hide = 1 , staging_stage_no = '$staging_stage_no',staging_no_bags = ' $staging_no_begs' where gredding_id = '$gredding_id'");
+            DB::update("update gredding set gredding_verity = '$gredding_verity' ,gredding_godown = '$gredding_godown',gred_stage_no = '$gred_stage_no',gred_no_begs = '$gred_no_begs',gredded_quantity = '$gredded_quantity',undersize_quantity = '$undersize_quantity' ,pay_gredding = '$pay_gredding' ,gredding_lot_no = '$gredding_lot_no' ,farmar_name = '$farmar_name' ,land_owner = '$land_owner',final_waigth = '$final_waigth' , is_hide = 1 , staging_stage_no = '$staging_stage_no',staging_no_bags = ' $staging_no_begs', company_id = '$company_id' where gredding_id = '$gredding_id'");
 
-           DB::insert("Insert into packing (lot_no,farmer_name,land_owner,packing_stage_no,packing_no_of_begs,packing_pay,packing_gredded_quantity,packing_verity,final_weight,packing_godown,gred_no_bag,gred_stage_no) VALUES ('$gredding_lot_no', '$farmar_name', '$land_owner', '$gred_stage_no', '$gred_no_begs', '$pay_gredding','$gredded_quantity','$gredding_verity','$final_waigth','$gredding_godown','$staging_no_begs','$staging_stage_no')");
+           DB::insert("Insert into packing (lot_no,farmer_name,land_owner,packing_stage_no,packing_no_of_begs,packing_pay,packing_gredded_quantity,packing_verity,final_weight,packing_godown,gred_no_bag,gred_stage_no,company_id) VALUES ('$gredding_lot_no', '$farmar_name', '$land_owner', '$gred_stage_no', '$gred_no_begs', '$pay_gredding','$gredded_quantity','$gredding_verity','$final_waigth','$gredding_godown','$staging_no_begs','$staging_stage_no','$company_id')");
 
 
          return Redirect::to('gredding')->with('success', 'Gredding Create Successfully');

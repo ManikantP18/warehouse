@@ -11,39 +11,65 @@ use Illuminate\Support\Facades\Redirect;
 class PackingController extends Controller
 {
     function index() {
-        $data['packing'] = DB::select("select * from packing join branches on branches.branch_id  = packing.packing_godown join product_services on product_services.id = packing.packing_verity  where packing_status = 1 and is_deleted = 0 order by packing_id desc");
+        $data['packing'] = DB::select("select * from packing join branches on branches.branch_id  = packing.packing_godown join product_services on product_services.id = packing.packing_verity join company on company.company_id = packing.company_id  where packing_status = 1 and packing.is_deleted = 0 order by packing_id desc");
         return view('packing/list',$data);
     }
 
 
 
     function edit($id) {
-        $data['packing'] = DB::select("select * from packing join product_services on product_services.id = packing.packing_verity where packing_id = '$id'");
+        $data['packing'] = DB::select("select *,packing.company_id AS cmp from packing join product_services on product_services.id = packing.packing_verity where packing_id = '$id'");
         $data['branch'] = DB::select("select * from branches where branch_status = 1");
-       
+       $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
         return view('packing/edit',$data);
     }
 
-    function update(Request $req ) {
-        $packing_id  = $req->input('packing_id');
-        $lot_no = $req->input('lot_no');
-        $farmer_name	 = $req->input('farmer_name');
-        $land_owner	 = $req->input('land_owner');
-        $verity = $req->input('verity');
-        $Gredded_qty = $req->input('Gredded_qty');
-         $total_bag = $req->input('total_bag');
-          $packing_pay	 = $req->input('packing_pay');
-           $stage_no = $req->input('stage_no');
-        $final_weight = $req->input('final_weight');
-        $godown = $req->input('godown');
-                
+   public function update(Request $req)
+{
+    $packing_id = $req->packing_id;
+    $remaing_qty = $req->remaing_qty;
+    // Bags data
+    $bags_kg = $req->bags_kg;       // array
+    $bags_count = $req->bags_count; // array
 
+    // Initialize
+    $packing_40 = $packing_30 = $packing_20 = $packing_5 = 0;
 
-       DB::update("update packing set lot_no = '$lot_no' ,farmer_name = '$farmer_name',land_owner = '$land_owner',packing_stage_no = '$stage_no',packing_no_of_begs = '$total_bag',packing_pay = '$packing_pay' ,packing_gredded_quantity = '$Gredded_qty' ,packing_verity = '$verity' ,final_weight = '$final_weight' ,packing_godown = '$godown' where packing_id = '$packing_id'");
-
-
-        return Redirect::to('/packing')->with('success', 'Packing edit Successfully');
+    if ($bags_kg && $bags_count) {
+        foreach ($bags_kg as $index => $kg) {
+            $count = isset($bags_count[$index]) ? (int)$bags_count[$index] : 0;
+            if ($kg == 40) $packing_40 = $count;
+            if ($kg == 30) $packing_30 = $count;
+            if ($kg == 20) $packing_20 = $count;
+            if ($kg == 5)  $packing_5  = $count;
+        }
     }
+
+    DB::table('packing')
+        ->where('packing_id', $packing_id)
+        ->update([
+            'lot_no'                   => $req->lot_no,
+            'farmer_name'              => $req->farmer_name,
+            'land_owner'               => $req->land_owner,
+            'packing_stage_no'         => $req->stage_no,
+            'packing_no_of_begs'       => array_sum($bags_count),
+            'packing_pay'              => $req->packing_pay,
+            'packing_gredded_quantity' => $req->Gredded_qty,
+            'packing_verity'           => $req->verity,
+            'final_weight'             => $req->final_weight,
+            'packing_godown'           => $req->godown,
+            'company_id'               => $req->company_id,
+            'packing_40'               => $packing_40,
+            'packing_30'               => $packing_30,
+            'packing_20'               => $packing_20,
+            'packing_5'                => $packing_5,
+            'remaing_qty'              => $remaing_qty
+        ]);
+
+    return Redirect::to('/packing')->with('success', 'Packing updated successfully');
+}
+
+
 
   
 }

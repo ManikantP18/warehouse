@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <label for="farmar_name" class="form-label">Customer Name</label>
                     <div class="form-icon-user">
-                        <input class="form-control alwaysvisible" required pattern="[A-Za-z ]+" title="Only alphabets are allowed" name="farmar_name" type="text" id="farmar_name" value="{{$gredding[0]->farmar_name}}">
+                        <input class="form-control alwaysvisible" readonly required pattern="[A-Za-z ]+" title="Only alphabets are allowed" name="farmar_name" type="text" id="farmar_name" value="{{$gredding[0]->farmar_name}}">
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label for="land_owner" class="form-label">land owner name</label>
                     <div class="form-icon-user">
-                        <input class="form-control " required="required" name="land_owner" type="text" id="land_owner" value="{{$gredding[0]->land_owner}}">
+                        <input class="form-control " readonly required="required" name="land_owner" type="text" id="land_owner" value="{{$gredding[0]->land_owner}}">
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label for="gredding_lot_no" class="form-label"> LOT No. </label>
                     <div class="form-icon-user">
-                        <input class="form-control "  name="gredding_lot_no" type="text" id="gredding_lot_no" value="{{$gredding[0]->gredding_lot_no	}}">
+                        <input class="form-control " readonly  name="gredding_lot_no" type="text" id="gredding_lot_no" value="{{$gredding[0]->gredding_lot_no	}}">
                     </div>
                 </div>
             </div>
@@ -49,10 +49,10 @@
 
         <div class="form-group col-md-6">
             <label for="company_id" class="form-label">Company Name</label>
-            <select name="company_id" id="company_id" class="form-control select" required>
-                <option value="">Select Company Name</option> 
-                @foreach($company as $key => $value)
-                    <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
+            <select name="company_id" id="company_id" class="form-control select {{$gredding[0]->cmp}}" required>
+                <option value="" hidden>Select Company Name</option> 
+                @foreach($company as $value)
+                    <option value="{{ $value->company_id }}" {{ $value->company_id == $gredding[0]->cmp ? 'selected' : 'hidden'}}>{{ $value->company_name }}</option>
                 @endforeach
             </select>
         </div>
@@ -74,7 +74,7 @@
                 <div class="form-group">
                     <label for="gred_stage_no" class="form-label">Staging Stage No.</label>
                     <div class="form-icon-user">
-                        <input class="form-control " required="required" name="staging_stage_no" type="text" id="staging_stage_no" value="{{$gredding[0]->gred_stage_no}}">
+                        <input class="form-control " required="required" readonly name="staging_stage_no" type="text" id="staging_stage_no" value="{{$gredding[0]->gred_stage_no}}">
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                 <div class="form-group">
                     <label for="gred_no_begs" class="form-label">Staging No Of Begs </label>
                     <div class="form-icon-user">
-                        <input class="form-control " title="Only letters allowed" name="staging_no_begs" type="text" id="staging_no_begs" value="{{$gredding[0]->gred_no_begs}}" >
+                        <input class="form-control " readonly title="Only letters allowed" name="staging_no_begs" type="text" id="staging_no_begs" value="{{$gredding[0]->gred_no_begs}}" >
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                 <div class="form-group">
                     <label for="final_waigth" class="form-label">Staging Final Weight </label>
                     <div class="form-icon-user">
-                        <input class="form-control " title="Only letters allowed" name="final_waigth" type="text" id="final_waigth" value="{{$gredding[0]->final_waigth	}}" >
+                        <input class="form-control " title="Only letters allowed" readonly name="final_waigth" type="text" id="final_waigth" value="{{$gredding[0]->final_waigth	}}" >
                     </div>
                 </div>
             </div>

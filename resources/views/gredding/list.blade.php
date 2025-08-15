@@ -83,12 +83,14 @@
                                     <th>Select Lot No.</th>
                                     <th> Gredding Varity </th>
                                     <th> Godown </th>
+                                     <th>Company name</th>
                                     <th>Stage No. </th>
                                     <th>Final Waigth</th>
                                     <th> No of Begs </th>
                                     <th> Gredded  Quantity </th>
                                     <th> Undersize Quantity </th>
                                     <th>Pay for greeding </th>
+                                   
                                     <th>Date </th>
                                     <th> Status </th>
                                     <th> Action </th>
@@ -106,6 +108,7 @@
                                     <td> {{ $value->gredding_lot_no}} </td>
                                     <td> {{ $value->name}} </td>
                                     <td> {{ $value->branch_name}} </td>
+                                    <td> {{ $value->company_name}} </td>
                                     <td> {{ $value->gred_stage_no}} </td>
                                     <td> {{ $value->final_waigth}} </td>
 

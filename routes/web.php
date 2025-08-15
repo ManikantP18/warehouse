@@ -198,6 +198,8 @@ Route::get('/sellto', 'App\Http\Controllers\SelltoController@index')->name('sell
 
 Route::get('/othersSellto', 'App\Http\Controllers\SelltoController@others')->name('sellto.other')->middleware('auth');
 
+Route::get('/sellto/getItems', 'App\Http\Controllers\SelltoController@getItems')->name('sellto.getItems')->middleware('auth');
+
 Route::get('/sellto/create', 'App\Http\Controllers\SelltoController@create')->name('sellto.create')->middleware('auth');
 
 Route::post('/sellto/add', 'App\Http\Controllers\SelltoController@add')->name('sellto.add')->middleware('auth');

@@ -92,7 +92,7 @@
                             </thead>
                             <tbody>
 
-                            @foreach($staging AS $value):
+                            @foreach($staging AS $value)
 
                                 <tr>
                                     <td> {{ $value->staging_id}} </td>
@@ -101,12 +101,12 @@
                                     <td style="display:none"> {{ $value->name}} </td>
                                     <td style="display:none">{{ $value->rst_no}}</td>
                                     <td> {{ $value->branch_name}} </td>
-                                     <td >{{ $value->company_name }}</td>
+                                    <td></td>
                                      <td style="display:none"> {{ $value->stage_no}} </td>
                                     <td style="display:none"> {{ $value->no_of_begs}} </td>
                                     <td style="display:none">{{ $value->final_weight}}</td>
                                      <td style="display:none"> {{ $value->pay_for_staging}} </td>
-                                      <td> {{ date('d/m/Y', strtotime($value->$value->staging_date)) }} </td>
+                                      <td>{{ date('d/m/Y', strtotime($value->staging_date)) }}</td>
                                     <td style="display:none"> {{ $value->staging_status == 1 ? 'Active' : 'Inactive' }} </td>
                                     <td>
                                             <div class="flex gap-4">

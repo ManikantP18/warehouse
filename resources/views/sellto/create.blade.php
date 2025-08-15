@@ -116,7 +116,7 @@
 
         <div class="form-group col-md-6">
             <label for="company_id" class="form-label">Company Name</label>
-            <select name="company_id" id="company_id" class="form-control select" required>
+            <select name="company_id" id="company_id" class="form-control select" required onchange="CompanyItems(this.value)">
                 <option value="">Select Company Name</option> 
                 @foreach($company as $key => $value)
                     <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
@@ -132,11 +132,9 @@
     <div class="row">
       <div class="col-md-3">
         <label>Sell Item</label>
-        <select name="sellto_item_selled[]" class="form-control sellto_item_selled" dataid="0" onchange="selectItem(0, this)" required>
+        <select name="sellto_item_selled[]" class="form-control sellto_item_selled" id="cpm_id" dataid="0" onchange="selectItem(0, this)" required>
           <option value="">Select Item</option>
-          @foreach($items as $val)
-            <option value="{{ $val->pid }}">{{ $val->item_name }}</option>
-          @endforeach
+         
         </select>
       </div>
 
@@ -250,6 +248,20 @@
 <input type="hidden" id="itemsdata" value="{{ json_encode($items) }}">
 
 <script>
+
+  function CompanyItems(cmp_id) {
+      $.ajax({
+          url: '{{ route('sellto.getItems') }}',
+          type: 'GET',
+          data: { cmp_id: cmp_id },
+          success: function(response) {
+          $(".sellto_item_selled").html(response);
+        },
+        error: function(xhr) { alert('hi')
+          console.error("Error fetching item details");
+        }
+        })
+}
 
 function calculateAmt(){
   let sellto_cash_amount = parseInt($("#sellto_cash_amount").val());
@@ -461,38 +473,41 @@ console.log(item)
 
 </script>
 <script>
-let rowIndex = 1;
+var rowIndex1 = $('.item-group').length; // start from existing rows count
 
 function addMoreItem() {
   let $template = $('.item-group').first().clone();
-  
+
   $template.find('input, select').each(function () {
     let $el = $(this);
     let name = $el.attr('name');
     let oldId = $el.attr('id');
-    let newId = oldId ? oldId.replace(/\d+/, rowIndex) : '';
-
-    if (newId) {
-      $el.attr('id', newId);
-    }
+    
+    // Always append/replace the number at the end of the ID
+    let newId = oldId ? oldId.replace(/\d*$/, rowIndex1) : '';
+    if (newId) $el.attr('id', newId);
 
     $el.val('');
     if (name === 'sellto_quantity[]') $el.val(1);
     if (name === 'sell_total[]') $el.val(0);
-    if ($el.hasClass('sellto_item_selled')) {
-      $el.attr('dataid', rowIndex);
-      $el.attr('onchange', 'selectItem(' + rowIndex + ', this)');
+
+    // For item selector
+    if ($el.hasClass('sellto_item_selled')) { console.log('hi, Nik Nikku Nikita...')
+      $el.attr('dataid', rowIndex1);
+      $el.attr('onchange', 'selectItem(' + rowIndex1 + ', this)');
     }
 
+    // For quantity, rate, gst fields
     if (name === 'sellto_quantity[]' || name === 'sellto_rate[]' || name === 'sellto_gst_amount[]') {
-      $el.attr('onkeyup', 'autofill(' + rowIndex + ')');
-      $el.attr('onchange', 'autofill(' + rowIndex + ')');
+      $el.attr('onkeyup', 'autofill(' + rowIndex1 + ')');
+      $el.attr('onchange', 'autofill(' + rowIndex1 + ')');
     }
   });
 
   $('#item-wrapper').append($template);
-  rowIndex++;
+  rowIndex1++;
 }
+
 
 function removeRow(button) {
   if ($('.item-group').length > 1) {
@@ -521,6 +536,8 @@ function updateTotalAmount() {
   });
   $("#sellto_total_amount").val(grandTotal.toFixed(2));
 }
+
+
 </script>
 
 

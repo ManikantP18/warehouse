@@ -32,6 +32,25 @@ class SelltoController extends Controller
         return view('sellto/create',$data);
     }
 
+    function getItems(Request $req) {
+        $comp_id = $req->input('cmp_id');
+         $items = DB::select("select *,product_services.id AS pid, product_services.name AS item_name from product_services join taxes on product_services.tax_id = taxes.id where type = 'Product' and company_id = ' $comp_id' group by product_services.id");
+         $opt = '<option value=""> Select Items </option>';
+
+        if(!empty($items)){
+            
+            foreach($items as $ln) {
+
+                $pid = $ln->pid;
+
+                $opt .= "<option value='$pid'>$ln->item_name</option>";
+
+            }
+        }
+
+        echo $opt;
+    }
+
     function lotno(Request $request) {
         $itemId = $request->item;
 
