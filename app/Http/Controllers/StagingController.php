@@ -54,7 +54,7 @@ class StagingController extends Controller
     }
 
     function edit($id){
-         $data['staging'] = DB::select("select * from staging join product_services on product_services.id = staging.staging_varity where staging_id = '$id'");
+         $data['staging'] = DB::select("select *,staging.company_id AS cmp from staging join product_services on product_services.id = staging.staging_varity where staging_id = '$id'");
           $data['branch'] = DB::select("select * from branches where branch_status = 1");
          $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
      
@@ -76,17 +76,18 @@ class StagingController extends Controller
         $final_weight = $req->input('final_weight');
 
         $land_owner = $req->input('land_owner');
+         $company_id = $req->input('company_id');
 
         
         $today = date('Y-m-d H:i:s');
                 
 
 
-       DB::update("update staging set select_lot_no = '$select_lot_no' ,staging_varity = '$staging_varity',godown = '$godown',stage_no = '$stage_no',no_of_begs = '$no_of_begs',pay_for_staging = '$pay_for_staging',staging_date = '$staging_date' ,farmer_name = '$farmer_name' ,final_weight = '$final_weight' , is_hide = 1 where staging_id = '$staging_id'");
+       DB::update("update staging set select_lot_no = '$select_lot_no' ,staging_varity = '$staging_varity',godown = '$godown',stage_no = '$stage_no',no_of_begs = '$no_of_begs',pay_for_staging = '$pay_for_staging',staging_date = '$staging_date' ,farmer_name = '$farmer_name' ,final_weight = '$final_weight' , company_id = '$company_id' , is_hide = 1 where staging_id = '$staging_id'");
 
 
 
-       DB::insert("Insert into gredding (staging_id,gredding_lot_no,gredding_verity,gredding_godown,farmar_name,final_waigth,land_owner,gred_stage_no,gredding_date,gred_no_begs) VALUES ($staging_id,'$select_lot_no', '$staging_varity','$godown','$farmer_name','$final_weight','$land_owner','$stage_no','$today','$no_of_begs')");
+       DB::insert("Insert into gredding (staging_id,gredding_lot_no,gredding_verity,gredding_godown,farmar_name,final_waigth,land_owner,gred_stage_no,gredding_date,gred_no_begs,company_id) VALUES ($staging_id,'$select_lot_no', '$staging_varity','$godown','$farmer_name','$final_weight','$land_owner','$stage_no','$today','$no_of_begs','$company_id')");
 
 
         return Redirect::to('/staging')->with('success', 'Staging edit Successfully');

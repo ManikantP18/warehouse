@@ -47,9 +47,9 @@
 
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="total_bag" class="form-label">Staging No. of Bag</label>
+                <label for="total_bag" class="form-label">Gredding No. of Bag</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="staging_total_bag" type="text" id="staging_total_bag" value="{{$packing[0]->packing_no_of_begs}}">
+                    <input class="form-control alwaysvisible" required name="staging_total_bag" type="text" id="staging_total_bag" value="{{$packing[0]->gred_no_bag}}" readonly>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
             <div class="form-group">
                 <label for="total_bag" class="form-label">Packing No. of Bag</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="total_bag" type="text" id="total_bag" value="">
+                    <input class="form-control alwaysvisible" required name="total_bag" type="text" id="total_bag" value="{{$packing[0]->packing_no_of_begs}}">
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
             <div class="form-group">
                 <label for="stage_no" class="form-label">Packing Stage No.</label>
                 <div class="form-icon-user">
-                    <input class="form-control alwaysvisible" required name="stage_no" type="text" id="stage_no" value="">
+                    <input class="form-control alwaysvisible" required name="stage_no" type="text" id="stage_no" value="{{$packing[0]->packing_stage_no}}">
                 </div>
             </div>
         </div>
@@ -109,6 +109,15 @@
             </div>
         </div>
 
+         <div class="form-group col-md-6">
+            <label for="company_id" class="form-label">Company Name</label>
+            <select name="company_id" id="company_id" class="form-control select" required>
+                <option value="" hidden>Select Company Name</option> 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}" {{ $value->company_id == $packing[0]->cmp ? 'selected' : 'hidden'}}>{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
 
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="form-group">

@@ -96,11 +96,8 @@
                                     <th> Gredded quantity </th>
                                     <th> Packing total bag </th>
                                     <th> Pay for packing </th>
-<<<<<<< HEAD
                                     <th>lot no.</th>
-=======
-                                  
->>>>>>> 69a2edbe3c5d119c8c6cfc05a4e39d568b41cf67
+                                  <th>Company Name</th>
                                     <th>packing verity</th>
                                     <th>stage no.</th>
                                   
@@ -117,11 +114,8 @@
                                     <td> {{ $value->packing_gredded_quantity }} </td>
                                     <td> {{ $value->packing_no_of_begs }} </td>
                                     <td> {{ $value->packing_pay }} </td>
-<<<<<<< HEAD
                                     <td> {{ $value->lot_no }} </td>
-=======
-                                    
->>>>>>> 69a2edbe3c5d119c8c6cfc05a4e39d568b41cf67
+                                    <td> {{ $value->company_name }} </td>
                                     <td> {{ $value->name }} </td>
                                     <td> {{ $value->packing_stage_no }} </td>
                                   

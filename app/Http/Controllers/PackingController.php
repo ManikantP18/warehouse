@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Redirect;
 class PackingController extends Controller
 {
     function index() {
-        $data['packing'] = DB::select("select * from packing join branches on branches.branch_id  = packing.packing_godown join product_services on product_services.id = packing.packing_verity  where packing_status = 1 and is_deleted = 0 order by packing_id desc");
+        $data['packing'] = DB::select("select * from packing join branches on branches.branch_id  = packing.packing_godown join product_services on product_services.id = packing.packing_verity join company on company.company_id = packing.company_id  where packing_status = 1 and packing.is_deleted = 0 order by packing_id desc");
         return view('packing/list',$data);
     }
 
 
 
     function edit($id) {
-        $data['packing'] = DB::select("select * from packing join product_services on product_services.id = packing.packing_verity where packing_id = '$id'");
+        $data['packing'] = DB::select("select *,packing.company_id AS cmp from packing join product_services on product_services.id = packing.packing_verity where packing_id = '$id'");
         $data['branch'] = DB::select("select * from branches where branch_status = 1");
-       
+       $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
         return view('packing/edit',$data);
     }
 
@@ -36,10 +36,10 @@ class PackingController extends Controller
            $stage_no = $req->input('stage_no');
         $final_weight = $req->input('final_weight');
         $godown = $req->input('godown');
-                
+              $company_id = $req->input('company_id');  
 
 
-       DB::update("update packing set lot_no = '$lot_no' ,farmer_name = '$farmer_name',land_owner = '$land_owner',packing_stage_no = '$stage_no',packing_no_of_begs = '$total_bag',packing_pay = '$packing_pay' ,packing_gredded_quantity = '$Gredded_qty' ,packing_verity = '$verity' ,final_weight = '$final_weight' ,packing_godown = '$godown' where packing_id = '$packing_id'");
+       DB::update("update packing set lot_no = '$lot_no' ,farmer_name = '$farmer_name',land_owner = '$land_owner',packing_stage_no = '$stage_no',packing_no_of_begs = '$total_bag',packing_pay = '$packing_pay' ,packing_gredded_quantity = '$Gredded_qty' ,packing_verity = '$verity' ,final_weight = '$final_weight' ,packing_godown = '$godown' , company_id = '$company_id' where packing_id = '$packing_id'");
 
 
         return Redirect::to('/packing')->with('success', 'Packing edit Successfully');

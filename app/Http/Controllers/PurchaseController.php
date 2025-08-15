@@ -186,7 +186,7 @@ class PurchaseController extends Controller
          $godown = $req->input('godown');
         $purchase_to = $req->input('purchase_to');
         $id = $req->input('purchase_id');
-        $purchase_total = $req->input('purchase_total');
+        $purchase_total = $req->input('purchase_total',[]);
         $purchase_item = $req->input('purchase_item');
         $sum_total = array_sum($purchase_total);
         $cid = $req->input('company_id');
@@ -199,11 +199,11 @@ class PurchaseController extends Controller
 
         DB::delete("delete from purchase_item where purchase_id = '$id'");
 
-        $purchase_item = $req->input('purchase_item');
-                 $purchase_quantity = $req->input('purchase_quantity');
-                 $purchase_rate = $req->input('purchase_rate');
+        $purchase_item = $req->input('purchase_item', []);
+                 $purchase_quantity = $req->input('purchase_quantity', []);
+                 $purchase_rate = $req->input('purchase_rate', []);
                  
-                 $purchase_unit = $req->input('purchase_unit');
+                 $purchase_unit = $req->input('purchase_unit', []);
 
                  for($i = 0 ; $i < count($purchase_rate) ; $i++) {
                     if($purchase_rate[$i] != '' && $purchase_rate[$i] != 0) {
