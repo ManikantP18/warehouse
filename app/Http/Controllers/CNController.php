@@ -27,6 +27,13 @@ class CNController extends Controller
     return view('sales-return.list', $data);
  }
 
+ public function returnList(){
+
+    $data['SalesReturn'] = DB::select('SELECT * FROM sales_return where is_deleted = 0');
+    return view('sales-return.return_list', $data);
+
+ }
+
  function history(Request $req) {
         $acc_id = $req->input('searchVal'); 
         
@@ -56,7 +63,7 @@ function create(){
 
         $data['units'] = DB::select("select * from product_service_units");
 
-        $data['selleditems'] = DB::select("select * from selled_item where sell_id = '$id' and selled_status = 1");
+        $data['selleditems'] = DB::select("select *, (selled_quantity-return_qty) AS returnAbleQty from selled_item where sell_id = '$id' and selled_status = 1");
 
         $data['items'] = DB::select("select * from product_services where type = 'Product'");
 
@@ -75,8 +82,8 @@ function create(){
     public function update(Request $req) {
     $id = $req->input('cn_id'); // Get hidden ID
 
-    $cash_credit = $req->input('cash_credit');
-    $aadhar_no = $req->input('aadhar_no');
+    $cash_credit = $req->input('sellto_cash/credit');
+    $aadhar_no = $req->input('sellto_acc_holder');
     $quantity = $req->input('quantity');
     $rate = $req->input('rate');
     $purchase_unit = $req->input('purchase_unit');
@@ -99,7 +106,42 @@ function create(){
 
       $company_id = $req->input('company_id');
 
-    //   DB::insert("insert into sales_return (cash_credit,aadhar_no,r_cust,village,mo_no,item_sale,sell_id,land_owner,acc_holder,quantity,unit,rate,total_amount,GST_amount,) values ('$cash_credit','$aadhar_no','$sellto_customer_name','$village','$sellto_phone','$aadhar_no','$sellto_customer_name','$village',)")
+      $sell_id = $req->input('sell_id');
+
+      $sellto_item_selled = $req->input('sellto_item_selled');
+      
+
+      $sellto_quantity = $req->input('sellto_quantity');
+
+      $sellto_rate = $req->input('sellto_rate');
+
+      $purchase_unit = $req->input('purchase_unit');
+
+      $purchase_total = $req->input('purchase_total');
+
+      $GST_amount = $req->input('sellto_gst_amount');
+
+      $returnedProducts = $req->input('return_items');
+
+    for($i=0; $i<count($returnedProducts); $i++){
+
+        $exist = DB::select("select * FROM sales_return WHERE selled_item_id = $returnedProducts[$i] ");
+
+        if(count($exist) > 0){
+
+            DB::update("update sales_return set quantity = '$sellto_quantity[$i]',unit = '$purchase_unit[$i]' ,rate = '$sellto_rate[$i]',total_amount = '$purchase_total[$i]',GST_amount = '$GST_amount[$i]' where selled_item_id = '$returnedProducts[$i]'");
+
+        } else{
+
+            DB::insert("insert into sales_return (sale_id,p_id,selled_item_id,cash_credit,aadhar_no,r_cust,village,mo_no,land_owner,quantity,unit,rate,total_amount,GST_amount) values ('$sell_id','$sellto_item_selled[$i]','$returnedProducts[$i]','$cash_credit','$aadhar_no','$sellto_customer_name','$village','$sellto_phone','$sellto_owner_name','$sellto_quantity[$i]','$purchase_unit[$i]','$sellto_rate[$i]','$purchase_total[$i]','$GST_amount[$i]')");
+
+        }
+
+        DB::update("update selled_item set return_qty = return_qty + '$sellto_quantity[$i]' where selled_id = '$returnedProducts[$i]'");
+
+    }
+
+    
 
     return redirect()->route('Sales-Return.list')->with('success', 'Updated successfully');
 }

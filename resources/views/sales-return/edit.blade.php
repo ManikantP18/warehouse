@@ -77,15 +77,16 @@
                 @endforeach
             </select>
         </div>
-
     <!-- Default rows for already selled items -->
         @for($i = 0; $i < count($selleditems); $i++)
+
+        <input type="hidden" name="sell_id" value="{{$selleditems[$i]->sell_id}}">
 <div class="row mb-3 sell-row">
 
     {{-- Checkbox for return --}}
     <div class="col-md-1 d-flex align-items-center">
         <input type="checkbox" class="form-check-input return-checkbox"
-               data-index="{{ $i }}">
+               data-index="{{ $i }}" name="return_items[]" value="{{$selleditems[$i]->selled_id}}">
     </div>
 
     {{-- Sell Item --}}
@@ -108,9 +109,9 @@
     <div class="col-md-1">
         <label>Quantity</label>
         <input type="number" class="form-control" name="sellto_quantity[]" id="sellto_quantity_{{ $i }}"
-               value="{{ $selleditems[$i]->selled_quantity }}" 
+               value="{{ $selleditems[$i]->returnAbleQty }}" 
                required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})" disabled>
-               <input type="hidden" value="{{ $selleditems[$i]->selled_quantity }}" id="sellto_prev_quantity_{{ $i }}">
+               <input type="hidden" value="{{ $selleditems[$i]->returnAbleQty }}" id="sellto_prev_quantity_{{ $i }}">
     </div>
 
     {{-- Unit --}}
@@ -143,7 +144,7 @@
     <div class="col-md-2">
         <label>Total Amount</label>
         <input type="number" class="form-control purchase_total" name="purchase_total[]" id="purchase_total_{{ $i }}"
-               value="{{ $selleditems[$i]->selled_rate * $selleditems[$i]->selled_quantity }}" disabled>
+               value="{{ $selleditems[$i]->selled_rate * $selleditems[$i]->returnAbleQty }}" disabled>
     </div>
 
 </div>
@@ -156,7 +157,7 @@
 
 <input type="hidden" name="sell_id" value="{{$sellto[0]->sell_id}}">
   <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
-  <input type="submit" value="Update" class="btn btn-primary">
+  <input type="submit" value="Save" class="btn btn-primary">
 </div>
 {{ Form::close() }}
 <input type="hidden" id="itemsdata" value="{{json_encode($items)}}">
@@ -316,8 +317,16 @@ console.log(item)
         if(cqty <= 0 || cqty > prevqty) {
           alert('You Can not Return Quantity 0 or Higher than Salled Quantity');
           
-        $("#sellto_quantity_"+id).val('1')
+        $("#sellto_quantity_"+id).val(prevqty)
+        return false;
         }
+
+        let rate = $("#sellto_rate_"+id).val();
+        let gst = $("#sellto_gst_amount_"+id).val();
+
+        let total = (parseFloat(cqty) * parseFloat(rate)) + parseFloat(gst);
+
+        $("#purchase_total_"+id).val(total);
     }
 
   function checkmode() {

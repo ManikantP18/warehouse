@@ -241,13 +241,16 @@ Route::put('/kataparchi/update', 'App\Http\Controllers\KataParchiController@upda
 
 //-------------salse return----------------
 
-Route::get('/Sales-Return', 'App\Http\Controllers\CNController@index')->name('Sales-Return.list')->middleware('auth');
+
+Route::get('/Sales-Return', 'App\Http\Controllers\CNController@returnList')->name('Sales-Return.list')->middleware('auth');
+
+Route::get('/Sales-Return/create', 'App\Http\Controllers\CNController@index')->name('Sales-Return.create')->middleware('auth');
 
 Route::get('/Sales-Return/search', 'App\Http\Controllers\CNController@search')->name('Sales-Return.search')->middleware('auth');
 
 Route::get('/Sales-Return/history', 'App\Http\Controllers\CNController@history')->name('Sales-Return.history')->middleware('auth');
 
-Route::get('/Sales-Return/create', 'App\Http\Controllers\CNController@create')->name('Sales-Return.create')->middleware('auth');
+//Route::get('/Sales-Return/create', 'App\Http\Controllers\CNController@create')->name('Sales-Return.create')->middleware('auth');
 
 Route::post('/SalesReturn/add', 'App\Http\Controllers\CNController@add')->name('Sales-Return.add')->middleware('auth');
 
