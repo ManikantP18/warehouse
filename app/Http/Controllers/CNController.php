@@ -29,7 +29,7 @@ class CNController extends Controller
 
  public function returnList(){
 
-    $data['SalesReturn'] = DB::select('SELECT * FROM sales_return where is_deleted = 0');
+    $data['SalesReturn'] = DB::select('SELECT sales_return.*,product_services.name as pname,product_service_units.*  FROM sales_return JOIN product_services ON product_services.id = sales_return.p_id JOIN product_service_units ON product_service_units.id = sales_return.unit where is_deleted = 0');
     return view('sales-return.return_list', $data);
 
  }

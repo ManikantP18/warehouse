@@ -56,15 +56,13 @@
                                 ['label' => 'cn_id', 'index' => 0],
                                 ['label' => 'Aadhar Number ', 'index' => 2],
                                 ['label' => 'Mobile no.', 'index' => 5],
-                                ['label' => 'Item to sale', 'index' => 6],
+                                ['label' => 'Return Items', 'index' => 6],
                                 ['label' => 'Quantity', 'index' => 7],
                                 ['label' => 'UNIT', 'index' => 8],
                                 ['label' => 'Rate', 'index' => 9],
                                 ['label' => 'total amount ', 'index' => 10],
                                 ['label' => 'GSt amount', 'index' => 11],
                                 ['label' => 'creat date', 'index' => 12],
-                                ['label' => 'update date', 'index' => 13],
-                                ['label' => 'status', 'index' => 14],
                                
                             ];
                         @endphp
@@ -85,15 +83,13 @@
                                     <th> Relational customer name </th>
                                     <th>village</th>
                                     <th style="display:none"> Mobile no. </th>
-                                    <th style="display:none"> Item to sale</th>
+                                    <th style="display:none"> Returned Item</th>
                                     <th style="display:none"> Quantity </th>
                                     <th style="display:none"> UNIT </th>
                                     <th style="display:none"> Rate </th>
                                     <th style="display:none"> total amount  </th>
                                     <th style="display:none"> GSt amount </th> 
                                     <th style="display:none"> creat date </th>
-                                    <th style="display:none"> update date </th>
-                                    <th style="display:none"> status </th>
                                     <th> Action </th>
                                 </tr>
                             </thead>
@@ -107,34 +103,24 @@
                                     <td>{{ $value->r_cust }}</td>
                                     <td>{{ $value->village }}</td>
                                     <td style="display:none">{{ $value->mo_no }}</td>
-                                    <td style="display:none">{{ $value->item_sale }}</td>
+                                    <td style="display:none">{{ $value->pname }}</td>
                                     <td style="display:none">{{ $value->quantity }}</td>
-                                    <td style="display:none">{{ $value->unit }}</td>
+                                    <td style="display:none">{{ $value->name }}</td>
                                     <td style="display:none">{{ $value->rate }}</td>
                                     <td style="display:none">{{ $value->total_amount }}</td>
                                     <td style="display:none">{{ $value->GST_amount }}</td>
-                                    <td style="display:none">{{ $value->creat_at }}</td>
-                                    <td style="display:none">{{ $value->UPdate_at }}</td>
-                                    <td style="display:none">{{ $value->status }}</td>
+                                    <td style="display:none">{{ date('d/m/Y', strtotime($value->creat_at)) }}</td>
 
                                     <td>
                                         <div class="d-flex">
                                             <a href="#"
                                             data-url="{{ route('Sales-Return.edit', $value->cn_id) }}"
                                             data-ajax-popup="true"
-                                            data-title="{{ __('EDit Sales-Return') }}"
+                                            data-title="{{ __('View Sales-Return') }}"
                                             class="btn btn-sm btn-primary me-2"
-                                            data-bs-toggle="tooltip" title="{{ __('Edite') }}">
-                                                <i class="ti ti-pencil"></i>
+                                            data-bs-toggle="tooltip" title="{{ __('View') }}">
+                                                <i class="ti ti-eye"></i>
                                             </a>
-
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip"
-                                                    title="{{ __('DELETE') }}"
-                                                    onclick="removeParch('{{ route('Sales-Return.delete', $value->cn_id) }}')">
-                                                <i class="ti ti-trash"></i>
-                                            </button>
                                         </div>
                                     </td>
                                 </tr>

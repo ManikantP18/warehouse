@@ -62,14 +62,11 @@
                                     <td >{{ $value->company_name }}</td>
                                     <td>
                                         <a href="#" data-size="xl" data-url="{{ route('Sales-Return.edit', $value->sell_id) }}" data-ajax-popup="true"
-                                            data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('Edit Sales REturn') }}"
+                                            data-bs-toggle="tooltip" title="{{ __('Make Return') }}" data-title="{{ __('Make Sales Return') }}"
                                             class="btn btn-sm btn-primary">
-                                            <i class="ti ti-pencil"></i>
+                                            <i class="ti ti-eye"></i>
                                         </a>
-                                        <a href="javascript:void(0)" class="btn btn-sm bg-danger text-white shadow-sm" title="Delete"
-                                            onclick="removeit('{{ route('sellto.delete', $value->sell_id) }}')">
-                                            <i class="ti ti-trash"></i>
-                                        </a>
+                                        
                                     </td>
                                 </tr>
                             @endforeach
