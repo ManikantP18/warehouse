@@ -84,6 +84,7 @@ class PaymentsController extends Controller
          $data['pt'] =  DB::select("select tr_type from payment where pay_id = '$id' ");
         
         return view('payments/view',$data);
+    }
         
      function create(Request $req) {
         $tr_type = $req->input('tr_type'); 
@@ -113,4 +114,5 @@ class PaymentsController extends Controller
         return Redirect::to('payment');
     }
 }
-}
+
+

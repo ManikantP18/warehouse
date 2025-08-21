@@ -71,7 +71,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Acre</label>
-            <input type="text" class="form-control" name="purchase_acre" id="purchase_acre" required value="{{$purchase[0]->purchase_acre}}" readonly>
+            <input type="text" class="form-control" name="purchase_acre" id="purchase_acre" required value="{{$purchase[0]->purchase_acre}}" readonly step="0.01">
           </div>
         </div>
 
@@ -198,14 +198,14 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Rate</label>
-            <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_{{ $i }}" value="{{$items[$i]->purchased_rate}}" onkeyup="autofill({{ $i }})">
+            <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_{{ $i }}" value="{{$items[$i]->purchased_rate}}" onkeyup="autofill({{ $i }})" step="0.01">
           </div>
         </div>
 
         <div class="col-md-2">
           <div class="form-group">
             <label>Total Amount</label>
-            <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_{{ $i }}" required value="{{$items[$i]->purchased_total}}">
+            <input type="number" class="form-control" name="purchase_total[]" id="purchase_total_{{ $i }}" required value="{{$items[$i]->purchased_total}}" step="0.01">
           </div>
         </div>
 
@@ -305,7 +305,7 @@ function selectLadger(id) {
 }
 
 function autofill(id) {
- $("#purchase_total_"+id).val(parseFloat($("#purchase_quantity_"+id).val()) * parseFloat($("#purchase_rate_"+id).val()));
+ $("#purchase_total_"+id).val((parseFloat($("#purchase_quantity_"+id).val()) * parseFloat($("#purchase_rate_"+id).val())).toFixed(2));
  handleChage(id)
 }
 
@@ -525,14 +525,14 @@ function addMoreRow() {
       <div class="col-md-2">
         <div class="form-group">
           <label>Rate</label>
-          <input type="number" class="form-control" required name="purchase_rate[]" id="purchase_rate_${j}" value="0" onkeyup="autofill(${j})">
+          <input type="number" class="form-control" required name="purchase_rate[]" id="purchase_rate_${j}" value="0" step="0.01" onkeyup="autofill(${j})">
         </div>
       </div>
 
       <div class="col-md-2">
         <div class="form-group">
           <label>Total</label>
-          <input type="number" class="form-control" required name="purchase_total[]" id="purchase_total_${j}" value="0">
+          <input type="number" class="form-control" required name="purchase_total[]" id="purchase_total_${j}" value="0" step="0.01">
         </div>
       </div>
 

@@ -75,7 +75,7 @@
                             <thead>
                                 <tr>
                                     <th >Staging Id</th>
-                                    <th style="display:none">Select Lot No.</th>
+                                    <th style="display:none">Lot No.</th>
                                     <th>Farmer Name</th>
                                     <th style="display:none"> Staging Varity </th>
                                     <th style="display:none">Rst number</th>
@@ -106,7 +106,7 @@
                                     <td style="display:none"> {{ $value->no_of_begs}} </td>
                                     <td style="display:none">{{ $value->final_weight}}</td>
                                      <td style="display:none"> {{ $value->pay_for_staging}} </td>
-                                      <td>{{ date('d/m/Y', strtotime($value->staging_date)) }}</td>
+                                      <td>{{ date('d/m/Y h:i a', strtotime($value->staging_date)) }}</td>
                                     <td style="display:none"> {{ $value->staging_status == 1 ? 'Active' : 'Inactive' }} </td>
                                     <td>
                                             <div class="flex gap-4">

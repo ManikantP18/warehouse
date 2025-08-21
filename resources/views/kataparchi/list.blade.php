@@ -132,8 +132,8 @@
                                     <td style="display:none"> {{ $value->kp_pure_wigth }} </td>
 
                                     <td style="display:none"> {{ $value->kp_godown_name  }} </td>
-                                    <td style="display:none">{{ date('d/m/Y', strtotime( $value->creat_at)) }}  </td>
-                                    <td style="display:none">{{ date('d/m/Y', strtotime($value->update_at)) }}  </td>
+                                    <td style="display:none">{{ date('d/m/Y h:i:a', strtotime( $value->creat_at)) }}  </td>
+                                    <td style="display:none">{{ date('d/m/Y h:i:a', strtotime($value->update_at)) }}  </td>
                                     <td style="display:none"> {{ $value->status }} </td>
 
                                     <td> 

@@ -107,6 +107,11 @@
                 @endforeach
             </select>
         </div>
+
+        <div class="form-group col-md-6">
+            <label for="lotno" class="form-label">Lot No.</label>
+            <input type="text" name="lotno" id="lotno" class="form-control select" required>
+        </div>
                                
         <div class="form-group col-md-12">
             {{ Form::label('description', __('Description'), ['class' => 'form-label']) }}

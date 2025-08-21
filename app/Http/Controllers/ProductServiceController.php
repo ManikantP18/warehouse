@@ -143,7 +143,7 @@ class ProductServiceController extends Controller
            $productService->first_unit_val = $request->first_unit;
             $productService->second_unit_val = $request->second_unit;
             $productService->company_id = $request->company_id;
-            
+            $productService->lotno = $request->lotno;
             $productService->quantity   = 0;
             
             $productService->type           = $request->type;

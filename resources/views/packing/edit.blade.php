@@ -59,7 +59,7 @@
         <div class="col-lg-6">
             <div class="form-group">
                 <label class="form-label">Gredding Stage No.</label>
-                <input class="form-control" required name="staging_stage_no" type="text" value="{{ $packing[0]->packing_stage_no }}" readonly>
+                <input class="form-control" required name="staging_stage_no" type="text" value="{{ $packing[0]->gred_stage_no }}" readonly>
             </div>
         </div>
 
@@ -139,10 +139,10 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="number" class="form-control bag-count" name="bags_count[]" min="0" value="{{ $row['bags'] }}">
+                    <input type="number" class="form-control bag-count" name="bags_count[]" min="0" value="{{ $row['bags'] }}" placeholder="Enter Quantity....">
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control total-kg" name="total_kg[]" readonly>
+                    <input type="text" class="form-control total-kg" name="total_kg[]" readonly placeholder="Total KG....">
                 </div>
                 <div class="col-lg-3">
                     <button type="button" class="btn btn-danger remove-row">- Remove</button>
@@ -189,9 +189,7 @@ $(function() {
             calculateTotals();
             return;
         }
-        if (remaining === 0) {
-            alert("No remaining quantity left!");
-        }
+        
         $('#remainingQty').val(remaining + ' KG');
     }
 

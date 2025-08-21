@@ -56,7 +56,6 @@
                                 ['label' => 'cn_id', 'index' => 0],
                                 ['label' => 'Aadhar Number ', 'index' => 2],
                                 ['label' => 'Mobile no.', 'index' => 5],
-                                ['label' => 'Return Items', 'index' => 6],
                                 ['label' => 'Quantity', 'index' => 7],
                                 ['label' => 'UNIT', 'index' => 8],
                                 ['label' => 'Rate', 'index' => 9],
@@ -81,9 +80,9 @@
                                     <th> Cash / Credit</th>
                                     <th style="display:none"> Aadhar Number </th>
                                     <th> Relational customer name </th>
-                                    <th>village</th>
+                                    <th style="display:none">village</th>
                                     <th style="display:none"> Mobile no. </th>
-                                    <th style="display:none"> Returned Item</th>
+                                    <th > Returned Item</th>
                                     <th style="display:none"> Quantity </th>
                                     <th style="display:none"> UNIT </th>
                                     <th style="display:none"> Rate </th>
@@ -101,9 +100,9 @@
                                     <td>{{ $value->cash_credit }}</td>
                                     <td style="display:none">{{ $value->aadhar_no }}</td>
                                     <td>{{ $value->r_cust }}</td>
-                                    <td>{{ $value->village }}</td>
+                                    <td style="display:none">{{ $value->village }}</td>
                                     <td style="display:none">{{ $value->mo_no }}</td>
-                                    <td style="display:none">{{ $value->pname }}</td>
+                                    <td >{{ $value->pname }}</td>
                                     <td style="display:none">{{ $value->quantity }}</td>
                                     <td style="display:none">{{ $value->name }}</td>
                                     <td style="display:none">{{ $value->rate }}</td>
@@ -114,7 +113,8 @@
                                     <td>
                                         <div class="d-flex">
                                             <a href="#"
-                                            data-url="{{ route('Sales-Return.edit', $value->cn_id) }}"
+                                            data-size="xl"
+                                            data-url="{{ route('Sales-Return.view', $value->cn_id) }}"
                                             data-ajax-popup="true"
                                             data-title="{{ __('View Sales-Return') }}"
                                             class="btn btn-sm btn-primary me-2"

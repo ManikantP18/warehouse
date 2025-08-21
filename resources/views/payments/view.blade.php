@@ -52,7 +52,7 @@
 
         <!-- Multy Products Sells -->
 
-@for($i = 0; $i < count($selleditems); $i++)
+<!-- @for($i = 0; $i < count($selleditems); $i++)
      <div class="row mb-12">
                 
 
@@ -116,7 +116,7 @@
                 </div>
                </div> 
             </div>
-     @endfor   
+     @endfor    -->
                
            
         

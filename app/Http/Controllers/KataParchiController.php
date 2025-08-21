@@ -29,7 +29,7 @@ class KataParchiController extends Controller
 
        // print_r($req->input()); exit;
 
-        $kpdate = date('d-m-y', strtotime($req->input('kp_date')));
+        $kpdate = date('Y-m-d', strtotime($req->input('kp_date')));
         $kpacc = $req->input('kp_acc_no');
         $kprel = $req->input('kp_rel_name');
         $kpacc_hold_name = $req->input('kp_acc_holdername');
@@ -54,9 +54,9 @@ class KataParchiController extends Controller
             $kpvarity = $req->input('kp_other_varity');
          }
 
-        
+        $create_at = date('Y-m-d H:i:s');
 
-        DB::insert("Insert into kata_parchi (kp_date,kp_acc_no,kp_rel_name,kp_acc_holdername,kp_bhoomiswami_name,kp_vilage,kp_rakaba_acre,kp_khasra_no,kp_mo_no,kp_rogger_name,kp_verity,kp_rstno,kp_vehicle_wight,kp_godown_name) VALUES ('$kpdate','$kpacc','$kprel','$kpacc_hold_name','$kp_land_owner','$kpvilage','$kp_acre','$kp_khashra','$kpmn','$kp_rogger','$kpvarity','$kprst','$kp_vwihgt','$kp_goween')");
+        DB::insert("Insert into kata_parchi (kp_date,kp_acc_no,kp_rel_name,kp_acc_holdername,kp_bhoomiswami_name,kp_vilage,kp_rakaba_acre,kp_khasra_no,kp_mo_no,kp_rogger_name,kp_verity,kp_rstno,kp_vehicle_wight,kp_godown_name,creat_at,update_at) VALUES ('$kpdate','$kpacc','$kprel','$kpacc_hold_name','$kp_land_owner','$kpvilage','$kp_acre','$kp_khashra','$kpmn','$kp_rogger','$kpvarity','$kprst','$kp_vwihgt','$kp_goween', '$create_at', '$create_at')");
 
         return Redirect::to('kataparchi');
     }
@@ -102,6 +102,8 @@ class KataParchiController extends Controller
         $hideFlag = 1;
     }
 
+    $update_at = date('Y-m-d H:i:s');
+
     DB::update("UPDATE kata_parchi SET 
         kp_date = '$kpdate',
         kp_acc_no = '$kpacc',
@@ -119,7 +121,8 @@ class KataParchiController extends Controller
         kp_only_vechicle_w = '$kp_only_vechicle_w',
         kp_pure_wigth = '$kp_pure_wigth',
         kp_godown_name = '$kp_goween',
-        pure_update_hide = '$hideFlag'
+        pure_update_hide = '$hideFlag',
+        update_at = '$update_at'
         WHERE kp_id = '$id'");
 
         $ladgerinfo = DB::select("SELECT * FROM ladgers where account_id = '$kpacc'");

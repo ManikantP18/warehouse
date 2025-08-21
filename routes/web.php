@@ -146,7 +146,7 @@ Route::get('/payment/pay/{id}', 'App\Http\Controllers\PaymentsController@pay')->
 
 Route::get('/payment/view/{id}', 'App\Http\Controllers\PaymentsController@view')->name('payment.view')->middleware('auth');
 Route::put('/payment/update/', 'App\Http\Controllers\PaymentsController@update')->name('payment.update')->middleware('auth');
-Route::get('/payment/pay', 'App\Http\Controllers\PaymentsController@pay')->name('payment.pay')->middleware('auth');
+Route::get('/payment/pay/{id}', 'App\Http\Controllers\PaymentsController@pay')->name('payment.pay')->middleware('auth');
 Route::post('/payment/create', 'App\Http\Controllers\PaymentsController@create')->name('payment.create')->middleware('auth');
 
 
@@ -259,6 +259,8 @@ Route::get('/SalesReturn/delete/{id}', 'App\Http\Controllers\CNController@delete
 Route::get('/SalesReturn/edit/{id}', 'App\Http\Controllers\CNController@edit')->name('Sales-Return.edit')->middleware('auth');
 
 Route::put('/SalesReturn/update', 'App\Http\Controllers\CNController@update')->name('Sales-Return.update')->middleware('auth');
+
+Route::get('/SalesReturn/view/{id}', 'App\Http\Controllers\CNController@viewreturn')->name('Sales-Return.view')->middleware('auth');
 
 
 // --------------End selse return ------------

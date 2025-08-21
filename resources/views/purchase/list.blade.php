@@ -146,7 +146,7 @@
         <tbody>
             @foreach($purchase AS $value):
                 <tr>
-                    <td>{{ date('d/m/Y', strtotime($value->purchase_date)) }}</td>
+                    <td>{{ date('d/m/Y h:i a', strtotime($value->purchase_date)) }}</td>
                     <td >{{ $value->purchase_way }}</td>
                     <td>{{ $value->purchase_relation_cusm }}</td>
                     <td class="accountant optional-column">{{ $value->purchase_accountant }}</td>

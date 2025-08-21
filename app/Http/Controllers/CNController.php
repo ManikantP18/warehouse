@@ -75,9 +75,44 @@ function create(){
          
        
         
-        return view('Sales-Return/edit',$data);
+        return view('sales-return/edit',$data);
         
     } 
+
+
+        function viewreturn($id) {
+    $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
+
+    $data['units'] = DB::select("select * from product_service_units");
+
+    // Remaining saled items (not returned yet)
+    $data['selleditems'] = DB::select("select *, (selled_quantity-return_qty) AS returnAbleQty 
+         from selled_item 
+         where sell_id = '$id' and selled_status = 1");
+
+        // print_r("SELECT sales_return.*,product_services.name as pname,product_service_units.*  FROM sales_return JOIN product_services ON product_services.id = sales_return.p_id JOIN product_service_units ON product_service_units.id = sales_return.unit where ");exit;
+
+         $data['returneditems'] = DB::select("SELECT sales_return.*,product_services.name as pname,product_service_units.*  FROM sales_return JOIN product_services ON product_services.id = sales_return.p_id JOIN product_service_units ON product_service_units.id = sales_return.unit where sales_return.cn_id = '$id'");
+
+
+
+            $data['items'] = DB::select("select * from product_services where type = 'Product'");
+
+            $data['products'] = DB::select("select id, name, quantity 
+                from product_services 
+                where type = 'Product' 
+                AND product_services.id NOT IN(
+                    select selled_item from selled_item 
+                    where sell_id = '$id' and selled_status = 1
+                )");
+
+            $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
+
+            $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+            
+            return view('sales-return/viewreturn',$data);
+        }
+
 
     public function update(Request $req) {
     $id = $req->input('cn_id'); // Get hidden ID
@@ -125,17 +160,17 @@ function create(){
 
     for($i=0; $i<count($returnedProducts); $i++){
 
-        $exist = DB::select("select * FROM sales_return WHERE selled_item_id = $returnedProducts[$i] ");
+        /*$exist = DB::select("select * FROM sales_return WHERE selled_item_id = $returnedProducts[$i] ");
 
         if(count($exist) > 0){
 
             DB::update("update sales_return set quantity = '$sellto_quantity[$i]',unit = '$purchase_unit[$i]' ,rate = '$sellto_rate[$i]',total_amount = '$purchase_total[$i]',GST_amount = '$GST_amount[$i]' where selled_item_id = '$returnedProducts[$i]'");
 
-        } else{
+        } else{*/
 
             DB::insert("insert into sales_return (sale_id,p_id,selled_item_id,cash_credit,aadhar_no,r_cust,village,mo_no,land_owner,quantity,unit,rate,total_amount,GST_amount) values ('$sell_id','$sellto_item_selled[$i]','$returnedProducts[$i]','$cash_credit','$aadhar_no','$sellto_customer_name','$village','$sellto_phone','$sellto_owner_name','$sellto_quantity[$i]','$purchase_unit[$i]','$sellto_rate[$i]','$purchase_total[$i]','$GST_amount[$i]')");
 
-        }
+       // }
 
         DB::update("update selled_item set return_qty = return_qty + '$sellto_quantity[$i]' where selled_id = '$returnedProducts[$i]'");
 
