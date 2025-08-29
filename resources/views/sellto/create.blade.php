@@ -155,7 +155,7 @@
         <select class="form-control" name="purchase_unit[]" id="purchase_unit_0" required>
           <option value="" hidden>Select Unit</option>
           @foreach($units as $value)
-            <option value="{{ $value->id }}">{{ $value->name }}</option>
+            <option value="{{ $value->id }}" {{ $value->name == 'Bags' ? 'selected' : ''}}>{{ $value->name }}</option>
           @endforeach
         </select>
       </div>
@@ -167,7 +167,7 @@
         <input type="number" class="form-control sellto_rate" name="sellto_rate[]" id="sellto_rate_0" value="0" onchange="autofill(0)">
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-3 d-none">
         <label>GST</label>
         <input type="number" class="form-control sellto_gst_amount" name="sellto_gst_amount[]" id="sellto_gst_amount_0" value="0" onchange="autofill(0)">
       </div>

@@ -119,7 +119,7 @@
                     value="{{ $selleditems[$i]->selled_rate }}" onkeyup="autofill({{ $i }})">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 d-none">
               <label>GST</label>
               <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_{{ $i }}" 
                     onkeyup="autofill({{ $i }})" value="{{ $selleditems[$i]->sell_gst ?? 0 }}">

@@ -59,7 +59,7 @@
                     </div>
 
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 d-none">
                     <div class="form-group">
                         <label for="kp_acc_no" class="form-label">Customer-ID</label>
                         <div class="form-icon-user">
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 d-none">
                     <div class="form-group">
                         <label for="kp_khasra_no" class="form-label">Khasra No.</label>
                         <div class="form-icon-user">

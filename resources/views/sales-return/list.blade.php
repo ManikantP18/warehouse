@@ -35,11 +35,11 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-        <a href="#" data-size="xl" data-url="{{ route('Sales-Return.create') }}" data-ajax-popup="true"
+        <!-- <a href="#" data-size="xl" data-url="{{ route('Sales-Return.create') }}" data-ajax-popup="true"
             data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create SalesReturn') }}"
             class="btn btn-sm btn-primary">
             <i class="ti ti-plus"></i>
-        </a>
+        </a> -->
     </div>
 @endsection
 

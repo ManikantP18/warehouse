@@ -29,7 +29,7 @@ class CNController extends Controller
 
  public function returnList(){
 
-    $data['SalesReturn'] = DB::select('SELECT sales_return.*,product_services.name as pname,product_service_units.*  FROM sales_return JOIN product_services ON product_services.id = sales_return.p_id JOIN product_service_units ON product_service_units.id = sales_return.unit where is_deleted = 0');
+    $data['SalesReturn'] = DB::select('SELECT sales_return.*,product_services.name as pname,product_service_units.*  FROM sales_return JOIN product_services ON product_services.id = sales_return.p_id JOIN product_service_units ON product_service_units.id = sales_return.unit where is_deleted = 0 group by date, sale_id');
     return view('sales-return.return_list', $data);
 
  }
@@ -80,7 +80,7 @@ function create(){
     } 
 
 
-        function viewreturn($id) {
+        function viewreturn($id,$date) {
     $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
 
     $data['units'] = DB::select("select * from product_service_units");
@@ -92,7 +92,7 @@ function create(){
 
         // print_r("SELECT sales_return.*,product_services.name as pname,product_service_units.*  FROM sales_return JOIN product_services ON product_services.id = sales_return.p_id JOIN product_service_units ON product_service_units.id = sales_return.unit where ");exit;
 
-         $data['returneditems'] = DB::select("SELECT sales_return.*,product_services.name as pname,product_service_units.*  FROM sales_return JOIN product_services ON product_services.id = sales_return.p_id JOIN product_service_units ON product_service_units.id = sales_return.unit where sales_return.cn_id = '$id'");
+         $data['returneditems'] = DB::select("SELECT sales_return.*,product_services.name as pname,product_service_units.*  FROM sales_return JOIN product_services ON product_services.id = sales_return.p_id JOIN product_service_units ON product_service_units.id = sales_return.unit where sales_return.sale_id = '$id' and date = '$date'");
 
 
 
@@ -116,7 +116,7 @@ function create(){
 
     public function update(Request $req) {
     $id = $req->input('cn_id'); // Get hidden ID
-
+     $date = $req->input('rt_date');   
     $cash_credit = $req->input('sellto_cash/credit');
     $aadhar_no = $req->input('sellto_acc_holder');
     $quantity = $req->input('quantity');
@@ -168,7 +168,7 @@ function create(){
 
         } else{*/
 
-            DB::insert("insert into sales_return (sale_id,p_id,selled_item_id,cash_credit,aadhar_no,r_cust,village,mo_no,land_owner,quantity,unit,rate,total_amount,GST_amount) values ('$sell_id','$sellto_item_selled[$i]','$returnedProducts[$i]','$cash_credit','$aadhar_no','$sellto_customer_name','$village','$sellto_phone','$sellto_owner_name','$sellto_quantity[$i]','$purchase_unit[$i]','$sellto_rate[$i]','$purchase_total[$i]','$GST_amount[$i]')");
+            DB::insert("insert into sales_return (sale_id,p_id,selled_item_id,cash_credit,aadhar_no,r_cust,village,mo_no,land_owner,quantity,unit,rate,total_amount,GST_amount,date) values ('$sell_id','$sellto_item_selled[$i]','$returnedProducts[$i]','$cash_credit','$aadhar_no','$sellto_customer_name','$village','$sellto_phone','$sellto_owner_name','$sellto_quantity[$i]','$purchase_unit[$i]','$sellto_rate[$i]','$purchase_total[$i]','$GST_amount[$i]','$date')");
 
        // }
 

@@ -8,7 +8,7 @@
   
     <div class="col-md-6">
       <div class="form-group">
-        <label for="sellto_farmer/other" class="form-label">Sell To</label>
+        <label for="sellto_farmer/other" class="form-label">Sales Return From</label>
         <select name="sellto_farmer/other" id="sellto_farmer/other" class="form-control alwaysvisible" required onchange="toggleFields()">
           <option value="farmer">Farmer</option>
           <option value="other">Other</option>
@@ -26,34 +26,23 @@
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="sellto_account_number" class="form-label">Customer-ID</label>
-        <input class="form-control alwaysvisible" required name="sellto_account_number" type="text" id="sellto_account_number" value="{{$sellto[0]->sell_account_number}}">
-      </div>
-    </div>
+    
 
     <div class="col-md-6">
       <div class="form-group">
         <label for="sellto_phone" class="form-label">Mobile Number</label>
-        <input class="form-control onlyforformesrs" required name="sellto_phone" type="tel" pattern="[0-9]{10}" maxlength="10" title="Enter 10-digit mobile number" id="sellto_phone" value="{{$sellto[0]->sell_phone}}">
+        <input class="form-control onlyforformesrs" required name="sellto_phone" type="tel" pattern="[0-9]{10}" maxlength="10" title="Enter 10-digit mobile number" id="sellto_phone" value="{{$sellto[0]->sell_phone}}" readonly>
       </div>
     </div>
     <input type="hidden" value="{{$sellto[0]->sell_id}}" name="cn_id">
     <div class="col-md-6">
       <div class="form-group">
         <label for="sellto_customer_name" class="form-label">Customer Name</label>
-        <input class="form-control alwaysvisible" required pattern="[A-Za-z ]+" title="Only alphabets are allowed" name="sellto_customer_name" type="text" id="sellto_customer_name" value="{{$sellto[0]->sell_relation_customer}}">
+        <input class="form-control alwaysvisible" required pattern="[A-Za-z ]+" title="Only alphabets are allowed" name="sellto_customer_name" type="text" id="sellto_customer_name" value="{{$sellto[0]->sell_relation_customer}}" readonly>
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="sellto_acc_holder" class="form-label">Aadhar Number</label>
-        <input class="form-control alwaysvisible" required name="sellto_acc_holder" type="text" id="sellto_acc_holder" value="{{$sellto[0]->sell_account_name}}" readonly>
-      </div>
-    </div>
-
+    
     <div class="col-md-6 changehide">
       <div class="form-group">
         <label for="sellto_owner_name" class="form-label">Land Owner Name</label>
@@ -70,13 +59,24 @@
 
     <div class="form-group col-md-6">
             <label for="company_id" class="form-label">Company Name</label>
-            <select name="company_id" id="company_id" class="form-control select" required>
+            <select name="company_id" id="company_id" class="form-control select" required readonly>
                  
                 @foreach($company as $key => $value)
-                    <option value="{{ $value->company_id }}" {{ $value->company_id == $sellto[0]->company_id ? 'selected' : ''}}>{{ $value->company_name }}</option>
+                    <option value="{{ $value->company_id }}" {{ $value->company_id == $sellto[0]->company_id ? 'selected' : 'hidden'}}>{{ $value->company_name }}</option>
                 @endforeach
             </select>
         </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="rt_date" class="form-label">Sales Return Date</label>
+                        
+                            <input class="form-control alwaysvisible" required name="rt_date" type="date" id="rt_date" value="{{date('Y-m-d')}}">
+                        
+                    </div>
+              </div>
+
+       
     <!-- Default rows for already selled items -->
         @for($i = 0; $i < count($selleditems); $i++)
 
@@ -90,7 +90,7 @@
     </div>
 
     {{-- Sell Item --}}
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="form-group">
             <label> Item</label>
             <select name="sellto_item_selled[]" class="form-control sell-item" 
@@ -106,7 +106,7 @@
     </div>
 
     {{-- Quantity --}}
-    <div class="col-md-1">
+    <div class="col-md-2">
         <label>Quantity</label>
         <input type="number" class="form-control" name="sellto_quantity[]" id="sellto_quantity_{{ $i }}"
                value="{{ $selleditems[$i]->returnAbleQty }}" 
@@ -134,7 +134,7 @@
     </div>
 
     {{-- GST --}}
-    <div class="col-md-2">
+    <div class="col-md-2 d-none">
         <label>GST</label>
         <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_{{ $i }}"
                onkeyup="autofill({{ $i }})" value="{{ $selleditems[$i]->sell_gst ?? 0 }}" disabled>

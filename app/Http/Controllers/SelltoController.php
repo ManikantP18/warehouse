@@ -67,7 +67,21 @@ class SelltoController extends Controller
                 $opt .= "<option value='$lotnumber'>$lotnumber</option>";
 
             }
+        } else {
+             $lotno = DB::select("select lotno from product_services where type = 'Product' AND id  = '$itemId'"); 
+
+             if(!empty($lotno)){
+            
+            foreach($lotno as $ln) {
+
+                $lotnumber = $ln->lotno;
+
+                $opt .= "<option value='$lotnumber'>$lotnumber</option>";
+
+            }
         }
+
+    }
 
         echo $opt;
     }

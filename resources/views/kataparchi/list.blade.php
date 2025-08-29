@@ -153,7 +153,7 @@
 
                                                 @csrf
                                                     @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="{{ __('DELETE') }}" onclick="removeParch('{{ route('kataparchi.delete',$value->kp_id) }}')">
+                                                <button type="submit" class="btn btn-sm btn-danger d-none" data-bs-toggle="tooltip" title="{{ __('DELETE') }}" onclick="removeParch('{{ route('kataparchi.delete',$value->kp_id) }}')">
                                                     <i class="ti ti-trash"></i>
 
                                                 </button>

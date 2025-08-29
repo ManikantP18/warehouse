@@ -77,6 +77,7 @@
                             <thead>
                                 <tr>
                                     <th style="display:none">cn_id</th>
+                                    <th>Date</th>
                                     <th> Cash / Credit</th>
                                     <th style="display:none"> Aadhar Number </th>
                                     <th> Relational customer name </th>
@@ -97,6 +98,7 @@
                           @foreach($SalesReturn as $value)
                                 <tr>
                                     <td style="display:none">{{ $value->cn_id }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($value->date)) }}</td>
                                     <td>{{ $value->cash_credit }}</td>
                                     <td style="display:none">{{ $value->aadhar_no }}</td>
                                     <td>{{ $value->r_cust }}</td>
@@ -114,13 +116,14 @@
                                         <div class="d-flex">
                                             <a href="#"
                                             data-size="xl"
-                                            data-url="{{ route('Sales-Return.view', $value->cn_id) }}"
+                                            data-url="{{ route('Sales-Return.view', ['id' => $value->sale_id, 'date' => date('Y-m-d', strtotime($value->date))]) }}"
                                             data-ajax-popup="true"
                                             data-title="{{ __('View Sales-Return') }}"
                                             class="btn btn-sm btn-primary me-2"
                                             data-bs-toggle="tooltip" title="{{ __('View') }}">
                                                 <i class="ti ti-eye"></i>
                                             </a>
+
                                         </div>
                                     </td>
                                 </tr>

@@ -260,7 +260,7 @@ Route::get('/SalesReturn/edit/{id}', 'App\Http\Controllers\CNController@edit')->
 
 Route::put('/SalesReturn/update', 'App\Http\Controllers\CNController@update')->name('Sales-Return.update')->middleware('auth');
 
-Route::get('/SalesReturn/view/{id}', 'App\Http\Controllers\CNController@viewreturn')->name('Sales-Return.view')->middleware('auth');
+Route::get('/sales-return/view/{id}/{date}', 'App\Http\Controllers\CNController@viewreturn')->name('Sales-Return.view')->middleware('auth');
 
 
 // --------------End selse return ------------

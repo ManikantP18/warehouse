@@ -26,12 +26,7 @@
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="sellto_account_number" class="form-label">Customer-ID</label>
-        <input class="form-control alwaysvisible" required name="sellto_account_number" type="text" id="sellto_account_number" value="{{$sellto[0]->sell_account_number}}">
-      </div>
-    </div>
+   
 
     <div class="col-md-6">
       <div class="form-group">
@@ -47,12 +42,7 @@
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="sellto_acc_holder" class="form-label">Aadhar Number</label>
-        <input class="form-control alwaysvisible" required name="sellto_acc_holder" type="text" id="sellto_acc_holder" value="{{$sellto[0]->sell_account_name}}" readonly>
-      </div>
-    </div>
+   
 
     <div class="col-md-6 changehide">
       <div class="form-group">
@@ -77,6 +67,14 @@
                 @endforeach
             </select>
         </div>
+        <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="rt_date" class="form-label">Sales Return Date</label>
+                        
+                            <input class="form-control alwaysvisible" required name="rt_date" type="date" id="rt_date" value="{{date('Y-m-d')}}">
+                        
+                    </div>
+              </div>
 
     <h5>Already Returned Items</h5>
         <table class="table table-bordered">
@@ -343,7 +341,7 @@ $(document).on("click", "#addMoreRow", function() {
         <input type="number" class="form-control" name="sellto_rate[]" id="sellto_rate_${rowIndex}" onchange="autofill(${rowIndex})">
       </div>
 
-      <div class="col-md-2">
+      <div class="col-md-2 d-none">
         <label>GST</label>
         <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_${rowIndex}" value="0" onchange="autofill(${rowIndex})">
       </div>
