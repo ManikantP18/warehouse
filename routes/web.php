@@ -224,6 +224,8 @@ Route::get('/sellto/edit/{id}', 'App\Http\Controllers\SelltoController@edit')->n
 
 Route::put('/sellto/update', 'App\Http\Controllers\SelltoController@update')->name('sellto.update')->middleware('auth');
 
+Route::get('/sellto/filter', 'App\Http\Controllers\SelltoController@filter')->name('sells.filter')->middleware('auth');
+
 Route::get('/company', 'App\Http\Controllers\CompanyController@index')->name('company.list')->middleware('auth');
 
 Route::get('/company/create', 'App\Http\Controllers\CompanyController@create')->name('company.create')->middleware('auth');

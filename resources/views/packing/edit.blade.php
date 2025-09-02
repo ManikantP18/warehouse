@@ -38,16 +38,7 @@
                 <input class="form-control" required name="Gredded_qty" type="text" value="{{ $packing[0]->packing_gredded_quantity }}" readonly>
             </div>
         </div>
-
-        <!-- Pay for Packing -->
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label class="form-label">Pay for Packing</label>
-                <input class="form-control" required name="packing_pay" type="text" value="{{ $packing[0]->packing_pay }}" readonly>
-                <small class="text-muted">Auto-calculated based on graded quantity and packing price per kwintal</small>
-            </div>
-        </div>
-
+        
         <!-- Lot No -->
         <div class="col-lg-6">
             <div class="form-group">
@@ -73,7 +64,7 @@
         </div>
 
         <!-- Final Weight -->
-        <div class="col-lg-6">
+        <div class="col-lg-6 d-none">
             <div class="form-group">
                 <label class="form-label">Final Weight</label>
                 <input class="form-control" required name="final_weight" type="text" value="{{ $packing[0]->final_weight }}" readonly>
@@ -123,6 +114,15 @@
                 <label class="form-label">Packing Date</label>
                 <input class="form-control" required name="packing_date" type="date" value="{{ $packing[0]->packing_date ?: date('Y-m-d') }}">
                 <div class="invalid-feedback">Please select a packing date.</div>
+            </div>
+        </div>
+
+        <!-- Pay for Packing -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Pay for Packing</label>
+                <input class="form-control" required name="packing_pay" type="text" value="{{ $packing[0]->packing_pay }}" readonly>
+                <small class="text-muted">Auto-calculated based on graded quantity and packing price per kwintal</small>
             </div>
         </div>
 

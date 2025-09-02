@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 class PackingController extends Controller
 {
     function index() {
-        $data['packing'] = DB::select("select * from packing join branches on branches.branch_id  = packing.packing_godown join product_services on product_services.id = packing.packing_verity join company on company.company_id = packing.company_id  where packing_status = 1 and packing.is_deleted = 0 order by packing_id desc");
+        $data['packing'] = DB::select("select * from packing join branches on branches.branch_id  = packing.packing_godown join product_services on product_services.id = packing.packing_verity join company on company.company_id = packing.company_id  where packing_status = 1 and packing.is_deleted = 0 AND packing.is_hide = 0 order by packing_id desc");
         return view('packing/list',$data);
     }
 
@@ -89,7 +89,8 @@ class PackingController extends Controller
             'packing_20'               => $packing_20,
             'packing_5'                => $packing_5,
             'remaing_qty'              => $remaing_qty,
-            'packing_date'             => $packing_date
+            'packing_date'             => $packing_date,
+            'is_hide'                  => 1
         ]);
 
     return Redirect::to('/packing')->with('success', 'Packing updated successfully');

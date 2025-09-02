@@ -22,7 +22,7 @@
                 </div>
             
 
-            <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 d-none">
                 <div class="form-group">
                     <label for="kp_acc_no" class="form-label">Customer-ID</label>
                     <div class="form-icon-user">
@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <label for="kp_rel_name" class="form-label">Customer Name</label>
                     <div class="form-icon-user">
-                        <input class="form-control alwaysvisible" required pattern="[A-Za-z ]+" title="Only alphabets are allowed" name="kp_rel_name" type="text" id="kp_rel_name" value="{{$kataparchi[0]->kp_rel_name}}">
+                        <input class="form-control alwaysvisible" required pattern="[A-Za-z ]+" title="Only alphabets are allowed" name="kp_rel_name" type="text" id="kp_rel_name" value="{{$kataparchi[0]->kp_rel_name}}" readonly>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <label for="kp_acc_holdername" class="form-label">Aadhar number</label>
                     <div class="form-icon-user">
-                        <input class="form-control alwaysvisible" required="required" name="kp_acc_holdername" type="text" id="kp_acc_holdername" value="{{$kataparchi[0]->kp_acc_holdername}}">
+                        <input class="form-control alwaysvisible" required="required" name="kp_acc_holdername" type="text" id="kp_acc_holdername" value="{{$kataparchi[0]->kp_acc_holdername}}" readonly>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <label for="kp_bhoomiswami_name" class="form-label">land owner name</label>
                     <div class="form-icon-user">
-                        <input class="form-control " required="required" name="kp_bhoomiswami_name" type="text" id="kp_bhoomiswami_name" value="{{$kataparchi[0]->kp_bhoomiswami_name}}">
+                        <input class="form-control " required="required" name="kp_bhoomiswami_name" type="text" id="kp_bhoomiswami_name" value="{{$kataparchi[0]->kp_bhoomiswami_name}}" readonly>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 <div class="form-group">
                     <label for="kp_vilage" class="form-label"> Village </label>
                     <div class="form-icon-user">
-                        <input class="form-control " required pattern="[A-Za-z ]+" title="Only letters allowed" name="kp_vilage" type="text" id="kp_vilage" value="{{$kataparchi[0]->kp_vilage	}}">
+                        <input class="form-control " required pattern="[A-Za-z ]+" title="Only letters allowed" name="kp_vilage" type="text" id="kp_vilage" value="{{$kataparchi[0]->kp_vilage	}}" readonly>
                     </div>
                 </div>
             </div>
@@ -78,12 +78,12 @@
                 <div class="form-group">
                     <label for="kp_rakaba_acre" class="form-label">land acre</label>
                     <div class="form-icon-user">
-                        <input class="form-control " required="required" name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" value="{{$kataparchi[0]->kp_rakaba_acre}}">
+                        <input class="form-control " required="required" name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" value="{{$kataparchi[0]->kp_rakaba_acre}}" readonly>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 d-none">
                 <div class="form-group">
                     <label for="kp_khasra_no" class="form-label">Khasra No.</label>
                     <div class="form-icon-user">
@@ -96,7 +96,7 @@
                 <div class="form-group">
                     <label for="kp_mo_no" class="form-label"> Mobile no.  </label>
                     <div class="form-icon-user">
-                        <input class="form-control " required="required" name="kp_mo_no" type="text" id="kp_mo_no" value="{{$kataparchi[0]->kp_mo_no}}">
+                        <input class="form-control " required="required" name="kp_mo_no" type="text" id="kp_mo_no" value="{{$kataparchi[0]->kp_mo_no}}" readonly>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                 <div class="form-group">
                     <label for="kp_rogger_name" class="form-label"> Rogating agent name </label>
                     <div class="form-icon-user">
-                        <input class="form-control " title="Only letters allowed" name="kp_rogger_name" type="text" id="kp_rogger_name" value="{{$kataparchi[0]->kp_rogger_name	}}" >
+                        <input class="form-control " title="Only letters allowed" name="kp_rogger_name" type="text" id="kp_rogger_name" value="{{$kataparchi[0]->kp_rogger_name	}}" readonly >
                     </div>
                 </div>
             </div>

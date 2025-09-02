@@ -469,7 +469,7 @@ function autofill(id) {
 
   // Step 5: Show result
   console.log('Converted Qty:', secQty);
-  $("#other_qty_val").html(secQty);
+ // $("#other_qty_val").html(secQty);
   $("#prev_unit_" + rid).val(currentUnitShort); // update old unit
 }
 

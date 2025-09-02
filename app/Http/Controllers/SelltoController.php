@@ -280,4 +280,36 @@ class SelltoController extends Controller
         return Redirect::to('sellto');
     }
 
+    public function filter(Request $request)
+    {
+
+                    
+            $from = $request->input('from_date');
+            $to = $request->input('to_date');
+
+            $nextDay = date('Y-m-d',strtotime($to) + 86400);
+
+            if (!$from || !$to) {
+                return response()->json(['error' => 'Both dates are required'], 400);
+            }
+
+           $data['sellto'] = DB::table('sell_to')
+            ->join('ledgerbank_accounts', 'ledgerbank_accounts.account_id', '=', 'sell_to.bank_name')
+            ->join('company', 'company.company_id', '=', 'sell_to.company_id')
+            ->select(
+                'sell_to.*',
+                'ledgerbank_accounts.bank_name as branchname',
+                'company.company_name'
+            )
+            ->where('sell_to.sell_to', 'farmer')
+            ->where('sell_to.is_deleted', 0)
+            ->whereBetween('sell_to.sell_created_date', [$from, $nextDay]) // 👈 here
+            ->orderByDesc('sell_to.sell_id')
+            ->get();
+
+
+            
+            return view('sellto/filter',$data);
+    }
+
 }

@@ -101,7 +101,7 @@
                                     <td style="display:none"> {{ $value->name}} </td>
                                     <td style="display:none">{{ $value->rst_no}}</td>
                                     <td> {{ $value->branch_name}} </td>
-                                    <td></td>
+                                    <td> {{ $value->company_name}} </td>
                                      <td style="display:none"> {{ $value->stage_no}} </td>
                                     <td style="display:none"> {{ $value->no_of_begs}} </td>
                                     <td style="display:none">{{ $value->final_weight}}</td>

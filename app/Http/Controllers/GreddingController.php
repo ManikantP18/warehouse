@@ -90,7 +90,7 @@ class GreddingController extends Controller
           
             DB::update("update gredding set gredding_verity = '$gredding_verity' ,gredding_godown = '$gredding_godown',gred_stage_no = '$gred_stage_no',gred_no_begs = '$gred_no_begs',gredded_quantity = '$gredded_quantity',undersize_quantity = '$undersize_quantity' ,pay_gredding = '$pay_gredding' ,gredding_lot_no = '$gredding_lot_no' ,farmar_name = '$farmar_name' ,land_owner = '$land_owner',final_waigth = '$final_waigth' ,gredding_date = '$gredding_date' , is_hide = 1 , staging_stage_no = '$staging_stage_no',staging_no_bags = ' $staging_no_begs', company_id = '$company_id' where gredding_id = '$gredding_id'");
 
-           DB::insert("Insert into packing (lot_no,farmer_name,land_owner,packing_no_of_begs,packing_pay,packing_gredded_quantity,packing_verity,final_weight,packing_godown,gred_no_bag,gred_stage_no,company_id) VALUES ('$gredding_lot_no', '$farmar_name', '$land_owner', '$gred_no_begs', '$pay_gredding','$gredded_quantity','$gredding_verity','$final_waigth','$gredding_godown','$staging_no_begs','$gred_stage_no','$company_id')");
+           DB::insert("Insert into packing (lot_no,farmer_name,land_owner,packing_no_of_begs,packing_pay,packing_gredded_quantity,packing_verity,final_weight,packing_godown,gred_no_bag,gred_stage_no,company_id) VALUES ('$gredding_lot_no', '$farmar_name', '$land_owner', '$gred_no_begs', '$pay_gredding','$gredded_quantity','$gredding_verity','$final_waigth','$gredding_godown','$gred_no_begs','$gred_stage_no','$company_id')");
 
 
          return Redirect::to('gredding')->with('success', 'Gredding Create Successfully');

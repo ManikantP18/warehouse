@@ -178,12 +178,15 @@ class PurchaseController extends Controller
         $purchase_phone = $req->input('purchase_phone');
         $purchase_rst_no = $req->input('purchase_rst_no');
         $purchase_lot_no = $req->input('purchase_lot_no');
-         $purchase_account_no = $req->input('purchase_account_no');
+
+        // Bank Detail of Ladger
+        $purchase_account_no = $req->input('purchase_account_no');
         $purchas_bank_name = $req->input('purchas_bank_name');
         $purchase_ifsc = $req->input('purchase_ifsc');
-         $purchase_branch = $req->input('purchase_branch');
+        $purchase_branch = $req->input('purchase_branch');
+
         $purchase_gst_no = $req->input('purchase_gst_no');
-         $godown = $req->input('godown');
+        $godown = $req->input('godown');
         $purchase_to = $req->input('purchase_to');
         $id = $req->input('purchase_id');
         $purchase_total = $req->input('purchase_total',[]);
@@ -216,12 +219,35 @@ class PurchaseController extends Controller
                     }
                  }
                  
-                 DB::insert("Insert into payment (pay_ladger_id,tr_type,amount,purchase_id) VALUES ('$ladgerid','2', '$sum_total','$id')"); 
+            DB::insert("Insert into payment (pay_ladger_id,tr_type,amount,purchase_id) VALUES ('$ladgerid','2', '$sum_total','$id')");
 
-                 DB::update("update ladgers set opening_balance = opening_balance + '$sum_total' WHERE account_id = '$ladgerid'");
+            DB::update("update ladgers set account_number = '$purchase_account_no', bank_name = '$purchas_bank_name', ifsc_code = '$purchase_ifsc', branch = '$purchase_branch' WHERE account_id = '$ladgerid'");
 
         return Redirect::to('purchase');
        
     }
+
+    public function filter(Request $request)
+    {
+
+                    
+            $from = $request->input('from_date');
+            $to = $request->input('to_date');
+
+            $nextDay = date('Y-m-d',strtotime($to) + 86400);
+
+            if (!$from || !$to) {
+                return response()->json(['error' => 'Both dates are required'], 400);
+            }
+
+            $data['purchase'] = DB::table('purchase')
+                ->whereBetween('purchase_date', [$from, $nextDay])
+                ->get();
+
+            
+        return view('purchase/filter',$data);
+    }
+
+    
   
 }

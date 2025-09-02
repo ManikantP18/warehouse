@@ -52,6 +52,21 @@
     </div>
 @endsection
 @section('content')
+
+<div class="row mb-3">
+    <div class="col-md-3">
+        <input type="date" name="from_date" class="form-control" value="{{ request('from_date') }}" id="from_date">
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="to_date" class="form-control" value="{{ request('to_date') }}" id="to_date">
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary" onclick="filterTable()">
+            <i class="ti ti-filter"></i> Filter
+        </button>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -79,7 +94,7 @@
                         @endforeach
                     </div>
 
-                    <table class="table datatable">
+                    <table class="table datatable" id="purchasetable">
                         <thead>
                             <tr>
                                 <th>Sell Date</th>
@@ -173,6 +188,33 @@
                 }
             });
         });
+
+        function filterTable() {
+        let from_date = $('#from_date').val();
+        let to_date = $('#to_date').val();
+
+        if (from_date === '' || to_date === '') {
+            alert("Please select both dates");
+            return;
+        }
+
+        $.ajax({
+            url: '{{ route('sells.filter') }}',
+            type: 'GET',
+            data: {
+                from_date: from_date,
+                to_date: to_date
+            },
+            success: function(response) {
+                $("#purchasetable").html('');
+                $("#purchasetable").html(response);
+            },
+            error: function(xhr) {
+                alert("Something went wrong while fetching data.");
+                console.log(xhr.responseText);
+            }
+        });
+    }
 
 
     </script>
