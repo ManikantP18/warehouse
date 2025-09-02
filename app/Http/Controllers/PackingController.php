@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
+use App\Models\LaborPrice;
 
 use Illuminate\Support\Facades\Redirect;
 
@@ -21,6 +22,25 @@ class PackingController extends Controller
         $data['packing'] = DB::select("select *,packing.company_id AS cmp from packing join product_services on product_services.id = packing.packing_verity where packing_id = '$id'");
         $data['branch'] = DB::select("select * from branches where branch_status = 1");
        $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+        
+        // Calculate pay for packing based on graded quantity
+        if (!empty($data['packing'])) {
+            $graded_quantity = $data['packing'][0]->packing_gredded_quantity;
+            $calculated_pay = LaborPrice::calculatePayment($graded_quantity, 'packing');
+            $data['packing'][0]->packing_pay = $calculated_pay;
+            
+            // Set default date if packing_date is empty or format it properly
+            if (empty($data['packing'][0]->packing_date)) {
+                $data['packing'][0]->packing_date = date('Y-m-d');
+            } else {
+                // Convert datetime to date format if it's a datetime
+                $date = $data['packing'][0]->packing_date;
+                if (strlen($date) > 10) {
+                    $data['packing'][0]->packing_date = date('Y-m-d', strtotime($date));
+                }
+            }
+        }
+        
         return view('packing/edit',$data);
     }
 
@@ -28,6 +48,8 @@ class PackingController extends Controller
 {
     $packing_id = $req->packing_id;
     $remaing_qty = $req->remaing_qty;
+    $Gredded_qty = $req->Gredded_qty;
+    $packing_date = $req->packing_date ?: date('Y-m-d');
     // Bags data
     $bags_kg = $req->bags_kg;       // array
     $bags_count = $req->bags_count; // array
@@ -45,6 +67,9 @@ class PackingController extends Controller
         }
     }
 
+    // Auto-calculate pay for packing
+    $packing_pay = LaborPrice::calculatePayment($Gredded_qty, 'packing');
+
     DB::table('packing')
         ->where('packing_id', $packing_id)
         ->update([
@@ -53,7 +78,7 @@ class PackingController extends Controller
             'land_owner'               => $req->land_owner,
             'packing_stage_no'         => $req->stage_no,
             'packing_no_of_begs'       => array_sum($bags_count),
-            'packing_pay'              => $req->packing_pay,
+            'packing_pay'              => $packing_pay,
             'packing_gredded_quantity' => $req->Gredded_qty,
             'packing_verity'           => $req->verity,
             'final_weight'             => $req->final_weight,
@@ -63,7 +88,8 @@ class PackingController extends Controller
             'packing_30'               => $packing_30,
             'packing_20'               => $packing_20,
             'packing_5'                => $packing_5,
-            'remaing_qty'              => $remaing_qty
+            'remaing_qty'              => $remaing_qty,
+            'packing_date'             => $packing_date
         ]);
 
     return Redirect::to('/packing')->with('success', 'Packing updated successfully');

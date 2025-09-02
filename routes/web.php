@@ -92,6 +92,7 @@ use App\Http\Controllers\RogringController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\StagingController;
 use App\Http\Controllers\GreddingController;
+use App\Http\Controllers\LaborPriceController;
 
 
 
@@ -153,6 +154,15 @@ Route::post('/payment/create', 'App\Http\Controllers\PaymentsController@create')
 Route::get('/packing', 'App\Http\Controllers\PackingController@index')->name('packing.list')->middleware('auth');
 Route::get('/packing/edit/{id}', 'App\Http\Controllers\PackingController@edit')->name('packing.edit')->middleware('auth');
 Route::post('/packing/update/', 'App\Http\Controllers\PackingController@update')->name('packing.update')->middleware('auth');
+
+// Labor Prices Routes
+Route::get('/labor-prices', 'App\Http\Controllers\LaborPriceController@index')->name('labor-prices.list')->middleware('auth');
+Route::get('/labor-prices/create', 'App\Http\Controllers\LaborPriceController@create')->name('labor-prices.create')->middleware('auth');
+Route::post('/labor-prices/add', 'App\Http\Controllers\LaborPriceController@add')->name('labor-prices.add')->middleware('auth');
+Route::get('/labor-prices/edit/{id}', 'App\Http\Controllers\LaborPriceController@edit')->name('labor-prices.edit')->middleware('auth');
+Route::put('/labor-prices/update/{id}', 'App\Http\Controllers\LaborPriceController@update')->name('labor-prices.update')->middleware('auth');
+Route::get('/labor-prices/delete/{id}', 'App\Http\Controllers\LaborPriceController@delete')->name('labor-prices.delete')->middleware('auth');
+Route::get('/labor-prices/get-price/{moduleType}', 'App\Http\Controllers\LaborPriceController@getPrice')->name('labor-prices.get-price')->middleware('auth');
 
 
 Route::get('/bankacc', 'App\Http\Controllers\BankController@index')->name('bankacc.list')->middleware('auth');

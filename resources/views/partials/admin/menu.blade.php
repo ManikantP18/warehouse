@@ -318,6 +318,14 @@
                     </ul>
                 </li>
 
+                {{-- Labor Prices Management --}}
+                <li class="dash-item {{ Request::route()->getName() == 'labor-prices.list' ? ' active' : '' }} ">
+                    <a href="{{ route('labor-prices.list') }}" class="dash-link ">
+                        <span class="dash-micon"><i class="ti ti-currency-rupee"></i></span>
+                        <span class="dash-mtext">Labor Prices</span>
+                    </a>
+                </li>
+
                    
                     <li class="dash-item {{ Request::route()->getName() == 'company.list' ? ' active' : '' }} ">
                         <a href="{{ route('company.list') }}" class="dash-link ">

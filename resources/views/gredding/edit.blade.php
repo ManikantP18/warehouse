@@ -141,8 +141,19 @@
                 <div class="form-group">
                     <label for="pay_gredding" class="form-label">Pay For Gredding</label>
                     <div class="form-icon-user">
-                        <input class="form-control "  title="Only letters allowed" name="pay_gredding" type="text" id="pay_gredding" value="{{$gredding[0]->pay_gredding}}">
+                        <input class="form-control" readonly name="pay_gredding" type="text" id="pay_gredding" value="{{$gredding[0]->pay_gredding}}">
+                        <small class="text-muted">Auto-calculated based on staging final weight and grading price per kwintal</small>
                     </div>
+                </div>
+            </div>
+
+            {{-- Grading Date --}}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="gredding_date" class="form-label">Grading Date</label>
+                    <input class="form-control" required name="gredding_date" type="date" id="gredding_date"
+                           value="{{ $gredding[0]->gredding_date ?: date('Y-m-d') }}">
+                    <div class="invalid-feedback">Please select a grading date.</div>
                 </div>
             </div>
         
@@ -170,8 +181,12 @@
 
         $("#undersize_quantity").val(rem);
 
-
     }
+
+    // Initialize calculations on page load
+    $(document).ready(function() {
+        calcRemain();
+    });
     
 </script>
 

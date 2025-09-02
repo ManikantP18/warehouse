@@ -44,6 +44,7 @@
             <div class="form-group">
                 <label class="form-label">Pay for Packing</label>
                 <input class="form-control" required name="packing_pay" type="text" value="{{ $packing[0]->packing_pay }}" readonly>
+                <small class="text-muted">Auto-calculated based on graded quantity and packing price per kwintal</small>
             </div>
         </div>
 
@@ -113,6 +114,15 @@
             <div class="form-group">
                 <label class="form-label">Gredding No. of Bag</label>
                 <input class="form-control" required name="staging_total_bag" type="text" value="{{ $packing[0]->gred_no_bag }}" readonly>
+            </div>
+        </div>
+
+        <!-- Packing Date -->
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="form-label">Packing Date</label>
+                <input class="form-control" required name="packing_date" type="date" value="{{ $packing[0]->packing_date ?: date('Y-m-d') }}">
+                <div class="invalid-feedback">Please select a packing date.</div>
             </div>
         </div>
 
@@ -229,6 +239,7 @@ $(function() {
         }
     });
 
+    // Initialize calculations on page load
     calculateTotals();
 });
 </script>

@@ -107,7 +107,7 @@
             <div class="form-group">
                 <label for="staging_date" class="form-label">Staging Date</label>
                 <input class="form-control" required name="staging_date" type="date" id="staging_date"
-                       value="{{ $staging[0]->staging_date }}">
+                       value="{{ $staging[0]->staging_date ?: date('Y-m-d') }}">
                 <div class="invalid-feedback">Please select a staging date.</div>
             </div>
         </div>
@@ -118,8 +118,9 @@
                 <label for="pay_for_staging" class="form-label">Pay for Staging</label>
                 <input class="form-control" required name="pay_for_staging" type="number" min="1" step="0.01"
                        id="pay_for_staging" value="{{ $staging[0]->pay_for_staging }}"
-                       placeholder="Enter amount">
+                       placeholder="Enter amount" readonly>
                 <div class="invalid-feedback">Please enter valid payment amount (₹).</div>
+                <small class="text-muted">Auto-calculated based on final weight and staging price per kwintal</small>
             </div>
         </div>
     <input type="hidden" name="staging_id" value="{{$staging[0]->staging_id}}">

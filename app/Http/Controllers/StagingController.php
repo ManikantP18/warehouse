@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Staging;
+use App\Models\LaborPrice;
 
 use Illuminate\Support\Facades\Redirect;
 
@@ -58,6 +59,24 @@ class StagingController extends Controller
           $data['branch'] = DB::select("select * from branches where branch_status = 1");
          $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
      
+        // Calculate pay for staging based on final weight
+        if (!empty($data['staging'])) {
+            $final_weight = $data['staging'][0]->final_weight;
+            $calculated_pay = LaborPrice::calculatePayment($final_weight, 'staging');
+            $data['staging'][0]->pay_for_staging = $calculated_pay;
+            
+            // Set default date if staging_date is empty or format it properly
+            if (empty($data['staging'][0]->staging_date)) {
+                $data['staging'][0]->staging_date = date('Y-m-d');
+            } else {
+                // Convert datetime to date format if it's a datetime
+                $date = $data['staging'][0]->staging_date;
+                if (strlen($date) > 10) {
+                    $data['staging'][0]->staging_date = date('Y-m-d', strtotime($date));
+                }
+            }
+        }
+     
         return view('staging/edit',$data);
     }
 
@@ -69,14 +88,16 @@ class StagingController extends Controller
         $godown	 = $req->input('godown');
         $stage_no = $req->input('stage_no');
         $no_of_begs = $req->input('no_of_begs');
-         $pay_for_staging = $req->input('pay_for_staging');
-          $staging_date	 = $req->input('staging_date');
+        $staging_date	 = $req->input('staging_date');
         
         $farmer_name = $req->input('farmer_name');
         $final_weight = $req->input('final_weight');
 
         $land_owner = $req->input('land_owner');
          $company_id = $req->input('company_id');
+
+        // Auto-calculate pay for staging
+        $pay_for_staging = LaborPrice::calculatePayment($final_weight, 'staging');
 
         
         $today = date('Y-m-d H:i:s');
