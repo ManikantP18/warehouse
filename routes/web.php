@@ -138,6 +138,10 @@ Route::get('/staging/delete/{id}', 'App\Http\Controllers\StagingController@delet
 Route::get('/staging/edit/{id}', 'App\Http\Controllers\StagingController@edit')->name('staging.edit')->middleware('auth');
 Route::put('/staging/edit/', 'App\Http\Controllers\StagingController@update')->name('staging.update')->middleware('auth');
 
+//ladger Statement
+Route::get('/Ladgerstatement', 'App\Http\Controllers\LadgerPaymentStatement@index')->name('Ladgerstatement.list')->middleware('auth');
+Route::get('/Ladgerstatement/search', 'App\Http\Controllers\LadgerPaymentStatement@search')->name('Ladgerstatement.search')->middleware('auth');
+Route::get('/Ladgerstatement/history', 'App\Http\Controllers\LadgerPaymentStatement@history')->name('Ladgerstatement.history')->middleware('auth');
 
 
 Route::get('/payment', 'App\Http\Controllers\PaymentsController@index')->name('payment.list')->middleware('auth');
@@ -321,6 +325,7 @@ Route::get('/purchase/getrst', 'App\Http\Controllers\PurchaseController@getrst')
 Route::post('/purchase/update', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update')->middleware('auth');
 
 Route::get('/otherspurchase', 'App\Http\Controllers\PurchaseController@others')->name('purchase.other')->middleware('auth');
+
 
 
 Route::get('/purchase/delete/{id}', 'App\Http\Controllers\PurchaseController@delete')->name('purchase.delete')->middleware('auth');
