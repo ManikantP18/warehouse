@@ -141,10 +141,43 @@ class SelltoController extends Controller
             }
 
          }
-        
-         DB::insert("Insert into payment (sell_id,amount,pay_ladger_id) VALUES ('$lastId','$total','$accno')");
 
-        
+         $avbl_bal = -$total;
+
+         $lastAvailableBal = DB::select("select avbl_bal from payment_statement where ladger_id = '$accno' AND pay_status  = 1 AND is_deleted = 0 ORDER BY pay_id DESC LIMIT 1"); 
+         if(!empty($lastAvailableBal)){
+            
+            foreach($lastAvailableBal as $ln) {
+
+                $avbl_bal = $ln->avbl_bal - $total;
+
+                DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sell','sell','$total','$avbl_bal','$comp_id')");
+
+            }
+
+
+        } else {
+
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sell','sell','$total','-$total','$comp_id')");
+
+        }
+
+        if(!empty($cashamm) && $cashamm > 0){
+
+            $avbl_bal = $avbl_bal + $cashamm;
+
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sell','sell','$cashamm','$avbl_bal','$comp_id')");
+
+        }
+
+        if(!empty($creditamm) && $creditamm > 0){
+
+            $avbl_bal = $avbl_bal + $creditamm;
+
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,bank_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','$bank_name','Sell','sell','$creditamm','$avbl_bal','$comp_id')");
+
+        }
+
         
         if($farmerother == 'farmer') {
             return Redirect::to('sellto');
@@ -281,9 +314,7 @@ class SelltoController extends Controller
     }
 
     public function filter(Request $request)
-    {
-
-                    
+    {      
             $from = $request->input('from_date');
             $to = $request->input('to_date');
 
