@@ -221,7 +221,19 @@ class PurchaseController extends Controller
                  
             DB::insert("Insert into payment (pay_ladger_id,tr_type,amount,purchase_id) VALUES ('$ladgerid','2', '$sum_total','$id')");
 
+            
+
             DB::update("update ladgers set account_number = '$purchase_account_no', bank_name = '$purchas_bank_name', ifsc_code = '$purchase_ifsc', branch = '$purchase_branch' WHERE account_id = '$ladgerid'");
+
+           $avlBal = DB::select("select avbl_bal from payment_statement 
+                      where ladger_id = ? AND pay_status = 1 AND is_deleted = 0 
+                      ORDER BY pay_id DESC LIMIT 1", [$ladgerid]);
+
+            $avlBal = $avlBal ? $avlBal[0]->avbl_bal : 0;
+
+            $balance = $sum_total + $avlBal;
+
+            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal) VALUES ('$ladgerid','Purchase','Purchase','0', '$sum_total','$balance')");
 
         return Redirect::to('purchase');
        
