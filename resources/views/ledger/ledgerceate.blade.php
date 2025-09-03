@@ -5,12 +5,26 @@
 <div class="modal-body">
     <h6 class="sub-title">Ledger Creation</h6>
 
-    <div class="form-group mb-3">
-        <label for="ledger_type" class="form-label">Select Ledger Type</label>
-        <select name="ledger_type" id="ledger_type" class="form-select" required onchange="showhide(this.value)">
-            <option value="farmer">Farmer</option>
-            <option value="others">Others</option>
-        </select>
+    <div class="form-group row mb-3">
+        <div class="col-md-6">
+            <label for="ledger_type" class="form-label">Select Ledger Type</label>
+            <select name="ledger_type" id="ledger_type" class="form-select" required onchange="showhide(this.value)">
+                <option value="farmer">Farmer</option>
+                <option value="others">Others</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="ledger_type" class="form-label">Ledger Under Type</label>
+            <select name="ledger_under_type" id="ledger_under_type" class="form-select" required onchange="ladgrunder(this.value)">
+                <option value="others">Former/Others</option>
+                <option value="cash">Cash In Hand</option>
+                <option value="debt">Debtor</option>
+                <option value="creditor">Creditor</option>
+                <option value="ind_exp">Indirect Expenses</option>
+                <option value="dir_exp">Direct Expenses</option>
+            </select>
+        </div>
     </div>
 
     {{-- FARMER FORM SECTION --}}
@@ -51,7 +65,7 @@
 
    
     @foreach($company as $val)
-    <div class="col-md-6">
+    <div class="col-md-6 opening-balances">
         <label>Opening Balance ({{$val->company_name}})</label>
         <input class="form-control" name="opening_balance[]" type="number" required>
         <input type="hidden" name="company_id[]" value="{{$val->company_id}}">
@@ -112,6 +126,24 @@
 </div>
 {{ Form::close() }}
 <script>
+
+    function ladgrunder(val){
+    if(val == 'others'){
+        showhide($("#ledger_type").val());
+    } else{
+
+        let html = '';
+
+        $(".opening-balances").each(function(index, element) {
+           html += `<div class="col-md-6 opening-balances"> ${ $(this).html() } </div>`;
+        });
+
+        $(".farmer-form-section").html(html)
+
+    }
+
+}
+
 function showhide(value) {
    
     let formar_fields = `<div class="col-md-6">

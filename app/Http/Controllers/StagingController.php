@@ -88,7 +88,7 @@ class StagingController extends Controller
         $godown	 = $req->input('godown');
         $stage_no = $req->input('stage_no');
         $no_of_begs = $req->input('no_of_begs');
-        $staging_date	 = $req->input('staging_date');
+          $staging_date	 = $req->input('staging_date');
         
         $farmer_name = $req->input('farmer_name');
         $final_weight = $req->input('final_weight');
