@@ -144,7 +144,7 @@ class SelltoController extends Controller
 
          $avbl_bal = -$total;
 
-         $lastAvailableBal = DB::select("select avbl_bal from payment_statement where ladger_id = '$accno' AND pay_status  = 1 AND is_deleted = 0 ORDER BY pay_id DESC LIMIT 1"); 
+         $lastAvailableBal = DB::select("select avbl_bal from payment_statement where ladger_id = '$accno' AND pay_status  = 1 AND is_deleted = 0 AND comp_id = '$comp_id' ORDER BY pay_id DESC LIMIT 1"); 
          if(!empty($lastAvailableBal)){
             
             foreach($lastAvailableBal as $ln) {

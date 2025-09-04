@@ -8,7 +8,8 @@ use DB;
 class LadgerPaymentStatement extends Controller
 {
     function index() {
-         return view('ladgerstatement/list',);
+        $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+         return view('ladgerstatement/list',$data);
     }
 
     public function search(Request $req)
@@ -52,12 +53,101 @@ class LadgerPaymentStatement extends Controller
 
         }
 
-        function history(Request $req) {
-        $acc_id = $req->input('searchVal'); 
+    //     function history(Request $req) {
+    //     $acc_id = $req->input('searchVal');
 
-        $data['statement'] = DB::select("select * from payment_statement join ladgers on ladgers.account_id = payment_statement.ladger_id where payment_statement.ladger_id = '$acc_id' ");
+    //     $cid = $req->input('company');
 
-        return view('Ladgerstatement/table',$data);
+    //     $html = '';
+
+    //     if($cid == 'all'){
+
+    //         $companies = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
+    //         foreach($companies as $comp){
+
+    //             $data['comp_name'] = $comp->company_name;
+
+    //             $data['statement'] = DB::select("select * from payment_statement join ladgers on ladgers.account_id = payment_statement.ladger_id where payment_statement.ladger_id = '$acc_id' AND comp_id = '$comp->company_id'");
+
+    //             $html .= view('Ladgerstatement/table',$data);
+
+    //         }
+
+    //     } else {
+
+    //         $companies = DB::select("select * from company where company_id = $cid");
+
+    //         foreach($companies as $comp){
+
+    //             $data['comp_name'] = $comp->company_name;
+
+    //             $data['statement'] = DB::select("select * from payment_statement join ladgers on ladgers.account_id = payment_statement.ladger_id where payment_statement.ladger_id = '$acc_id' AND comp_id = '$comp->company_id'");
+
+    //             $html .= view('Ladgerstatement/table',$data);
+
+    //         }
+
+    //     }
+
+    //     return $html;
         
+    // }
+
+    function history(Request $req) {
+    $acc_id = $req->input('searchVal');
+    $cid = $req->input('company');
+
+    $html = '';
+    $totalBalance = 0; // yeh grand total ke liye
+
+    if($cid == 'all'){
+        $companies = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+    } else {
+        $companies = DB::select("select * from company where company_id = $cid");
     }
+
+    foreach($companies as $comp){
+        $data['comp_name'] = $comp->company_name;
+
+        // company wise pura statement
+        $data['statement'] = DB::select("
+            select * from payment_statement 
+            join ladgers on ladgers.account_id = payment_statement.ladger_id 
+            where payment_statement.ladger_id = '$acc_id' 
+            AND comp_id = '$comp->company_id'
+            order by pay_id asc
+        ");
+
+        // 👉 last available balance nikalna
+        $lastBalance = DB::selectOne("
+            select avbl_bal from payment_statement 
+            where ladger_id = '$acc_id' AND comp_id = '$comp->company_id'
+            order by pay_id desc limit 1
+        ");
+
+        if($lastBalance){
+            $totalBalance += $lastBalance->avbl_bal;
+        }
+
+        $html .= view('Ladgerstatement/table',$data);
+    }
+
+    $html .= '
+    <div class="mt-4">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-body text-center">
+                <h5 class="card-title mb-3">Total Available Balance</h5>
+                <h3 class="fw-bold text-' . ($totalBalance > 0 ? 'success' : 'danger') . '">
+                    ' . number_format($totalBalance) . ' ' . ($totalBalance > 0 ? 'Cr' : 'Dr') . '
+                </h3>
+            </div>
+        </div>
+    </div>
+';
+
+
+    return $html;
+}
+
 }

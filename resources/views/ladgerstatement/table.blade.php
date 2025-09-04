@@ -1,4 +1,5 @@
-<table class="table datatable">
+                        <div class="mt-5">Company Name : <b>{{$comp_name}}</b></div>
+                        <table class="table datatable">
                                     <thead>
                                         <tr>
                                             <th> Date </th>

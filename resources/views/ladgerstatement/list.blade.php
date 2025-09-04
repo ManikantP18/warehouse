@@ -79,6 +79,8 @@
                             </div>
                             </div>
 
+                            
+
                             <div class="col-md-2 ">
                             <div class="form-group">
                                 <label class="form-label d-none d-sm-block">&nbsp;</label>
@@ -88,11 +90,26 @@
                         </div>
                     </div>
                     <!-- Dynamic Farmer Selection -->
-                    <div class="col-6 m-auto">
-                    <div class="form-group">
-                        <div class="form-icon-user allfarmers"></div>
-                    </div>
-                    </div>
+                     <div class="row">
+                            <div class="col-6 ">
+                            <div class="form-group">
+                                <div class="form-icon-user allfarmers"></div>
+                            </div>
+                            </div>
+
+                            <div class="col-6 ">
+                            <div class="form-group allcompanies">
+                                <label for="comp_id" class="form-label">Company Name</label>
+                                <select class="form-control" name="comp_id"  id="comp_id" onchange="selectLadger()">
+                                    <option value="all">All</option>
+                                    @foreach($company as $value)
+                                    <option value="{{$value->company_id}}">{{$value->company_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            </div>
+
+                        </div>
 
                         <div id="table"></div>
                     </div>
@@ -137,12 +154,13 @@
                 data: { searchVal, searchVillage, searchname,searchowner, all },
                 success: function(response) {
                 if (response.success && response.data) {
-                    let html = '<select class="form-control" onchange="selectLadger(this.value)"><option value="">Select Farmer</option>';
+                    let html = '<label for="comp_id" class="form-label">Farmers</label> <select class="form-control" onchange="selectLadger()" id="selectedLadger"><option value="">Select Farmer</option>';
                     response.data.forEach(d => {
                     html += `<option value="${d.account_id}">${d.relational_cust_name} - ${d.farm_owner_name}</option>`;
                     });
                     html += '</select>';
                     $('.allfarmers').html(html).show();
+                    $(".allcompanies").show();
                     $('#form-fields-wrapper').hide();
                 } else {
                     alert("No matching record found.");
@@ -151,8 +169,10 @@
             });
         }
 
-        function selectLadger(id) {
-            $.get('{{ route('Ladgerstatement.history') }}', { searchVal: id }, function(response) {
+        function selectLadger() {
+            let id = $("#selectedLadger").val();
+            let cid = $("#comp_id").val();
+            $.get('{{ route('Ladgerstatement.history') }}', { searchVal: id, company : cid }, function(response) {
                 if (response && response.length > 0) {
                     $("#table").html(response)
                 }
@@ -162,6 +182,7 @@
             $(document).ready(function () {
             $('#form-fields-wrapper').hide();
             $('.allfarmers').hide();
+            $(".allcompanies").hide();
             });
 
 
