@@ -166,7 +166,7 @@ class SelltoController extends Controller
 
             $avbl_bal = $avbl_bal + $cashamm;
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sell','sell','$cashamm','$avbl_bal','$comp_id')");
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sell','Payment','$cashamm','$avbl_bal','$comp_id')");
 
         }
 
@@ -174,7 +174,13 @@ class SelltoController extends Controller
 
             $avbl_bal = $avbl_bal + $creditamm;
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,bank_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','$bank_name','Sell','sell','$creditamm','$avbl_bal','$comp_id')");
+            $bank = DB::select("select bank_name FROM ledgerbank_accounts WHERE account_id  = $bank_name ");
+
+            foreach($bank as $b) {
+
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,bank_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','$bank_name','$b->bank_name','Payment','$creditamm','$avbl_bal','$comp_id')");
+
+            }
 
         }
 
