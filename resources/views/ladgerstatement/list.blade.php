@@ -91,13 +91,13 @@
                     </div>
                     <!-- Dynamic Farmer Selection -->
                      <div class="row">
-                            <div class="col-6 ">
+                            <div class="col-3 ">
                             <div class="form-group">
                                 <div class="form-icon-user allfarmers"></div>
                             </div>
                             </div>
 
-                            <div class="col-6 ">
+                            <div class="col-3 ">
                             <div class="form-group allcompanies">
                                 <label for="comp_id" class="form-label">Company Name</label>
                                 <select class="form-control" name="comp_id"  id="comp_id" onchange="selectLadger()">
@@ -108,7 +108,20 @@
                                 </select>
                             </div>
                             </div>
-
+                                <div class="col-md-3 allcompanies">
+                                    <label for="comp_id" class="form-label">From Date</label>
+                                    <input type="date" name="from_date" class="form-control"  id="from_date" onchange="selectLadger()">
+                                </div>
+                                <div class="col-md-3 allcompanies">
+                                    <label for="comp_id" class="form-label">To Date</label>
+                                    <input type="date" name="to_date" class="form-control" id="to_date" onchange="selectLadger()">
+                                </div>
+                                <!-- <div class="col-md-2 allcompanies">
+                                    
+                                    <button type="submit" class="btn btn-primary mt-4" onclick="filterTable()">
+                                        <i class="ti ti-filter"></i> Filter
+                                    </button>
+                                </div> -->
                         </div>
 
                         <div id="table"></div>
@@ -172,7 +185,9 @@
         function selectLadger() {
             let id = $("#selectedLadger").val();
             let cid = $("#comp_id").val();
-            $.get('{{ route('Ladgerstatement.history') }}', { searchVal: id, company : cid }, function(response) {
+            let fdate = $("#from_date").val();
+            let todate = $("#to_date").val();
+            $.get('{{ route('Ladgerstatement.history') }}', { searchVal: id, company : cid , fromdate : fdate , todate : todate}, function(response) {
                 if (response && response.length > 0) {
                     $("#table").html(response)
                 }

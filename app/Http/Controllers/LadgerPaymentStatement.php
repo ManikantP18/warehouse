@@ -97,9 +97,10 @@ class LadgerPaymentStatement extends Controller
     function history(Request $req) {
     $acc_id = $req->input('searchVal');
     $cid = $req->input('company');
-
+    $fdate = $req->input('fromdate');    
+    $todate = $req->input('todate');   
     $html = '';
-    $totalBalance = 0; // yeh grand total ke liye
+    $totalBalance = 0; 
 
     if($cid == 'all'){
         $companies = DB::select("select * from company where company_status = 1 and is_deleted = 0");
@@ -109,20 +110,30 @@ class LadgerPaymentStatement extends Controller
 
     foreach($companies as $comp){
         $data['comp_name'] = $comp->company_name;
+        
+        $where = '';
+
+        if(!empty($fdate)) {
+            $where .= " AND created_date >= '$fdate' ";
+        }
+
+        if(!empty($todate)){
+            $where .= " AND created_date <= '$todate'";
+        }
 
         // company wise pura statement
         $data['statement'] = DB::select("
             select * from payment_statement 
             join ladgers on ladgers.account_id = payment_statement.ladger_id 
             where payment_statement.ladger_id = '$acc_id' 
-            AND comp_id = '$comp->company_id'
+            AND comp_id = '$comp->company_id' $where
             order by pay_id asc
         ");
 
         // 👉 last available balance nikalna
         $lastBalance = DB::selectOne("
             select avbl_bal from payment_statement 
-            where ladger_id = '$acc_id' AND comp_id = '$comp->company_id'
+            where ladger_id = '$acc_id' AND comp_id = '$comp->company_id' $where
             order by pay_id desc limit 1
         ");
 
@@ -133,18 +144,18 @@ class LadgerPaymentStatement extends Controller
         $html .= view('Ladgerstatement/table',$data);
     }
 
-    $html .= '
-    <div class="mt-4">
-        <div class="card shadow-sm border-0 rounded-3">
-            <div class="card-body text-center">
-                <h5 class="card-title mb-3">Total Available Balance</h5>
-                <h3 class="fw-bold text-' . ($totalBalance > 0 ? 'success' : 'danger') . '">
-                    ' . number_format($totalBalance) . ' ' . ($totalBalance > 0 ? 'Cr' : 'Dr') . '
-                </h3>
-            </div>
-        </div>
-    </div>
-';
+                $html .= '
+                <div class="mt-4">
+                    <div class="card shadow-sm border-0 rounded-3">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-3">Total Available Balance</h5>
+                            <h3 class="fw-bold text-' . ($totalBalance > 0 ? 'success' : 'danger') . '">
+                                ' . number_format($totalBalance) . ' ' . ($totalBalance > 0 ? 'Cr' : 'Dr') . '
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            ';
 
 
     return $html;
