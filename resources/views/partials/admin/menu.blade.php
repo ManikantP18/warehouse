@@ -299,6 +299,14 @@
                                     <span class="dash-mtext">Statement</span>
                                 </a>
                             </li>
+
+                            <li class="dash-item {{ Request::route()->getName() == 'payment_in.list' ? ' active' : '' }} ">
+                                <a href="{{ route('payment_in.list') }}" class="dash-link ">
+                                    <span class="dash-micon"><i class="ti ti-report-money"></i></span>
+                                    <span class="dash-mtext">Payment In</span>
+                                </a>
+                            </li>
+                
                         @endcan
                     </ul>
                 </li>
