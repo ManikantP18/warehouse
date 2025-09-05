@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+namespace App\Models;
 
 use Illuminate\Database\Seeder;
 use App\Models\LaborPrice;

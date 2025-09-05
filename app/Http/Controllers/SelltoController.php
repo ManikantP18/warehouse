@@ -223,7 +223,19 @@ class SelltoController extends Controller
 
             DB::insert("Insert into payment_statement (ladger_id,sell_id,bank_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','$bank_name','$b->bank_name','Payment','$creditamm','$avbl_bal','$comp_id')");
 
+            $bank_bal = $creditamm;
+
+            $bankBalance = DB::select("select avbl_bal from payment_statement where bank_id = '$bank_name' AND pay_status  = 1 AND is_deleted = 0 AND comp_id = '$comp_id' AND ladger_id = '' ORDER BY pay_id DESC LIMIT 1"); 
+         
+
+            if(!empty($bankBalance)){
+                $bank_bal = $bank_bal + $bankBalance[0]->avbl_bal;
             }
+            
+                DB::insert("Insert into payment_statement (sell_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id,bank_id) VALUES ('$lastId','Ladger','sell','0', '$creditamm','$bank_bal','$comp_id','$bank_name')");
+            }
+
+            
 
         }
 

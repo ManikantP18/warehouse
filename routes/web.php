@@ -148,6 +148,13 @@ Route::get('/payment_in', 'App\Http\Controllers\Ladgerpayment_in@index')->name('
 Route::get('/payment_in/search', 'App\Http\Controllers\Ladgerpayment_in@search')->name('payment_in.search')->middleware('auth');
 Route::get('/payment_in/history', 'App\Http\Controllers\Ladgerpayment_in@history')->name('payment_in.history')->middleware('auth');
 
+//bank statement
+Route::get('/bankstatement', 'App\Http\Controllers\BankStatementController@index')->name('bankstatement.list')->middleware('auth');
+Route::get('/get-company-banks', [App\Http\Controllers\BankStatementController::class, 'getCompanyBanks'])
+->name('get.company.banks');
+Route::get('/bank/statement', [App\Http\Controllers\BankStatementController::class, 'getBankStatement'])
+->name('get.bank.statement');
+
 
 Route::get('/payment', 'App\Http\Controllers\PaymentsController@index')->name('payment.list')->middleware('auth');
 Route::get('/payment/search', 'App\Http\Controllers\PaymentsController@search')->name('payment.search')->middleware('auth');

@@ -283,6 +283,13 @@
                         </a>
                     </li>
 
+                    <li class="dash-item {{ Request::route()->getName() == 'bankstatement.list' ? ' active' : '' }} ">
+                        <a href="{{ route('bankstatement.list') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-report-money"></i></span>
+                            <span class="dash-mtext">Bank Statement</span>
+                        </a>
+                    </li>
+
                     
                    <li class="dash-item dash-hasmenu {{ Request::segment(1) == 'users' || Request::segment(1) == 'roles' || Request::segment(1) == 'permissions' ? 'active dash-trigger' : '' }}">
                     <a href="#!" class="dash-link">

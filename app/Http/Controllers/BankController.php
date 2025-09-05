@@ -39,12 +39,23 @@ class BankController extends Controller
         $to   = $req->input('chequerange_to');   // array
         $tc   = $req->input('total_check');      // array
 
-        for ($i = 0; $i < count($from); $i++) {
-            DB::insert("
-                INSERT INTO chequebookrange (bank_id, check_from, check_to, check_total) 
-                VALUES (?, ?, ?, ?)
-            ", [$lastId, $from[$i], $to[$i], $tc[$i]]);
+        if(!empty($from)){
+
+            for ($i = 0; $i < count($from); $i++) {
+                DB::insert("
+                    INSERT INTO chequebookrange (bank_id, check_from, check_to, check_total) 
+                    VALUES (?, ?, ?, ?)
+                ", [$lastId, $from[$i], $to[$i], $tc[$i]]);
+            }
+
         }
+
+        $bank_bal = $req->input('opening_bal');
+
+        $cid = $req->input('company_id');
+
+        DB::insert("Insert into payment_statement (pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id,bank_id) VALUES ('Opening Balance','Opening Balance','0', '$bank_bal','$bank_bal','$cid','$lastId')");
+        
 
 
         return Redirect::to('bankacc')->with('success', 'Bank account added successfully.');

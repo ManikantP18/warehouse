@@ -37,7 +37,7 @@ class PurchaseController extends Controller
         $purchas_bank_name = $req->input('purchas_bank_name');
         $purchase_ifsc = $req->input('purchase_ifsc');
          $purchase_branch = $req->input('purchase_branch');
-        $purchase_gst_no = $req->input('purchase_gst_no');
+        $purchase_gst_no = $req->input('purchase_gst_no') ?? 0;
         $purchase_to = $req->input('purchase_to');
        $purchase_total = $req->input('purchase_total');
         $comp_id = $req->input('company_id');
@@ -62,20 +62,20 @@ class PurchaseController extends Controller
             'purchase_ifsc' => $purchase_ifsc,
             'purchase_branch' => $purchase_branch,
             'purchase_gst_no' => $purchase_gst_no,
-            'purchase_to' => $purchase_to,
+            'purchase_to' => $purchase_to ?? 'farmer',
             'purchase_total' => $sum_total,
             'company_id'     => $comp_id
         ]);
 
                  $purchase_item = $req->input('purchase_item');
-    //           $pure_wigth = $req->input('pure_wigth');
+                 $pure_wigth = $req->input('purchase_quantity');
                  $purchase_rate = $req->input('purchase_rate');
                  $purchase_total = $req->input('purchase_total');
                  $purchase_unit = $req->input('purchase_unit');
 
                  for($i = 0 ; $i < count($purchase_rate) ; $i++) {
                     if($purchase_rate[$i] != '' && $purchase_rate[$i] != 0) {
-                         DB::insert("Insert into purchase_item (purchase_id,purchased_item,purchased_rate,pure_wigth,purchased_unit,purchased_total) values ('$pid','$purchase_item[$i]','$purchase_rate[$i]','$pure_wigth[$i]','$purchase_unit[$i]','$purchase_total[$i]')" );
+                         DB::insert("Insert into purchase_item (purchase_id,purchased_item,purchased_rate,purchased_qty,purchased_unit,purchased_total) values ('$pid','$purchase_item[$i]','$purchase_rate[$i]','$pure_wigth[$i]','$purchase_unit[$i]','$purchase_total[$i]')" );
                     }
                  }
 
