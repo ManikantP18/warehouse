@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 
-class Ladgerpayment_in extends Controller
+class Ladgerpayment_out extends Controller
+
 {
     function index() {
          
     $company = DB::select("SELECT * FROM company WHERE company_status = 1 AND is_deleted = 0");
-    return view('payment_in/list', ['company' => $company]);
+    return view('payment_out/list', ['company' => $company]);
 }
 
     
@@ -90,14 +91,14 @@ class Ladgerpayment_in extends Controller
             select * from payment_statement 
             join ladgers on ladgers.account_id = payment_statement.ladger_id 
             where payment_statement.ladger_id = '$acc_id' 
-            AND comp_id = '$comp->company_id' $where AND cr_amt > 0
+            AND comp_id = '$comp->company_id' $where AND dr_amt > 0
             order by pay_id asc 
         ");
 
         // 👉 last available balance nikalna
         $lastBalance = DB::selectOne("
             select avbl_bal from payment_statement 
-            where ladger_id = '$acc_id' AND comp_id = '$comp->company_id' $where AND cr_amt > 0
+            where ladger_id = '$acc_id' AND comp_id = '$comp->company_id' $where AND dr_amt > 0
             order by pay_id desc limit 1 
         ");
 
@@ -105,7 +106,7 @@ class Ladgerpayment_in extends Controller
             $totalBalance += $lastBalance->avbl_bal;
         }
 
-        $html .= view('payment_in/table',$data);
+        $html .= view('payment_out/table',$data);
     }
 
                 $html .= '

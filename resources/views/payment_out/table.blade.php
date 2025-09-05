@@ -6,8 +6,7 @@
                                             <th> Date </th>
                                             <th>Purticulars</th>
                                             <th>vch Type</th>
-                                            
-                                            <th> Credit </th>
+                                              <th> Debit </th>
                                             <th> Balance </th>
                                             <th>action</th>
                                         </tr>
@@ -19,7 +18,7 @@
                                         <td>{{ $value->prtclr }}</td>
                                         <td>{{ $value->pay_type }}</td>
                                         
-                                        <td>{{ $value->cr_amt }}</td>
+                                        <td>{{ $value->dr_amt }}</td>
                                         <td>{{ $value->avbl_bal}} {{$value->avbl_bal > 0 ? 'Cr' : 'Dr'}}</td>
                                         <td></td>
                                     </tr>

@@ -106,6 +106,8 @@ use App\Http\Controllers\KataParchiController;
 
 use App\Http\Controllers\CNController;
 
+use App\Http\Controllers\Ladgerpayment_out;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -147,6 +149,11 @@ Route::get('/Ladgerstatement/history', 'App\Http\Controllers\LadgerPaymentStatem
 Route::get('/payment_in', 'App\Http\Controllers\Ladgerpayment_in@index')->name('payment_in.list')->middleware('auth');
 Route::get('/payment_in/search', 'App\Http\Controllers\Ladgerpayment_in@search')->name('payment_in.search')->middleware('auth');
 Route::get('/payment_in/history', 'App\Http\Controllers\Ladgerpayment_in@history')->name('payment_in.history')->middleware('auth');
+
+//payment OUT Statement
+Route::get('/payment_out', 'App\Http\Controllers\Ladgerpayment_out@index')->name('payment_out.list')->middleware('auth');
+Route::get('/payment_out/search', 'App\Http\Controllers\Ladgerpayment_out@search')->name('payment_out.search')->middleware('auth');
+Route::get('/payment_out/history', 'App\Http\Controllers\Ladgerpayment_out@history')->name('payment_out.history')->middleware('auth');
 
 
 Route::get('/payment', 'App\Http\Controllers\PaymentsController@index')->name('payment.list')->middleware('auth');
