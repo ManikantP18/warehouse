@@ -106,6 +106,8 @@ use App\Http\Controllers\KataParchiController;
 
 use App\Http\Controllers\CNController;
 
+use App\Http\Controllers\Ladgerpayment_out;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -154,6 +156,10 @@ Route::get('/get-company-banks', [App\Http\Controllers\BankStatementController::
 ->name('get.company.banks');
 Route::get('/bank/statement', [App\Http\Controllers\BankStatementController::class, 'getBankStatement'])
 ->name('get.bank.statement');
+//payment OUT Statement
+Route::get('/payment_out', 'App\Http\Controllers\Ladgerpayment_out@index')->name('payment_out.list')->middleware('auth');
+Route::get('/payment_out/search', 'App\Http\Controllers\Ladgerpayment_out@search')->name('payment_out.search')->middleware('auth');
+Route::get('/payment_out/history', 'App\Http\Controllers\Ladgerpayment_out@history')->name('payment_out.history')->middleware('auth');
 
 
 Route::get('/payment', 'App\Http\Controllers\PaymentsController@index')->name('payment.list')->middleware('auth');

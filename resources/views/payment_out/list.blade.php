@@ -156,7 +156,7 @@
             let searchowner = $('#search_owner').val();
             let all = 'no';
             $.ajax({
-                url: '{{ route('payment_in.search') }}',
+                url: '{{ route('payment_out.search') }}',
                 type: 'GET',
                 data: { searchVal, searchVillage, searchname,searchowner, all },
                 success: function(response) {
@@ -181,7 +181,7 @@
             let cid = $("#comp_id").val();
             let fdate = $("#from_date").val();
             let todate = $("#to_date").val();
-            $.get('{{ route('payment_in.history') }}', { searchVal: id, company : cid , fromdate : fdate , todate : todate}, function(response) {
+            $.get('{{ route('payment_out.history') }}', { searchVal: id, company : cid , fromdate : fdate , todate : todate}, function(response) {
                 if (response && response.length > 0) {
                     $("#table").html(response)
                 }
