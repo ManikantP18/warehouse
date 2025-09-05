@@ -218,10 +218,6 @@ class PurchaseController extends Controller
                         
                     }
                  }
-                 
-            DB::insert("Insert into payment (pay_ladger_id,tr_type,amount,purchase_id) VALUES ('$ladgerid','2', '$sum_total','$id')");
-
-            
 
             DB::update("update ladgers set account_number = '$purchase_account_no', bank_name = '$purchas_bank_name', ifsc_code = '$purchase_ifsc', branch = '$purchase_branch' WHERE account_id = '$ladgerid'");
 

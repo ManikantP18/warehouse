@@ -26,7 +26,6 @@ class LedgerController extends Controller
     }
 
     function add(Request $req){
-        
         $ladger_type = $req->input('ledger_type') == 'others' ? 2 : 1;
         $relational_cust_name = $req->input('relational_cust_name');
         $account_holder	 = $req->input('account_holder');
@@ -49,6 +48,10 @@ class LedgerController extends Controller
             $account_id = $this->customerNumber() > 0 ? 'cust-'.$this->customerNumber() : 'cust-1';
                 
             $ledger_under_type = $req->input('ledger_under_type');
+
+            if($ledger_under_type == 'cash'){
+                $relational_cust_name = 'Cash In Hand';
+            }
             
 
        DB::insert("Insert into ladgers ( account_id,ladger_type,under_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num,khasra_no,bhumi_gram) VALUES ('$account_id',$ladger_type,'$ledger_under_type','$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num','$khasra_no','$bhumi_gram')");
@@ -59,7 +62,7 @@ class LedgerController extends Controller
             
             DB::insert("INSERT INTO ladger_opening_bal (ladger_id, company_id, opening_amount)VALUES ('$account_id','$companies[$i]','$opening_balance[$i]')");
 
-            DB::insert("Insert into payment (is_opening_bal,amount,pay_ladger_id,pay_status,company_id ) VALUES ('1','$opening_balance[$i]','$account_id','done','$companies[$i]')");
+            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$account_id','Payment','Payment', '$opening_balance[$i]','$opening_balance[$i]','$companies[$i]')");
         }
 
         if($ladger_type == 1){

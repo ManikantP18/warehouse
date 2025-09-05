@@ -168,6 +168,49 @@ class SelltoController extends Controller
 
             DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sell','Payment','$cashamm','$avbl_bal','$comp_id')");
 
+            $cashAvblBal = DB::select("
+    SELECT ps.avbl_bal
+    FROM payment_statement ps
+    JOIN (
+        SELECT account_id
+        FROM ladgers
+        WHERE relational_cust_name = 'Cash In Hand'
+        ORDER BY ladger_id DESC
+        LIMIT 1
+    ) AS l ON ps.ladger_id = l.account_id
+    WHERE ps.pay_status = 1
+      AND ps.is_deleted = 0
+      AND ps.comp_id = '$comp_id'
+    ORDER BY ps.pay_id DESC
+    LIMIT 1
+");
+
+            $cashLadgerBalanceAmt = 0;
+
+            if(!empty($cashAvblBal)){
+
+                $cashLadgerBalanceAmt = $cashAvblBal[0]->avbl_bal;
+
+            }
+
+            $cashLadgerBalanceAmt = $cashLadgerBalanceAmt + $cashamm;
+
+            $cashLadgerId = DB::select("SELECT account_id
+        FROM ladgers
+        WHERE relational_cust_name = 'Cash In Hand'
+        ORDER BY ladger_id DESC
+        LIMIT 1");
+
+        $cashLadgerAcc = 'Cash Ladger';
+
+        if(!empty($cashLadgerId)){
+            $cashLadgerAcc = $cashLadgerId[0]->account_id;
+        }
+
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$cashLadgerAcc','$lastId','Sell','Payment','$cashamm','$cashLadgerBalanceAmt','$comp_id')");
+
+
+
         }
 
         if(!empty($creditamm) && $creditamm > 0){

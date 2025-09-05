@@ -141,7 +141,7 @@ class LadgerPaymentStatement extends Controller
             $totalBalance += $lastBalance->avbl_bal;
         }
 
-        $html .= view('Ladgerstatement/table',$data);
+        $html .= view('ladgerstatement/table',$data);
     }
 
                 $html .= '
