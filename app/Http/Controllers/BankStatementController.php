@@ -34,7 +34,6 @@ class BankStatementController extends Controller
         ->where('bank_id', $bank_id)
         ->where('ladger_id','')
         ->where('is_deleted', 0)
-        ->orderBy('pay_id', 'desc')
         ->get();
 
     $comp_name = DB::table('ledgerbank_accounts')
