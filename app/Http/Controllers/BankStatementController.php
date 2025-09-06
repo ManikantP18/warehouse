@@ -8,7 +8,7 @@ class BankStatementController extends Controller
 {
    function index() {
     $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
-    return view('bankstatement/list',$data);
+    return view('bankStatement/list',$data);
    }
 
     function getCompanyBanks(Request $request) {
@@ -41,7 +41,7 @@ class BankStatementController extends Controller
         ->where('account_id', $bank_id)
         ->value('bank_name');
 
-    return view('bankstatement.statement_table', compact('statement','comp_name'))->render();
+    return view('bankStatement.statement_table', compact('statement','comp_name'))->render();
 }
 
 }

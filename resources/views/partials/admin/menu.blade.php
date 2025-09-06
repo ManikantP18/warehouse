@@ -275,13 +275,13 @@
                             <span class="dash-mtext">Purchase</span>
                         </a>
                     </li>
-
+<!-- 
                     <li class="dash-item {{ Request::route()->getName() == 'payment.list' ? ' active' : '' }} ">
                         <a href="{{ route('payment.list') }}" class="dash-link ">
                             <span class="dash-micon"><i class="ti ti-report-money"></i></span>
                             <span class="dash-mtext">Payments</span>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="dash-item {{ Request::route()->getName() == 'bankstatement.list' ? ' active' : '' }} ">
                         <a href="{{ route('bankstatement.list') }}" class="dash-link ">
