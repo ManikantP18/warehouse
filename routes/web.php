@@ -165,6 +165,15 @@ Route::get('/payment_out/searchbanks', 'App\Http\Controllers\Ladgerpayment_out@s
 Route::post('/payment_out/add', 'App\Http\Controllers\Ladgerpayment_out@add')->name('payment_out.add')->middleware('auth');
 
  Route::get('/payment_out/create', 'App\Http\Controllers\Ladgerpayment_out@create')->name('payment_out.create')->middleware('auth');
+///payment in 
+ Route::get('/payment_in', 'App\Http\Controllers\Ladgerpayment_in@index')->name('payment_in.list')->middleware('auth');
+Route::get('/payment_in/search', 'App\Http\Controllers\Ladgerpayment_in@search')->name('payment_in.search')->middleware('auth');
+Route::get('/payment_in/history', 'App\Http\Controllers\Ladgerpayment_in@history')->name('payment_in.history')->middleware('auth');
+Route::get('/payment_in/searchbanks', 'App\Http\Controllers\Ladgerpayment_in@searchbanks')->name('payment_in.searchbanks')->middleware('auth');
+
+Route::post('/payment_in/add', 'App\Http\Controllers\Ladgerpayment_in@add')->name('payment_in.add')->middleware('auth');
+
+ Route::get('/payment_in/create', 'App\Http\Controllers\Ladgerpayment_in@create')->name('payment_in.create')->middleware('auth');
 
 
 Route::get('/payment', 'App\Http\Controllers\PaymentsController@index')->name('payment.list')->middleware('auth');

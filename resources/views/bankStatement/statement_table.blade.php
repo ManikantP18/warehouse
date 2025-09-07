@@ -23,7 +23,6 @@
                 <td>{{ $value->cr_amt }}</td>
                 <td>{{ $value->avbl_bal }} {{ $value->avbl_bal > 0 ? 'Cr' : 'Dr' }}</td>
                 <td>
-                    <!-- future action buttons (edit/delete/view) डाल सकते हो -->
                 </td>
             </tr>
         @endforeach
