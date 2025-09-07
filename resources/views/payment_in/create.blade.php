@@ -1,4 +1,4 @@
-{{ Form::open(['url' => 'payment_out/add', 'method'=>'post', 'class'=>'needs-validation','novalidate','onsubmit'=>'return validForm()']) }}
+{{ Form::open(['url' => 'payment_in/add', 'method'=>'post', 'class'=>'needs-validation','novalidate','onsubmit'=>'return validForm()']) }}
 
 <!-- 🔍 Search Section -->
 <div class="card mb-3">
@@ -81,7 +81,7 @@
 
             <div class="row mt-4 text-center">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary px-5">Make Payment</button>
+                    <button type="submit" class="btn btn-primary px-5">Receive Payment</button>
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@ function searchLadger() {
     let all = 'no';
 
     $.ajax({
-        url: '{{ route('payment_out.search') }}',
+        url: '{{ route('payment_in.search') }}',
         type: 'GET',
         data: { searchVal, searchVillage, searchname, searchowner, all },
         success: function(response) {
@@ -108,7 +108,7 @@ function searchLadger() {
                 <div class="card mb-3 form-control">
                     <div class="card-body">
                         <label class="form-label">Select Farmer</label>
-                        <select class="form-control" onchange="fillFarmer(this)" id="selectedLadger" name="ladger_id">
+                        <select class="form-control" onchange="fillFarmer(this)" id="selectedLadger">
                             <option value="">Select Farmer</option>`;
                 response.data.forEach(d => {
                     html += `<option value="${d.account_id}" 
@@ -130,14 +130,14 @@ function searchLadger() {
 }
 
 function fillFarmer(el) {
-    if ($(el).val()) { alert($(el).val())
+    if ($(el).val()) {
         $("#payment-form-wrapper").show();
-        $("#selectedLadger1").val($(el).val())
+        $("#selectedLadger1").val($(el).val());
     } else {
         $("#payment-form-wrapper").hide();
+        $("#selectedLadger1").val('');
     }
 }
-
 
 function selectCompany(cid) {
     if (!cid) {
@@ -146,7 +146,7 @@ function selectCompany(cid) {
     }
 
     $.ajax({
-        url: '{{ route('payment_out.searchbanks') }}',
+        url: '{{ route('payment_in.searchbanks') }}',
         type: 'GET',
         data: { cid },
         success: function(response) {

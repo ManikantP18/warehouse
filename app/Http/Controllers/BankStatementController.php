@@ -15,7 +15,7 @@ class BankStatementController extends Controller
       $company_id = $request->company_id;
 
       $banks = DB::select("
-         SELECT account_id, bank_name, account_name 
+         SELECT account_id, bank_name, account_name ,account_num
          FROM ledgerbank_accounts 
          WHERE company_id = ? AND is_deleted = 0
       ", [$company_id]);

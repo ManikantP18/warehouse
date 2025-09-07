@@ -11,13 +11,41 @@ class Ladgerpayment_out extends Controller
 
 {
     function index() {
-         
-    $company = DB::select("SELECT * FROM company WHERE company_status = 1 AND is_deleted = 0");
-    return view('payment_out/list', ['company' => $company]);
+    $company = DB::table('company')
+                ->where('company_status', 1)
+                ->where('is_deleted', 0)
+                ->get();
+
+   $payments = DB::table('payment_outs as p')
+    ->leftJoin('company as c', 'p.comp_id', '=', 'c.company_id')
+    ->leftJoin('ledgerbank_accounts as b', 'p.bank_id', '=', 'b.account_id')
+    ->leftJoin('ladgers as l', 'p.ladger_id', '=', 'l.account_id')
+    ->where('p.is_deleted', 0)
+    ->orderBy('p.pay_id', 'desc')
+    ->select(
+        'p.*',
+        'c.company_name',
+        'b.bank_name',
+        'b.account_num',
+        'l.relational_cust_name as ladger_name',
+        'l.farm_owner_name',
+        'l.village'
+    )
+    ->get();
+
+
+
+
+    return view('payment_out/list', [
+        'company' => $company,
+        'payments' => $payments
+    ]);
 }
 
+
 function create() {
-    
+    $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+   return view('payment_out/create',$data);
 }
 
     public function searchbanks(Request $req){
@@ -31,7 +59,7 @@ function create() {
             
             foreach($banks as $ln) {
 
-                $opt .= "<option value='$ln->account_id '>$ln->bank_name</option>";
+                $opt .= "<option value='$ln->account_id '>$ln->bank_name ($ln->account_num)</option>";
 
             }
         }
@@ -130,7 +158,7 @@ function create() {
             $totalBalance += $lastBalance->avbl_bal;
         }
 
-        $html .= view('payment_out/table',$data);
+        $html .= view('payment_out/list',$data);
     }
 
                 $html .= '
@@ -158,30 +186,27 @@ function add(Request $req){
         $bank_id = $req->input('bank_id');
         $date = $req->input('date');
 
-
+        // Save cash payment
         if(!empty($cash_amt) && $cash_amt > 0){
-
-            $lastId = DB::table('payment_outs')->insertGetId([
-            'ladger_id'            => $ladger_id,
-            'bank_id'             => '0',
-            'comp_id' => $comp_id,
-            'pay_type'          => 'Cash',
-            'ammount' => $cash_amt,
-            'created_date' => date('Y-m-d', strtotime($date))
-        ]);
-
+            DB::table('payment_outs')->insert([
+                'ladger_id' => $ladger_id,
+                'bank_id'   => 0,
+                'comp_id'   => $comp_id,
+                'pay_type'  => 'Cash',
+                'ammount'   => $cash_amt,
+                'created_date' => date('Y-m-d', strtotime($date))
+            ]);
         }
-
         if(!empty($bank_amt) && $bank_amt > 0){
 
-            $lastId = DB::table('payment_outs')->insertGetId([
-            'ladger_id'            => $ladger_id,
-            'bank_id'             => $bank_id,
-            'comp_id' => $comp_id,
-            'pay_type'          => 'Bank',
-            'ammount' => $bank_amt,
-            'created_date' => date('Y-m-d', strtotime($date))
-        ]);
+            $lastId = DB::table('payment_outs')->insert([
+                        'ladger_id' => $ladger_id,
+                        'bank_id'   => $bank_id,
+                        'comp_id'   => $comp_id,
+                        'pay_type'  => 'Bank',
+                        'ammount'   => $bank_amt,
+                        'created_date' => date('Y-m-d', strtotime($date))
+                    ]);
 
         }
         
