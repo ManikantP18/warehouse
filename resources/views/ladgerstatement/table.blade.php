@@ -19,7 +19,7 @@
                                         <td>{{ $value->pay_type }}</td>
                                         <td>{{ $value->dr_amt }}</td>
                                         <td>{{ $value->cr_amt }}</td>
-                                        <td>{{ $value->avbl_bal}} {{$value->avbl_bal > 0 ? 'Cr' : 'Dr'}}</td>
+                                        <td>{{ ($value->avbl_bal) > 0 ? '-'.$value->avbl_bal : abs($value->avbl_bal)}} {{$value->avbl_bal > 0 ? 'Cr' : 'Dr'}}</td>
                                         <td></td>
                                     </tr>
                                 @endforeach

@@ -144,13 +144,14 @@ class LadgerPaymentStatement extends Controller
         $html .= view('ladgerstatement/table',$data);
     }
 
+
                 $html .= '
                 <div class="mt-4">
                     <div class="card shadow-sm border-0 rounded-3">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-3">Total Available Balance</h5>
                             <h3 class="fw-bold text-' . ($totalBalance > 0 ? 'success' : 'danger') . '">
-                                ' . number_format($totalBalance) . ' ' . ($totalBalance > 0 ? 'Cr' : 'Dr') . '
+                                ' . ($totalBalance > 0 ? '-'. number_format($totalBalance) : number_format(abs($totalBalance))). ' ' . ($totalBalance > 0 ? 'Cr' : 'Dr' ). '
                             </h3>
                         </div>
                     </div>

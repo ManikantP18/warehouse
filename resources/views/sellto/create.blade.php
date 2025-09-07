@@ -155,7 +155,7 @@
         <select class="form-control" name="purchase_unit[]" id="purchase_unit_0" required>
           <option value="" hidden>Select Unit</option>
           @foreach($units as $value)
-            <option value="{{ $value->id }}" {{ $value->name == 'Bags' ? 'selected' : ''}}>{{ $value->name }}</option>
+            <option value="{{ $value->id }}" {{ $value->name == 'Bag' ? 'selected' : ''}}>{{ $value->name }}</option>
           @endforeach
         </select>
       </div>
@@ -255,7 +255,10 @@
           type: 'GET',
           data: { cmp_id: cmp_id },
           success: function(response) {
-          $(".sellto_item_selled").html(response);
+            response = JSON.parse(response);
+          $(".sellto_item_selled").html(response.items);
+          $("#bank_name").html(response.banks)
+          
         },
         error: function(xhr) { alert('hi')
           console.error("Error fetching item details");

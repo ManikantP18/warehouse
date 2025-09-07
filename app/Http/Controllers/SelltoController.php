@@ -48,7 +48,19 @@ class SelltoController extends Controller
             }
         }
 
-        echo $opt;
+        $banks = DB::select("select * from ledgerbank_accounts where company_id = ' $comp_id' ");
+         $bopt = '<option value=""> Select Bank </option>';
+
+        if(!empty($banks)){
+            
+            foreach($banks as $ln) {
+
+                $bopt .= "<option value='$ln->account_id'>$ln->bank_name ($ln->account_num)</option>";
+
+            }
+        }
+
+        echo json_encode(array('items' => $opt, 'banks'=> $bopt));
     }
 
     function lotno(Request $request) {
@@ -151,14 +163,14 @@ class SelltoController extends Controller
 
                 $avbl_bal = $ln->avbl_bal - $total;
 
-                DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sell','sell','$total','$avbl_bal','$comp_id')");
+                DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sale','$lastId','$total','$avbl_bal','$comp_id')");
 
             }
 
 
         } else {
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sell','sell','$total','-$total','$comp_id')");
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sale','$lastId','$total','-$total','$comp_id')");
 
         }
 
@@ -166,7 +178,7 @@ class SelltoController extends Controller
 
             $avbl_bal = $avbl_bal + $cashamm;
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sell','Payment','$cashamm','$avbl_bal','$comp_id')");
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sale','Cash','$cashamm','$avbl_bal','$comp_id')");
 
             $cashAvblBal = DB::select("
     SELECT ps.avbl_bal
@@ -207,7 +219,7 @@ class SelltoController extends Controller
             $cashLadgerAcc = $cashLadgerId[0]->account_id;
         }
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$cashLadgerAcc','$lastId','Sell','Payment','$cashamm','$cashLadgerBalanceAmt','$comp_id')");
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$cashLadgerAcc','$lastId','Sale','$csname','$cashamm','$cashLadgerBalanceAmt','$comp_id')");
 
 
 
@@ -217,11 +229,11 @@ class SelltoController extends Controller
 
             $avbl_bal = $avbl_bal + $creditamm;
 
-            $bank = DB::select("select bank_name FROM ledgerbank_accounts WHERE account_id  = $bank_name ");
+            $bank = DB::select("select bank_name,account_num FROM ledgerbank_accounts WHERE account_id  = $bank_name ");
 
             foreach($bank as $b) {
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,bank_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','$bank_name','$b->bank_name','Payment','$creditamm','$avbl_bal','$comp_id')");
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,bank_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','$bank_name','Sale','$b->bank_name.($b->account_num)','$creditamm','$avbl_bal','$comp_id')");
 
             $bank_bal = $creditamm;
 
@@ -232,7 +244,7 @@ class SelltoController extends Controller
                 $bank_bal = $bank_bal + $bankBalance[0]->avbl_bal;
             }
             
-                DB::insert("Insert into payment_statement (sell_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id,bank_id) VALUES ('$lastId','Ladger','sell','0', '$creditamm','$bank_bal','$comp_id','$bank_name')");
+                DB::insert("Insert into payment_statement (sell_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id,bank_id) VALUES ('$lastId','Sale','$csname','0', '$creditamm','$bank_bal','$comp_id','$bank_name')");
             }
 
             

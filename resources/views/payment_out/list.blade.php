@@ -16,7 +16,7 @@
     </script>
 @endpush
 @section('page-title')
-    {{ __('Payment In') }}
+    {{ __('Payment OUT') }}
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
@@ -35,16 +35,23 @@
             <i class="ti ti-file-export"></i>
         </a>
 
-       
+       <a href="#" data-size="xl" data-url="{{ route('payment_out.create') }}" data-ajax-popup="true"
+            data-bs-toggle="tooltip" title="{{ __('Create') }}" data-title="{{ __('Create Ladger') }}"
+            class="btn btn-sm btn-primary">
+            <i class="ti ti-plus"></i>
+        </a>
     </div>
 @endsection
 
 @section('content')
             <div class="row">
+                
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body table-border-style table-border-style">
                             <div class="table-responsive">
+
+                            {{ Form::open(['url' => 'payment_out/add', 'method' => 'post', 'class'=>'needs-validation','novalidate', 'onsubmit' => 'return validForm()']) }}
                     <div class="col-12">
                         <div class="row align-items-end m-auto">
                             <div class="col-md-2">
@@ -94,7 +101,7 @@
                             <div class="col-3 ">
                             <div class="form-group allcompanies">
                                 <label for="comp_id" class="form-label">Company Name</label>
-                                <select class="form-control" name="comp_id"  id="comp_id" onchange="selectLadger()">
+                                <select class="form-control" name="comp_id"  id="comp_id" onchange="selectCompany(this.value)">
                                     <option value="all">All</option>
                                     @foreach($company as $value)
                                     <option value="{{$value->company_id}}">{{$value->company_name}}</option>
@@ -102,14 +109,51 @@
                                 </select>
                             </div>
                             </div>
-                                <div class="col-md-3 allcompanies">
+
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="search_village" class="form-label">Cash Amount</label>
+                                <input class="form-control" name="cash_amt" type="number" id="search_village" placeholder="Cash Amount" step="0.1">
+                            </div>
+                            </div>
+
+                            <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="search_village" class="form-label">Bank Amount</label>
+                                <input class="form-control" name="bank_amt" type="number" id="search_village" placeholder="Bank Amount">
+                            </div>
+                            </div>
+
+                            <div class="col-3 ">
+                            <div class="form-group allcompanies">
+                                <label for="comp_id" class="form-label">Bank Name</label>
+                                <select class="form-control" name="bank_id"  id="bankslist">
+                                    
+                                </select>
+                            </div>
+                            </div>
+
+                            <div class="col-md-3 allcompanies">
+                                    <label for="comp_id" class="form-label">From Date</label>
+                                    <input type="date" name="date" class="form-control"  id="from_date" value="{{date('Y-m-d')}}">
+                                </div>
+
+                                <div class="col-md-3 ">
+                            <div class="form-group">
+                                <label class="form-label d-none d-sm-block">&nbsp;</label>
+                                <button type="submit" class="btn btn-primary w-100">Make A Payment</button>
+                            </div>
+                            </div>
+
+                            {{ Form::close() }}
+                                <!--<div class="col-md-3 allcompanies">
                                     <label for="comp_id" class="form-label">From Date</label>
                                     <input type="date" name="from_date" class="form-control"  id="from_date" onchange="selectLadger()">
                                 </div>
                                 <div class="col-md-3 allcompanies">
                                     <label for="comp_id" class="form-label">To Date</label>
                                     <input type="date" name="to_date" class="form-control" id="to_date" onchange="selectLadger()">
-                                </div>
+                                </div> -->
                                 <!-- <div class="col-md-2 allcompanies">
                                     
                                     <button type="submit" class="btn btn-primary mt-4" onclick="filterTable()">
@@ -161,7 +205,7 @@
                 data: { searchVal, searchVillage, searchname,searchowner, all },
                 success: function(response) {
                 if (response.success && response.data) {
-                    let html = '<label for="comp_id" class="form-label">Farmers</label> <select class="form-control" onchange="selectLadger()" id="selectedLadger"><option value="">Select Farmer</option>';
+                    let html = '<label for="comp_id" class="form-label">Farmers</label> <select class="form-control" onchange="selectLadger()" id="selectedLadger" name="ladger_id"><option value="">Select Farmer</option>';
                     response.data.forEach(d => {
                     html += `<option value="${d.account_id}">${d.relational_cust_name} - ${d.farm_owner_name}</option>`;
                     });
@@ -195,6 +239,19 @@
             });
 
 
+            function selectCompany(cid){
 
+                $.ajax({
+                url: '{{ route('payment_out.searchbanks') }}',
+                type: 'GET',
+                data: { cid},
+                success: function(response) {
+                
+                    $("#bankslist").html(response);
+                    
+                }
+            });
+
+            }
     </script>
 @endpush

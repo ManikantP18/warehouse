@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 
+use Illuminate\Support\Facades\Redirect;
+
 class Ladgerpayment_out extends Controller
 
 {
@@ -14,7 +16,29 @@ class Ladgerpayment_out extends Controller
     return view('payment_out/list', ['company' => $company]);
 }
 
+function create() {
     
+}
+
+    public function searchbanks(Request $req){
+
+        $cid = $req->input('cid'); 
+
+        $banks = DB::select("select * from ledgerbank_accounts where company_id = ' $cid'");
+         $opt = '<option value=""> Select Bank </option>';
+
+        if(!empty($banks)){
+            
+            foreach($banks as $ln) {
+
+                $opt .= "<option value='$ln->account_id '>$ln->bank_name</option>";
+
+            }
+        }
+
+        echo $opt;
+
+    }
 
     public function search(Request $req)
 
@@ -125,4 +149,141 @@ class Ladgerpayment_out extends Controller
 
     return $html;
 }
+
+function add(Request $req){
+        $ladger_id = $req->input('ladger_id');
+        $comp_id = $req->input('comp_id');
+        $cash_amt = $req->input('cash_amt');
+        $bank_amt = $req->input('bank_amt');
+        $bank_id = $req->input('bank_id');
+        $date = $req->input('date');
+
+
+        if(!empty($cash_amt) && $cash_amt > 0){
+
+            $lastId = DB::table('payment_outs')->insertGetId([
+            'ladger_id'            => $ladger_id,
+            'bank_id'             => '0',
+            'comp_id' => $comp_id,
+            'pay_type'          => 'Cash',
+            'ammount' => $cash_amt,
+            'created_date' => date('Y-m-d', strtotime($date))
+        ]);
+
+        }
+
+        if(!empty($bank_amt) && $bank_amt > 0){
+
+            $lastId = DB::table('payment_outs')->insertGetId([
+            'ladger_id'            => $ladger_id,
+            'bank_id'             => $bank_id,
+            'comp_id' => $comp_id,
+            'pay_type'          => 'Bank',
+            'ammount' => $bank_amt,
+            'created_date' => date('Y-m-d', strtotime($date))
+        ]);
+
+        }
+        
+        
+
+        $avbl_bal = 0;
+
+        $lastAvailableBal = DB::select("select avbl_bal from payment_statement where ladger_id = '$ladger_id' AND pay_status  = 1 AND is_deleted = 0 AND comp_id = '$comp_id' ORDER BY pay_id DESC LIMIT 1"); 
+         if(!empty($lastAvailableBal)){
+            
+            foreach($lastAvailableBal as $ln) {
+
+                
+
+                
+
+                    $avbl_bal = $ln->avbl_bal;
+
+                }
+         }
+
+         $avbl_bal = $avbl_bal - $cash_amt;
+
+        if(!empty($cash_amt) && $cash_amt > 0){
+                DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$ladger_id','Payment','Cash','$cash_amt','$avbl_bal','$comp_id')");
+
+            }
+
+         if(!empty($cash_amt) && $cash_amt > 0){
+
+            $cashAvblBal = DB::select("
+                SELECT ps.avbl_bal
+                FROM payment_statement ps
+                JOIN (
+                    SELECT account_id
+                    FROM ladgers
+                    WHERE relational_cust_name = 'Cash In Hand'
+                    ORDER BY ladger_id DESC
+                    LIMIT 1
+                ) AS l ON ps.ladger_id = l.account_id
+                WHERE ps.pay_status = 1
+                AND ps.is_deleted = 0
+                AND ps.comp_id = '$comp_id'
+                ORDER BY ps.pay_id DESC
+                LIMIT 1
+            ");
+
+            $cashLadgerBalanceAmt = 0;
+
+            if(!empty($cashAvblBal)){
+
+                $cashLadgerBalanceAmt = $cashAvblBal[0]->avbl_bal;
+
+            }
+
+            $cashLadgerBalanceAmt = $cashLadgerBalanceAmt - $cash_amt;
+
+            $cashLadgerId = DB::select("SELECT account_id
+        FROM ladgers
+        WHERE relational_cust_name = 'Cash In Hand'
+        ORDER BY ladger_id DESC
+        LIMIT 1");
+
+        $cashLadgerAcc = 'Cash Ladger';
+
+        if(!empty($cashLadgerId)){
+            $cashLadgerAcc = $cashLadgerId[0]->account_id;
+        }
+
+            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$cashLadgerAcc','Payment','Cash','$cash_amt','$cashLadgerBalanceAmt','$comp_id')");
+
+
+
+        }
+
+        if(!empty($bank_amt) && $bank_amt > 0){
+
+            $avbl_bal = $avbl_bal - $bank_amt;
+
+            $bank = DB::select("select bank_name FROM ledgerbank_accounts WHERE account_id  = $bank_id ");
+
+            foreach($bank as $b) {
+
+            DB::insert("Insert into payment_statement (ladger_id,bank_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$ladger_id','$bank_id','Payment','$b->bank_name',$bank_amt,'$avbl_bal','$comp_id')");
+
+            $bank_bal = 0-$bank_amt;
+
+            $bankBalance = DB::select("select avbl_bal from payment_statement where bank_id = '$bank_id' AND pay_status  = 1 AND is_deleted = 0 AND comp_id = '$comp_id' AND ladger_id = '' ORDER BY pay_id DESC LIMIT 1"); 
+         
+
+            if(!empty($bankBalance)){
+                $bank_bal = $bankBalance[0]->avbl_bal - $bank_amt;
+            }
+            
+                DB::insert("Insert into payment_statement (pay_type,prtclr,cr_amt,dr_amt,avbl_bal,comp_id,bank_id) VALUES ('Ladger','Payment Out','0', '$bank_amt','$bank_bal','$comp_id','$bank_id')");
+            }
+
+            
+
+        }
+        
+        return Redirect::to('payment_out');
+    }
+
 }

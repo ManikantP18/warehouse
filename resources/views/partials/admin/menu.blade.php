@@ -232,7 +232,7 @@
                             <li class="dash-item {{ Request::route()->getName() == 'sellto.list' ? 'active' : '' }}">
                                 <a href="{{ route('sellto.list') }}" class="dash-link">
                                     <span class="dash-micon"><i class="ti ti-users"></i></span>
-                                    <span class="dash-mtext">Sell To</span>
+                                    <span class="dash-mtext">Sale To</span>
                                 </a>
                             </li>
 
@@ -246,7 +246,7 @@
                             <li class="dash-item {{ Request::route()->getName() == 'SellsQuatation.list' ? 'active' : '' }}">
                                 <a href="{{ route('SellsQuatation.list') }}" class="dash-link">
                                     <span class="dash-micon"><i class="ti ti-file-text"></i></span>
-                                    <span class="dash-mtext">Selles Quatation</span>
+                                    <span class="dash-mtext">Sale Quatation</span>
                                 </a>
                             </li>
                         @endcan
