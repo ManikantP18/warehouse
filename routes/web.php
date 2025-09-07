@@ -93,7 +93,7 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\StagingController;
 use App\Http\Controllers\GreddingController;
 use App\Http\Controllers\LaborPriceController;
-
+use App\Http\Controllers\InventoryController;
 
 
 
@@ -122,6 +122,14 @@ use App\Http\Controllers\Ladgerpayment_out;
 
 
 require __DIR__ . '/auth.php';
+
+Route::get('/inventory', 'App\Http\Controllers\InventoryController@index')->name('inventory.index')->middleware('auth');
+Route::get('/getcategories', 'App\Http\Controllers\InventoryController@getcategories')->name('inventory.getcategories')->middleware('auth');
+
+Route::get('/getitems', 'App\Http\Controllers\InventoryController@getItems')->name('inventory.getitems')->middleware('auth');
+
+Route::get('/filter', 'App\Http\Controllers\InventoryController@filter')->name('inventory.filter')->middleware('auth');
+
 
 
 Route::get('/gredding', 'App\Http\Controllers\GreddingController@index')->name('gredding.list')->middleware('auth');

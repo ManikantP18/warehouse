@@ -197,6 +197,13 @@
                             <span class="dash-mtext">{{ __('Product & Services') }}</span>
                         </a>
                     </li>
+
+                     <li class="dash-item {{ Request::segment(1) == 'inventory' ? 'active' : '' }} ">
+                        <a href="{{ route('inventory.index') }}" class="dash-link ">
+                            <span class="dash-micon"><i class="ti ti-shopping-cart"></i></span>
+                            <span class="dash-mtext">{{ __('Inventory') }}</span>
+                        </a>
+                    </li>
                 @endif
 
                 

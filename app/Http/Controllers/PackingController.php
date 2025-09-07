@@ -93,6 +93,19 @@ class PackingController extends Controller
             'is_hide'                  => 1
         ]);
 
+        $bagcount = array_sum($bags_count);
+
+        
+        $cat_id = DB::select("select category_id from product_services where id = '$req->verity'");
+
+        $category_id = 0;
+
+        if(!empty($cat_id)){
+            $category_id = $cat_id[0]->category_id;
+        }
+
+        DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock) VALUES ('$req->company_id','$category_id','$req->verity','$req->lot_no','$bagcount')");
+
     return Redirect::to('/packing')->with('success', 'Packing updated successfully');
 }
 

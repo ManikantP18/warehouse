@@ -111,7 +111,7 @@
         <div class="form-group col-md-6">
             <label for="company_id" class="form-label">Company Name</label>
             <select name="company_id" id="company_id" class="form-control select" required>
-                 
+                <option value=''> Select Company </option>
                 @foreach($company as $key => $value)
                     <option value="{{ $value->company_id }}" {{ $value->company_id == $purchase[0]->company_id ? 'selected' : ''}}>{{ $value->company_name }}</option>
                 @endforeach
@@ -198,7 +198,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Rate</label>
-            <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_{{ $i }}" value="{{$items[$i]->purchased_rate}}" onkeyup="autofill({{ $i }})" step="0.01">
+            <input type="number" class="form-control" name="purchase_rate[]" id="purchase_rate_{{ $i }}" value="{{$items[$i]->purchased_rate > 0 ? $items[$i]->purchased_rate : ''}}" onkeyup="autofill({{ $i }})" step="0.01" required>
           </div>
         </div>
 

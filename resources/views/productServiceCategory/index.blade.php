@@ -30,7 +30,7 @@
                                 <tr>
                                     <th> {{ __('Category') }}</th>
                                     <th> {{ __('Type') }}</th>
-                                    <th> {{ __('Account') }}</th>
+                                    <th> {{ __('Company') }}</th>
                                     <th width="10%"> {{ __('Action') }}</th>
                                 </tr>
                             </thead>
@@ -41,7 +41,7 @@
                                         <td class="font-style">
                                             {{ array_key_exists($category->type, \App\Models\ProductServiceCategory::$catTypes) ? __(\App\Models\ProductServiceCategory::$catTypes[$category->type]) : 'Unknown Type' }}
                                         </td>
-                                        <td>{{ !empty($category->chartAccount) ? $category->chartAccount->name : '-' }}</td>
+                                        <td>{{ !empty($category->company_name) ? $category->company_name : '-' }}</td>
                                         <td class="Action">
                                             <span>
                                                 @can('edit constant category')

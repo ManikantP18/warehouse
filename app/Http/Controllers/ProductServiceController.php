@@ -144,13 +144,18 @@ class ProductServiceController extends Controller
             $productService->second_unit_val = $request->second_unit;
             $productService->company_id = $request->company_id;
             $productService->lotno = $request->lotno;
-            $productService->quantity   = 0;
+            $productService->quantity   = $request->quantity;
             
             $productService->type           = $request->type;
             $productService->category_id    = $request->category_id;
             $productService->created_by     = \Auth::user()->creatorId();
             $productService->save();
+
+            $lastId = $productService->id;
+
             CustomField::saveData($productService, $request->customField);
+
+            DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock) VALUES ('$productService->company_id','$productService->category_id','$lastId','$productService->lotno','$productService->quantity')");
 
             return redirect()->route('productservice.index')->with('success', __('Product successfully created.'));
         } else {
@@ -173,6 +178,8 @@ class ProductServiceController extends Controller
                 $productService->customField = CustomField::getData($productService, 'product');
                 $customFields                = CustomField::where('created_by', '=', \Auth::user()->creatorId())->where('module', '=', 'product')->get();
                 $productService->tax_id      = explode(',', $productService->tax_id);
+
+                $productInfo = DB::select("select * from product_services where id = $id");
 
                 $incomeChartAccounts = ChartOfAccount::select(\DB::raw('CONCAT(chart_of_accounts.code, " - ", chart_of_accounts.name) AS code_name'), 'chart_of_accounts.id')
                     ->leftJoin('chart_of_account_types', 'chart_of_account_types.id', '=', 'chart_of_accounts.type')
@@ -214,7 +221,7 @@ class ProductServiceController extends Controller
 
                      $company = DB::select("select * from company where company_status = 1 and is_deleted = 0");
 
-                return view('productservice.edit', compact('category', 'unit', 'tax', 'productService', 'customFields', 'incomeChartAccounts', 'incomeSubAccounts', 'expenseChartAccounts', 'expenseSubAccounts','company'));
+                return view('productservice.edit', compact('category', 'unit', 'tax', 'productService', 'customFields', 'incomeChartAccounts', 'incomeSubAccounts', 'expenseChartAccounts', 'expenseSubAccounts','company','productInfo'));
             } else {
                 return response()->json(['error' => __('Permission denied.')], 401);
             }
@@ -250,6 +257,7 @@ class ProductServiceController extends Controller
                 $productService->name           = $request->name;
                 $productService->description    = $request->description;
                 $productService->sale_price     = $request->sale_price;
+                $productService->quantity           = $request->quantity;
                 $productService->purchase_price = $request->purchase_price;
                 $productService->tax_id         = !empty($request->tax_id) ? implode(',', $request->tax_id) : '';
                 $productService->unit_id        = $request->unit_id;

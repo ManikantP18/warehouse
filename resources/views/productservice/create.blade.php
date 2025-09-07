@@ -42,6 +42,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="form-group col-md-6">
+            <label for="unit_id" class="form-label">Company Name</label>
+            <select name="company_id" id="company_id" class="form-control select" required onchange="getCat(this.value)">
+                <option value="">Select Company Name</option> 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
         
         <div class="form-group col-md-6">
             {{ Form::label('tax_id', __('Tax'), ['class' => 'form-label']) }}<x-required></x-required>
@@ -97,20 +107,14 @@
 
         <input type="hidden" class="form-check-input type" id="customRadio5" name="type"
                                value="Product">
-
-         <div class="form-group col-md-6">
-            <label for="unit_id" class="form-label">Company Name</label>
-            <select name="company_id" id="company_id" class="form-control select" required>
-                <option value="">Select Company Name</option> 
-                @foreach($company as $key => $value)
-                    <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
-                @endforeach
-            </select>
-        </div>
-
         <div class="form-group col-md-6">
             <label for="lotno" class="form-label">Lot No.</label>
             <input type="text" name="lotno" id="lotno" class="form-control select" required>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="lotno" class="form-label">Stock Qty</label>
+            <input type="number" name="quantity" id="quantity" class="form-control select" required>
         </div>
                                
         <div class="form-group col-md-12">
@@ -118,11 +122,11 @@
             {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2']) !!}
         </div>
         @if (!$customFields->isEmpty())
-            <div class="col-lg-6 col-md-6 col-sm-6">
+            <!--<div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="tab-pane fade show" id="tab-2" role="tabpanel">
                     @include('customFields.formBuilder')
                 </div>
-            </div>
+            </div>-->
         @endif
     </div>
 </div>
@@ -169,6 +173,24 @@ function secToggle() {
 
         $(".second-unit").html($("#sec_unit option:selected").text())
     }
+}
+
+function getCat(comp_id){
+
+        $.ajax({
+            url: '{{ route('inventory.getcategories') }}',
+            type: 'GET',
+            data: {
+                comp_id: comp_id
+            },
+            success: function(response) {
+                $("#category_id").html(response);
+            },
+            error: function(xhr) {
+                alert("Something went wrong while fetching data.");
+                console.log(xhr.responseText);
+            }
+        });
 }
 
 

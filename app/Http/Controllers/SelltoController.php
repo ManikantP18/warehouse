@@ -28,7 +28,7 @@ class SelltoController extends Controller
 
         $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
 
-       
+        
         return view('sellto/create',$data);
     }
 
@@ -66,7 +66,7 @@ class SelltoController extends Controller
     function lotno(Request $request) {
         $itemId = $request->item;
 
-        $lotno = DB::select("SELECT `purchase_lot_no` FROM purchase WHERE purchase_item = '$itemId' AND purchase_lot_no > 0 GROUP by purchase_lot_no;");
+        $lotno = DB::select("SELECT `lot_no` FROM products_inventory WHERE item_id = '$itemId'");
 
         $opt = '<option value=""> Select Lot No. </option>';
 
@@ -74,7 +74,7 @@ class SelltoController extends Controller
             
             foreach($lotno as $ln) {
 
-                $lotnumber = $ln->purchase_lot_no;
+                $lotnumber = $ln->lot_no;
 
                 $opt .= "<option value='$lotnumber'>$lotnumber</option>";
 

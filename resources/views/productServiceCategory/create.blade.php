@@ -15,6 +15,16 @@
                 </a>
             </div>
         @endif
+
+        <div class="form-group col-md-12">
+         <select name="company_id" id="company_id" class="form-control select" required onchange="getCategories()">
+                <option value="">Select Company</option> 
+                @foreach($company as $key => $value)
+                    <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="form-group col-md-12">
             {{ Form::label('name', __('Category Name'), ['class' => 'form-label']) }}<x-required></x-required>
             {{ Form::text('name', '', ['class' => 'form-control', 'required' => 'required']) }}

@@ -95,9 +95,22 @@
             <select name="company_id" id="company_id" class="form-control select" required>
                 <option value="">Select Company Name</option> 
                 @foreach($company as $key => $value)
-                    <option value="{{ $value->company_id }}">{{ $value->company_name }}</option>
+                <option value="{{ $value->company_id }}" {{ $productInfo[0]->company_id == $value->company_id ? 'selected' : '' }}>
+                    {{ $value->company_name }}
+                </option>
+
                 @endforeach
             </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="lotno" class="form-label">Lot No.</label>
+            <input type="text" name="lotno" id="lotno" class="form-control select" required value="{{$productInfo[0]->lotno}}">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="lotno" class="form-label">Stock Qty</label>
+            {{ Form::number('quantity', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) }}
         </div>
         
         <div class="form-group  col-md-12">
@@ -105,11 +118,11 @@
             {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2']) !!}
         </div>
         @if (!$customFields->isEmpty())
-            <div class="col-md-6">
+            <!--<div class="col-md-6">
                 <div class="tab-pane fade show" id="tab-2" role="tabpanel">
                     @include('customFields.formBuilder')
                 </div>
-            </div>
+            </div>-->
         @endif
     </div>
 </div>

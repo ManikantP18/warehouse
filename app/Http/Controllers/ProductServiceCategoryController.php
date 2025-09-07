@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\ProductService;
 use App\Models\ProductServiceCategory;
 use Illuminate\Http\Request;
+use DB;
 
 class ProductServiceCategoryController extends Controller
 {
@@ -15,7 +16,11 @@ class ProductServiceCategoryController extends Controller
     {
         if(\Auth::user()->can('manage constant category'))
         {
-            $categories = ProductServiceCategory::where('created_by', '=', \Auth::user()->creatorId())->get();
+            $categories = ProductServiceCategory::join('company', 'company.company_id', '=', 'product_service_categories.company_id')
+                ->where('product_service_categories.created_by', \Auth::user()->creatorId())
+                ->select('product_service_categories.*', 'company.company_name') // jitne fields chahiye add kar lo
+                ->get();
+
 
             return view('productServiceCategory.index', compact('categories'));
         }
@@ -42,7 +47,9 @@ class ProductServiceCategoryController extends Controller
                 
             $chart_accounts->prepend('Select Account', '');
 
-            return view('productServiceCategory.create', compact('types'));
+             $company = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
+            return view('productServiceCategory.create', compact('types','company'));
         }
         else
         {
@@ -70,6 +77,7 @@ class ProductServiceCategoryController extends Controller
             }
 
             $category             = new ProductServiceCategory();
+            $category->company_id       = $request->company_id;
             $category->name       = $request->name;
             $category->color      = $request->color;
             $category->type       = $request->type;
