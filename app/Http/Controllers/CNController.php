@@ -38,7 +38,7 @@ class CNController extends Controller
         $acc_id = $req->input('searchVal'); 
         
 
-        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to = 'farmer' and sell_to.is_deleted = 0 and sell_account_number = '$acc_id' order by sell_id DESC ");
+        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to left join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to = 'farmer' and sell_to.is_deleted = 0 and sell_account_number = '$acc_id' order by sell_id DESC ");
 
 
         return view('sales-return/table',$data);
@@ -51,7 +51,7 @@ function create(){
 
          $data['units'] = DB::select("select * from product_service_units");
 
-         $data['item'] = DB::select("select * from product_services where type = 'Product' ");  
+         $data['item'] = DB::select("select * from product_services where type = 'Product' "); 
 
         return view('sales-return/creat',$data);
     }
@@ -158,6 +158,8 @@ function create(){
 
       $returnedProducts = $req->input('return_items');
 
+      $returntoladger = 0; $noofbags = 0;
+
     for($i=0; $i<count($returnedProducts); $i++){
 
         /*$exist = DB::select("select * FROM sales_return WHERE selled_item_id = $returnedProducts[$i] ");
@@ -174,6 +176,29 @@ function create(){
 
         DB::update("update selled_item set return_qty = return_qty + '$sellto_quantity[$i]' where selled_id = '$returnedProducts[$i]'");
 
+        $returntoladger += $purchase_total[$i];
+
+        $noofbags += $sellto_quantity[$i];
+
+    }
+
+    $cust_info = DB::select("select sell_account_number,company_id from sell_to where sell_id = '$sell_id' ");
+
+    if(!empty($cust_info)){
+        $cid = $cust_info[0]->company_id;
+        $acc = $cust_info[0]->sell_account_number;
+
+         $lastAvailableBal = DB::select("select avbl_bal from payment_statement where ladger_id = '$acc' AND pay_status  = 1 AND is_deleted = 0 AND comp_id = '$cid' ORDER BY pay_id DESC LIMIT 1");
+
+         $avbl_bal = 0;
+
+         if(!empty($lastAvailableBal)){
+            $avbl_bal = $lastAvailableBal[0]->avbl_bal;
+         }
+
+         $avbl_bal = $avbl_bal + $returntoladger;
+
+        DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$acc','$sell_id','Sale Return','$noofbags Bags','$returntoladger','$avbl_bal','$cid')");
     }
 
     

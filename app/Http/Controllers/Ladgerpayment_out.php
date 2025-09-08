@@ -219,10 +219,6 @@ function add(Request $req){
             
             foreach($lastAvailableBal as $ln) {
 
-                
-
-                
-
                     $avbl_bal = $ln->avbl_bal;
 
                 }

@@ -62,7 +62,22 @@ class LedgerController extends Controller
             
             DB::insert("INSERT INTO ladger_opening_bal (ladger_id, company_id, opening_amount)VALUES ('$account_id','$companies[$i]','$opening_balance[$i]')");
 
-            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$account_id','Payment','Payment', '$opening_balance[$i]','$opening_balance[$i]','$companies[$i]')");
+            $cramt = 0; $dramt = 0;
+
+            $avabl = 0;
+
+            if($opening_balance[$i] < 0){
+                $cramt = abs($opening_balance[$i]);
+
+                $avabl = $avabl + $cramt;
+
+            } else {
+                $dramt = $opening_balance[$i];
+
+                $avabl =  $avabl - $dramt;
+            }
+
+            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt, cr_amt,avbl_bal,comp_id) VALUES ('$account_id','Payment','Payment', '$dramt','$cramt','$avabl','$companies[$i]')");
         }
 
         if($ladger_type == 1){

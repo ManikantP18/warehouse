@@ -13,36 +13,45 @@ class LadgerPaymentStatement extends Controller
     }
 
     public function search(Request $req)
-        {
-            $searchVal = $req->input('searchVal'); 
+    {
+            $searchVal = $req->input('searchVal'); // Account No or Mobile No
             $searchVillage = $req->input('searchVillage');
             $searchname = $req->input('searchname');
             $searchowner = $req->input('searchowner');
-            $all = $req->input('all') ? $req->input('all') : 'no';
+
+            $all = $req->input('all');
+            
 
             if($all == 'no'){
 
-                $searchData = DB::select("SELECT *,ladgers.bank_name as ladgers_bank,product_services.name AS item_name FROM ladgers left join sell_to ON sell_to.sell_account_number = ladgers.account_id left join product_services ON sell_to.item_selled = product_services.id
-                WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
+                $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
+                left join users on rogring.Rogring_name = users.id WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
-                AND village LIKE '%$searchVillage%'
-                AND farm_owner_name LIKE '%$searchowner%')
-                group by sell_to.sell_account_number order by sell_to.sell_id");
+                AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
+                ");
 
             } else {
 
-                $searchData = DB::select("SELECT *,ladgers.bank_name as ladgers_bank FROM ladgers
+                $searchData = DB::select("SELECT * FROM ladgers
                 WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
-                AND village LIKE '%$searchVillage%'
-                AND farm_owner_name LIKE '%$searchowner%')");
-
+                AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
+                ");
+                
             }
+     
+            $variety = DB::select("SELECT * FROM product_services join selled_item ON selled_item.selled_item = product_services.id join sell_to on sell_to.sell_id =  selled_item.sell_id
+            WHERE sell_to.sell_account_number = '$searchVal' group by product_services.id");
+
+             $Othervariety = DB::select("SELECT * FROM product_services group by product_services.id");
+
 
             if ($searchData) {
                 return response()->json([
                     'success' => true,
-                    'data' => $searchData
+                    'data' => $searchData,
+                    'products' => $variety,
+                    'otherProducts' => $Othervariety
                 ]);
             } else {
                 return response()->json([
@@ -51,7 +60,7 @@ class LadgerPaymentStatement extends Controller
                 ]);
             }
 
-        }
+    }
 
     //     function history(Request $req) {
     //     $acc_id = $req->input('searchVal');
