@@ -114,6 +114,16 @@
           </div>
         </div>
 
+
+        <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="kp_rakaba_acre" class="form-label">Land Acre</label>
+                        <div class="form-icon-user">
+                            <input class="form-control alwaysvisible"  name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" readonly>
+                        </div>
+                    </div>
+                </div>
+
         <div class="form-group col-md-6">
             <label for="company_id" class="form-label">Company Name</label>
             <select name="company_id" id="company_id" class="form-control select" required onchange="CompanyItems(this.value)">
@@ -329,6 +339,8 @@ function selectLadger(id) {
       $('#sellto_village').val(d.village).prop('readonly', true);
       $('#sellto_gst_amount').val(d.gst_num).prop('readonly', true);
       $('#form-fields-wrapper').slideDown();
+
+      $('#kp_rakaba_acre').val(d.farm_area_acre);
     }
   });
 }

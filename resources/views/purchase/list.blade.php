@@ -159,7 +159,7 @@
                     <td class="gst optional-column">{{ $value->purchase_gst_no }}</td>
                     <td class="total optional-column">{{ $value->purchase_total }}</td>
                      <td class="purewigth optional-column">{{ $value->pure_wigth }}</td>
-                     <td class="godown optional-column">{{ $value->godown }}</td>
+                     <td class="godown optional-column">{{ $value->branch_name }}</td>
                       <td class="company optional-column">{{ $value->company_name }}</td>
                     <td>
                         <a href="#" data-size="xl" data-url="{{ route('purchase.edit', $value->purchase_id) }}" data-ajax-popup="true"
