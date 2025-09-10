@@ -68,6 +68,15 @@
       </div>
     </div>
 
+    <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="kp_rakaba_acre" class="form-label">land acre</label>
+                    <div class="form-icon-user">
+                        <input class="form-control " required="required" name="kp_rakaba_acre" type="text" id="kp_rakaba_acre" value="{{$kataparchi[0]->kp_rakaba_acre}}" readonly>
+                    </div>
+                </div>
+            </div>
+
     <div class="form-group col-md-6">
             <label for="company_id" class="form-label">Company Name</label>
             <select name="company_id" id="company_id" class="form-control select" required onchange="">

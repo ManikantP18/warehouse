@@ -76,8 +76,8 @@
                         <label><strong>Show/Hide Columns:</strong></label><br>
                         @php
                             $columns = [
-                                ['label' => 'Customer-ID', 'index' => 1],
-                                ['label' => 'Aadhar Number', 'index' => 3],
+                            //   ['label' => 'Customer-ID', 'index' => 1],
+                            //   ['label' => 'Aadhar Number', 'index' => 3],  
                                 ['label' => 'Field Owner', 'index' => 4],
                                 ['label' => 'Mobile No.', 'index' => 6],
                                 ['label' => 'Received Cash', 'index' => 7],
@@ -103,6 +103,9 @@
                                 <th style="display:none"> Aadhar Number </th>
                                 <th style="display:none"> Land owner </th>
                                 <th>village</th>
+
+                                 <th > land acre</th>
+
                                 <th style="display:none"> mobile no. </th>
                                 <th style="display:none"> Received cash </th>
                                 <th style="display:none"> recieved bank </th>
@@ -122,6 +125,9 @@
                                     <td style="display:none">{{ $value->sell_account_name }}</td>
                                     <td style="display:none">{{ $value->sell_property_owner }}</td>
                                     <td>{{ $value->sell_village }}</td>
+
+                                    <td > {{ $value->kp_rakaba_acre}} </td>
+
                                     <td style="display:none">{{ $value->sell_phone }}</td>
                                     <td style="display:none">{{ $value->cash_amount }}</td>
                                     <td style="display:none">{{ $value->credit_amount }}</td>

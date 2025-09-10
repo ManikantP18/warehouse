@@ -107,11 +107,15 @@ class SelltoController extends Controller
         $accholder = $req->input('sellto_acc_holder');
         $oname = $req->input('sellto_owner_name');
         $village = $req->input('sellto_village');
+
+         $kp_acre = $req->input('kp_rakaba_acre');
         
         $cashamm = $req->input('sellto_cash_amount');
         $creditamm = $req->input('sellto_Credit_amount');
         $remainamm = $req->input('sellto_Remaining_amount');
         $bank_name = $req->input('bank_name');
+
+        
         $comp_id = $req->input('company_id');
 
 
@@ -127,6 +131,9 @@ class SelltoController extends Controller
             'sell_account_name'   => $accholder,
             'sell_property_owner' => $oname,
             'sell_village'        => $village,
+
+            'kp_rakaba_acre'      => $kp_acre,
+
             'sell_total_ammount'  => $total,
             'cash_amount'         => $cashamm,
             'credit_amount'       => $creditamm,
@@ -333,6 +340,9 @@ class SelltoController extends Controller
         $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
 
          $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
+         $data['kataparchi'] = DB::select("select * from sell_to  where sell_id = '$id'");
+        
          
         return view('sellto/edit',$data);
     } 
@@ -346,6 +356,9 @@ class SelltoController extends Controller
         $accholder = $req->input('sellto_acc_holder');
         $oname = $req->input('sellto_owner_name');
         $village = $req->input('sellto_village');
+
+        $kp_acre = $req->input('kp_rakaba_acre');
+
         $itemselled = $req->input('sellto_item_selled');
          $quantity = $req->input('sellto_quantity');
         $rate = $req->input('sellto_rate');
@@ -358,7 +371,7 @@ class SelltoController extends Controller
          $cid = $req->input('company_id');
 
 
-        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village',sell_total_ammount = '$total' ,company_id = '$cid', cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
+        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village', kp_rakaba_acre = '$kp_acre',sell_total_ammount = '$total' ,company_id = '$cid', cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
 
         $itemselled = $req->input('sellto_item_selled');
          $quantity = $req->input('sellto_quantity');

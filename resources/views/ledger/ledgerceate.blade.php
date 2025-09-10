@@ -21,8 +21,8 @@
                 <option value="cash">Cash In Hand</option>
                 <option value="debt">Debtor</option>
                 <option value="creditor">Creditor</option>
-                <option value="ind_exp">Indirect Expenses</option>
-                <option value="dir_exp">Direct Expenses</option>
+                <!-- <option value="ind_exp">Indirect Expenses</option>
+                <option value="dir_exp">Direct Expenses</option> -->
             </select>
         </div>
     </div>

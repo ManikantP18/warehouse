@@ -104,7 +104,7 @@
         </div>
 
         <div class="form-group col-md-6">
-            <label for="lotno" class="form-label">Lot No.</label>
+            <label for="lotno" class="form-label">LOT No.</label>
             <input type="text" name="lotno" id="lotno" class="form-control select" required value="{{$productInfo[0]->lotno}}">
         </div>
 

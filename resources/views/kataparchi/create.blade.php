@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 d-none">
                     <div class="form-group">
                         <label for="kp_acc_holdername" class="form-label">Aadhar Number</label>
                         <div class="form-icon-user">
@@ -250,6 +250,7 @@
                     $('#kp_acc_holdername').val(data.account_holder);
                     $('#kp_bhoomiswami_name').val(data.farm_owner_name);
                     $('#kp_vilage').val(data.village);
+                    
                     $('#kp_rakaba_acre').val(data.farm_area_acre);
 
                     $('#kp_khasra_no').val(data.khasra_no);

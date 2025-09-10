@@ -42,7 +42,7 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label>Accountant name</label>
+            <label>Aadhar No.</label>
             <input type="text" class="form-control" name="purchase_accountant" id="spurchase_accountant" required value="{{$purchase[0]->purchase_accountant}}" readonly>
           </div>
         </div>

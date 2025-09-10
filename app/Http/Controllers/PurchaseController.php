@@ -12,7 +12,7 @@ use DB;
 class PurchaseController extends Controller
 {
     function index() {
-         $data['purchase'] = DB::select("select * from purchase left join company on company.company_id = purchase.company_id where purchase_status = 1 AND purchase.is_deleted = 0 AND is_hide = 0 order by purchase_id DESC");
+         $data['purchase'] = DB::select("select * from purchase join branches on branches.branch_id  = purchase.godown left join company on company.company_id = purchase.company_id where purchase_status = 1 AND purchase.is_deleted = 0 AND is_hide = 0 order by purchase_id DESC");
         return view('purchase/list',$data);
     }
 
