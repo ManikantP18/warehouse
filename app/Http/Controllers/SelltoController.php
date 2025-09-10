@@ -225,7 +225,7 @@ class SelltoController extends Controller
 
         }
 
-        if(!empty($creditamm) && $creditamm > 0){
+        if(!empty($creditamm) && $creditamm > 0 && !empty($bank_name)){
 
             $avbl_bal = $avbl_bal + $creditamm;
 

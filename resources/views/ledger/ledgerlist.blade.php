@@ -132,7 +132,7 @@
            
 
     {{-- ✅ Delete Button: Calls JS confirm & deletes --}}
-    <button class="btn btn-sm btn-danger" onclick="deleteit('{{ route('ledger.delete', $value->ladger_id) }}')" title="Delete">
+    <button class="btn btn-sm btn-danger" onclick="deleteit('{{ route('ledger.delete', $value->account_id) }}')" title="Delete">
         <i class="ti ti-trash"></i>
     </button>
 </td>
@@ -200,7 +200,7 @@
 
 
         function deleteit(url){
-            let cnt = confirm("Are you sure you want to delete this Ledger?")
+            let cnt = confirm("Notice : If you delete ladger it will delete sales, purchase, payments history for this ladger. Are you sure you want to delete this ladger?")
 
             if(cnt == true){
                 window.location.href = url;

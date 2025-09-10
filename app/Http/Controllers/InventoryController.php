@@ -62,7 +62,7 @@ class InventoryController extends Controller
         $comp_id = $req->input('comp_id');
         $cat_id = $req->input('cat_id');
 
-        $where = '';
+        $where = ' AND products_inventory.is_deleted = 0';
 
         if($cat_id  != 'all')
         {

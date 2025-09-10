@@ -460,8 +460,6 @@ console.log(item)
     if (mode.toLowerCase() === 'cash' && remaining > 0) {
       alert('For cash invoices, the remaining amount must be zero.');
       
-      
-
       setTimeout(() => {
 
       $("#savebtn").removeAttr("disabled");
@@ -469,6 +467,14 @@ console.log(item)
       }, 500);
 
       return false;
+    }
+
+    if($('#sellto_Credit_amount').val() > 0 && $("#bank_name").val() == ''){
+
+      alert('Bank name is required If credit amount is highr then 0.');
+
+      return false;
+
     }
 
     return true;

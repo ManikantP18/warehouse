@@ -115,8 +115,191 @@ class LedgerController extends Controller
     }
 
     function delete($id){
-       DB::table('ladgers')->where('ladger_id', $id)->delete();
-       return Redirect::to('/ledger')->with('success', 'Ledger Delete Successfully');
+       DB::table('ladgers')->where('account_id', $id)->update(['is_deleted' => 1]);
+
+       DB::table('ladger_opening_bal')->where('ladger_id', $id)->update(['is_deleted' => 1]);
+
+       //Delete Sales
+
+       DB::table('sell_to')->where('sell_account_number', $id)->update(['is_deleted' => 1]);
+
+       DB::table('selled_item')->whereIn('sell_id', function($query) use ($id) {
+                $query->select('sell_id')
+                    ->from('sell_to')
+                    ->where('sell_account_number', $id);
+            })->update(['is_deleted' => 1]);
+
+       //Updating inventory again
+
+       DB::table('products_inventory as pi')
+        ->join('selled_item as si', 'pi.lot_no', '=', 'si.selled_lot_no')
+        ->join('sell_to as st', 'si.sell_id', '=', 'st.sell_id')
+        ->where('st.sell_account_number', $id)
+        ->update([
+            'pi.avbl_stock' => DB::raw('pi.avbl_stock + (si.selled_quantity - si.return_qty)')
+        ]);
+
+        //clear payment transations
+
+        DB::table('payment_statement')
+        ->whereIn('sell_id', function($q) use ($id) {
+            $q->select('sell_id')
+              ->from('sell_to')
+              ->where('sell_account_number', $id);
+        })
+        ->update(['is_deleted' => 1]);
+
+       // Clear Payment in out
+
+       DB::table('payment_outs')->where('ladger_id', $id)->update(['is_deleted' => 1]);
+       DB::table('payment_in')->where('ladger_id', $id)->update(['is_deleted' => 1]);
+
+       DB::table('payment_statement')->where('ladger_id', $id)->update(['is_deleted' => 1]);
+
+     //Delete Purchase
+
+      DB::table('purchase')->where('cust_id', $id)->update(['is_deleted' => 1]);
+      
+      DB::table('kata_parchi')->where('kp_acc_no', $id)->update(['is_deleted' => 1]);
+
+      DB::table('purchase_item')->whereIn('purchase_id', function($q) use ($id) {
+            $q->select('purchase_id')
+              ->from('purchase')
+              ->where('cust_id', $id);
+        })->update(['is_deleted' => 1]);
+
+      DB::table('payment_statement')
+        ->whereIn('purchase_id', function($q) use ($id) {
+            $q->select('purchase_id')
+              ->from('purchase')
+              ->where('cust_id', $id);
+        })
+        ->update(['is_deleted' => 1]);
+
+        // 4. Staging soft delete
+    DB::table('staging')
+        ->whereIn('purchase_id', function($q) use ($id) {
+            $q->select('purchase_id')
+              ->from('purchase')
+              ->where('cust_id', $id);
+        })
+        ->update(['is_deleted' => 1]);
+
+    // 5. Gredding soft delete (based on staging_id)
+    DB::table('gredding')
+        ->whereIn('staging_id', function($q) use ($id) {
+            $q->select('staging_id')
+              ->from('staging')
+              ->whereIn('purchase_id', function($q2) use ($id) {
+                  $q2->select('purchase_id')
+                     ->from('purchase')
+                     ->where('cust_id', $id);
+              });
+        })
+        ->update(['is_deleted' => 1]);
+
+    // 6. Packing soft delete (based on gredding_id)
+    DB::table('packing')
+        ->whereIn('gredding_id', function($q) use ($id) {
+            $q->select('gredding_id')
+              ->from('gredding')
+              ->whereIn('staging_id', function($q2) use ($id) {
+                  $q2->select('staging_id')
+                     ->from('staging')
+                     ->whereIn('purchase_id', function($q3) use ($id) {
+                         $q3->select('purchase_id')
+                            ->from('purchase')
+                            ->where('cust_id', $id);
+                     });
+              });
+        })
+        ->update(['is_deleted' => 1]);
+
+    // 1. Purchase soft delete
+    DB::table('purchase')
+        ->where('cust_id', $id)
+        ->update(['is_deleted' => 1]);
+
+    // 2. Purchase Items soft delete
+    DB::table('purchase_item')
+        ->whereIn('purchase_id', function($q) use ($id) {
+            $q->select('purchase_id')
+              ->from('purchase')
+              ->where('cust_id', $id);
+        })
+        ->update(['is_deleted' => 1]);
+
+    // 3. Payment Statement soft delete
+    DB::table('payment_statement')
+        ->whereIn('purchase_id', function($q) use ($id) {
+            $q->select('purchase_id')
+              ->from('purchase')
+              ->where('cust_id', $id);
+        })
+        ->update(['is_deleted' => 1]);
+
+    // 4. Staging soft delete
+    DB::table('staging')
+        ->whereIn('purchase_id', function($q) use ($id) {
+            $q->select('purchase_id')
+              ->from('purchase')
+              ->where('cust_id', $id);
+        })
+        ->update(['is_deleted' => 1]);
+
+    // 5. Gredding soft delete
+    DB::table('gredding')
+        ->whereIn('staging_id', function($q) use ($id) {
+            $q->select('staging_id')
+              ->from('staging')
+              ->whereIn('purchase_id', function($q2) use ($id) {
+                  $q2->select('purchase_id')
+                     ->from('purchase')
+                     ->where('cust_id', $id);
+              });
+        })
+        ->update(['is_deleted' => 1]);
+
+    // 6. Packing soft delete
+    DB::table('packing')
+        ->whereIn('gredding_id', function($q) use ($id) {
+            $q->select('gredding_id')
+              ->from('gredding')
+              ->whereIn('staging_id', function($q2) use ($id) {
+                  $q2->select('staging_id')
+                     ->from('staging')
+                     ->whereIn('purchase_id', function($q3) use ($id) {
+                         $q3->select('purchase_id')
+                            ->from('purchase')
+                            ->where('cust_id', $id);
+                     });
+              });
+        })
+        ->update(['is_deleted' => 1]);
+
+    // 7. Products Inventory soft delete (based on lot_no from packing)
+    DB::table('products_inventory')
+        ->whereIn('lot_no', function($q) use ($id) {
+            $q->select('lot_no')
+              ->from('packing')
+              ->whereIn('gredding_id', function($q2) use ($id) {
+                  $q2->select('gredding_id')
+                     ->from('gredding')
+                     ->whereIn('staging_id', function($q3) use ($id) {
+                         $q3->select('staging_id')
+                            ->from('staging')
+                            ->whereIn('purchase_id', function($q4) use ($id) {
+                                $q4->select('purchase_id')
+                                   ->from('purchase')
+                                   ->where('cust_id', $id);
+                            });
+                     });
+              });
+        })
+        ->update(['is_deleted' => 1]);
+
+
+       return Redirect::to('/ledger')->with('success', 'Ledger Deleted Successfully');
    
     }
 

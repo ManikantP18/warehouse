@@ -28,7 +28,7 @@ class LadgerPaymentStatement extends Controller
                 left join users on rogring.Rogring_name = users.id WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
                 AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
-                ");
+                 AND ladgers.is_deleted = 0");
 
             } else {
 
@@ -36,7 +36,7 @@ class LadgerPaymentStatement extends Controller
                 WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
                 AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
-                ");
+                 AND ladgers.is_deleted = 0");
                 
             }
      
@@ -120,7 +120,7 @@ class LadgerPaymentStatement extends Controller
     foreach($companies as $comp){
         $data['comp_name'] = $comp->company_name;
         
-        $where = '';
+        $where = ' AND payment_statement.is_deleted = 0 ';
 
         if(!empty($fdate)) {
             $where .= " AND created_date >= '$fdate' ";
