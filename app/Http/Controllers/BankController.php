@@ -10,7 +10,7 @@ class BankController extends Controller
 {
     public function index()
     {
-        $data['bankacc'] = DB::select("SELECT * FROM ledgerbank_accounts join chequebookrange on chequebookrange.bank_id = ledgerbank_accounts.account_id  join company on company.company_id = ledgerbank_accounts.company_id WHERE account_status = 1 and ledgerbank_accounts.is_deleted=0  group by account_id order by chequebookrange.check_id ");
+        $data['bankacc'] = DB::select("SELECT * FROM ledgerbank_accounts left join chequebookrange on chequebookrange.bank_id = ledgerbank_accounts.account_id  join company on company.company_id = ledgerbank_accounts.company_id WHERE account_status = 1 and ledgerbank_accounts.is_deleted=0  group by account_id order by chequebookrange.check_id ");
         
         return view('bankacc/list', $data);
     }
@@ -39,13 +39,18 @@ class BankController extends Controller
         $to   = $req->input('chequerange_to');   // array
         $tc   = $req->input('total_check');      // array
 
-        if(!empty($from)){
+        if($req->input('cheque_book') != 'no'){
 
             for ($i = 0; $i < count($from); $i++) {
-                DB::insert("
+                if($tc[$i] > 0){
+
+                    DB::insert("
                     INSERT INTO chequebookrange (bank_id, check_from, check_to, check_total) 
                     VALUES (?, ?, ?, ?)
                 ", [$lastId, $from[$i], $to[$i], $tc[$i]]);
+
+                }
+                
             }
 
         }

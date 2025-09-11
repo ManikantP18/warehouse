@@ -111,7 +111,9 @@ class DashboardController extends Controller
                 $users = User::find(\Auth::user()->creatorId());
                 $plan = Plan::find($users->plan);
 
-                $data['totalledgers'] = DB::select('select count(account_id) as total from ladgers where is_deleted = 0 order by ladger_id DESC');
+                $data['totalledgers'] = DB::select('select count(account_id) as total from ladgers where is_deleted = 0');
+
+                $data['totalsales'] = DB::select('select count(sell_id) as total from sell_to where is_deleted = 0');
                 
                 return view('dashboard.index', $data, compact('users','plan'));
                 
