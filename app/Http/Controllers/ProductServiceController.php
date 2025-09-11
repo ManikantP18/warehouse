@@ -155,7 +155,7 @@ class ProductServiceController extends Controller
 
             CustomField::saveData($productService, $request->customField);
 
-            DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock) VALUES ('$productService->company_id','$productService->category_id','$lastId','$productService->lotno','$productService->quantity')");
+            DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock,avbl_stock) VALUES ('$productService->company_id','$productService->category_id','$lastId','$productService->lotno','$productService->quantity','$productService->quantity')");
 
             return redirect()->route('productservice.index')->with('success', __('Product successfully created.'));
         } else {

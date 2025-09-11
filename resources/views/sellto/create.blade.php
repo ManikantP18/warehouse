@@ -150,7 +150,7 @@
 
       <div class="col-md-3">
         <label>Lot No.</label>
-        <select class="form-control" name="purchase_lot_no[]" id="purchase_lot_no_0">
+        <select class="form-control" name="purchase_lot_no[]" id="purchase_lot_no_0" onchange="checkqty(0)">
           <option value="" hidden>Select Lot no.</option>
         </select>
       </div>
@@ -448,23 +448,6 @@ console.log(item)
   }
 }
 
-
-
-    function autofill(id) {
-      
-        $("#purchase_total_" + id).val((parseInt($("#sellto_quantity_" + id).val()) * parseInt($("#sellto_rate_" + id).val())) + parseInt($("#sellto_gst_amount_" + id).val()));
-
-      let total = 0;
-
-       $(".purchase_total").each(function() {
-          let val = parseFloat($(this).val()) || 0;
-          total += val;
-        });
-
-        $("#sellto_total_amount").val(total);
-        calculateAmt();
-    }
-
   function checkmode() {
     let mode = $('#sellto_cash').val(); // Use correct ID of your select box
     let remaining = parseFloat($('#sellto_Remaining_amount').val()) || 0;
@@ -540,6 +523,11 @@ function removeRow(button) {
 }
 
 function autofill(id) {
+
+  if(checkqty(id) == false){
+    return false;
+  }
+
   let qty = parseFloat($("#sellto_quantity_" + id).val()) || 0;
   let rate = parseFloat($("#sellto_rate_" + id).val()) || 0;
   let gst = parseFloat($("#sellto_gst_amount_" + id).val()) || 0;
@@ -557,6 +545,27 @@ function updateTotalAmount() {
   });
   $("#sellto_total_amount").val(grandTotal.toFixed(2));
 }
+
+function checkqty(sid) {
+  let stock = $("#purchase_lot_no_" + sid + " option:selected").attr("dataid");
+  let ln = $("#purchase_lot_no_" + sid).val();
+
+  let qty = $("#sellto_quantity_"+sid).val();
+
+  console.log(stock, qty)
+
+  if(parseInt(stock) < parseInt(qty)){
+    alert(`Only ${stock} available in lot ${ln}`);
+
+    $("#sellto_quantity_"+sid).val();
+
+    return false;
+  }
+  return true;
+
+}
+
+
 
 
 </script>

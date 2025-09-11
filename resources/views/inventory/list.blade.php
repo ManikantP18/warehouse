@@ -104,6 +104,7 @@
 
                                 <th> Lot No. </th>
                                 <th> Stock Qty. </th>
+                                <th> Available Qty. </th>
                                 
                                 <th>Created Date</th>
                             </tr>

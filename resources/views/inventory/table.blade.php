@@ -9,6 +9,8 @@
 
                 <th> Lot No. </th>
                 <th> Stock Qty. </th>
+
+                <th> Available Qty. </th>
                                 
                 <th>Created Date</th>
             </tr>
@@ -23,6 +25,7 @@
                             <td>{{ $value->item_name }}</td>
                             <td>{{ $value->lot_no}}</td>
                             <td>{{ $value->stock}}</td>
+                            <td>{{ $value->avbl_stock}}</td>
                              <td>{{ date('d/m/Y h:i a', strtotime($value->created_date)) }}</td>
 
                         @endforeach

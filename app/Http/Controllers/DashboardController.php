@@ -18,6 +18,8 @@ use App\Models\Utility;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
+use DB;
+
 class DashboardController extends Controller
 {
     /**
@@ -108,18 +110,11 @@ class DashboardController extends Controller
 
                 $users = User::find(\Auth::user()->creatorId());
                 $plan = Plan::find($users->plan);
-                if(!empty($plan)){
-                    if ($plan->storage_limit > 0) {
-                        $storage_limit = ($users->storage_limit / $plan->storage_limit) * 100;
-                    } else {
-                        $storage_limit = 0;
-                    }
-                }
-                else{
-                    return view('dashboard.index', $data, compact('users','plan'));
-                }
 
-                return view('dashboard.index', $data, compact('users', 'plan', 'storage_limit'));
+                $data['totalledgers'] = DB::select('select count(account_id) as total from ladgers where is_deleted = 0 order by ladger_id DESC');
+                
+                return view('dashboard.index', $data, compact('users','plan'));
+                
             }
         } else {
             if (!file_exists(storage_path() . "/installed")) {

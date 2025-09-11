@@ -83,7 +83,7 @@
                             <thead>
     <tr>
         <th>Ladger Id</th>
-        <th>cutomer Id</th>
+        <th>Ladger Type</th>
         <th>Relational Cust. Name</th>
         <th>Aadhar No.</th>
         <th class="farmer-only">Land Owner Name</th>
@@ -106,7 +106,7 @@
 @foreach($ledger AS $value)
 <tr>
     <td>{{ $value->account_id }}</td>
-    <td>{{ $value->ladger_type }}</td>
+    <td>{{ $value->ladger_type == 1 ? 'Farmer' : 'Other' }}</td>
     <td >{{ $value->relational_cust_name }}</td>
     <td>{{ $value->account_holder }}</td>
     <td class="farmer-only">{{ $value->farm_owner_name }}</td>

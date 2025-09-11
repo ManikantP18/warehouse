@@ -104,7 +104,7 @@ class PackingController extends Controller
             $category_id = $cat_id[0]->category_id;
         }
 
-        DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock) VALUES ('$req->company_id','$category_id','$req->verity','$req->lot_no','$bagcount')");
+        DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock,avbl_stock) VALUES ('$req->company_id','$category_id','$req->verity','$req->lot_no','$bagcount','$bagcount')");
 
     return Redirect::to('/packing')->with('success', 'Packing updated successfully');
 }

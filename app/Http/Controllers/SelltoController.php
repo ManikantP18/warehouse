@@ -66,7 +66,7 @@ class SelltoController extends Controller
     function lotno(Request $request) {
         $itemId = $request->item;
 
-        $lotno = DB::select("SELECT `lot_no` FROM products_inventory WHERE item_id = '$itemId'");
+        $lotno = DB::select("SELECT `lot_no`,`avbl_stock` FROM products_inventory WHERE item_id = '$itemId' and avbl_stock > 0");
 
         $opt = '<option value=""> Select Lot No. </option>';
 
@@ -76,24 +76,12 @@ class SelltoController extends Controller
 
                 $lotnumber = $ln->lot_no;
 
-                $opt .= "<option value='$lotnumber'>$lotnumber</option>";
+                $avbl_stock = $ln->avbl_stock;
 
-            }
-        } else {
-             $lotno = DB::select("select lotno from product_services where type = 'Product' AND id  = '$itemId'"); 
-
-             if(!empty($lotno)){
-            
-            foreach($lotno as $ln) {
-
-                $lotnumber = $ln->lotno;
-
-                $opt .= "<option value='$lotnumber'>$lotnumber</option>";
+                $opt .= "<option value='$lotnumber' dataid='$avbl_stock'>$lotnumber</option>";
 
             }
         }
-
-    }
 
         echo $opt;
     }
@@ -156,6 +144,8 @@ class SelltoController extends Controller
             if(!empty($itemselled[$i]) && !empty($rate[$i])){
 
                 DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,selled_lot_no,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$lotno[$i]','$lastId')");
+
+                DB::update("update products_inventory SET avbl_stock = avbl_stock - $quantity[$i] WHERE lot_no = '$lotno[$i]'");
 
             }
 

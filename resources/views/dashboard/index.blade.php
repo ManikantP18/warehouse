@@ -189,7 +189,7 @@
         @if (!empty($plan))
             (function() {
                 var options = {
-                    series: [{{ $storage_limit }}],
+                    series: [],
                     chart: {
                         height: 350,
                         type: 'radialBar',
@@ -252,8 +252,8 @@
                                         <i class="ti ti-users"></i>
                                     </div>
                                     <p class="text-muted text-sm mt-4 mb-2 ">{{ __('Total') }}</p>
-                                    <h6 class="mb-3 "><a href="{{ route('customer.index') }}" class="text-primary" >{{__('Customers')}}</a></h6>
-                                    <h3 class="mb-0 text-primary">{{ \Auth::user()->countCustomers() }}
+                                    <h6 class="mb-3 "><a href="" class="text-primary" >{{__('Total Ladgers')}}</a></h6>
+                                    <h3 class="mb-0 text-primary">{{ !empty($totalledgers) ? $totalledgers[0]->total : '0' }}
 
                                     </h3>
                                 </div>
@@ -535,8 +535,7 @@
                         <div class="col-xxl-5">
                             <div class="card" style="height: 369px">
                                 <div class="card-header">
-                                    <h5>{{ __('Storage Status') }} <small>({{ $users->storage_limit . 'MB' }} /
-                                            {{ $plan->storage_limit . 'MB' }})</small></h5>
+                                    <h5>{{ __('Storage Status') }} <small></small></h5>
                                 </div>
                                 <div class="card-body">
                                     <div id="device-chart"></div>
