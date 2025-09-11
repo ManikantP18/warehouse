@@ -116,12 +116,7 @@
                                     <label for="comp_id" class="form-label">To Date</label>
                                     <input type="date" name="to_date" class="form-control" id="to_date" onchange="selectLadger()">
                                 </div>
-                                <!-- <div class="col-md-2 allcompanies">
-                                    
-                                    <button type="submit" class="btn btn-primary mt-4" onclick="filterTable()">
-                                        <i class="ti ti-filter"></i> Filter
-                                    </button>
-                                </div> -->
+                                
                         </div>
 
                         <div id="table"></div>

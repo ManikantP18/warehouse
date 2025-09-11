@@ -186,6 +186,8 @@ function add(Request $req){
         $bank_id = $req->input('bank_id');
         $date = $req->input('date');
 
+        $cheque_no = $req->input('cheque_no');
+
         // Save cash payment
         if(!empty($cash_amt) && $cash_amt > 0){
             DB::table('payment_outs')->insert([
@@ -194,6 +196,7 @@ function add(Request $req){
                 'comp_id'   => $comp_id,
                 'pay_type'  => 'Cash',
                 'ammount'   => $cash_amt,
+                
                 'created_date' => date('Y-m-d', strtotime($date))
             ]);
         }
@@ -205,6 +208,7 @@ function add(Request $req){
                         'comp_id'   => $comp_id,
                         'pay_type'  => 'Bank',
                         'ammount'   => $bank_amt,
+                        'cheque_no'   => $cheque_no,
                         'created_date' => date('Y-m-d', strtotime($date))
                     ]);
 
@@ -278,31 +282,40 @@ function add(Request $req){
 
         }
 
-        if(!empty($bank_amt) && $bank_amt > 0){
+        //---------------
 
-            $avbl_bal = $avbl_bal - $bank_amt;
+        if (!empty($bank_amt) && $bank_amt > 0) {
 
-            $bank = DB::select("select bank_name FROM ledgerbank_accounts WHERE account_id  = $bank_id ");
+    $avbl_bal = $avbl_bal - $bank_amt;
 
-            foreach($bank as $b) {
+    $bank = DB::select("SELECT bank_name, account_num FROM ledgerbank_accounts WHERE account_id = $bank_id");
 
-            DB::insert("Insert into payment_statement (ladger_id,bank_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$ladger_id','$bank_id','Payment','$b->bank_name',$bank_amt,'$avbl_bal','$comp_id')");
+    foreach ($bank as $b) {
 
-            $bank_bal = 0-$bank_amt;
+        $prtclr = $b->bank_name . ' (' . $b->account_num . ')';
 
-            $bankBalance = DB::select("select avbl_bal from payment_statement where bank_id = '$bank_id' AND pay_status  = 1 AND is_deleted = 0 AND comp_id = '$comp_id' AND ladger_id = '' ORDER BY pay_id DESC LIMIT 1"); 
-         
+        DB::insert("INSERT INTO payment_statement (ladger_id, bank_id, pay_type, prtclr, dr_amt, avbl_bal, comp_id) 
+                    VALUES (?, ?, 'Payment', ?, ?, ?, ?)", 
+                    [$ladger_id, $bank_id, $prtclr, $bank_amt, $avbl_bal, $comp_id]);
 
-            if(!empty($bankBalance)){
-                $bank_bal = $bankBalance[0]->avbl_bal - $bank_amt;
-            }
-            
-                DB::insert("Insert into payment_statement (pay_type,prtclr,cr_amt,dr_amt,avbl_bal,comp_id,bank_id) VALUES ('Ladger','Payment Out','0', '$bank_amt','$bank_bal','$comp_id','$bank_id')");
-            }
+        $bank_bal = 0 - $bank_amt;
 
-            
+        $bankBalance = DB::select("SELECT avbl_bal FROM payment_statement 
+                                   WHERE bank_id = ? AND pay_status = 1 AND is_deleted = 0 
+                                   AND comp_id = ? AND ladger_id = '' 
+                                   ORDER BY pay_id DESC LIMIT 1", 
+                                   [$bank_id, $comp_id]);
 
+        if (!empty($bankBalance)) {
+            $bank_bal = $bankBalance[0]->avbl_bal - $bank_amt;
         }
+
+        DB::insert("INSERT INTO payment_statement (pay_type, prtclr, cr_amt, dr_amt, avbl_bal, comp_id, bank_id) 
+                    VALUES ('Ladger', 'Payment Out', '0', ?, ?, ?, ?)", 
+                    [$bank_amt, $bank_bal, $comp_id, $bank_id]);
+    }
+}
+
         
         return Redirect::to('payment_out');
     }

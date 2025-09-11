@@ -103,7 +103,7 @@ class LadgerPaymentStatement extends Controller
         
     // }
 
-    function history(Request $req) {
+function history(Request $req) {
     $acc_id = $req->input('searchVal');
     $cid = $req->input('company');
     $fdate = $req->input('fromdate');    

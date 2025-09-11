@@ -16,7 +16,9 @@
         @foreach($statement as $value)
             <tr>
                 <td>{{ date('d/m/Y', strtotime($value->created_date)) }}</td>
+
                 <td>{{ $value->prtclr }}</td>
+
                 <td>{{ $value->pay_type }}</td>
                 <td>{{ $value->dr_amt}}</td>
                 <td>{{ $value->cr_amt}}</td>
