@@ -50,6 +50,24 @@
         </div>
         <div id="form-fields-wrapper" style="display: none;">
             <div class="row">
+
+   
+                <div class="col-lg-12  ">
+                    <div class="form-group text-center">
+                        <label for="photo" class="form-label">Profile Photo</label>
+                        <div style="margin-top: 10px; display: flex; justify-content: center;">
+                           
+                                <img
+                                    alt="Profile Photo"
+                                    width="150"
+                                    height="150"
+                                    style="object-fit: cover; border-radius: 50%; border: 1px solid #ddd;" id="lphoto">
+                                  
+                        </div>
+                    </div>
+                </div>
+
+                
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="kp_date" class="form-label">Date</label>
@@ -57,8 +75,8 @@
                             <input class="form-control alwaysvisible" required name="kp_date" type="date" id="kp_date" value="{{date('Y-m-d')}}">
                         </div>
                     </div>
-
                 </div>
+                
                 <div class="col-lg-6 d-none">
                     <div class="form-group">
                         <label for="kp_acc_no" class="form-label">Customer-ID</label>
@@ -244,6 +262,11 @@
             success: function (response) {
                 if (response.success && response.data.length > 0) {
                     const data = response.data[0];
+
+
+                    const baseUrl = '/storage/'; // Laravel's public storage path
+                    $("#lphoto").prop('src', baseUrl + data.photo_path);
+
 
                     $('#kp_acc_no').val(data.account_id);
                     $('#kp_rel_name').val(data.relational_cust_name);

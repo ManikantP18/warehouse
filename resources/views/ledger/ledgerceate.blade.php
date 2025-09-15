@@ -1,7 +1,8 @@
 
 
 
-{{ Form::open(['url' => 'ledger/add', 'method' => 'post', 'class'=>'needs-validation','novalidate']) }}
+{{ Form::open(['url' => 'ledger/add', 'method' => 'post', 'class' => 'needs-validation', 'novalidate', 'enctype' => 'multipart/form-data']) }}
+
 <div class="modal-body">
     <h6 class="sub-title">Ledger Creation</h6>
 
@@ -116,6 +117,13 @@
         <input class="form-control" name="branch" type="text" required minlength="2">
     </div>
 
+    <div class="col-md-6">
+        <label for="photo">Upload Photo</label>
+        <input class="form-control" type="file" name="photo" id="photo" accept="image/*" required>
+        <small class="form-text text-muted">Only image files allowed (jpg, png, jpeg).</small>
+    </div>
+
+
     
 </div>
 
@@ -224,6 +232,12 @@ function showhide(value) {
         <div class="col-md-6">
             <label>Branch</label>
             <input class="form-control" name="branch" type="text" required minlength="2">
+        </div>
+        
+        <div class="col-md-6">
+            <label for="photo">Upload Photo</label>
+            <input class="form-control" type="file" name="photo" id="photo" accept="image/*" required>
+            <small class="form-text text-muted">Only image files allowed (jpg, png, jpeg).</small>
         </div>`;
 
         let other_fields = `<div class="col-md-6">
@@ -268,6 +282,12 @@ function showhide(value) {
         <div class="col-md-6">
             <label>GST Number</label>
             <input class="form-control" name="gst_num" required title="Enter 15-digit GST number" >
+        </div>p
+        
+        <div class="col-md-6">
+            <label for="photo">Upload Photo</label>
+            <input class="form-control" type="file" name="photo" id="photo" accept="image/*" required>
+            <small class="form-text text-muted">Only image files allowed (jpg, png, jpeg).</small>
         </div>`;
 
     if (value === 'farmer') {

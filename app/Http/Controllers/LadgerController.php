@@ -50,6 +50,7 @@ class LadgerController extends Controller
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
+
     }
 
     public function store(Request $request)
@@ -94,6 +95,14 @@ class LadgerController extends Controller
                 $customer->branch    = $request->branch;
                 $customer->gst_num = $request->gst_num;
 
+                if ($request->hasFile('photo')) {
+                    $file = $request->file('photo');
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $path = $file->storeAs('photos', $filename, 'public'); // saves in storage/app/public/photos
+                    $customer->photo_path = 'photos/' . $filename; // correct path
+                }
+                dd($customer->photo_path);
+
                 $customer->save();
             
             //Twilio Notification
@@ -123,6 +132,7 @@ class LadgerController extends Controller
                     return redirect()->back()->with('error', __('Webhook call failed.'));
                 }
             }
+           
 
 
             return redirect()->route('ladger.index')->with('success', __('Customer successfully created.') . ((isset($smtp_error)) ? '<br> <span class="text-danger">' . $smtp_error . '</span>' : ''));
