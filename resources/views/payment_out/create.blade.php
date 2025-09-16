@@ -58,16 +58,22 @@
                     </select>
                 </div>
 
-                <!-- Cash -->
-                <div class="col-md-6">
-                    <label class="form-label">Cash Amount</label>
-                    <input class="form-control" name="cash_amt" type="number" step="0.1" placeholder="Cash Amount">
-                </div>
-
                 <!-- Bank -->
                 <div class="col-md-6">
                     <label class="form-label">Bank Amount</label>
                     <input class="form-control" name="bank_amt" type="number" step="0.1" placeholder="Bank Amount">
+                </div>
+
+                <!-- Cash -->
+                <div class="col-md-6">
+                    <label class="form-label">Cheque Number</label>
+                    <input class="form-control" name="cheque_no" type="number" step="0.1" placeholder="Cash Amount">
+                </div>
+
+                 <!-- Cash -->
+                <div class="col-md-6">
+                    <label class="form-label">Cash Amount</label>
+                    <input class="form-control" name="cash_amt" type="number" step="0.1" placeholder="Cash Amount">
                 </div>
 
                 <!-- Date -->
@@ -130,7 +136,7 @@ function searchLadger() {
 }
 
 function fillFarmer(el) {
-    if ($(el).val()) { alert($(el).val())
+    if ($(el).val()) { 
         $("#payment-form-wrapper").show();
         $("#selectedLadger1").val($(el).val())
     } else {

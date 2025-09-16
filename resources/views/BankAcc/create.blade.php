@@ -80,6 +80,22 @@
     </div>
 </div>
 
+           
+<!-- Account Opening Date -->
+<div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="form-group">
+        <label for="open_blnc_date" class="form-label">Account Opening Date</label>
+        <div class="form-icon-user">
+           <input class="form-control alwaysvisible" 
+                name="open_blnc_date" 
+                type="date" 
+                id="open_blnc_date" 
+                required>
+
+        </div>
+    </div>
+</div>
+
 <div class="col-lg-6 col-md-6 col-sm-6">
     <div class="form-group">
         <label for="company_id" class="form-label">Company Name</label>
@@ -275,5 +291,14 @@ function totalCheck(el) {
     const total = (to >= from) ? (to - from + 1) : 0;
     row.find("input[name='total_check[]']").val(total);
 }
+
+ document.addEventListener('DOMContentLoaded', function () {
+        const dateField = document.getElementById('open_blnc_date');
+        if (dateField) {
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            dateField.value = formattedDate;
+        }
+    });
 
 </script>

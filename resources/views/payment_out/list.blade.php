@@ -57,6 +57,7 @@
             <th>Ladger Name</th>
             <th>Bank Name (Acc No)</th>
             <th>Type</th>
+            <th>Checre No.</th>
             <th>Amount</th>
             <th>Date</th>
         </tr>
@@ -86,6 +87,7 @@
                     </td>
 
                     <td>{{ $row->pay_type ?? 'N/A' }}</td>
+                    <td>{{ $row->cheque_no ?? 'N/A' }}</td>
                     <td>{{ $row->ammount ?? '0' }}</td>
                     <td>{{ \Carbon\Carbon::parse($row->created_date)->format('d-m-Y') ?? 'N/A' }}</td>
 

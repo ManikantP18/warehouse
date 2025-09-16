@@ -311,7 +311,45 @@ class SelltoController extends Controller
     }
 
     function delete($id) { 
-        DB::update("update sell_to set is_deleted = 1 where sell_id = '$id'");
+        
+        //Delete Sales
+
+       DB::table('sell_to')->where('sell_id', $id)->update(['is_deleted' => 1]);
+
+       DB::table('selled_item')->whereIn('sell_id', function($query) use ($id) {
+                $query->select('sell_id')
+                    ->from('sell_to')
+                    ->where('sell_id', $id);
+            })->update(['is_deleted' => 1]);
+
+       //Updating inventory again
+
+       DB::table('products_inventory as pi')
+        ->join('selled_item as si', 'pi.lot_no', '=', 'si.selled_lot_no')
+        ->join('sell_to as st', 'si.sell_id', '=', 'st.sell_id')
+        ->where('st.sell_id', $id)
+        ->update([
+            'pi.avbl_stock' => DB::raw('pi.avbl_stock + (si.selled_quantity - si.return_qty)')
+        ]);
+
+        //clear payment transations
+
+        DB::table('payment_statement')
+        ->whereIn('sell_id', function($q) use ($id) {
+            $q->select('sell_id')
+              ->from('sell_to')
+              ->where('sell_id', $id);
+        })
+        ->update(['is_deleted' => 1]);
+
+       // Clear Payment in out
+
+       
+      
+
+       DB::table('payment_statement')->where('sell_id', $id)->update(['is_deleted' => 1]);
+
+
         //  return view('sellto/delete');
          return Redirect::to('sellto');
     }

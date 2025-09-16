@@ -81,63 +81,79 @@
                     <div class="table-responsive">
                         <table class="table datatable">
                             <thead>
-    <tr>
-        <th>Ladger Id</th>
-        <th>Ladger Type</th>
-        <th>Relational Cust. Name</th>
-        <th>Aadhar No.</th>
-        <th class="farmer-only">Land Owner Name</th>
-        <th>Village</th>
-        <th class="farmer-only">Farmer Area Acre</th>
-         <th class="farmer-only">Khasra No.</th>
-         <th class="farmer-only">Bhumi gram</th>
-         <th class="farmer-only">Opening balance</th>
-        <th>Phone No.</th>
-        <th  class="farmer-only">Bank Account Name</th>
-        <th class="farmer-only">Account No.</th>
-        <th class="farmer-only">Bank Name</th>
-        <th class="farmer-only">IFSC Code</th>
-        <th class="farmer-only">Branch</th>
-        <th>GST Details</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-</thead>
+                                <tr>
+                                    <th>Photo</th>
+                                    <th>Ladger Id</th>
+                                    <th>Ladger Type</th>
+                                    <th>Relational Cust. Name</th>
+                                    <th>Aadhar No.</th>
+                                    <th class="farmer-only">Land Owner Name</th>
+                                    <th>Village</th>
+                                    <th class="farmer-only">Farmer Area Acre</th>
+                                    <th class="farmer-only">Khasra No.</th>
+                                    <th class="farmer-only">Bhumi gram</th>
+                                    <th class="farmer-only">Opening balance</th>
+                                    <th>Phone No.</th>
+                                    <th  class="farmer-only">Bank Account Name</th>
+                                    <th class="farmer-only">Account No.</th>
+                                    <th class="farmer-only">Bank Name</th>
+                                    <th class="farmer-only">IFSC Code</th>
+                                    <th class="farmer-only">Branch</th>
+                                    <th>GST Details</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
 @foreach($ledger AS $value)
-<tr>
-    <td>{{ $value->account_id }}</td>
-    <td>{{ $value->ladger_type == 1 ? 'Farmer' : 'Other' }}</td>
-    <td >{{ $value->relational_cust_name }}</td>
-    <td>{{ $value->account_holder }}</td>
-    <td class="farmer-only">{{ $value->farm_owner_name }}</td>
-    <td>{{ $value->village }}</td>
-    <td class="farmer-only">{{ $value->farm_area_acre }}</td> {{-- corrected --}}
-    <td class="farmer-only">{{ $value->khasra_no}}</td> {{-- corrected --}}
-    <td class="farmer-only">{{ $value->bhumi_gram}}</td> {{-- corrected --}}
-    <td class="farmer-only">{{ $value->opening_balance}}</td> {{-- corrected --}}
-    <td>{{ $value->phone_number }}</td>
-    <td class="farmer-only">{{ $value->bank_account_name }}</td>
-    <td class="farmer-only">{{ $value->account_number }}</td>
-    <td class="farmer-only">{{ $value->bank_name }}</td>
-    <td class="farmer-only">{{ $value->ifsc_code }}</td>
-    <td class="farmer-only">{{ $value->branch }}</td>
-    <td >{{ $value->gst_num }}</td>
-    <td>{{ $value->status == 1 ? 'Active' : 'Inactive' }}</td>
-    <td>
-    {{-- ✅ Edit Button: Redirects to edit page --}}
-   <a href="#" data-size="xl" data-url="{{ route('ledger.edit', $value->ladger_id) }}" data-ajax-popup="true" data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Ladger') }}"
-            class="btn btn-sm btn-success">
-           <i class="ti ti-pencil"></i>
-        </a>
-           
+                <tr>
+                    <td>
+                        @if($value->photo_path)
+                            <img src="{{ asset('storage/' . $value->photo_path) }}" 
+                                alt="Photo" width="50" height="50" 
+                                style="object-fit: cover; border-radius: 50%; cursor: pointer;" 
+                                class="clickable-image">
+                        @else
+                            <img src="{{ $profile }}/avatar.png" 
+                                alt="No Photo" width="50" height="50" 
+                                style="object-fit: cover; border-radius: 50%; cursor: pointer;" 
+                                class="clickable-image">
+                        @endif
+                    </td>
 
-    {{-- ✅ Delete Button: Calls JS confirm & deletes --}}
-    <button class="btn btn-sm btn-danger" onclick="deleteit('{{ route('ledger.delete', $value->account_id) }}')" title="Delete">
-        <i class="ti ti-trash"></i>
-    </button>
-</td>
 
-</tr>
+                    <td>{{ $value->account_id }}</td>
+                    <td>{{ $value->ladger_type == 1 ? 'Farmer' : 'Other' }}</td>
+                    <td >{{ $value->relational_cust_name }}</td>
+                    <td>{{ $value->account_holder }}</td>
+                    <td class="farmer-only">{{ $value->farm_owner_name }}</td>
+                    <td>{{ $value->village }}</td>
+                    <td class="farmer-only">{{ $value->farm_area_acre }}</td> {{-- corrected --}}
+                    <td class="farmer-only">{{ $value->khasra_no}}</td> {{-- corrected --}}
+                    <td class="farmer-only">{{ $value->bhumi_gram}}</td> {{-- corrected --}}
+                    <td class="farmer-only">{{ $value->opening_balance}}</td> {{-- corrected --}}
+                    <td>{{ $value->phone_number }}</td>
+                    <td class="farmer-only">{{ $value->bank_account_name }}</td>
+                    <td class="farmer-only">{{ $value->account_number }}</td>
+                    <td class="farmer-only">{{ $value->bank_name }}</td>
+                    <td class="farmer-only">{{ $value->ifsc_code }}</td>
+                    <td class="farmer-only">{{ $value->branch }}</td>
+                    <td >{{ $value->gst_num }}</td>
+                    <td>{{ $value->status == 1 ? 'Active' : 'Inactive' }}</td>
+                    <td>
+                        {{-- ✅ Edit Button: Redirects to edit page --}}
+                    <a href="#" data-size="xl" data-url="{{ route('ledger.edit', $value->ladger_id) }}" data-ajax-popup="true" data-bs-toggle="tooltip" title="{{ __('edit') }}" data-title="{{ __('edit Ladger') }}"
+                                class="btn btn-sm btn-success">
+                            <i class="ti ti-pencil"></i>
+                            </a>
+                            
+
+                        {{-- ✅ Delete Button: Calls JS confirm & deletes --}}
+                        <button class="btn btn-sm btn-danger" onclick="deleteit('{{ route('ledger.delete', $value->account_id) }}')" title="Delete">
+                            <i class="ti ti-trash"></i>
+                        </button>
+                    </td>
+
+                </tr>
 @endforeach
 
                         </table>
@@ -146,6 +162,20 @@
             </div>
         </div>
     </div>
+
+    <!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-body text-center p-0">
+        <img src="" id="modalImage" class="img-fluid rounded" alt="Preview Image">
+      </div>
+    </div>
+  </div>
+</div>
+<button type="button" class="btn-close position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
 @endsection
 
 @push('script-page')
@@ -161,20 +191,6 @@
         farmerCols.forEach(el => el.style.display = 'none');
     }
 }
-
-// // Default show farmer fields on load
-// document.addEventListener('DOMContentLoaded', function () {
-//     showFields('farmer'); // or 'others' if needed
-// });
-
-// document.querySelectorAll('.btn-toggle-type').forEach(btn => {
-//     btn.classList.remove('active');
-// });
-// document.getElementById(`${type}-btn`).classList.add('active');
-
-
-
-
 
 
         $(document).on('change', '#password_switch', function() {
@@ -206,5 +222,13 @@
                 window.location.href = url;
             }
         }
+
+         // Fullscreen Image Viewer
+            $(document).on('click', '.clickable-image', function () {
+                var src = $(this).attr('src');
+                $('#modalImage').attr('src', src);
+                $('#imageModal').modal('show');
+            });
+
     </script>
 @endpush

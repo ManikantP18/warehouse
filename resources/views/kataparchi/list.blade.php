@@ -101,8 +101,8 @@
                                     <th style="display:none"> Godown name </th>
                                     <th style="display:none"> creat date </th>
                                     <th style="display:none"> update date </th>
+                                   
                                     <th> status </th>
-
                                      <th> Action </th>
                                 </tr>
                             </thead>
@@ -134,7 +134,11 @@
                                     <td style="display:none"> {{ $value->kp_godown_name  }} </td>
                                     <td style="display:none">{{ date('d/m/Y h:i:a', strtotime( $value->creat_at)) }}  </td>
                                     <td style="display:none">{{ date('d/m/Y h:i:a', strtotime($value->update_at)) }}  </td>
+                                    
                                     <td style="display:none"> {{ $value->status }} </td>
+
+                                    
+
 
                                     <td> 
                                         <div class="d-flex">

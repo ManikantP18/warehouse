@@ -29,10 +29,11 @@ class BankController extends Controller
             'account_num'       => $req->input('account_num'),
             'account_type'      => $req->input('account_type'),
             'cheque_book'       => $req->input('cheque_book'),
-            
             'Bank_name'         => $req->input('Bank_name'),
             'opening_bal'       => $req->input('opening_bal'),
             'company_id'       => $req->input('company_id'),
+
+            'open_blnc_date'       => $req->input('open_blnc_date'),
         ]);
 
        $from = $req->input('chequerange_from'); // array
@@ -81,9 +82,7 @@ class BankController extends Controller
     $account_num = $req->input('account_num');
     $account_type = $req->input('account_type');
     $cheque_book = $req->input('cheque_book');
-    
-    
-      $opening_bal = $req->input('opening_bal');
+    $opening_bal = $req->input('opening_bal');
    
 
     DB::table('ledgerbank_accounts')->where('account_id', $account_id)->update([

@@ -49,12 +49,22 @@ class LedgerController extends Controller
                 
             $ledger_under_type = $req->input('ledger_under_type');
 
+            $photo_path = null;
+
+            if ($req->hasFile('photo')) {
+                $file = $req->file('photo');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('photos', $filename, 'public'); // storage/app/public/photos
+                $photo_path = 'photos/' . $filename;
+            }
+
+
             if($ledger_under_type == 'cash'){
                 $relational_cust_name = 'Cash In Hand';
             }
             
 
-       DB::insert("Insert into ladgers ( account_id,ladger_type,under_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num,khasra_no,bhumi_gram) VALUES ('$account_id',$ladger_type,'$ledger_under_type','$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num','$khasra_no','$bhumi_gram')");
+       DB::insert("Insert into ladgers ( account_id,ladger_type,under_type,relational_cust_name,account_holder,farm_owner_name,village,farm_area_acre,phone_number,bank_account_name,account_number,bank_name,ifsc_code,branch,gst_num,khasra_no,bhumi_gram,photo_path) VALUES ('$account_id',$ladger_type,'$ledger_under_type','$relational_cust_name', '$account_holder', '$farm_owner_name','$village','$farm_area_acre','$phone_number','$bank_account_name','$account_number','$bank_name','$ifsc_code','$branch','$gst_num','$khasra_no','$bhumi_gram','$photo_path')");
 
        
 

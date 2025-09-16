@@ -57,6 +57,7 @@
                                       <th> Account  Num</th>
                                        <th> Bank Name</th>
                                        <th> Opening Bal</th>
+                                       <th> Opening Date</th>
                                     <th> Account Type </th>
                                     <th> ChequeBook  </th>
                                     <th> ChequeRangefrom </th>
@@ -75,8 +76,11 @@
                                  
                                     <td> {{ $value->account_name }} </td>
                                     <td> {{ $value->account_num }} </td>
-                                     <td> {{ $value->bank_name }} </td>
-                                      <td> {{ $value->opening_bal }} </td>
+                                    <td> {{ $value->bank_name }} </td>
+                                    <td> {{ $value->opening_bal }} </td>
+                                   
+                                    <td> {{ date('d/m/Y', strtotime($value->open_blnc_date)) }} </td>
+
                                     <td> {{ $value->account_type }} </td>
                                     <td> {{ $value->cheque_book }} </td>
                                    
