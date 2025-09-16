@@ -108,12 +108,18 @@
                 <tr>
                     <td>
                         @if($value->photo_path)
-                           <img src="{{ asset('storage/' . $value->photo_path) }}" alt="Photo" width="50" height="50" style="object-fit: cover; border-radius: 50%;">
-
+                            <img src="{{ asset('storage/' . $value->photo_path) }}" 
+                                alt="Photo" width="50" height="50" 
+                                style="object-fit: cover; border-radius: 50%; cursor: pointer;" 
+                                class="clickable-image">
                         @else
-                            <img src="{{ $profile }}/avatar.png" alt="No Photo" width="50" height="50" style="object-fit: cover; border-radius: 50%;">
+                            <img src="{{ $profile }}/avatar.png" 
+                                alt="No Photo" width="50" height="50" 
+                                style="object-fit: cover; border-radius: 50%; cursor: pointer;" 
+                                class="clickable-image">
                         @endif
                     </td>
+
 
                     <td>{{ $value->account_id }}</td>
                     <td>{{ $value->ladger_type == 1 ? 'Farmer' : 'Other' }}</td>
@@ -156,6 +162,20 @@
             </div>
         </div>
     </div>
+
+    <!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-body text-center p-0">
+        <img src="" id="modalImage" class="img-fluid rounded" alt="Preview Image">
+      </div>
+    </div>
+  </div>
+</div>
+<button type="button" class="btn-close position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
 @endsection
 
 @push('script-page')
@@ -171,20 +191,6 @@
         farmerCols.forEach(el => el.style.display = 'none');
     }
 }
-
-// // Default show farmer fields on load
-// document.addEventListener('DOMContentLoaded', function () {
-//     showFields('farmer'); // or 'others' if needed
-// });
-
-// document.querySelectorAll('.btn-toggle-type').forEach(btn => {
-//     btn.classList.remove('active');
-// });
-// document.getElementById(`${type}-btn`).classList.add('active');
-
-
-
-
 
 
         $(document).on('change', '#password_switch', function() {
@@ -216,5 +222,13 @@
                 window.location.href = url;
             }
         }
+
+         // Fullscreen Image Viewer
+            $(document).on('click', '.clickable-image', function () {
+                var src = $(this).attr('src');
+                $('#modalImage').attr('src', src);
+                $('#imageModal').modal('show');
+            });
+
     </script>
 @endpush

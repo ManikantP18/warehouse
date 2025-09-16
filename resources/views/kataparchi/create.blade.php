@@ -1,3 +1,36 @@
+<style>
+  .photo-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+  }
+
+  .photo-modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+  }
+
+  .photo-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
 {{ Form::open(['url' => 'kataparchi/add', 'method' => 'post', 'class'=>'needs-validation','novalidate', 'onsubmit' => 'return validForm()']) }}
 <div class="modal-body">
     <h6 class="sub-title">kataparchi</h6>
@@ -61,8 +94,11 @@
                                     alt="Profile Photo"
                                     width="150"
                                     height="150"
-                                    style="object-fit: cover; border-radius: 50%; border: 1px solid #ddd;" id="lphoto">
-                                  
+                                    style="object-fit: cover; border-radius: 50%; border: 1px solid #ddd; cursor: pointer;"
+                                    id="lphoto"
+                                    onclick="openPhotoModal()"
+                                />
+
                         </div>
                     </div>
                 </div>
@@ -215,6 +251,15 @@
 </div>
 {{ Form::close() }}
 
+<!-- Zoom Image Modal -->
+<div id="photoZoomModal" class="photo-modal" onclick="closePhotoModal()">
+  <span class="photo-modal-close">&times;</span>
+  <img class="photo-modal-content" id="zoomedPhoto">
+</div>
+
+
+
+
 <script>
     function searchLadger() {
         let searchVal = $('#search').val();
@@ -261,10 +306,11 @@
             data: { searchVal: account_id, all : 'no' },
             success: function (response) {
                 if (response.success && response.data.length > 0) {
+
                     const data = response.data[0];
 
-
                     const baseUrl = '/storage/'; // Laravel's public storage path
+
                     $("#lphoto").prop('src', baseUrl + data.photo_path);
 
 
@@ -344,4 +390,19 @@ function validForm() {
 
     return true;
 }
+
+function openPhotoModal() {
+    const modal = document.getElementById('photoZoomModal');
+    const zoomedImg = document.getElementById('zoomedPhoto');
+    const originalImg = document.getElementById('lphoto');
+
+    zoomedImg.src = originalImg.src;
+    modal.style.display = 'block';
+  }
+
+  function closePhotoModal() {
+    document.getElementById('photoZoomModal').style.display = 'none';
+  }
+
+  
 </script>

@@ -1,3 +1,37 @@
+<style>
+  .photo-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+  }
+
+  .photo-modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+  }
+
+  .photo-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+
+
 {{ Form::open(['url' => 'sellto/add', 'method' => 'post', 'class'=>'needs-validation','novalidate', 'onsubmit' => 'return checkmode()']) }}
 <div class="modal-body">
   <div class="row">
@@ -52,7 +86,28 @@
     <!-- Form Fields Wrapper -->
     <div id="form-fields-wrapper" style="display: none;">
       <div class="row">
-        <div class="col-md-6">
+
+      <div class="col-lg-12  ">
+             <div class="form-group text-center">
+                   <label for="photo" class="form-label">Profile Photo</label>
+                      <div style="margin-top: 10px; display: flex; justify-content: center;">
+                          
+                        <img
+                          alt="Profile Photo"
+                          width="150"
+                          height="150"
+                          style="object-fit: cover; border-radius: 50%; border: 1px solid #ddd; cursor: pointer;"
+                          id="lphoto"
+                          onclick="openPhotoModal()"
+                        />
+
+                      </div>
+                </div>
+         </div>      
+
+        <div class="col-md-6">             
+
+
           <div class="form-group">
             <label>Sell To</label>
             <select name="sellto_farmer/other" id="sellto_farmer/other" class="form-control" onchange="toggleFields()">
@@ -255,6 +310,13 @@
 
 {{ Form::close() }}
 
+<!-- Zoom Image Modal -->
+<div id="photoZoomModal" class="photo-modal" onclick="closePhotoModal()">
+  <span class="photo-modal-close">&times;</span>
+  <img class="photo-modal-content" id="zoomedPhoto">
+</div>
+
+
 <input type="hidden" id="itemsdata" value="{{ json_encode($items) }}">
 
 <script>
@@ -266,6 +328,8 @@
           data: { cmp_id: cmp_id },
           success: function(response) {
             response = JSON.parse(response);
+
+
           $(".sellto_item_selled").html(response.items);
           $("#bank_name").html(response.banks)
           
@@ -319,6 +383,7 @@ function searchLadger() {
           html += `<option value="${d.account_id}">${d.relational_cust_name} - ${d.farm_owner_name}</option>`;
         });
         html += '</select>';
+
         $('.allfarmers').html(html).show();
         $('#form-fields-wrapper').hide();
       } else {
@@ -331,6 +396,11 @@ function selectLadger(id) {
   $.get('{{ route('sellto.search') }}', { searchVal: id, all : 'no' }, function(response) {
     if (response.success && response.data.length > 0) {
       let d = response.data[0];
+
+      const baseUrl = '/storage/'; // Laravel's public storage path
+                    
+        $("#lphoto").prop('src', baseUrl + d.photo_path);
+
       $('#sellto_account_number').val(d.account_id).prop('readonly', true);
       $('#sellto_phone').val(d.phone_number).prop('readonly', true);
       $('#sellto_customer_name').val(d.relational_cust_name).prop('readonly', true);
@@ -564,6 +634,19 @@ function checkqty(sid) {
   return true;
 
 }
+
+function openPhotoModal() {
+    const modal = document.getElementById('photoZoomModal');
+    const zoomedImg = document.getElementById('zoomedPhoto');
+    const originalImg = document.getElementById('lphoto');
+
+    zoomedImg.src = originalImg.src;
+    modal.style.display = 'block';
+  }
+
+  function closePhotoModal() {
+    document.getElementById('photoZoomModal').style.display = 'none';
+  }
 
 
 
