@@ -747,6 +747,12 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'XSS', 'revalidate']);
     Route::get('user/{id}/plan', [UserController::class, 'upgradePlan'])->name('plan.upgrade')->middleware(['XSS', 'revalidate']);
 
+    Route::get('/salesdashboard', 'App\Http\Controllers\DashboardController@saledashboard')->name('dashboard.sales')->middleware('auth');
+    
+    Route::get('/salehistory', 'App\Http\Controllers\DashboardController@saleHistory')->name('dashboard.history')->middleware('auth');
+
+    Route::get('/salesreport', 'App\Http\Controllers\DashboardController@salereport')->name('dashboard.report')->middleware('auth');
+
     Route::get('user/{id}/plan/{pid}', [UserController::class, 'activePlan'])->name('plan.active')->middleware(['XSS', 'revalidate']);
     Route::get('profile', [UserController::class, 'profile'])->name('profile')->middleware(['XSS', 'revalidate']);
     Route::post('edit-profile', [UserController::class, 'editprofile'])->name('update.account')->middleware(['XSS', 'revalidate']);

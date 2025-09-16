@@ -145,7 +145,6 @@
 }
 
 function showhide(value) {
-   
     let formar_fields = `<div class="col-md-6">
             <label>Relational Cust. Name</label>
             <input class="form-control" name="relational_cust_name" required type="text">
@@ -167,39 +166,43 @@ function showhide(value) {
         </div>
 
         <div class="col-md-6">
-        <label>Bhumi Gram</label>
-        <input class="form-control" name="bhumi_gram" type="text" required minlength="2" pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed" >
-      </div>
+            <label>Bhumi Gram</label>
+            <input class="form-control" name="bhumi_gram" type="text" required minlength="2" 
+                   pattern="^[A-Za-z\\s ]+$" title="Only alphabets and spaces allowed" >
+        </div>
 
         <div class="col-md-6">
             <label>Farmer Area Acre</label>
             <input class="form-control" name="farm_area_acre" type="number" step="0.01">
         </div>
+
         <div class="col-md-6">
             <label>Khasra No.</label>
             <input class="form-control" name="khasra_no" type="text" required 
-           pattern="^[6-9][0-9]{9}$" 
-           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
+                   pattern="^[6-9][0-9]{9}$" 
+                   title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
+        </div>`;
+
+    $(".opening-balances").each(function(index, element) {
+        formar_fields += `<div class="col-md-6 opening-balances">${ $(this).html() }</div>`;
+    });
+
+    formar_fields += `<div class="col-md-6">
+            <label>Phone No.</label>
+            <input class="validphone form-control @error('phone_number') is-invalid @enderror" 
+                   name="phone_number" 
+                   type="tel" 
+                   required 
+                   pattern="^[6-9][0-9]{9}$" 
+                   value="{{ old('phone_number') }}"
+                   title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9" 
+                   onchange="validphone(this.value)">
+            @error('phone_number')
+                <div class="invalid-feedback d-block">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
-
-       <div class="col-md-6">
-    <label>Phone No.</label>
-    <input class="validphone form-control @error('phone_number') is-invalid @enderror" 
-           name="phone_number" 
-           type="tel" 
-           required 
-           pattern="^[6-9][0-9]{9}$" 
-           value="{{ old('phone_number') }}"
-           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9" onchange="validphone(this.value)">
-
-
-    @error('phone_number')
-        <div class="invalid-feedback d-block">
-            {{ $message }}
-        </div>
-    @enderror
-</div>
-
 
         <div class="col-md-6">
             <label>Bank Account Name</label>
@@ -226,56 +229,61 @@ function showhide(value) {
             <input class="form-control" name="branch" type="text" required minlength="2">
         </div>`;
 
-        let other_fields = `<div class="col-md-6">
-    <label>Relational Cust. Name</label>
-    <input class="form-control" name="relational_cust_name" type="text" required
-           pattern="^[A-Za-z ]+$"
-           title="Only letters and spaces are allowed. Special characters are not permitted.">
-</div>
+    // ✅ यहाँ fix किया गया है
+    let other_fields = `<div class="col-md-6">
+            <label>Relational Cust. Name</label>
+            <input class="form-control" name="relational_cust_name" type="text" required
+                   pattern="^[A-Za-z ]+$"
+                   title="Only letters and spaces are allowed. Special characters are not permitted.">
+        </div>
 
         <div class="col-md-6">
             <label>Aadhar No.</label>
             <input class="form-control" name="account_holder" type="number" required 
-           pattern="^[6-9][0-9]{9}$" 
-           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
+                   pattern="^[6-9][0-9]{9}$" 
+                   title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
         </div>
 
         <div class="col-md-6">
             <label>Village</label>
-            <input class="form-control" name="village" type="text" required  pattern="^[A-Za-z\s ]+$" title="Only alphabets and spaces allowed">
+            <input class="form-control" name="village" type="text" required  
+                   pattern="^[A-Za-z\\s ]+$" title="Only alphabets and spaces allowed">
         </div>
 
-       
-       <div class="col-md-6">
-    <label>Phone No.</label>
-    <input class="validphone form-control @error('phone_number') is-invalid @enderror" 
-           name="phone_number" 
-           type="tel" 
-           required 
-           pattern="^[6-9][0-9]{9}$" 
-           value="{{ old('phone_number') }}"
-           title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9" onchange="validphone(this.value)">
-
-    @error('phone_number')
-        <div class="invalid-feedback d-block">
-            {{ $message }}
+        <div class="col-md-6">
+            <label>Phone No.</label>
+            <input class="validphone form-control @error('phone_number') is-invalid @enderror" 
+                   name="phone_number" 
+                   type="tel" 
+                   required 
+                   pattern="^[6-9][0-9]{9}$" 
+                   value="{{ old('phone_number') }}"
+                   title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9" 
+                   onchange="validphone(this.value)">
+            @error('phone_number')
+                <div class="invalid-feedback d-block">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
-    @enderror
-</div>
-
-
 
         <div class="col-md-6">
             <label>GST Number</label>
-            <input class="form-control" name="gst_num" required title="Enter 15-digit GST number" >
+            <input class="form-control" name="gst_num" required 
+                   title="Enter 15-digit GST number">
         </div>`;
 
+    $(".opening-balances").each(function(index, element) {
+        other_fields += `<div class="col-md-6 opening-balances">${ $(this).html() }</div>`;
+    });
+
     if (value === 'farmer') {
-        $(".farmer-form-section").html(formar_fields)
+        $(".farmer-form-section").html(formar_fields);
     } else {
-        $(".farmer-form-section").html(other_fields)
+        $(".farmer-form-section").html(other_fields);
     }
 }
+
 
 function validphone(val){
     $.ajax({

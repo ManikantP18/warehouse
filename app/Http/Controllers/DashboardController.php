@@ -18,6 +18,10 @@ use App\Models\Utility;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Redirect;
+
 use DB;
 
 class DashboardController extends Controller
@@ -132,6 +136,283 @@ class DashboardController extends Controller
             }
         }
     }
+
+    public function saledashboard(){
+        $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
+        return view('dashboard/selldashboard',$data);
+    }
+
+
+    public function saleHistory(Request $req)
+{
+    $item   = $req->input('item');
+    $cat    = $req->input('cat_id');
+    $cid    = $req->input('comp_id');
+    $fdate  = $req->input('from_date');    
+    $todate = $req->input('to_date');   
+    $html   = '';
+    $tatalbags = 0; 
+
+    // Company list
+    if ($cid == 'all') {
+        $companies = DB::select("SELECT * FROM company WHERE company_status = 1 AND is_deleted = 0");
+    } else {
+        $companies = DB::select("SELECT * FROM company WHERE company_id = $cid");
+    }
+
+    foreach($companies as $comp){
+        $data['comp_name'] = $comp->company_name;
+        
+        // base where
+        $where = " s.company_id = '$comp->company_id' ";
+
+        if (!empty($fdate)) {
+            $where .= " AND s.sell_created_date >= '$fdate' ";
+        }
+
+        if (!empty($todate)) {
+            $where .= " AND s.sell_created_date <= '$todate' ";
+        }
+
+        if (!empty($cat)) {
+            $where .= " AND ps.category_id = '$cat' ";
+        }
+
+        // global join
+        $join = " 
+            JOIN selled_item si ON s.sell_id = si.sell_id
+            JOIN product_services ps ON ps.id = si.selled_item
+        ";
+
+        // 1. Total Bags
+        $data['totalbags'] = DB::select("
+            SELECT 
+                SUM(si.selled_quantity) - SUM(si.return_qty) AS totalbags,
+                GROUP_CONCAT(DISTINCT ps.name ORDER BY ps.name ASC) AS product_names
+            FROM sell_to s
+            $join
+            WHERE $where AND si.is_deleted = 0
+        ");
+
+        // 2. Total Amount
+        $data['totalamount'] = DB::select("
+            SELECT 
+                SUM(s.sell_total_ammount + s.sell_gst_ammount) AS totalamount
+            FROM sell_to s
+            $join
+            WHERE $where AND s.is_deleted = 0
+        ");
+
+        // 3. Cash Bags
+        $data['cashbags'] = DB::select("
+            SELECT 
+                SUM(si.selled_quantity) - SUM(si.return_qty) AS totalbags
+            FROM sell_to s
+            $join
+            WHERE $where AND si.is_deleted = 0
+            AND s.sell_way = 'cash'
+        ");
+
+        // 4. Credit Bags
+        $data['creditbags'] = DB::select("
+            SELECT 
+                SUM(si.selled_quantity) - SUM(si.return_qty) AS totalbags
+            FROM sell_to s
+            $join
+            WHERE $where AND si.is_deleted = 0
+            AND s.sell_way = 'credit'
+        ");
+
+        // 5. Returned Qty
+        $data['returned_qty'] = DB::select("
+            SELECT 
+                SUM(sr.quantity) AS total_returned_qty
+            FROM sales_return sr
+            JOIN selled_item si ON sr.selled_item_id = si.selled_id
+            JOIN sell_to s ON si.sell_id = s.sell_id
+            JOIN product_services ps ON ps.id = si.selled_item
+            WHERE $where AND s.is_deleted = 0
+        ");
+
+        // 6. Returned Amount
+        $data['returned_amount'] = DB::select("
+            SELECT 
+                SUM(sr.quantity * sr.rate) + SUM(sr.GST_amount) AS total_returned_amount
+            FROM sales_return sr
+            JOIN selled_item si ON sr.selled_item_id = si.selled_id
+            JOIN sell_to s ON si.sell_id = s.sell_id
+            JOIN product_services ps ON ps.id = si.selled_item
+            WHERE $where AND s.is_deleted = 0
+        ");
+
+        // Add to total
+        if($data['totalbags']){
+            $tatalbags += $data['totalbags'][0]->totalbags;
+        }
+
+        // Render card view
+        $html .= view('dashboard/salescard',$data);
+    }
+
+    // Final card for all companies
+    $html .= '
+        <div class="mt-4">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-3">Total Saled Bags</h5>
+                    <h3 class="fw-bold text-' . ($tatalbags > 0 ? 'success' : 'danger') . '">
+                        '. $tatalbags. '
+                    </h3>
+                </div>
+            </div>
+        </div>
+    ';
+
+    return $html;
+}
+
+
+public function salereport(Request $req)
+{
+    $tid    = $req->input('tid');   // yeh batayega kis card pe click hua
+    $item   = $req->input('item_id');
+    $cat    = $req->input('cat_id');
+    $cid    = $req->input('cid');
+    $fdate  = $req->input('from_date');    
+    $todate = $req->input('to_date');   
+    $title  = $req->input('title');
+
+    $page = $req->input('page') ?? 'full';
+
+    // base where
+    $where = " s.company_id = '$cid' ";
+
+    if (!empty($fdate)) {
+        $where .= " AND s.sell_created_date >= '$fdate' ";
+    }
+
+    if (!empty($todate)) {
+        $where .= " AND s.sell_created_date <= '$todate' ";
+    }
+
+    if (!empty($cat)) {
+        $where .= " AND ps.category_id = '$cat' ";
+    }
+
+    // global join
+    $join = " 
+        JOIN selled_item si ON s.sell_id = si.sell_id
+        JOIN product_services ps ON ps.id = si.selled_item
+    ";
+
+    // default query
+    $sql = "";
+
+    if ($tid == 1) {
+    $sql = "
+        SELECT s.sell_id, s.sell_created_date,s.sell_relation_customer,s.sell_property_owner,s.sell_village, s.sell_way,
+               ps.name AS product_name, si.selled_quantity, si.return_qty
+        FROM sell_to s
+        JOIN selled_item si ON s.sell_id = si.sell_id
+        JOIN product_services ps ON ps.id = si.selled_item
+        WHERE $where AND si.is_deleted = 0
+    ";
+}
+
+// ✅ Total Amount List
+if ($tid == 2) {
+    $sql = "
+        SELECT s.sell_id, s.sell_created_date,s.sell_relation_customer,s.sell_property_owner,s.sell_village, s.sell_way,
+               (s.sell_total_ammount + s.sell_gst_ammount) AS amount,
+               ps.name AS product_name, si.selled_quantity, si.return_qty
+        FROM sell_to s
+        JOIN selled_item si ON s.sell_id = si.sell_id
+        JOIN product_services ps ON ps.id = si.selled_item
+        WHERE $where AND s.is_deleted = 0
+    ";
+}
+
+// ✅ Cash Bags List
+if ($tid == 3) {
+    $sql = "
+        SELECT s.sell_id, s.sell_created_date,s.sell_relation_customer,s.sell_property_owner,s.sell_village, s.sell_way,
+               ps.name AS product_name, si.selled_quantity, si.return_qty
+        FROM sell_to s
+        JOIN selled_item si ON s.sell_id = si.sell_id
+        JOIN product_services ps ON ps.id = si.selled_item
+        WHERE $where AND si.is_deleted = 0
+        AND s.sell_way = 'cash'
+    ";
+}
+
+// ✅ Credit Bags List
+if ($tid == 4) {
+    $sql = "
+        SELECT s.sell_id, s.sell_created_date,s.sell_relation_customer,s.sell_property_owner,s.sell_village, s.sell_way,
+               ps.name AS product_name, si.selled_quantity, si.return_qty
+        FROM sell_to s
+        JOIN selled_item si ON s.sell_id = si.sell_id
+        JOIN product_services ps ON ps.id = si.selled_item
+        WHERE $where AND si.is_deleted = 0
+        AND s.sell_way = 'credit'
+    ";
+}
+
+// ✅ Returned Bags List
+if ($tid == 5) {
+    $sql = "
+        SELECT sr.sale_id, sr.creat_at as return_date, ps.name AS product_name, sr.quantity, sr.rate,s.sell_relation_customer,s.sell_property_owner,s.sell_village, s.sell_way, si.selled_quantity, si.return_qty
+        FROM sales_return sr
+        JOIN selled_item si ON sr.selled_item_id = si.selled_id
+        JOIN sell_to s ON si.sell_id = s.sell_id
+        JOIN product_services ps ON ps.id = si.selled_item
+        WHERE $where AND s.is_deleted = 0
+    ";
+}
+
+// ✅ Returned Amount List
+if ($tid == 6) {
+    $sql = "
+        SELECT sr.sale_id, sr.creat_at, ps.name AS product_name, 
+               (sr.quantity * sr.rate + sr.GST_amount) AS amount, ,s.sell_relation_customer,s.sell_property_owner,s.sell_village, s.sell_way, si.selled_quantity, si.return_qty
+        FROM sales_return sr
+        JOIN selled_item si ON sr.selled_item_id = si.selled_id
+        JOIN sell_to s ON si.sell_id = s.sell_id
+        JOIN product_services ps ON ps.id = si.selled_item
+        WHERE $where AND s.is_deleted = 0
+    ";
+}
+
+    $list = DB::select($sql);
+
+    $copanies = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
+    // Render ek naya blade table
+
+    if($page == 'full') {
+
+         return view('dashboard/saleslist', [
+            'title' => $title,
+            'list'  => $list,
+            'company' => $copanies,
+            'tid'     => $tid
+        ]);
+
+    } else {
+
+        return view('dashboard/filteredtable', [
+            'title' => $title,
+            'list'  => $list,
+            'company' => $copanies
+        ]);
+
+    }
+   
+}
+
+
+
 
     public function getOrderChart($arrParam)
     {

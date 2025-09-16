@@ -266,7 +266,7 @@
                                         <i class="ti ti-note"></i>
                                     </div>
                                     <p class="text-muted text-sm mt-4 mb-2 text-info">{{ __('Sales') }}</p>
-                                    <h6 class="mb-3 "><a href="{{ route('vender.index') }}" class="text-info" >{{__('Sales')}}</a></h6>
+                                    <h6 class="mb-3 "><a href="{{ route('dashboard.sales') }}" class="text-info" >{{__('Sales')}}</a></h6>
                                     <h3 class="mb-0 text-info"> {{ !empty($totalsales) ? $totalsales[0]->total : '0' }}
                                     </h3>
                                 </div>
