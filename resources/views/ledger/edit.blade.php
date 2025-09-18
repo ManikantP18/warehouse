@@ -68,6 +68,8 @@
                             <input class="form-control" required name="opening_balance[]" type="number" value="{{ $val->opening_amount }}">
                             
                             <input type="hidden" name="opening_bal_id[]" value="{{ $val->opening_bal_id }}">
+
+                            <input type="hidden" name="company_ids[]" value="{{ $val->company_id }}">
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,7 @@ use DB;
 class SelltoController extends Controller
 {
     public function index(){
-        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to left join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to = 'farmer' and sell_to.is_deleted = 0 order by sell_id DESC");
+        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to left join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to.is_deleted = 0 order by sell_id DESC");
         return view('sellto/list',$data);
 
     }
@@ -160,14 +160,14 @@ class SelltoController extends Controller
 
                 $avbl_bal = $ln->avbl_bal - $total;
 
-                DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sale','$lastId','$total','$avbl_bal','$comp_id')");
+                DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sale','Invoice-$lastId','$total','$avbl_bal','$comp_id')");
 
             }
 
 
         } else {
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sale','$lastId','$total','-$total','$comp_id')");
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,dr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sale','Invoice-$lastId','$total','-$total','$comp_id')");
 
         }
 
@@ -175,7 +175,7 @@ class SelltoController extends Controller
 
             $avbl_bal = $avbl_bal + $cashamm;
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sale','Cash','$cashamm','$avbl_bal','$comp_id')");
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','Sale','Cash (Invoice-$lastId)','$cashamm','$avbl_bal','$comp_id')");
 
             $cashAvblBal = DB::select("
     SELECT ps.avbl_bal
@@ -216,7 +216,7 @@ class SelltoController extends Controller
             $cashLadgerAcc = $cashLadgerId[0]->account_id;
         }
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$cashLadgerAcc','$lastId','Sale','$csname','$cashamm','$cashLadgerBalanceAmt','$comp_id')");
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$cashLadgerAcc','$lastId','Sale','$csname (Invoice-$lastId)','$cashamm','$cashLadgerBalanceAmt','$comp_id')");
 
 
 
@@ -230,7 +230,7 @@ class SelltoController extends Controller
 
             foreach($bank as $b) {
 
-            DB::insert("Insert into payment_statement (ladger_id,sell_id,bank_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','$bank_name','Sale','$b->bank_name.($b->account_num)','$creditamm','$avbl_bal','$comp_id')");
+            DB::insert("Insert into payment_statement (ladger_id,sell_id,bank_id,pay_type,prtclr,cr_amt,avbl_bal,comp_id) VALUES ('$accno','$lastId','$bank_name','Sale','$b->bank_name.($b->account_num) (Invoice-$lastId)','$creditamm','$avbl_bal','$comp_id')");
 
             $bank_bal = $creditamm;
 
@@ -241,7 +241,7 @@ class SelltoController extends Controller
                 $bank_bal = $bank_bal + $bankBalance[0]->avbl_bal;
             }
             
-                DB::insert("Insert into payment_statement (sell_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id,bank_id) VALUES ('$lastId','Sale','$csname','0', '$creditamm','$bank_bal','$comp_id','$bank_name')");
+                DB::insert("Insert into payment_statement (sell_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id,bank_id) VALUES ('$lastId','Sale','$csname (Invoice-$lastId)','0', '$creditamm','$bank_bal','$comp_id','$bank_name')");
             }
 
             
@@ -249,10 +249,7 @@ class SelltoController extends Controller
         }
 
         
-        if($farmerother == 'farmer') {
             return Redirect::to('sellto');
-        }
-        return Redirect::to('othersSellto');
     }
 
     public function search(Request $req)
@@ -355,7 +352,7 @@ class SelltoController extends Controller
     }
 
     function edit($id) {
-        $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
+        $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and is_deleted = 0");
 
         $data['units'] = DB::select("select * from product_service_units");
 

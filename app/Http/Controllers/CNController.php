@@ -22,7 +22,7 @@ class CNController extends Controller
     $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
 
 
-    $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to = 'farmer' and sell_to.is_deleted = 0 order by sell_id DESC ");
+    $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to left join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to.is_deleted = 0 order by sell_id DESC ");
 
     return view('sales-return.list', $data);
  }
@@ -38,7 +38,7 @@ class CNController extends Controller
         $acc_id = $req->input('searchVal'); 
         
 
-        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to left join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to = 'farmer' and sell_to.is_deleted = 0 and sell_account_number = '$acc_id' order by sell_id DESC ");
+        $data['sellto'] = DB::select("select sell_to.*,ledgerbank_accounts.bank_name as branchname , company.company_name from sell_to left join ledgerbank_accounts on ledgerbank_accounts.account_id = sell_to.bank_name join company on company.company_id = sell_to.company_id where sell_to.is_deleted = 0 and sell_account_number = '$acc_id' order by sell_id DESC ");
 
 
         return view('sales-return/table',$data);
@@ -59,7 +59,7 @@ function create(){
     
     
     function edit($id) {
-       $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
+       $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and is_deleted = 0");
 
         $data['units'] = DB::select("select * from product_service_units");
 
@@ -81,7 +81,7 @@ function create(){
 
 
         function viewreturn($id,$date) {
-    $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and sell_to = 'farmer' and is_deleted = 0");
+    $data['sellto'] = DB::select("select * from sell_to where sell_id = '$id' and is_deleted = 0");
 
     $data['units'] = DB::select("select * from product_service_units");
 

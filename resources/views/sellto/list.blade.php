@@ -131,7 +131,7 @@
                                     <td style="display:none">{{ $value->sell_phone }}</td>
                                     <td style="display:none">{{ $value->cash_amount }}</td>
                                     <td style="display:none">{{ $value->credit_amount }}</td>
-                                    <td style="display:none">{{ $value->branchname }}</td>
+                                    <td style="display:none">{{ isset($value->branchname) ? $value->branchname : ''}}</td>
                                     <td style="display:none">{{ $value->remaining_amount }}</td>
                                     <td >{{ $value->sell_way }}</td>
                                     <td >{{ $value->company_name }}</td>

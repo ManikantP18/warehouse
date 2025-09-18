@@ -108,7 +108,7 @@
                 <tr>
                     <td>
                         @if($value->photo_path)
-                            <img src="{{ asset('storage/' . $value->photo_path) }}" 
+                            <img src="{{ asset('storage/app/public/' . $value->photo_path) }}" 
                                 alt="Photo" width="50" height="50" 
                                 style="object-fit: cover; border-radius: 50%; cursor: pointer;" 
                                 class="clickable-image">

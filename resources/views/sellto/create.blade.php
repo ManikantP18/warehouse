@@ -397,7 +397,7 @@ function selectLadger(id) {
     if (response.success && response.data.length > 0) {
       let d = response.data[0];
 
-      const baseUrl = '/storage/'; // Laravel's public storage path
+      const baseUrl = '/storage/app/public/'; // Laravel's public storage path
                     
         $("#lphoto").prop('src', baseUrl + d.photo_path);
 

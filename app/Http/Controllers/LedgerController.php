@@ -87,7 +87,7 @@ class LedgerController extends Controller
                 $avabl =  $avabl - $dramt;
             }
 
-            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt, cr_amt,avbl_bal,comp_id) VALUES ('$account_id','Payment','Payment', '$dramt','$cramt','$avabl','$companies[$i]')");
+            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt, cr_amt,avbl_bal,comp_id) VALUES ('$account_id','Payment','Opening Balance', '$dramt','$cramt','$avabl','$companies[$i]')");
         }
 
         if($ladger_type == 1){
@@ -339,11 +339,30 @@ class LedgerController extends Controller
                 $gst_num = $req->input('gst_num');
                 $opening_bal_id = $req->input('opening_bal_id');
 
+                $companies = $req->input('company_ids');
+
 
        DB::update("update ladgers set relational_cust_name = '$relational_cust_name' ,account_holder = '$account_holder',farm_owner_name = '$farm_owner_name',village = '$village',farm_area_acre = '$farm_area_acre',phone_number = '$phone_number',bank_account_name = '$bank_account_name',account_number = '$account_number',bank_name = '$bank_name',ifsc_code = '$ifsc_code',branch = '$branch',gst_num = '$gst_num',khasra_no = '$khasra_no',bhumi_gram = '$bhumi_gram'  where ladger_id = '$ladger_id'");
 
        for($i=0;$i<count($opening_balance);$i++) {
         DB::update("update ladger_opening_bal set opening_amount = '$opening_balance[$i]' where opening_bal_id = '$opening_bal_id[$i]'");
+
+        $cramt = 0; $dramt = 0;
+
+            $avabl = 0;
+
+            if($opening_balance[$i] < 0){
+                $cramt = abs($opening_balance[$i]);
+
+                $avabl = $avabl + $cramt;
+
+            } else {
+                $dramt = $opening_balance[$i];
+
+                $avabl =  $avabl - $dramt;
+            }
+
+        DB::update("update payment_statement SET dr_amt = '$dramt', cr_amt = '$cramt', avbl_bal = '$avabl' WHERE prtclr = 'Opening Balance' and comp_id = '$companies[$i]' and ladger_id = 'cust-$ladger_id'");
 
        }
        
