@@ -119,7 +119,7 @@
 
     <div class="col-md-6">
         <label for="photo">Upload Photo</label>
-        <input class="form-control" type="file" name="photo" id="photo" accept="image/*" required>
+        <input class="form-control" type="file" name="photo" id="photo" accept="image/*" >
         <small class="form-text text-muted">Only image files allowed (jpg, png, jpeg).</small>
     </div>
 

@@ -85,28 +85,37 @@ class BankController extends Controller
     $opening_bal = $req->input('opening_bal');
    
 
-    DB::table('ledgerbank_accounts')->where('account_id', $account_id)->update([
-        'ledger_id' => $ledger_id,
-        'account_name' => $account_name,
-        'account_num' => $account_num,
-        'account_type' => $account_type,
-        'cheque_book' => $cheque_book,
-        'opening_bal' => $opening_bal,
-    ]);
+   DB::table('ledgerbank_accounts')->where('account_id', $account_id)->update([
+    'ledger_id' => $ledger_id,
+    'account_name' => $account_name,
+    'account_num' => $account_num,
+    'account_type' => $account_type,
+    'cheque_book' => $cheque_book,
+    'opening_bal' => $opening_bal,
+    'Bank_name' => $req->input('Bank_name'), // ✅ ADD THIS LINE
+]);
+
 
     DB::delete("delete from chequebookrange where bank_id = '$account_id'");
 
 
-                 $chequerange_from = $req->input('chequerange_from');
-                 $chequerange_to = $req->input('chequerange_to');
-                  $total_check = $req->input('total_check');
+               $chequerange_from = $req->input('chequerange_from');
+                $chequerange_to = $req->input('chequerange_to');
+                $total_check = $req->input('total_check');
 
-                 for($i = 0 ; $i < count($chequerange_from) ; $i++) {
-                    if($chequerange_from[$i] != '' && $chequerange_from[$i] != 0) {
-                         DB::insert("Insert into chequebookrange (bank_id,check_from,check_to,check_total) values ($account_id,'$chequerange_from[$i]','$chequerange_to[$i]','$total_check[$i]')" );
-
+                if (is_array($chequerange_from)) {
+                    for ($i = 0; $i < count($chequerange_from); $i++) {
+                        if (!empty($chequerange_from[$i]) && $chequerange_from[$i] != 0) {
+                            DB::insert("INSERT INTO chequebookrange (bank_id, check_from, check_to, check_total) 
+                                        VALUES (?, ?, ?, ?)", [
+                                            $account_id,
+                                            $chequerange_from[$i],
+                                            $chequerange_to[$i],
+                                            $total_check[$i]
+                                        ]);
+                        }
                     }
-                 }
+                }
 
 
     return Redirect::to('/bankacc')->with('success', 'Bank detail edited successfully.');

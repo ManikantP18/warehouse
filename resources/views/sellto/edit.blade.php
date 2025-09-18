@@ -170,17 +170,19 @@
       </div>
     </div>
 
-    <div class="col-md-6">
-          <div class="form-group">
-            <label>Bank Name</label>
-            <select name="bank_name" id="bank_name" class="form-control">
-             @foreach($banks as $val)
-                <option value="{{ $val->account_id }}" {{ $val->account_id == $sellto[0]->bank_name ?  'selected' : ''}}>{{ $val->bank_name }}</option>
-              @endforeach
-            </select>
-          </div>
-        </div>
-
+   <div class="col-md-6">
+      <div class="form-group">
+        <label>Bank Name</label>
+        <select name="bank_name" id="bank_name" class="form-control">
+        @foreach($banks as $val)
+            <option value="{{ $val->account_id }}" 
+                {{ $val->account_id == $sellto[0]->bank_name ?  'selected' : '' }}>
+                {{ $val->bank_name }} - {{ $val->account_num }}
+            </option>
+          @endforeach
+        </select>
+      </div>
+    </div>
 
     <div class="col-md-6">
       <div class="form-group">
