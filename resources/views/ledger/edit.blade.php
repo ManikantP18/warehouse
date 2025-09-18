@@ -1,4 +1,4 @@
-{{ Form::open(['url' => route('ledger.update'), 'method' => 'PUT', 'class'=>'needs-validation','novalidate']) }}
+{{ Form::open(['url' => route('ledger.update'), 'method' => 'PUT', 'class'=>'needs-validation', 'novalidate', 'enctype' => 'multipart/form-data', 'files' => true]) }}
 
 <div class="modal-body">
     <h6 class="sub-title">Ladger Creation</h6>
@@ -139,6 +139,12 @@
                     <input class="form-control alwaysvisible" required="required" name="branch" type="text" id="branch" value="{{$ledger[0]->branch }}">
                 </div>
             </div>
+        </div>
+
+        <div class="col-md-6">
+            <label for="photo">Update Photo</label>
+            <input class="form-control" type="file" name="photo" id="photo" accept="image/*" >
+            <small class="form-text text-muted">Only image files allowed (jpg, png, jpeg).</small>
         </div>
         
     </div>
