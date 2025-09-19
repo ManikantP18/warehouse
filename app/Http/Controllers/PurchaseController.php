@@ -12,7 +12,7 @@ use DB;
 class PurchaseController extends Controller
 {
     function index() {
-         $data['purchase'] = DB::select("select * from purchase join branches on branches.branch_id  = purchase.godown left join company on company.company_id = purchase.company_id where purchase_status = 1 AND purchase.is_deleted = 0 AND is_hide = 0 order by purchase_id DESC");
+         $data['purchase'] = DB::select("select * from purchase left join branches on branches.branch_id  = purchase.godown left join company on company.company_id = purchase.company_id where purchase_status = 1 AND purchase.is_deleted = 0 AND is_hide = 0 order by purchase_id DESC");
         return view('purchase/list',$data);
     }
 
@@ -28,6 +28,7 @@ class PurchaseController extends Controller
     }
     function add(Request $req){
         $purchase_way = $req->input('purchase_way');
+        $custid = $req->input('cust_id');
         $purchase_relation_cusm = $req->input('purchase_relation_cusm');
         $purchase_accountant = $req->input('purchase_accountant');
         $purchase_owner = $req->input('purchase_owner');
@@ -53,6 +54,7 @@ class PurchaseController extends Controller
 
        $pid = DB::table('purchase')->insertGetId([
             'purchase_way' => $purchase_way,
+            'cust_id'      => $custid,
             'purchase_relation_cusm' => $purchase_relation_cusm,
             'purchase_accountant' => $purchase_accountant,
             'purchase_owner' => $purchase_owner,
@@ -69,7 +71,8 @@ class PurchaseController extends Controller
             'purchase_to' => $purchase_to ?? 'farmer',
             'purchase_total' => $sum_total,
             'Dharm_kata' => $Dharm_kata,
-            'company_id'     => $comp_id
+            'company_id'     => $comp_id,
+            'is_hide'        => 1
         ]);
 
                  $purchase_item = $req->input('purchase_item');
@@ -84,7 +87,23 @@ class PurchaseController extends Controller
                     }
                  }
 
-       
+                 $avlBal = DB::select("
+                select avbl_bal from payment_statement 
+                where ladger_id = ? AND comp_id = ? AND pay_status = 1 AND is_deleted = 0 
+                order by pay_id desc limit 1
+            ", [$custid, $comp_id]);
+
+            $avlBal = $avlBal ? $avlBal[0]->avbl_bal : 0;
+
+            $balance = $sum_total + $avlBal;
+
+            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id) VALUES ('$custid','Purchase','Purchase','0', '$sum_total','$balance','$comp_id')");
+
+            
+             $balance = $balance - $Dharm_kata;
+
+            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id) VALUES ('$custid','Purchase','Dharam Kata','$Dharm_kata', '0','$balance','$comp_id')");
+            
         return Redirect::to('purchase');
     }
 

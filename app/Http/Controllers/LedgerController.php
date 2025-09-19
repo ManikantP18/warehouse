@@ -389,45 +389,47 @@ class LedgerController extends Controller
         ->update($updateData);
 
     // Update opening balances and payment statements
-    $opening_balances = $request->input('opening_balance');
+    $opening_balance = $request->input('opening_balance');
     $opening_ids = $request->input('opening_bal_id');
-    $company_ids = $request->input('company_ids');
+    $companies = $request->input('company_ids');
 
-    for ($i = 0; $i < count($opening_balances); $i++) {
-        $bal = $opening_balances[$i];
-        $bal_id = $opening_ids[$i];
-        $company_id = $company_ids[$i];
+       for($i=0;$i<count($opening_balance);$i++) {
+        DB::update("update ladger_opening_bal set opening_amount = '$opening_balance[$i]' where opening_bal_id = '$opening_ids[$i]'");
 
-        // Update opening balance
-        DB::table('ladger_opening_bal')
-            ->where('opening_bal_id', $bal_id)
-            ->update(['opening_amount' => $bal]);
+        $cramt = 0; $dramt = 0;
 
-        // Update payment statement
-        $cr = 0;
-        $dr = 0;
-        $avbl = 0;
+            $avabl = 0;
 
-        if ($bal < 0) {
-            $cr = abs($bal);
-            $avbl = $cr;
-        } else {
-            $dr = $bal;
-            $avbl = -$dr;
+            if($opening_balance[$i] < 0){
+                $cramt = abs($opening_balance[$i]);
+
+                $avabl = $avabl + $cramt;
+
+            } else {
+                $dramt = $opening_balance[$i];
+
+                $avabl =  $avabl - $dramt;
+            }
+
+        DB::update("update payment_statement SET dr_amt = '$dramt', cr_amt = '$cramt', avbl_bal = '$avabl' WHERE prtclr = 'Opening Balance' and comp_id = '$companies[$i]' and ladger_id = 'cust-$ladger_id'");
+
+        $statement = DB::select("select pay_id,dr_amt,cr_amt from payment_statement WHERE prtclr != 'Opening Balance' and comp_id = '$companies[$i]' and ladger_id = 'cust-$ladger_id' order by pay_id ASC");
+
+        if(!empty($statement)){
+            foreach($statement as $sttmnt){
+
+                $avabl = $avabl + $sttmnt->cr_amt - $sttmnt->dr_amt;
+
+                $pay_id = $sttmnt->pay_id;
+
+                DB::update("update payment_statement SET avbl_bal = '$avabl' WHERE pay_id = '$pay_id'");
+
+            }
         }
 
-        DB::table('payment_statement')
-            ->where('ladger_id', 'cust-' . $ladger_id)
-            ->where('comp_id', $company_id)
-            ->where('prtclr', 'Opening Balance')
-            ->update([
-                'dr_amt' => $dr,
-                'cr_amt' => $cr,
-                'avbl_bal' => $avbl,
-            ]);
-    }
 
-    
+
+       }
 
 
     return redirect('/ledger')->with('success', 'Ledger updated successfully');
