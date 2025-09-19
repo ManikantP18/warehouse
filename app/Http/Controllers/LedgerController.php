@@ -8,7 +8,17 @@ use App\Models\Ledger;
 
 use Illuminate\Support\Facades\Redirect;
 
-use DB;
+
+
+
+
+use App\Models\OpeningBalance;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class LedgerController extends Controller
 {
@@ -319,33 +329,72 @@ class LedgerController extends Controller
         return view('ledger/edit',$data);
     }
 
-    function update(Request $req) {
-       
-        $ladger_id = $req->input('ladger_id');
-        $relational_cust_name	 = $req->input('relational_cust_name');
-        $account_holder	 = $req->input('account_holder');
-        $farm_owner_name = $req->input('farm_owner_name');
-        $khasra_no = $req->input('khasra_no');
-        $bhumi_gram = $req->input('bhumi_gram');
-        $opening_balance = $req->input('opening_balance');
-        $village = $req->input('village');
-         $farm_area_acre = $req->input('farm_area_acre');
-          $phone_number	 = $req->input('phone_number');
-           $bank_account_name	 = $req->input('bank_account_name');
-            $account_number	 = $req->input('account_number');
-             $bank_name	 = $req->input('bank_name');
-              $ifsc_code = $req->input('ifsc_code');
-               $branch	 = $req->input('branch');
-                $gst_num = $req->input('gst_num');
-                $opening_bal_id = $req->input('opening_bal_id');
 
-                $companies = $req->input('company_ids');
+    public function update(Request $request)
+{
+    
+    /*$request->validate([
+        'ladger_id' => 'required',
+        'relational_cust_name' => 'required|string',
+        'account_holder' => 'required',
+        'farm_owner_name' => 'nullable|string',
+        'khasra_no' => 'nullable|string',
+        'bhumi_gram' => 'nullable|string',
+        'village' => 'required|string',
+        'farm_area_acre' => 'nullable|numeric',
+        'phone_number' => 'required',
+        'bank_account_name' => 'nullable|string',
+        'account_number' => 'nullable|string',
+        'bank_name' => 'nullable|string',
+        'ifsc_code' => 'nullable|string',
+        'branch' => 'nullable|string',
+        'gst_num' => 'nullable|string',
+        'opening_balance' => 'required|array',
+        'opening_bal_id' => 'required|array',
+        'company_ids' => 'required|array',
+    ]);*/
+
+    $ladger_id = $request->input('ladger_id');
 
 
-       DB::update("update ladgers set relational_cust_name = '$relational_cust_name' ,account_holder = '$account_holder',farm_owner_name = '$farm_owner_name',village = '$village',farm_area_acre = '$farm_area_acre',phone_number = '$phone_number',bank_account_name = '$bank_account_name',account_number = '$account_number',bank_name = '$bank_name',ifsc_code = '$ifsc_code',branch = '$branch',gst_num = '$gst_num',khasra_no = '$khasra_no',bhumi_gram = '$bhumi_gram'  where ladger_id = '$ladger_id'");
+    // Prepare update data
+    $updateData = [
+        'relational_cust_name' => $request->relational_cust_name,
+        'account_holder' => $request->account_holder,
+        'farm_owner_name' => $request->farm_owner_name,
+        'village' => $request->village,
+        'farm_area_acre' => $request->farm_area_acre,
+        'phone_number' => $request->phone_number,
+        'bank_account_name' => $request->bank_account_name,
+        'account_number' => $request->account_number,
+        'bank_name' => $request->bank_name,
+        'ifsc_code' => $request->ifsc_code,
+        'branch' => $request->branch,
+        'gst_num' => $request->gst_num,
+        'khasra_no' => $request->khasra_no,
+        'bhumi_gram' => $request->bhumi_gram,
+    ];
+
+    // Photo upload
+    if ($request->hasFile('photo')) {
+        $file = $request->file('photo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->storeAs('photos', $filename, 'public');
+        $updateData['photo_path'] = 'photos/' . $filename;
+    }
+
+    // Update main ladger
+    DB::table('ladgers')
+        ->where('ladger_id', $ladger_id)
+        ->update($updateData);
+
+    // Update opening balances and payment statements
+    $opening_balance = $request->input('opening_balance');
+    $opening_ids = $request->input('opening_bal_id');
+    $companies = $request->input('company_ids');
 
        for($i=0;$i<count($opening_balance);$i++) {
-        DB::update("update ladger_opening_bal set opening_amount = '$opening_balance[$i]' where opening_bal_id = '$opening_bal_id[$i]'");
+        DB::update("update ladger_opening_bal set opening_amount = '$opening_balance[$i]' where opening_bal_id = '$opening_ids[$i]'");
 
         $cramt = 0; $dramt = 0;
 
@@ -381,10 +430,14 @@ class LedgerController extends Controller
 
 
        }
-       
-      
-        return Redirect::to('/ledger')->with('success', 'Ledger edit Successfully');
-    }
+
+
+    return redirect('/ledger')->with('success', 'Ledger updated successfully');
+}
+
+ 
+
+
 
     function other() {
         $data['ledger'] = DB::select("select * from ladgers where ladger_type != 1 and is_deleted = 0");

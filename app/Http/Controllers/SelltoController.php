@@ -405,7 +405,7 @@ class SelltoController extends Controller
          $gst = $req->input('sellto_gst_amount');
          $units = $req->input('purchase_unit');
 
-         DB::update("update payment set sell_id ='$id',amount = '$total',pay_ladger_id ='$accno' ");
+         //DB::update("update payment set sell_id ='$id',amount = '$total',pay_ladger_id ='$accno' ");
 
         DB::delete("delete from selled_item where sell_id = '$id'");
 
