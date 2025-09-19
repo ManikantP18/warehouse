@@ -372,8 +372,11 @@ class SelltoController extends Controller
         return view('sellto/edit',$data);
     } 
 
+  
     function update(Request $req) {
-         $cashcredit = $req->input('sellto_cash/credit');
+    DB::beginTransaction();
+    try {
+        $cashcredit = $req->input('sellto_cash/credit');
         $farmerother = $req->input('sellto_farmer/other');
         $accno = $req->input('sellto_account_number');
         $phone = $req->input('sellto_phone');
@@ -381,48 +384,133 @@ class SelltoController extends Controller
         $accholder = $req->input('sellto_acc_holder');
         $oname = $req->input('sellto_owner_name');
         $village = $req->input('sellto_village');
-
         $kp_acre = $req->input('kp_rakaba_acre');
 
         $itemselled = $req->input('sellto_item_selled');
-         $quantity = $req->input('sellto_quantity');
+        $quantity = $req->input('sellto_quantity');
         $rate = $req->input('sellto_rate');
         $total = $req->input('sellto_total_amount');
-         $gst = $req->input('sellto_gst_amount');
+        $gst = $req->input('sellto_gst_amount');
         $cashamm = $req->input('sellto_cash_amount');
         $creditamm = $req->input('sellto_Credit_amount');
         $remainamm = $req->input('sellto_Remaining_amount');
-         $id = $req->input('sell_id');
-         $cid = $req->input('company_id');
+        $bank_name = $req->input('bank_name');
+        $id = $req->input('sell_id');
+        $cid = $req->input('company_id');
+        $units = $req->input('purchase_unit');
+        $lotno = $req->input('purchase_lot_no');
 
+        // 1. Sell record update
+        DB::update("UPDATE sell_to 
+            SET sell_way = '$cashcredit',
+                sell_to = '$farmerother',
+                sell_account_number = '$accno',
+                sell_phone = '$phone',
+                sell_relation_customer = '$csname',
+                sell_account_name = '$accholder',
+                sell_property_owner = '$oname',
+                sell_village = '$village',
+                kp_rakaba_acre = '$kp_acre',
+                sell_total_ammount = '$total',
+                company_id = '$cid',
+                cash_amount = '$cashamm',
+                credit_amount = '$creditamm',
+                remaining_amount = '$remainamm',
+                bank_name = '$bank_name'
+            WHERE sell_id = '$id'");
 
-        DB::update("update sell_to set sell_way = '$cashcredit',sell_to = '$farmerother' ,sell_account_number = '$accno',sell_phone = '$phone',sell_relation_customer = '$csname',sell_account_name = '$accholder',sell_property_owner = '$oname',sell_village =  '$village', kp_rakaba_acre = '$kp_acre',sell_total_ammount = '$total' ,company_id = '$cid', cash_amount = '$cashamm',credit_amount = '$creditamm',  remaining_amount = '$remainamm'  where sell_id = '$id'");
-
-        $itemselled = $req->input('sellto_item_selled');
-         $quantity = $req->input('sellto_quantity');
-        $rate = $req->input('sellto_rate');
-        $total = $req->input('sellto_total_amount');
-         $gst = $req->input('sellto_gst_amount');
-         $units = $req->input('purchase_unit');
-
-         //DB::update("update payment set sell_id ='$id',amount = '$total',pay_ladger_id ='$accno' ");
-
-        DB::delete("delete from selled_item where sell_id = '$id'");
-
-         for($i=0; $i<count($itemselled); $i++){
-
+        // 2. Selled items reset
+        DB::delete("DELETE FROM selled_item WHERE sell_id = '$id'");
+        for($i=0; $i<count($itemselled); $i++){
             if(!empty($itemselled[$i]) && !empty($rate[$i])){
-
-                DB::insert("Insert into selled_item (selled_item,selled_quantity,sell_unit,selled_gst,selled_rate,sell_id) VALUES ('$itemselled[$i]', '$quantity[$i]',$units[$i] , '$gst[$i]', '$rate[$i]' ,'$id')");
-
+                DB::insert("INSERT INTO selled_item 
+                    (selled_item, selled_quantity, sell_unit, selled_gst, selled_rate, selled_lot_no, sell_id) 
+                    VALUES ('$itemselled[$i]', '$quantity[$i]', $units[$i], '$gst[$i]', '$rate[$i]', '', '$id')");
             }
+        }
 
-             
+        // 3. Purane payment statement delete
+        DB::delete("DELETE FROM payment_statement WHERE sell_id = '$id' AND comp_id = '$cid'");
 
-         }
+        // 4. Naya insert jaise add() me hai
+        $avbl_bal = -$total;
+        $lastAvailableBal = DB::select("SELECT avbl_bal FROM payment_statement 
+            WHERE ladger_id = '$accno' AND pay_status = 1 AND is_deleted = 0 AND comp_id = '$cid'
+            ORDER BY pay_id DESC LIMIT 1");
 
+        if(!empty($lastAvailableBal)){
+            $avbl_bal = $lastAvailableBal[0]->avbl_bal - $total;
+        }
+        DB::insert("INSERT INTO payment_statement 
+            (ladger_id, sell_id, pay_type, prtclr, dr_amt, avbl_bal, comp_id) 
+            VALUES ('$accno', '$id', 'Sale', 'Invoice-$id', '$total', '$avbl_bal', '$cid')");
+
+        // Cash payment
+        if(!empty($cashamm) && $cashamm > 0){
+            $avbl_bal = $avbl_bal + $cashamm;
+            DB::insert("INSERT INTO payment_statement 
+                (ladger_id, sell_id, pay_type, prtclr, cr_amt, avbl_bal, comp_id) 
+                VALUES ('$accno', '$id', 'Sale', 'Cash (Invoice-$id)', '$cashamm', '$avbl_bal', '$cid')");
+
+            // Cash Ledger balance update
+            $cashLadgerId = DB::select("SELECT account_id FROM ladgers 
+                WHERE relational_cust_name = 'Cash In Hand' ORDER BY ladger_id DESC LIMIT 1");
+            $cashLadgerAcc = !empty($cashLadgerId) ? $cashLadgerId[0]->account_id : 'Cash Ladger';
+
+            $cashAvblBal = DB::select("SELECT avbl_bal FROM payment_statement 
+                WHERE ladger_id = '$cashLadgerAcc' AND pay_status = 1 AND is_deleted = 0 AND comp_id = '$cid' 
+                ORDER BY pay_id DESC LIMIT 1");
+            $cashLadgerBalanceAmt = !empty($cashAvblBal) ? $cashAvblBal[0]->avbl_bal : 0;
+            $cashLadgerBalanceAmt = $cashLadgerBalanceAmt + $cashamm;
+
+            DB::insert("INSERT INTO payment_statement 
+                (ladger_id, sell_id, pay_type, prtclr, cr_amt, avbl_bal, comp_id) 
+                VALUES ('$cashLadgerAcc', '$id', 'Sale', '$csname (Invoice-$id)', '$cashamm', '$cashLadgerBalanceAmt', '$cid')");
+        }
+
+        // Credit payment (Bank)
+        if(!empty($creditamm) && $creditamm > 0 && !empty($bank_name)){
+            $avbl_bal = $avbl_bal + $creditamm;
+            $bank = DB::select("SELECT bank_name, account_num FROM ledgerbank_accounts WHERE account_id = $bank_name");
+            foreach($bank as $b){
+                DB::insert("INSERT INTO payment_statement 
+                    (ladger_id, sell_id, bank_id, pay_type, prtclr, cr_amt, avbl_bal, comp_id) 
+                    VALUES ('$accno', '$id', '$bank_name', 'Sale', '$b->bank_name ($b->account_num) (Invoice-$id)', '$creditamm', '$avbl_bal', '$cid')");
+
+                $bank_bal = $creditamm;
+                $bankBalance = DB::select("SELECT avbl_bal FROM payment_statement 
+                    WHERE bank_id = '$bank_name' AND pay_status = 1 AND is_deleted = 0 AND comp_id = '$cid' 
+                    AND ladger_id = '' ORDER BY pay_id DESC LIMIT 1");
+                if(!empty($bankBalance)){
+                    $bank_bal = $bank_bal + $bankBalance[0]->avbl_bal;
+                }
+                DB::insert("INSERT INTO payment_statement 
+                    (sell_id, pay_type, prtclr, dr_amt, cr_amt, avbl_bal, comp_id, bank_id) 
+                    VALUES ('$id','Sale','$csname (Invoice-$id)','0','$creditamm','$bank_bal','$cid','$bank_name')");
+            }
+        }
+
+        // 5. Sare next payment_statement ka avbl_bal recalc
+        $allStatements = DB::select("SELECT * FROM payment_statement 
+            WHERE ladger_id = '$accno' AND comp_id = '$cid' AND pay_status = 1 AND is_deleted = 0 
+            ORDER BY pay_id ASC");
+
+        $runningBalance = 0;
+        foreach($allStatements as $s){
+            $runningBalance = $runningBalance + $s->cr_amt - $s->dr_amt;
+            DB::update("UPDATE payment_statement SET avbl_bal = '$runningBalance' WHERE pay_id = '$s->pay_id'");
+        }
+
+        DB::commit();
         return Redirect::to('sellto');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->with('error', 'Update failed: '.$e->getMessage());
     }
+}
+
+
 
     public function filter(Request $request)
     {      
