@@ -21,6 +21,9 @@ class PurchaseController extends Controller
         $data['units'] = DB::select("select * from product_service_units");
         //  $data['banks'] = DB::select("select * FROM ledgerbank_accounts WHERE account_status = 1 "); 
           $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
+
+
+          
         return view('purchase/create',$data);
     }
     function add(Request $req){
@@ -42,6 +45,7 @@ class PurchaseController extends Controller
        $purchase_total = $req->input('purchase_total');
         $comp_id = $req->input('company_id');
 
+        $Dharm_kata = $req->input('Dharm_kata');
 //      $pure_wigth = $req->input('pure_wigth');
 
        $sum_total = array_sum($purchase_total);
@@ -64,6 +68,7 @@ class PurchaseController extends Controller
             'purchase_gst_no' => $purchase_gst_no,
             'purchase_to' => $purchase_to ?? 'farmer',
             'purchase_total' => $sum_total,
+            'Dharm_kata' => $Dharm_kata,
             'company_id'     => $comp_id
         ]);
 
@@ -321,6 +326,8 @@ class PurchaseController extends Controller
         $purchase_rst_no = $req->input('purchase_rst_no');
         $purchase_lot_no = $req->input('purchase_lot_no');
 
+        $Dharm_kata = $req->input('Dharm_kata');
+
         // Bank Detail of Ladger
         $purchase_account_no = $req->input('purchase_account_no');
         $purchas_bank_name = $req->input('purchas_bank_name');
@@ -338,7 +345,7 @@ class PurchaseController extends Controller
         $ladgerid = $req->input('cust_id');
         
         
-        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to',company_id = '$cid' , purchase_total = '$sum_total',godown = '$godown', is_hide = '1' WHERE purchase_id = '$id'");
+        DB::update("UPDATE purchase SET purchase_way = '$purchase_way' ,purchase_relation_cusm = '$purchase_relation_cusm',purchase_accountant = '$purchase_accountant',purchase_owner = '$purchase_owner',purchase_village = '$purchase_village',purchase_acre = '$purchase_acre',purchase_phone = '$purchase_phone',purchase_rst_no = '$purchase_rst_no',purchase_lot_no = '$purchase_lot_no',purchase_account_no = '$purchase_account_no',purchas_bank_name = '$purchas_bank_name',purchase_ifsc = '$purchase_ifsc',purchase_branch = '$purchase_branch',purchase_gst_no = '$purchase_gst_no',purchase_total = '0',purchase_to = '$purchase_to',company_id = '$cid' , purchase_total = '$sum_total',godown = '$godown',Dharm_kata ='$Dharm_kata', is_hide = '1' WHERE purchase_id = '$id'");
 
         $today = date('Y-m-d H:i:s');
 
@@ -374,6 +381,10 @@ class PurchaseController extends Controller
             $balance = $sum_total + $avlBal;
 
             DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id) VALUES ('$ladgerid','Purchase','Purchase','0', '$sum_total','$balance','$cid')");
+
+            $balance = $balance - $Dharm_kata;
+
+            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt,cr_amt,avbl_bal,comp_id) VALUES ('$ladgerid','Purchase','Dharam Kata','$Dharm_kata', '0','$balance','$cid')");
 
         return Redirect::to('purchase');
        

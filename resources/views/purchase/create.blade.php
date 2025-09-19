@@ -166,6 +166,13 @@
           </div>
         </div>
 
+        <div class="col-md-6 ">
+          <div class="form-group">
+            <label>Dharm Kata</label>
+            <input type="text" class="form-control" name="Dharm_kata" id="Dharm_kata"  required>
+          </div>
+        </div>
+
         <div class="col-md-6 changehide ">
           <div class="form-group changehide" style="display: none;">
             <label>GST No.</label>
@@ -306,6 +313,7 @@ function selectLadger(id) {
   $.get('{{ route('purchase.search') }}', { searchVal: id }, function(response) { 
     if (response.success && response.data) {
       let d = response.data[0];
+      
      
       $.ajax({
         url: '{{ route('purchase.getrst') }}',
@@ -331,9 +339,10 @@ function selectLadger(id) {
       $('#purchas_bank_name').val(d.ladgers_bank);
       $('#purchase_ifsc').val(d.ifsc_code);
       $('#purchase_branch').val(d.branch);
+
       $('#purchase_gst_no').val(d.gst_no);
 
-      
+      $('#Dharm_kata').val('100');
 
       $('#purchase_item').val(d.item_selled ?? '');
       
