@@ -77,6 +77,8 @@
           <div class="form-group">
             <label>Aadhar Number </label>
             <input type="text" class="form-control" name="purchase_accountant" id="spurchase_accountant" required readonly>
+
+            <input type="hidden" class="form-control" name="cust_id" id="cust_id">
           </div>
         </div>
 
@@ -321,6 +323,7 @@ function selectLadger(id) {
      
       $('#purchase_relation_cusm').val(d.relational_cust_name);
       $('#spurchase_accountant').val(d.account_holder);
+      $("#cust_id").val(d.account_id);
       $('#purchase_owner').val(d.farm_owner_name);
       $('#purchase_village').val(d.village);
       $('#purchase_acre').val(d.farm_area_acre);

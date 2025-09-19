@@ -364,6 +364,22 @@ class LedgerController extends Controller
 
         DB::update("update payment_statement SET dr_amt = '$dramt', cr_amt = '$cramt', avbl_bal = '$avabl' WHERE prtclr = 'Opening Balance' and comp_id = '$companies[$i]' and ladger_id = 'cust-$ladger_id'");
 
+        $statement = DB::select("select pay_id,dr_amt,cr_amt from payment_statement WHERE prtclr != 'Opening Balance' and comp_id = '$companies[$i]' and ladger_id = 'cust-$ladger_id' order by pay_id ASC");
+
+        if(!empty($statement)){
+            foreach($statement as $sttmnt){
+
+                $avabl = $avabl + $sttmnt->cr_amt - $sttmnt->dr_amt;
+
+                $pay_id = $sttmnt->pay_id;
+
+                DB::update("update payment_statement SET avbl_bal = '$avabl' WHERE pay_id = '$pay_id'");
+
+            }
+        }
+
+
+
        }
        
       
