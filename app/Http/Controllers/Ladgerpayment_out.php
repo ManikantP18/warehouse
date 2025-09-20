@@ -68,6 +68,44 @@ function create() {
 
     }
 
+    
+    public function getladgerbalance(Request $req){
+
+        $cid = $req->input('cust');
+        $cmpid = $req->input('comp_id');
+
+        if(!empty($cmpid)){
+
+            $avbl_bal = DB::select(" select avbl_bal as total_balance from payment_statement where ladger_id = '$cid' AND comp_id = '$cmpid' ORDER BY pay_id DESC limit 1");
+
+        } else {
+
+            $avbl_bal = DB::select("
+            SELECT SUM(t.avbl_bal) as total_balance
+            FROM (
+                SELECT ps.comp_id, ps.avbl_bal
+                FROM payment_statement ps
+                INNER JOIN (
+                    SELECT comp_id, MAX(pay_id) as last_id
+                    FROM payment_statement
+                    WHERE ladger_id = '$cid'
+                    GROUP BY comp_id
+                ) x ON ps.comp_id = x.comp_id AND ps.pay_id = x.last_id
+                WHERE ps.ladger_id = '$cid'
+            ) t
+        ");
+
+        }
+
+        
+
+        $totalBalance = $avbl_bal[0]->total_balance ?? 0;
+         
+
+        echo $totalBalance;
+
+    }
+
     public function search(Request $req)
 
     

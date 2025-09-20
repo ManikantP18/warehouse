@@ -170,6 +170,8 @@ Route::get('/payment_out/search', 'App\Http\Controllers\Ladgerpayment_out@search
 Route::get('/payment_out/history', 'App\Http\Controllers\Ladgerpayment_out@history')->name('payment_out.history')->middleware('auth');
 Route::get('/payment_out/searchbanks', 'App\Http\Controllers\Ladgerpayment_out@searchbanks')->name('payment_out.searchbanks')->middleware('auth');
 
+Route::get('/payment_out/getladgerbalance', 'App\Http\Controllers\Ladgerpayment_out@getladgerbalance')->name('payment_out.getladgerbalance')->middleware('auth');
+
 Route::post('/payment_out/add', 'App\Http\Controllers\Ladgerpayment_out@add')->name('payment_out.add')->middleware('auth');
 
  Route::get('/payment_out/create', 'App\Http\Controllers\Ladgerpayment_out@create')->name('payment_out.create')->middleware('auth');

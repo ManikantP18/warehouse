@@ -146,6 +146,13 @@
           </div>
         </div>
 
+         <div class="col-md-6 changehide">
+          <div class="form-group">
+            <label>Dharm Kata</label>
+            <input type="text" class="form-control" name="Dharm_kata" id="Dharm_kata" required value="{{$purchase[0]->Dharm_kata}}" >
+          </div>
+        </div>
+
         <div div class="form-group changehide" style="display: none;">
           <div class="form-group">
             <label>GST No.</label>
