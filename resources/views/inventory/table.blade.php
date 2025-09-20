@@ -11,6 +11,10 @@
                 <th> Stock Qty. </th>
 
                 <th> Available Qty. </th>
+
+                <th> Unit </th>
+
+                <th> Unit Qty </th>
                                 
                 <th>Created Date</th>
             </tr>
@@ -26,6 +30,8 @@
                             <td>{{ $value->lot_no}}</td>
                             <td>{{ $value->stock}}</td>
                             <td>{{ $value->avbl_stock}}</td>
+                            <td>{{ $value->unit == 1 ? 'KW' : ($value->unit == 2 ? 'KG' : 'Bag') }}</td>
+                            <td>{{ $value->unit_qty}}KW</td>
                              <td>{{ date('d/m/Y h:i a', strtotime($value->created_date)) }}</td>
 
                         @endforeach

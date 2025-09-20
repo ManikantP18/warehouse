@@ -39,7 +39,13 @@ class InventoryController extends Controller
 
         $cid = $req->input('cat_id'); 
 
-        $categories = DB::select("select * from product_services where category_id = ' $cid'");
+        $where = "where category_id = ' $cid'";
+
+        if($cid == 'all'){
+            $where = "";
+        }
+
+        $categories = DB::select("select * from product_services $where");
          $opt = '<option value=""> Select Item </option> <option value="all"> All </option>';
 
         if(!empty($categories)){

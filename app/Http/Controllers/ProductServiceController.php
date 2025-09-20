@@ -155,7 +155,15 @@ class ProductServiceController extends Controller
 
             CustomField::saveData($productService, $request->customField);
 
-            DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock,avbl_stock) VALUES ('$productService->company_id','$productService->category_id','$lastId','$productService->lotno','$productService->quantity','$productService->quantity')");
+            $unti_qty = $request->second_unit;
+
+            if($request->sec_unit == 2 && $request->unit_id == 3){
+
+                $unti_qty = $request->second_unit/100;
+
+            }
+
+            DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock,avbl_stock,unit,unit_qty) VALUES ('$productService->company_id','$productService->category_id','$lastId','$productService->lotno','$productService->quantity','$productService->quantity','$request->unit_id','$unti_qty')");
 
             return redirect()->route('productservice.index')->with('success', __('Product successfully created.'));
         } else {

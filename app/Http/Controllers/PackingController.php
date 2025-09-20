@@ -93,6 +93,20 @@ class PackingController extends Controller
             'is_hide'                  => 1
         ]);
 
+        $unit_qty = '0.4';
+
+        if(!empty($packing_30) && $packing_30 > 0){
+            $unit_qty = '0.3';
+        }
+
+        if(!empty($packing_20) && $packing_20 > 0){
+            $unit_qty = '0.2';
+        }
+
+        if(!empty($packing_5) && $packing_5 > 0){
+            $unit_qty = '0.05';
+        }
+
         $bagcount = array_sum($bags_count);
 
         
@@ -104,7 +118,7 @@ class PackingController extends Controller
             $category_id = $cat_id[0]->category_id;
         }
 
-        DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock,avbl_stock) VALUES ('$req->company_id','$category_id','$req->verity','$req->lot_no','$bagcount','$bagcount')");
+        DB::insert("Insert into products_inventory (company_id,cat_id,item_id,lot_no,stock,avbl_stock,unit,unit_qty) VALUES ('$req->company_id','$category_id','$req->verity','$req->lot_no','$bagcount','$bagcount','3','$unit_qty')");
 
     return Redirect::to('/packing')->with('success', 'Packing updated successfully');
 }

@@ -146,7 +146,7 @@ class DashboardController extends Controller
 
     public function saleHistory(Request $req)
 {
-    $item   = $req->input('item');
+    $item   = $req->input('item_id');
     $cat    = $req->input('cat_id');
     $cid    = $req->input('comp_id');
     $fdate  = $req->input('from_date');    
@@ -175,8 +175,12 @@ class DashboardController extends Controller
             $where .= " AND s.sell_created_date <= '$todate' ";
         }
 
-        if (!empty($cat)) {
+        if (!empty($cat) && $cat != 'all') {
             $where .= " AND ps.category_id = '$cat' ";
+        }
+
+        if(!empty($item) && $item != 'all'){
+            $where .= " AND ps.id = '$item' ";
         }
 
         // global join
@@ -286,7 +290,14 @@ public function salereport(Request $req)
     $page = $req->input('page') ?? 'full';
 
     // base where
-    $where = " s.company_id = '$cid' ";
+
+    $where = " s.company_id != '' ";
+    if($cid != 'all'){
+
+        $where = " s.company_id = '$cid' ";
+
+    }
+    
 
     if (!empty($fdate)) {
         $where .= " AND s.sell_created_date >= '$fdate' ";
@@ -296,9 +307,13 @@ public function salereport(Request $req)
         $where .= " AND s.sell_created_date <= '$todate' ";
     }
 
-    if (!empty($cat)) {
+    if (!empty($cat) && $cat != 'all') {
         $where .= " AND ps.category_id = '$cat' ";
     }
+
+    if(!empty($item) && $item != 'all'){
+            $where .= " AND ps.id = '$item' ";
+        }
 
     // global join
     $join = " 

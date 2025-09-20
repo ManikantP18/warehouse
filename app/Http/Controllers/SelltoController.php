@@ -430,76 +430,52 @@ class SelltoController extends Controller
         }
 
         // 3. Purane payment statement delete
-        DB::delete("DELETE FROM payment_statement WHERE sell_id = '$id' AND comp_id = '$cid'");
+DB::delete("DELETE FROM payment_statement WHERE sell_id = '$id' AND comp_id = '$cid'");
 
-        // 4. Naya insert jaise add() me hai
-        $avbl_bal = -$total;
-        $lastAvailableBal = DB::select("SELECT avbl_bal FROM payment_statement 
-            WHERE ladger_id = '$accno' AND pay_status = 1 AND is_deleted = 0 AND comp_id = '$cid'
-            ORDER BY pay_id DESC LIMIT 1");
+// 4. Naye records insert karo (jaise add() me hai)
+// --- yaha dr/cr insert hoga jaise tumhe chahiye (Invoice, Cash, Bank etc)
 
-        if(!empty($lastAvailableBal)){
-            $avbl_bal = $lastAvailableBal[0]->avbl_bal - $total;
-        }
+// Example Invoice Dr
+DB::insert("INSERT INTO payment_statement 
+    (ladger_id, sell_id, pay_type, prtclr, dr_amt, comp_id) 
+    VALUES ('$accno', '$id', 'Sale', 'Invoice-$id', '$total', '$cid')");
+
+// Example Cash Cr
+if(!empty($cashamm) && $cashamm > 0){
+    DB::insert("INSERT INTO payment_statement 
+        (ladger_id, sell_id, pay_type, prtclr, cr_amt, comp_id) 
+        VALUES ('$accno', '$id', 'Sale', 'Cash (Invoice-$id)', '$cashamm', '$cid')");
+}
+
+// Example Bank Cr
+if(!empty($creditamm) && $creditamm > 0 && !empty($bank_name)){
+    $bank = DB::select("SELECT bank_name, account_num 
+                        FROM ledgerbank_accounts 
+                        WHERE account_id = $bank_name");
+    foreach($bank as $b){
         DB::insert("INSERT INTO payment_statement 
-            (ladger_id, sell_id, pay_type, prtclr, dr_amt, avbl_bal, comp_id) 
-            VALUES ('$accno', '$id', 'Sale', 'Invoice-$id', '$total', '$avbl_bal', '$cid')");
+            (ladger_id, sell_id, bank_id, pay_type, prtclr, cr_amt, comp_id) 
+            VALUES ('$accno', '$id', '$bank_name', 'Sale', 
+            '$b->bank_name ($b->account_num) (Invoice-$id)', '$creditamm', '$cid')");
+    }
+}
 
-        // Cash payment
-        if(!empty($cashamm) && $cashamm > 0){
-            $avbl_bal = $avbl_bal + $cashamm;
-            DB::insert("INSERT INTO payment_statement 
-                (ladger_id, sell_id, pay_type, prtclr, cr_amt, avbl_bal, comp_id) 
-                VALUES ('$accno', '$id', 'Sale', 'Cash (Invoice-$id)', '$cashamm', '$avbl_bal', '$cid')");
+// 5. Recalculate sirf iss company ke statements ka avbl_bal
+$allStatements = DB::select("SELECT * FROM payment_statement 
+    WHERE ladger_id = '$accno' 
+      AND comp_id = '$cid' 
+      AND pay_status = 1 
+      AND is_deleted = 0 
+    ORDER BY pay_id ASC");
 
-            // Cash Ledger balance update
-            $cashLadgerId = DB::select("SELECT account_id FROM ladgers 
-                WHERE relational_cust_name = 'Cash In Hand' ORDER BY ladger_id DESC LIMIT 1");
-            $cashLadgerAcc = !empty($cashLadgerId) ? $cashLadgerId[0]->account_id : 'Cash Ladger';
+$runningBalance = 0;
+foreach($allStatements as $s){
+    $runningBalance = $runningBalance + $s->cr_amt - $s->dr_amt;
+    DB::update("UPDATE payment_statement 
+                SET avbl_bal = '$runningBalance' 
+                WHERE pay_id = '$s->pay_id'");
+}
 
-            $cashAvblBal = DB::select("SELECT avbl_bal FROM payment_statement 
-                WHERE ladger_id = '$cashLadgerAcc' AND pay_status = 1 AND is_deleted = 0 AND comp_id = '$cid' 
-                ORDER BY pay_id DESC LIMIT 1");
-            $cashLadgerBalanceAmt = !empty($cashAvblBal) ? $cashAvblBal[0]->avbl_bal : 0;
-            $cashLadgerBalanceAmt = $cashLadgerBalanceAmt + $cashamm;
-
-            DB::insert("INSERT INTO payment_statement 
-                (ladger_id, sell_id, pay_type, prtclr, cr_amt, avbl_bal, comp_id) 
-                VALUES ('$cashLadgerAcc', '$id', 'Sale', '$csname (Invoice-$id)', '$cashamm', '$cashLadgerBalanceAmt', '$cid')");
-        }
-
-        // Credit payment (Bank)
-        if(!empty($creditamm) && $creditamm > 0 && !empty($bank_name)){
-            $avbl_bal = $avbl_bal + $creditamm;
-            $bank = DB::select("SELECT bank_name, account_num FROM ledgerbank_accounts WHERE account_id = $bank_name");
-            foreach($bank as $b){
-                DB::insert("INSERT INTO payment_statement 
-                    (ladger_id, sell_id, bank_id, pay_type, prtclr, cr_amt, avbl_bal, comp_id) 
-                    VALUES ('$accno', '$id', '$bank_name', 'Sale', '$b->bank_name ($b->account_num) (Invoice-$id)', '$creditamm', '$avbl_bal', '$cid')");
-
-                $bank_bal = $creditamm;
-                $bankBalance = DB::select("SELECT avbl_bal FROM payment_statement 
-                    WHERE bank_id = '$bank_name' AND pay_status = 1 AND is_deleted = 0 AND comp_id = '$cid' 
-                    AND ladger_id = '' ORDER BY pay_id DESC LIMIT 1");
-                if(!empty($bankBalance)){
-                    $bank_bal = $bank_bal + $bankBalance[0]->avbl_bal;
-                }
-                DB::insert("INSERT INTO payment_statement 
-                    (sell_id, pay_type, prtclr, dr_amt, cr_amt, avbl_bal, comp_id, bank_id) 
-                    VALUES ('$id','Sale','$csname (Invoice-$id)','0','$creditamm','$bank_bal','$cid','$bank_name')");
-            }
-        }
-
-        // 5. Sare next payment_statement ka avbl_bal recalc
-        $allStatements = DB::select("SELECT * FROM payment_statement 
-            WHERE ladger_id = '$accno' AND comp_id = '$cid' AND pay_status = 1 AND is_deleted = 0 
-            ORDER BY pay_id ASC");
-
-        $runningBalance = 0;
-        foreach($allStatements as $s){
-            $runningBalance = $runningBalance + $s->cr_amt - $s->dr_amt;
-            DB::update("UPDATE payment_statement SET avbl_bal = '$runningBalance' WHERE pay_id = '$s->pay_id'");
-        }
 
         DB::commit();
         return Redirect::to('sellto');
