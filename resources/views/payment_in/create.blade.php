@@ -50,6 +50,12 @@
                     </select>
                 </div>
 
+                <div class="col-md-6">
+                    <label class="form-label">Ladger Balance</label>
+                    <input class="form-control" type="text" id="ladger_balance" value="0" readonly>
+                </div>
+
+
                 <!-- Bank -->
                 <div class="col-md-6">
                     <label class="form-label">Bank Name</label>
@@ -130,6 +136,19 @@ function searchLadger() {
 }
 
 function fillFarmer(el) {
+
+    $.ajax({
+        url: '{{ route('payment_out.getladgerbalance') }}',
+        type: 'GET',
+        data: { cust: $(el).val(), comp_id : '' },
+        success: function(response) {
+            $("#ladger_balance").val(response);
+        },
+        error: function() {
+            alert("Ladger Balance load करने में error आया");
+        }
+    });
+
     if ($(el).val()) {
         $("#payment-form-wrapper").show();
         $("#selectedLadger1").val($(el).val());
@@ -140,6 +159,18 @@ function fillFarmer(el) {
 }
 
 function selectCompany(cid) {
+
+     $.ajax({
+        url: '{{ route('payment_out.getladgerbalance') }}',
+        type: 'GET',
+        data: { cust: $("#selectedLadger1").val(), comp_id: cid },
+        success: function(response) {
+            $("#ladger_balance").val(response);
+        },
+        error: function() {
+            alert("Ladger Balance load करने में error आया");
+        }
+    });
     if (!cid) {
         $("#bankslist").html('<option value="">Select Bank</option>');
         return;

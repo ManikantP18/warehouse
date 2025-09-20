@@ -178,6 +178,8 @@ Route::post('/payment_out/add', 'App\Http\Controllers\Ladgerpayment_out@add')->n
 ///payment in 
  Route::get('/payment_in', 'App\Http\Controllers\Ladgerpayment_in@index')->name('payment_in.list')->middleware('auth');
 Route::get('/payment_in/search', 'App\Http\Controllers\Ladgerpayment_in@search')->name('payment_in.search')->middleware('auth');
+
+
 Route::get('/payment_in/history', 'App\Http\Controllers\Ladgerpayment_in@history')->name('payment_in.history')->middleware('auth');
 Route::get('/payment_in/searchbanks', 'App\Http\Controllers\Ladgerpayment_in@searchbanks')->name('payment_in.searchbanks')->middleware('auth');
 

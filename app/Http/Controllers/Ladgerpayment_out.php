@@ -97,13 +97,9 @@ function create() {
 
         }
 
-        
-
-        $totalBalance = $avbl_bal[0]->total_balance ?? 0;
-         
+        $totalBalance = $avbl_bal[0]->total_balance ?? 0;      
 
         echo $totalBalance;
-
     }
 
     public function search(Request $req)
