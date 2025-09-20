@@ -66,6 +66,8 @@ class Ladgerpayment_in extends Controller
         return $opt;
     }
 
+    
+
     // 🔹 Search Ladgers
     public function search(Request $req)
     {
