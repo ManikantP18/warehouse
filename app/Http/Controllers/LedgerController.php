@@ -46,6 +46,8 @@ class LedgerController extends Controller
          $bhumi_gram = $req->input('bhumi_gram');
 
          $opening_balance = $req->input('opening_balance');
+
+         $created_at = $req->input('created_at');
          
           $phone_number	 = $req->input('phone_number');
            $bank_account_name	 = $req->input('bank_account_name');
@@ -97,7 +99,7 @@ class LedgerController extends Controller
                 $avabl =  $avabl - $dramt;
             }
 
-            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt, cr_amt,avbl_bal,comp_id) VALUES ('$account_id','Payment','Opening Balance', '$dramt','$cramt','$avabl','$companies[$i]')");
+            DB::insert("Insert into payment_statement (ladger_id,pay_type,prtclr,dr_amt, cr_amt,avbl_bal,comp_id,created_date) VALUES ('$account_id','Payment','Opening Balance', '$dramt','$cramt','$avabl','$companies[$i]','$created_at')");
         }
 
         if($ladger_type == 1){
