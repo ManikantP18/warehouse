@@ -79,7 +79,7 @@
 
     <div class="form-group col-md-6">
             <label for="company_id" class="form-label">Company Name</label>
-            <select name="company_id" id="company_id" class="form-control select" required onchange="">
+            <select name="company_id" id="company_id" class="form-control select" required onchange="CompanyItems(this.value)">
                  
                 @foreach($company as $key => $value)
                     <option value="{{ $value->company_id }}" {{ $value->company_id == $sellto[0]->company_id ? 'selected' : ''}}>{{ $value->company_name }}</option>
@@ -90,28 +90,47 @@
     <!-- Default rows for already selled items -->
         @for($i = 0; $i < count($selleditems); $i++)
           <div class="row mb-3 sell-row">
-            <div class="col-md-2">
+            <div class="col-md-3">
               <div class="form-group">
                 <label>Sell Item</label>
-                <select name="sellto_item_selled[]" class="form-control sell-item" onchange="selectItem({{ $i }}, this)" required>
-                  <option value="" hidden>Select Item</option>
+                <select name="sellto_item_selled[]" class="form-control sell-item sellto_item_selled" dataid="0" onchange="selectItem({{ $i }}, this)" required>
+                  <option value="">Select Item</option>
+
                   @foreach($items as $value)
                     <option value="{{ $value->id }}" {{ $value->id == $selleditems[$i]->selled_item ? 'selected' : '' }}>
                       {{ $value->name }}
                     </option>
                   @endforeach
+                  
                 </select>
               </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
+              <label>Lot No.</label>
+              <select class="form-control" name="purchase_lot_no[]" id="purchase_lot_no_{{ $i }}" onchange="checkqty({{ $i }})" required>
+                  <option value="" hidden>Select Lot no.</option>
+
+                  {{-- All available lots for this item --}}
+                  @foreach($lots[$selleditems[$i]->selled_item] ?? [] as $lot)
+                      <option value="{{ $lot->lot_no }}"
+                          {{ $lot->lot_no == $selleditems[$i]->selled_lot_no ? 'selected' : '' }}>
+                          {{ $lot->lot_no }}
+                      </option>
+                  @endforeach
+              </select>
+            </div>
+
+
+
+            <div class="col-md-3">
               <label>Quantity</label>
               <input type="number" class="form-control" name="sellto_quantity[]" id="sellto_quantity_{{ $i }}" 
                     value="{{ $selleditems[$i]->selled_quantity }}" 
                     required onkeyup="autofill({{ $i }})" onchange="autofill({{ $i }})">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label>Unit</label>
               <select class="form-control" name="purchase_unit[]" required>
                 @foreach($units as $value)
@@ -122,19 +141,19 @@
               </select>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label>Rate</label>
               <input type="number" class="form-control" name="sellto_rate[]" id="sellto_rate_{{ $i }}"
                     value="{{ $selleditems[$i]->selled_rate }}" onkeyup="autofill({{ $i }})">
             </div>
 
-            <div class="col-md-2 d-none">
+            <div class="col-md-3 d-none">
               <label>GST</label>
               <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_{{ $i }}" 
                     onkeyup="autofill({{ $i }})" value="{{ $selleditems[$i]->sell_gst ?? 0 }}">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label>Total Amount</label>
               <input type="number" class="form-control purchase_total" name="purchase_total[]" id="purchase_total_{{ $i }}" 
                     value="{{ $selleditems[$i]->selled_rate * $selleditems[$i]->selled_quantity }}">
@@ -187,7 +206,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Remaining Amount</label>
-        <input type="number" class="form-control" name="sellto_Remaining_amount" id="sellto_Remaining_amount" required value="{{$sellto[0]->remaining_amount}}" >
+        <input type="number" class="form-control" name="sellto_Remaining_amount" id="sellto_Remaining_amount" required value="{{$sellto[0]->remaining_amount}}" readonly>
       </div>
     </div>
 
@@ -195,7 +214,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Total Amount</label>
-        <input type="number" class="form-control sellto_total_amount" name="sellto_total_amount" id="sellto_total_amount" required value='{{$sellto[0]->sell_total_ammount}}'>
+        <input type="number" class="form-control sellto_total_amount" name="sellto_total_amount" id="sellto_total_amount" required value='{{$sellto[0]->sell_total_ammount}}' readonly>
       </div>
     </div>
 
@@ -214,6 +233,26 @@
 
 <>
   <script>
+
+    function CompanyItems(cmp_id) {
+      $.ajax({
+          url: '{{ route('sellto.getItems') }}',
+          type: 'GET',
+          data: { cmp_id: cmp_id },
+          success: function(response) {
+            response = JSON.parse(response);
+
+
+          $(".sellto_item_selled").html(response.items);
+          $("#bank_name").html(response.banks)
+          
+        },
+        error: function(xhr) {
+          console.error("Error fetching item details");
+        }
+        })
+}
+
     (() => {
       
       const forms = document.querySelectorAll('.needs-validation')
@@ -328,7 +367,6 @@ console.log(item)
     autofill();
     return;
   }
-
   // ✅ Proceed with calculations
   const qty = parseFloat($('#sellto_quantity_' + did).val()) || 0;
   const data = JSON.parse($('#itemsdata').val());
@@ -348,11 +386,18 @@ console.log(item)
 
     autofill();
 
-   /* const cash = parseFloat($('#sellto_cash_amount').val()) || 0;
-    const credit = parseFloat($('#sellto_Credit_amount').val()) || 0;
-    const remaining = (ratetotal + gst) - (cash + credit);
-
-    $('#sellto_Remaining_amount').val(remaining.toFixed(2));*/
+    $.ajax({
+      url: '{{ route('sellto.lotno') }}',
+      type: 'GET',
+      data: { item: item },
+      success: function(response) {
+      $("#purchase_lot_no_"+did).html(response);
+    },
+    error: function(xhr) {
+      console.error("Error fetching item details");
+    }
+    })
+    
   }
 }
 
@@ -404,38 +449,45 @@ const unitsData = @json($units);
 $(document).on("click", "#addMoreRow", function() {
   let newRow = `
     <div class="row mb-3 sell-row">
-      <div class="col-md-2">
+      <div class="col-md-3">
         <label>Sell Item</label>
-        <select name="sellto_item_selled[]" class="form-control" onchange="selectItem(${rowIndex}, this)">
+        <select name="sellto_item_selled[]" dataid="${rowIndex}" class="form-control" onchange="selectItem(${rowIndex}, this)">
           <option value="" hidden>Select Item</option>
           ${itemsData.map(item => `<option value="${item.id}">${item.name}</option>`).join('')}
         </select>
       </div>
 
-      <div class="col-md-2">
+      <div class="col-md-3">
+              <label>Lot No.</label>
+              <select class="form-control" name="purchase_lot_no[]" id="purchase_lot_no_${rowIndex}" onchange="checkqty(${rowIndex})" required>
+                  <option value="" hidden>Select Lot no.</option>
+              </select>
+            </div>
+
+      <div class="col-md-3">
         <label>Quantity</label>
         <input type="number" class="form-control" name="sellto_quantity[]" id="sellto_quantity_${rowIndex}" 
                value="1" onkeyup="autofill(${rowIndex})" onchange="autofill(${rowIndex})">
       </div>
 
-      <div class="col-md-2">
+      <div class="col-md-3">
         <label>Unit</label>
         <select class="form-control" name="purchase_unit[]">
           ${unitsData.map(unit => `<option value="${unit.id}">${unit.name}</option>`).join('')}
         </select>
       </div>
 
-      <div class="col-md-2">
+      <div class="col-md-3">
         <label>Rate</label>
         <input type="number" class="form-control" name="sellto_rate[]" id="sellto_rate_${rowIndex}" onchange="autofill(${rowIndex})">
       </div>
 
-      <div class="col-md-2">
+      <div class="col-md-3 d-none">
         <label>GST</label>
         <input type="number" class="form-control" name="sellto_gst_amount[]" id="sellto_gst_amount_${rowIndex}" value="0" onchange="autofill(${rowIndex})">
       </div>
 
-      <div class="col-md-1">
+      <div class="col-md-3">
         <label>Total</label>
         <input type="number" class="form-control purchase_total" name="purchase_total[]" id="purchase_total_${rowIndex}" value="0">
       </div>

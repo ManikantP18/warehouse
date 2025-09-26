@@ -83,6 +83,7 @@ class BankController extends Controller
     $account_type = $req->input('account_type');
     $cheque_book = $req->input('cheque_book');
     $opening_bal = $req->input('opening_bal');
+    $comp = $req->input('company_id');
    
 
    DB::table('ledgerbank_accounts')->where('account_id', $account_id)->update([
@@ -92,7 +93,8 @@ class BankController extends Controller
     'account_type' => $account_type,
     'cheque_book' => $cheque_book,
     'opening_bal' => $opening_bal,
-    'Bank_name' => $req->input('Bank_name'), // ✅ ADD THIS LINE
+    'Bank_name' => $req->input('Bank_name'),
+    'company_id' => $comp
 ]);
 
 
@@ -116,7 +118,6 @@ class BankController extends Controller
                         }
                     }
                 }
-
 
     return Redirect::to('/bankacc')->with('success', 'Bank detail edited successfully.');
 }

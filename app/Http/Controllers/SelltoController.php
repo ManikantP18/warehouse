@@ -265,7 +265,7 @@ class SelltoController extends Controller
             if($all == 'no'){
 
                 $searchData = DB::select("SELECT * FROM ladgers left join rogring on ladgers.ladger_id = rogring.ledgers
-                left join users on rogring.Rogring_name = users.id WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
+                left join users on rogring.Rogring_name = users.id WHERE ladgers.is_deleted = 0 AND (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
                 AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
                 ");
@@ -273,7 +273,7 @@ class SelltoController extends Controller
             } else {
 
                 $searchData = DB::select("SELECT * FROM ladgers
-                WHERE (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
+                WHERE ladgers.is_deleted = 0 AND (account_id LIKE '%$searchVal%' OR phone_number LIKE '%$searchVal%')
                 AND (relational_cust_name LIKE '%$searchname%'
                 AND village LIKE '%$searchVillage%' AND farm_owner_name LIKE '%$searchowner%')
                 ");
@@ -358,7 +358,7 @@ class SelltoController extends Controller
 
         $data['selleditems'] = DB::select("select * from selled_item where sell_id = '$id' and selled_status = 1");
 
-        $data['items'] = DB::select("select * from product_services where type = 'Product'");
+        $data['items'] = DB::select("select * from product_services where type = 'Product' AND product_services.company_id = (select company_id from sell_to where sell_id = '$id' and is_deleted = 0)");
 
         $data['products'] = DB::select("select id, name, quantity from product_services where type = 'Product' AND product_services.id NOT IN(select selled_item from selled_item where sell_id = '$id' and selled_status = 1)");
 
@@ -367,6 +367,16 @@ class SelltoController extends Controller
          $data['company'] = DB::select("select * from company where company_status = 1 and is_deleted = 0");
 
          $data['kataparchi'] = DB::select("select * from sell_to  where sell_id = '$id'");
+
+         $lotsData = DB::select("
+            SELECT item_id, lot_no, avbl_stock
+            FROM products_inventory
+            WHERE company_id = (SELECT company_id FROM sell_to WHERE sell_id = '$id' AND is_deleted = 0)
+            AND is_deleted = 0
+        ");
+
+        $data['lots'] = collect($lotsData)->groupBy('item_id');
+
         
          
         return view('sellto/edit',$data);
@@ -425,7 +435,7 @@ class SelltoController extends Controller
             if(!empty($itemselled[$i]) && !empty($rate[$i])){
                 DB::insert("INSERT INTO selled_item 
                     (selled_item, selled_quantity, sell_unit, selled_gst, selled_rate, selled_lot_no, sell_id) 
-                    VALUES ('$itemselled[$i]', '$quantity[$i]', $units[$i], '$gst[$i]', '$rate[$i]', '', '$id')");
+                    VALUES ('$itemselled[$i]', '$quantity[$i]', $units[$i], '$gst[$i]', '$rate[$i]','$lotno[$i]' , '$id')");
             }
         }
 

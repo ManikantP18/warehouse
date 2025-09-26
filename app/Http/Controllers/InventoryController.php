@@ -17,16 +17,22 @@ class InventoryController extends Controller
 
     public function getcategories(Request $req){
 
-        $cid = $req->input('comp_id'); 
+        $cid = $req->input('comp_id');
 
-        $categories = DB::select("select * from product_service_categories where company_id = ' $cid'");
+        $where = '';
+
+        if(!empty($cid) && $cid != 'all'){
+            $where = " where product_service_categories.company_id = ' $cid'";
+        }
+
+        $categories = DB::select("select *,company.company_name from product_service_categories join company on company.company_id = product_service_categories.company_id  $where");
          $opt = '<option value=""> Select Category </option> <option value="all"> Select All </option>';
 
         if(!empty($categories)){
             
             foreach($categories as $ln) {
 
-                $opt .= "<option value='$ln->id'>$ln->name</option>";
+                $opt .= "<option value='$ln->id'>$ln->name ($ln->company_name)</option>";
 
             }
         }
@@ -70,7 +76,7 @@ class InventoryController extends Controller
 
         $where = ' AND products_inventory.is_deleted = 0';
 
-        if($cat_id  != 'all')
+        if($comp_id  != 'all')
         {
             $where .= " WHERE products_inventory.company_id = '$comp_id'";
         }

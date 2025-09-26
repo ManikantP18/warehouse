@@ -148,7 +148,13 @@ function fillFarmer(el) {
         type: 'GET',
         data: { cust: $(el).val(), comp_id : '' },
         success: function(response) {
-            $("#ladger_balance").val(response);
+            let txt = 'Dr';
+
+            if(response>0){
+                txt = 'Cr';
+            }
+
+            $("#ladger_balance").val(response+txt);
         },
         error: function() {
             alert("Ladger Balance load करने में error आया");
@@ -171,7 +177,14 @@ function selectCompany(cid) {
         type: 'GET',
         data: { cust: $("#selectedLadger1").val(), comp_id: cid },
         success: function(response) {
-            $("#ladger_balance").val(response);
+
+            let txt = 'Dr';
+
+            if(response>0){
+                txt = 'Cr';
+            }
+
+            $("#ladger_balance").val(response+txt);
         },
         error: function() {
             alert("Ladger Balance load करने में error आया");

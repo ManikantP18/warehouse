@@ -288,14 +288,14 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Remaining Amount</label>
-            <input type="number" class="form-control" name="sellto_Remaining_amount" id="sellto_Remaining_amount" required value='0'>
+            <input type="number" class="form-control" name="sellto_Remaining_amount" id="sellto_Remaining_amount" required value='0' readonly>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label>Total Amount</label>
-            <input type="number" class="form-control sellto_total_amount" name="sellto_total_amount" id="sellto_total_amount" required value='0'>
+            <input type="number" class="form-control sellto_total_amount" name="sellto_total_amount" id="sellto_total_amount" required value='0' readonly>
           </div>
         </div>
 
