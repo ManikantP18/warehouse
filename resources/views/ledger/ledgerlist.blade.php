@@ -93,6 +93,7 @@
                                     <th class="farmer-only">Khasra No.</th>
                                     <th class="farmer-only">Bhumi gram</th>
                                     <th class="farmer-only">Opening balance</th>
+                                    
                                     <th>Phone No.</th>
                                     <th  class="farmer-only">Bank Account Name</th>
                                     <th class="farmer-only">Account No.</th>

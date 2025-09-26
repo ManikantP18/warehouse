@@ -64,6 +64,15 @@
         <input class="form-control" name="khasra_no" type="text" required>
     </div>
 
+     <div class="col-lg-6">
+            <div class="form-group">
+                 <label for="created_at" class="form-label">Opening Blance date</label>
+                    <div class="form-icon-user">
+                        <input class="form-control alwaysvisible" required name="created_at" type="date" id="created_at" value="{{date('Y-m-d')}}">
+                    </div>
+             </div>
+        </div>
+
    
     @foreach($company as $val)
     <div class="col-md-6 opening-balances">
@@ -189,6 +198,15 @@ function showhide(value) {
             <input class="form-control" name="khasra_no" type="text" required 
                    pattern="^[6-9][0-9]{9}$" 
                    title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9">
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="form-group">
+                 <label for="created_at" class="form-label">Opening Blance date</label>
+                    <div class="form-icon-user">
+                        <input class="form-control alwaysvisible" required name="created_at" type="date" id="created_at" value="{{date('Y-m-d')}}">
+                    </div>
+             </div>
         </div>`;
 
     $(".opening-balances").each(function(index, element) {
@@ -284,12 +302,21 @@ function showhide(value) {
         <div class="col-md-6">
             <label>GST Number</label>
             <input class="form-control" name="gst_num" required title="Enter 15-digit GST number" >
-        </div>p
+        </div>
         
         <div class="col-md-6">
             <label for="photo">Upload Photo</label>
             <input class="form-control" type="file" name="photo" id="photo" accept="image/*" required>
             <small class="form-text text-muted">Only image files allowed (jpg, png, jpeg).</small>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="form-group">
+                 <label for="created_at" class="form-label">Opening Blance date</label>
+                    <div class="form-icon-user">
+                        <input class="form-control alwaysvisible" required name="created_at" type="date" id="created_at" value="{{date('Y-m-d')}}">
+                    </div>
+             </div>
         </div>`;
 
     $(".opening-balances").each(function(index, element) {
